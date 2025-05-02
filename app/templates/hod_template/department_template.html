@@ -1,0 +1,202 @@
+{% extends 'hod_template/base_template.html' %}
+{% block page_title %}
+Phòng ban
+{% endblock page_title %}
+{% load static %}
+{% block main_content %}
+<section class="content">
+  <div class="container-fluid">
+    <div class="card card-default">
+      <div class="card-header">
+        <h3 class="card-title">Thêm phòng ban</h3>
+        <div class="card-tools">
+          <button type="button" class="btn btn-tool" data-card-widget="collapse">
+            <i class="fas fa-minus"></i>
+          </button>
+        </div>
+      </div>
+      <form role="form" action="/add_department_save/" method="post" id="departmentForm">
+        {% csrf_token %}
+        <input type="hidden" name="department_id_hidden" id="department_id_hidden">
+        <div class="card-body" style="display: block;">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Tên phòng ban<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" placeholder="Nhập tên phòng ban" name="department_name" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label>Ngày thành lập</label>
+                <input type="date" class="form-control" name="department_date_establishment">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label>Mô tả phòng ban</label>
+                <div class="mb-3">
+                  <textarea class="textarea" name="department_description"
+                    style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #ddd; padding: 10px;"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group" id="manager_field" style="display: none;">
+                <label for="department_manager">Trưởng phòng</label>
+                <select class="form-control" id="department_manager" name="department_manager">
+
+                  {% for emp in employees %}
+                  <option value="{{ emp.id }}">{{ emp.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+            </div>
+          </div>
+
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+          <div class="card-footer text-center">
+            {% if selected_department %}
+              <button type="submit" class="btn btn-success">Cập nhật</button>
+              <a href="{% url 'delete_department' selected_department.id %}" class="btn btn-danger btn-sm"
+                 onclick="return confirm('Bạn có chắc chắn muốn xóa phòng ban này không?')">
+                <i class="fas fa-trash"></i> Xóa
+              </a>
+              <a href="{% url 'department_page' %}" class="btn btn-secondary">Thêm phòng ban mới</a>
+            {% else %}
+              <button type="submit" class="btn btn-primary">Lưu</button>
+            {% endif %}
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="card card-secondary">
+          <div class="card-header">
+            <h3 class="card-title">Danh sách phòng ban</h3>
+          </div>
+          <div class="card-body">
+            <table id="example2" class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>Mã phòng ban</th>
+                  <th>Tên phòng ban</th>
+                  <th>Mô tả</th>
+                  <th>Trưởng phòng</th>
+                  <th>Ngày thành lập</th>
+                  <th>Hành động</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for department in departments %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ department.name }}</td>
+                  <td>{{ department.description|safe|linebreaks }}</td>
+                  <td>{{ department.manager_name }}</td>
+                  <td>{{ department.date_establishment|date:"d/m/Y" }}</td>
+                  <td>
+                    <button class="btn btn-info btn-sm"
+                            onclick='viewDepartment("{{ department.id }}", "{{ department.name }}", "{{ department.description|escapejs }}", "{{ department.manager_id }}", "{{ department.date_establishment|date:"Y-m-d" }}")'>
+                      <i class="fas fa-eye"></i> Xem
+                    </button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+  function clearMessages() {
+    document.querySelectorAll('.alert').forEach(alert => alert.remove());
+  }
+
+  function viewDepartment(id, name, description, manager, date) {
+    clearMessages();
+
+    document.getElementsByName('department_name')[0].value = name;
+    document.getElementsByName('department_description')[0].value = description;
+    document.getElementsByName('department_manager')[0].value = manager;
+    document.getElementsByName('department_date_establishment')[0].value = date;
+    document.getElementById('department_id_hidden').value = id;
+
+    // Cập nhật tiêu đề và nút
+    document.querySelector('.card-title').textContent = "Sửa phòng ban";
+    document.querySelector('button[type="submit"]').textContent = "Cập nhật";
+
+    // Hiện trường Trưởng phòng khi sửa
+    document.getElementById('manager_field').style.display = "block";
+
+    // Nút Xóa
+    if (!document.getElementById('delete_button')) {
+      const deleteBtn = document.createElement('button');
+      deleteBtn.id = 'delete_button';
+      deleteBtn.type = 'button';
+      deleteBtn.className = 'btn btn-danger mr-2';
+      deleteBtn.innerText = 'Xóa phòng ban';
+      deleteBtn.onclick = () => {
+        if (confirm('Bạn có chắc chắn muốn xóa phòng ban này không?')) {
+          window.location.href = `/delete_department/${id}/`;
+        }
+      };
+      document.querySelector('.card-footer').prepend(deleteBtn);
+    }
+
+    // Nút Reset / Thêm mới
+    if (!document.getElementById('reset_button')) {
+      const resetBtn = document.createElement('button');
+      resetBtn.id = 'reset_button';
+      resetBtn.className = 'btn btn-secondary ml-2';
+      resetBtn.innerText = 'Thêm phòng ban mới';
+      resetBtn.onclick = () => {
+        clearMessages();
+        document.getElementById('departmentForm').reset();
+        document.getElementById('department_id_hidden').value = '';
+        document.querySelector('.card-title').textContent = "Thêm phòng ban";
+        document.querySelector('button[type="submit"]').textContent = "Lưu";
+
+        // Ẩn lại Trưởng phòng khi thêm mới
+        document.getElementById('manager_field').style.display = "none";
+
+        document.getElementById('delete_button')?.remove();
+        document.getElementById('reset_button')?.remove();
+      };
+      document.querySelector('.card-footer').appendChild(resetBtn);
+    }
+
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  $(document).ready(function () {
+    $('#example2').DataTable();
+
+    // Ẩn Trưởng phòng khi load form lần đầu (Thêm mới)
+    document.getElementById('manager_field').style.display = "none";
+
+    setTimeout(() => {
+      document.querySelectorAll('.alert').forEach(el => el.remove());
+    }, 5000);
+  });
+</script>
+{% endblock custom_js %}
+

@@ -1,0 +1,119 @@
+{% extends 'hod_template/base_template.html' %}
+{% load humanize %}
+{% block page_title %}
+Chi Tiết Bảng Lương
+{% endblock page_title %}
+{% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Chi Tiết Bảng Lương</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Nhân viên</label>
+                                    <p class="form-control-static">{{ payroll.employee.name }} ({{ payroll.employee.employee_code }})</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Phòng ban</label>
+                                    <p class="form-control-static">{{ payroll.employee.department.name }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Tháng/Năm</label>
+                                    <p class="form-control-static">{{ payroll.month }}/{{ payroll.year }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Chức vụ</label>
+                                    <p class="form-control-static">{{ payroll.employee.job_title.name }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Lương cơ bản</label>
+                                    <p class="form-control-static">{{ payroll.base_salary|floatformat:0|intcomma }} VNĐ</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Hệ số lương</label>
+                                    <p class="form-control-static">{{ payroll.salary_coefficient }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Số ngày làm việc chuẩn</label>
+                                    <p class="form-control-static">{{ payroll.standard_working_days }} ngày</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Lương theo giờ</label>
+                                    <p class="form-control-static">{{ payroll.hourly_rate|floatformat:0|intcomma }} VNĐ</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Tổng số giờ làm việc</label>
+                                    <p class="form-control-static">{{ payroll.total_working_hours }} giờ</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Thưởng</label>
+                                    <p class="form-control-static">{{ payroll.bonus|floatformat:0|intcomma }} VNĐ</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Phạt</label>
+                                    <p class="form-control-static">{{ payroll.penalty|floatformat:0|intcomma }} VNĐ</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Tổng lương</label>
+                                    <p class="form-control-static">{{ payroll.total_salary|floatformat:0|intcomma }} VNĐ</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Ghi chú</label>
+                                    <p class="form-control-static">{{ payroll.notes }}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <a href="{% url 'manage_payroll' %}" class="btn btn-secondary">Trở Về</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %} 

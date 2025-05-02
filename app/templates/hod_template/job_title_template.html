@@ -1,0 +1,217 @@
+{% extends 'hod_template/base_template.html'%}
+{% block page_title %}
+Chức vụ
+{% endblock page_title %}
+{% load static %}
+{% block main_content %}
+<!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <div class="card card-default">
+          <div class="card-header">
+            <h3 class="card-title" id="form-title">Thêm chức vụ</h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-remove"></i></button>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <form role="form" action="/add_job_title_save" method="post" id="jobTitleForm">
+              {% csrf_token %}
+              <input type="hidden" id="job_title_id" name="id_job_title" value="">
+            <div class="card-body" style="display: block;">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Tên chức vụ<span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" placeholder="Nhập tên chức vụ" name="name_job_title" value="{{ selected_job.name|default:'' }}" required>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label>Hệ số lương<span class="text-danger">*</span></label>
+                    <input class="form-control" placeholder="Nhập hệ số lương" name="salary_coefficient" value="{{ selected_job.salary_coefficient|default:'' }}" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Mô tả chức vụ</label>
+                    <div class="mb-3">
+                        <textarea class="textarea" name="description" placeholder="Nhập mô tả" style="width: 100%; height: 200px; font-size: 14px; line-height: 18px; border: 1px solid #ddd; padding: 10px;">{{ selected_job.description|default:'' }}</textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                  {% if messages %}
+                    {% for message in messages %}
+                      {% if message.tags == 'error' %}
+                        <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                      {% endif %}
+                      {% if message.tags == 'success' %}
+                        <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+              </div>
+              <div class="card-footer text-center">
+                {% if selected_job %}
+                  <button type="submit" class="btn btn-success">Cập nhật</button>
+                  <a href="{% url 'delete_job_title' job.id %}" class="btn btn-danger btn-sm"
+                     onclick="return confirm('Bạn có chắc chắn muốn xóa chức vụ này không?')">
+                    <i class="fas fa-trash"></i> Xóa
+                  </a>
+                  <a href="{% url 'job_title' %}" class="btn btn-secondary">Thêm chức vụ mới</a>
+                {% else %}
+                  <button type="submit" class="btn btn-primary">Lưu</button>
+                {% endif %}
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-secondary">
+              <div class="card-header">
+                <h3 class="card-title">Danh sách chức vụ</h3>
+              </div>
+              <div class="card-body">
+                <table id="example2" class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Tên chức vụ</th>
+                      <th>Hệ số lương</th>
+                      <th>Ngày tạo</th>
+                      <th>Mô tả</th>
+                      <th>Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for job in job_titles %}
+                      <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ job.name }}</td>
+                        <td>{{ job.salary_coefficient }}</td>
+                        <td>{{ job.created_at|date:"H:i:s d/m/Y" }}</td>
+                        <td>{{ job.description|safe|linebreaks }}</td>
+                        <td>
+                          <button class="btn btn-info btn-sm" onclick="viewJobTitle('{{ job.id }}', '{{ job.name }}', '{{ job.salary_coefficient }}', '{{ job.description|escapejs }}')">
+                              <i class="fas fa-eye"></i> Xem
+                          </button>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+  function clearMessages() {
+    const alerts = document.querySelectorAll('.alert');
+    alerts.forEach(alert => alert.remove());
+  }
+
+  function viewJobTitle(id, name, coefficient, description) {
+    clearMessages(); // Xóa thông báo khi người dùng nhấn Xem
+
+    // Gán thông tin vào form
+    document.getElementsByName('name_job_title')[0].value = name;
+    document.getElementsByName('salary_coefficient')[0].value = coefficient;
+    document.getElementsByName('description')[0].value = description;
+
+    // Gắn hoặc tạo input hidden id nếu chưa có
+    let idInput = document.querySelector('input[name="id_job_title"]');
+    if (!idInput) {
+      idInput = document.createElement('input');
+      idInput.type = 'hidden';
+      idInput.name = 'id_job_title';
+      document.getElementById('jobTitleForm').appendChild(idInput);
+    }
+    idInput.value = id;
+
+    // Đổi tiêu đề và nút
+    document.querySelector('.card-title').textContent = "Sửa chức vụ";
+    document.querySelector('button[type="submit"]').textContent = "Cập nhật";
+
+    // Nút Xoá
+    if (!document.getElementById('delete_button')) {
+      const deleteButton = document.createElement('button');
+      deleteButton.id = 'delete_button';
+      deleteButton.type = 'button';
+      deleteButton.className = 'btn btn-danger mr-2 flex-fill';
+      deleteButton.textContent = 'Xóa chức vụ';
+      deleteButton.onclick = function () {
+        if (confirm("Bạn có chắc chắn muốn xóa chức vụ này không?")) {
+          window.location.href = `/delete_job_title/${id}/`;
+        }
+      };
+      document.querySelector('.card-footer').prepend(deleteButton);
+    } else {
+      document.getElementById('delete_button').onclick = function () {
+        if (confirm("Bạn có chắc chắn muốn xóa chức vụ này không?")) {
+          window.location.href = `/delete_job_title/${id}/`;
+        }
+      };
+    }
+
+    // Nút Thêm mới
+    if (!document.getElementById('reset_button')) {
+      const resetButton = document.createElement('button');
+      resetButton.id = 'reset_button';
+      resetButton.type = 'button';
+      resetButton.className = 'btn btn-secondary ml-2 flex-fill';
+      resetButton.textContent = 'Thêm chức vụ mới';
+      resetButton.onclick = function () {
+        clearMessages(); // Xoá thông báo khi reset
+
+        // Reset lại form
+        idInput.value = "";
+        document.getElementsByName('name_job_title')[0].value = "";
+        document.getElementsByName('salary_coefficient')[0].value = "";
+        document.getElementsByName('description')[0].innerHTML = "";
+
+        document.querySelector('.card-title').textContent = "Thêm chức vụ";
+        document.querySelector('button[type="submit"]').textContent = "Lưu";
+
+        // Xóa các nút phụ
+        document.getElementById('delete_button')?.remove();
+        document.getElementById('reset_button')?.remove();
+      };
+      document.querySelector('.card-footer').appendChild(resetButton);
+    }
+
+    // Cuộn lên phần form
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  $(document).ready(function () {
+    $('#example2').DataTable({
+      paging: true,
+      lengthChange: true,
+      searching: true,
+      ordering: true,
+      info: true,
+      autoWidth: false,
+      responsive: true
+    });
+
+    // Tự động ẩn thông báo sau 5 giây
+    setTimeout(function() {
+      document.querySelectorAll('.alert').forEach(el => el.remove());
+    }, 5000);
+  });
+</script>
+{% endblock custom_js %}
+

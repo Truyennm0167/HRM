@@ -1,0 +1,221 @@
+{% extends 'hod_template/base_template.html' %}
+{% load humanize %}
+{% block page_title %}
+Quản Lý Bảng Lương
+{% endblock page_title %}
+{% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Quản Lý Bảng Lương</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Tháng</label>
+                                    <select class="form-control" id="month">
+                                        <option value="">Tất cả</option>
+                                        {% for i in "123456789101112"|make_list %}
+                                        <option value="{{ i }}">{{ i }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Năm</label>
+                                    <select class="form-control" id="year">
+                                        <option value="">Tất cả</option>
+                                        {% for year in years %}
+                                        <option value="{{ year }}">{{ year }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Phòng Ban</label>
+                                    <select class="form-control" id="department">
+                                        <option value="">Tất cả</option>
+                                        {% for dept in departments %}
+                                        <option value="{{ dept.name }}">{{ dept.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Trạng Thái</label>
+                                    <select class="form-control" id="status">
+                                        <option value="">Tất cả</option>
+                                        <option value="Chưa xác nhận">Chưa xác nhận</option>
+                                        <option value="Đã xác nhận">Đã xác nhận</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-primary" id="filter">Lọc</button>
+                                <a href="{% url 'calculate_payroll' %}" class="btn btn-success">Tính Lương Mới</a>
+                                <button class="btn btn-info" id="export">Xuất Excel</button>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <table class="table table-bordered table-striped" id="payroll_table">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Tháng/Năm</th>
+                                            <th>Mã NV</th>
+                                            <th>Tên NV</th>
+                                            <th>Phòng Ban</th>
+                                            <th>Tổng Lương</th>
+                                            <th>Trạng Thái</th>
+                                            <th>Thao Tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for payroll in payrolls %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ payroll.month }}/{{ payroll.year }}</td>
+                                            <td>{{ payroll.employee.employee_code }}</td>
+                                            <td>{{ payroll.employee.name }}</td>
+                                            <td>{{ payroll.employee.department.name }}</td>
+                                            <td>{{ payroll.total_salary|floatformat:0|intcomma }} VNĐ</td>
+                                            <td>
+                                                {% if payroll.status == 'pending' %}
+                                                <button class="btn btn-warning btn-sm">Chưa xác nhận</button>
+                                                {% else %}
+                                                <button class="btn btn-success btn-sm">Đã xác nhận</button>
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {% if payroll.status == 'pending' %}
+                                                <a href="{% url 'edit_payroll' payroll.id %}" class="btn btn-primary btn-sm">Cập nhật</a>
+                                                <button class="btn btn-danger btn-sm delete-payroll" data-id="{{ payroll.id }}">Xóa</button>
+                                                <button class="btn btn-success btn-sm confirm-payroll" data-id="{{ payroll.id }}">Xác nhận</button>
+                                                {% else %}
+                                                <a href="{% url 'view_payroll' payroll.id %}" class="btn btn-info btn-sm">Xem chi tiết</a>
+                                                {% endif %}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}
+{% block custom_js %}
+<script>
+    $(document).ready(function() {
+        // Initialize DataTable
+        var table = $('#payroll_table').DataTable({
+            "pageLength": 10,
+            "order": [[1, "desc"]],
+            "language": {
+                "search": "Tìm kiếm:",
+                "lengthMenu": "Hiển thị _MENU_ bản ghi",
+                "info": "Hiển thị _START_ đến _END_ của _TOTAL_ bản ghi",
+                "infoEmpty": "Không có bản ghi nào",
+                "infoFiltered": "(được lọc từ _MAX_ bản ghi)",
+                "zeroRecords": "Không tìm thấy bản ghi nào",
+                "paginate": {
+                    "first": "Đầu",
+                    "last": "Cuối",
+                    "next": "Tiếp",
+                    "previous": "Trước"
+                }
+            }
+        });
+
+        // Filter function
+        $("#filter").click(function() {
+            var month = $("#month").val();
+            var year = $("#year").val();
+            var department = $("#department").val();
+            var status = $("#status").val();
+
+            // Clear existing filters
+            table.search('').columns().search('');
+
+            // Apply new filters
+            if (month) {
+                table.column(1).search(month);
+            }
+            if (year) {
+                table.column(1).search(year);
+            }
+            if (department) {
+                table.column(4).search(department);
+            }
+            if (status) {
+                table.column(6).search(status);
+            }
+
+            table.draw();
+        });
+
+        // Export to Excel
+        $("#export").click(function() {
+            window.location.href = "{% url 'export_payroll' %}";
+        });
+
+        // Delete payroll
+        $(".delete-payroll").click(function() {
+            var id = $(this).data('id');
+            if (confirm('Bạn có chắc chắn muốn xóa bảng lương này?')) {
+                $.ajax({
+                    url: "{% url 'delete_payroll' %}",
+                    type: "POST",
+                    data: {
+                        id: id,
+                        csrfmiddlewaretoken: "{{ csrf_token }}"
+                    },
+                    success: function(response) {
+                        if (response.status == "success") {
+                            location.reload();
+                        } else {
+                            alert("Có lỗi xảy ra khi xóa bảng lương");
+                        }
+                    }
+                });
+            }
+        });
+
+        // Confirm payroll
+        $(".confirm-payroll").click(function() {
+            var id = $(this).data('id');
+            if (confirm('Bạn có chắc chắn muốn xác nhận bảng lương này?')) {
+                $.ajax({
+                    url: "{% url 'confirm_payroll' %}",
+                    type: "POST",
+                    data: {
+                        id: id,
+                        csrfmiddlewaretoken: "{{ csrf_token }}"
+                    },
+                    success: function(response) {
+                        if (response.status == "success") {
+                            location.reload();
+                        } else {
+                            alert("Có lỗi xảy ra khi xác nhận bảng lương");
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+{% endblock custom_js %} 

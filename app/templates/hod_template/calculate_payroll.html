@@ -1,0 +1,218 @@
+{% extends 'hod_template/base_template.html' %}
+{% block page_title %}
+Tính Lương
+{% endblock page_title %}
+{% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Tính Lương</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Nhân viên</label>
+                                    <select class="form-control" id="employee">
+                                        {% for employee in employees %}
+                                        <option value="{{ employee.id }}">{{ employee.name }} ({{ employee.employee_code }})</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Tháng</label>
+                                    <select class="form-control" id="month">
+                                        {% for i in "123456789101112"|make_list %}
+                                        <option value="{{ i }}">{{ i }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Năm</label>
+                                    <select class="form-control" id="year">
+                                        {% for year in years %}
+                                        <option value="{{ year }}">{{ year }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button class="btn btn-primary btn-block" id="calculate">Tính Lương</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Bảng Tính Lương</h3>
+                    </div>
+                    <div class="card-body">
+                        <form role="form" action="{% url 'save_payroll' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="employee_id" id="hidden_employee_id">
+                            <input type="hidden" name="month" id="hidden_month">
+                            <input type="hidden" name="year" id="hidden_year">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Lương cơ bản</label>
+                                        <input type="text" name="base_salary" class="form-control base-salary" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Hệ số lương</label>
+                                        <input type="text" name="salary_coefficient" class="form-control salary-coefficient" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Lương theo giờ</label>
+                                        <input type="number" name="hourly_rate" class="form-control hourly-rate" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Tổng số giờ làm việc</label>
+                                        <input type="text" name="total_working_hours" class="form-control total-hours" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Thưởng</label>
+                                        <input type="text" name="bonus" class="form-control bonus" value="0" min="0">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Phạt</label>
+                                        <input type="number" name="penalty" class="form-control penalty" value="0" min="0">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Tổng lương</label>
+                                        <input type="text" name="total_salary" class="form-control total-salary" readonly>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Ghi chú</label>
+                                        <input type="text" name="notes" class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary">Lưu Bảng Lương</button>
+                                <a href="{% url 'manage_payroll' %}" class="btn btn-secondary">Trở Về</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}
+{% block custom_js %}
+<script>
+    $(document).ready(function() {
+        // Lấy danh sách năm từ năm hiện tại trở về trước 5 năm
+        var currentYear = new Date().getFullYear();
+        var years = [];
+        for(var i = currentYear; i >= currentYear - 5; i--) {
+            years.push(i);
+        }
+        $("#year").html(years.map(year => `<option value="${year}">${year}</option>`).join(''));
+
+        // Tự động tính lại tổng lương khi thay đổi thưởng/phạt
+        $(".bonus, .penalty").change(function() {
+            var hourlyRate = parseFloat($(".hourly-rate").val().replace(/[^\d.-]/g, '')) || 0;
+            var totalHours = parseFloat($(".total-hours").val()) || 0;
+            var bonus = parseFloat($(".bonus").val()) || 0;
+            var penalty = parseFloat($(".penalty").val()) || 0;
+
+            var totalSalary = Math.round((hourlyRate * totalHours) + bonus - penalty);
+            $(".total-salary").val(totalSalary);
+        });
+
+        // Xử lý khi bấm nút Tính Lương
+        $("#calculate").click(function() {
+            var employeeId = $("#employee").val();
+            var month = $("#month").val();
+            var year = $("#year").val();
+            $("#hidden_employee_id").val(employeeId);
+            $("#hidden_month").val(month);
+            $("#hidden_year").val(year);
+
+            // Gọi API để lấy dữ liệu
+            $.ajax({
+                url: "{% url 'get_payroll_data' %}",
+                type: "POST",
+                data: {
+                    employee_id: employeeId,
+                    month: month,
+                    year: year,
+                    csrfmiddlewaretoken: "{{ csrf_token }}"
+                },
+                success: function(response) {
+                    if(response.status == "success") {
+                        // Cập nhật dữ liệu
+                        $(".base-salary").val(response.data.base_salary);
+                        $(".salary-coefficient").val(response.data.salary_coefficient);
+                        $(".hourly-rate").val(response.data.hourly_rate);
+                        $(".total-hours").val(response.data.total_working_hours);
+                        $(".bonus").val(response.data.bonus);
+                        $(".penalty").val(response.data.penalty);
+                        $(".total-salary").val(response.data.total_salary);
+                        $("input[name='notes']").val(response.data.notes);
+                    } else {
+                        alert(response.message || "Có lỗi xảy ra khi tính lương");
+                    }
+                }
+            });
+        });
+
+        // Xử lý khi form được submit
+        $("form").submit(function(e) {
+            e.preventDefault();
+            
+            // Lấy giá trị từ các trường input
+            var baseSalary = parseFloat($(".base-salary").val().replace(/[^\d.-]/g, '')) || 0;
+            var hourlyRate = parseFloat($(".hourly-rate").val().replace(/[^\d.-]/g, '')) || 0;
+            var totalHours = parseFloat($(".total-hours").val()) || 0;
+            var bonus = parseFloat($(".bonus").val()) || 0;
+            var penalty = parseFloat($(".penalty").val()) || 0;
+            var totalSalary = Math.round((hourlyRate * totalHours) + bonus - penalty);
+
+            // Cập nhật giá trị trước khi submit
+            $("input[name='base_salary']").val(baseSalary);
+            $("input[name='hourly_rate']").val(hourlyRate);
+            $("input[name='total_salary']").val(totalSalary);
+
+            // Submit form
+            this.submit();
+        });
+    });
+</script>
+{% endblock custom_js %} 

@@ -1,0 +1,66 @@
+{% extends 'hod_template/base_template.html' %}
+{% block page_title %}
+Chấm công
+{% endblock page_title %}
+{% load static %}
+{% block main_content %}
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Thêm bảng chấm công mới</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <form method="POST" action="{% url 'attendance:add_attendance' %}">
+            {% csrf_token %}
+            <div class="form-group">
+              <label for="attendance_date">Ngày chấm công</label>
+              <input type="date" name="attendance_date" id="attendance_date" class="form-control" value="{{ today }}" required>
+            </div>
+
+            <table id="attendance_table" class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>Mã nhân viên</th>
+                  <th>Tên nhân viên</th>
+                  <th>Trạng thái</th>
+                  <th>Số giờ công</th>
+                  <th>Ghi chú</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for employee in employees %}
+                <tr>
+                  <td>{{ employee.employee_id }}</td>
+                  <td>{{ employee.name }}</td>
+                  <td>
+                    <select name="status_{{ employee.id }}" class="form-control">
+                      <option value="Có làm việc">Có làm việc</option>
+                      <option value="Nghỉ phép">Nghỉ phép</option>
+                      <option value="Nghỉ không phép">Nghỉ không phép</option>
+                    </select>
+                  </td>
+                  <td>
+                    <input type="number" name="working_hours_{{ employee.id }}" class="form-control" value="8" step="0.5">
+                  </td>
+                  <td>
+                    <input type="text" name="notes_{{ employee.id }}" class="form-control">
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            <button type="submit" class="btn btn-primary">Lưu</button>
+          </form>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+</section>
+<!-- /.content -->
+{% endblock main_content %}

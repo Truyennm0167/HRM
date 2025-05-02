@@ -1,0 +1,176 @@
+{% extends 'hod_template/base_template.html' %}
+{% block page_title %}
+Quản Lý Bảng Chấm Công
+{% endblock page_title %}
+{% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Quản Lý Bảng Chấm Công</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Từ Ngày</label>
+                                    <input type="date" class="form-control" id="from_date">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Đến Ngày</label>
+                                    <input type="date" class="form-control" id="to_date">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label>Phòng Ban</label>
+                                    <select class="form-control" id="department">
+                                        <option value="">Tất cả</option>
+                                        {% for dept in departments %}
+                                        <option value="{{ dept.id }}">{{ dept.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-primary" id="filter">Lọc</button>
+                                <a href="{% url 'add_attendance' %}" class="btn btn-success">Thêm Bảng Chấm Công</a>
+                                <button class="btn btn-info" id="export">Xuất Excel</button>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-12">
+                                <table class="table table-bordered table-striped" id="attendance_table">
+                                    <thead>
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Ngày Chấm Công</th>
+                                            <th>Mã Nhân Viên</th>
+                                            <th>Tên Nhân Viên</th>
+                                            <th>Phòng Ban</th>
+                                            <th>Trạng Thái</th>
+                                            <th>Số Giờ Công</th>
+                                            <th>Ghi Chú</th>
+                                            <th>Thao Tác</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for attendance in attendances %}
+                                        <tr>
+                                            <td>{{ forloop.counter }}</td>
+                                            <td>{{ attendance.date|date:"d/m/Y" }}</td>
+                                            <td>{{ attendance.employee.employee_code }}</td>
+                                            <td>{{ attendance.employee.name }}</td>
+                                            <td>{{ attendance.employee.department.name }}</td>
+                                            <td>
+                                                {% if attendance.status == "Có làm việc" %}
+                                                <button class="btn btn-primary btn-sm">{{ attendance.status }}</button>
+                                                {% elif attendance.status == "Nghỉ phép" %}
+                                                <button class="btn btn-warning btn-sm">{{ attendance.status }}</button>
+                                                {% else %}
+                                                <button class="btn btn-danger btn-sm">{{ attendance.status }}</button>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ attendance.working_hours }}</td>
+                                            <td>{{ attendance.notes }}</td>
+                                            <td>
+                                                <a href="{% url 'edit_attendance' attendance.id %}" class="btn btn-primary btn-sm">Cập nhật</a>
+                                                <button class="btn btn-danger btn-sm delete-attendance" data-id="{{ attendance.id }}">Xóa</button>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}
+{% block custom_js %}
+<script>
+    $(document).ready(function() {
+        // Initialize DataTable
+        var table = $('#attendance_table').DataTable({
+            "pageLength": 10,
+            "order": [[1, "desc"]],
+            "language": {
+                "search": "Tìm kiếm:",
+                "lengthMenu": "Hiển thị _MENU_ bản ghi",
+                "info": "Hiển thị _START_ đến _END_ của _TOTAL_ bản ghi",
+                "infoEmpty": "Không có bản ghi nào",
+                "infoFiltered": "(được lọc từ _MAX_ bản ghi)",
+                "zeroRecords": "Không tìm thấy bản ghi nào",
+                "paginate": {
+                    "first": "Đầu",
+                    "last": "Cuối",
+                    "next": "Tiếp",
+                    "previous": "Trước"
+                }
+            }
+        });
+
+        // Filter function
+        $("#filter").click(function() {
+            var fromDate = $("#from_date").val();
+            var toDate = $("#to_date").val();
+            var department = $("#department").val();
+
+            // Clear existing filters
+            table.search('').columns().search('');
+
+            // Apply date filters
+            if (fromDate && toDate) {
+                table.column(1).search(fromDate + "|" + toDate, true, false);
+            } else if (fromDate) {
+                table.column(1).search(fromDate, true, false);
+            } else if (toDate) {
+                table.column(1).search(toDate, true, false);
+            }
+
+            // Apply department filter
+            if (department) {
+                table.column(4).search(department);
+            }
+
+            table.draw();
+        });
+
+        // Export to Excel
+        $("#export").click(function() {
+            window.location.href = "{% url 'export_attendance' %}";
+        });
+
+        // Delete attendance
+        $(".delete-attendance").click(function() {
+            var id = $(this).data('id');
+            if (confirm('Bạn có chắc chắn muốn xóa bảng chấm công này?')) {
+                $.ajax({
+                    url: "{% url 'delete_attendance' %}",
+                    type: "POST",
+                    data: {
+                        id: id,
+                        csrfmiddlewaretoken: "{{ csrf_token }}"
+                    },
+                    success: function(response) {
+                        if (response.status == "success") {
+                            location.reload();
+                        } else {
+                            alert("Có lỗi xảy ra khi xóa bảng chấm công");
+                        }
+                    }
+                });
+            }
+        });
+    });
+</script>
+{% endblock custom_js %} 

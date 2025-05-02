@@ -1,0 +1,195 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Hồ sơ nhân viên
+{% endblock page_title %}
+
+{% load static %}
+{% block main_content %}
+<!-- Main content -->
+  <section class="content">
+    <div class="container-fluid">
+      <div class="row">
+        {% if employee %}
+          <div class="col-md-4">
+
+            <!-- Profile Image -->
+            <div class="card card-primary card-outline">
+              <div class="card-body box-profile">
+                <div class="text-center">
+                  {% if employee.avatar %}
+                    <img src="{{ employee.avatar.url }}" class="profile-user-img img-fluid img-circle" alt="Ảnh đại diện">
+                  {% else %}
+                    <img src="{% static 'img/default-profile.png' %}" class="profile-user-img img-fluid img-circle" alt="Không có ảnh">
+                  {% endif %}
+                </div>
+
+                <h3 class="profile-username text-center">{{ employee.name }}</h3>
+
+                <p class="text-muted text-center">{{ employee.job_position }}</p>
+
+                <ul class="list-group list-group-unbordered mb-3">
+                  <li class="list-group-item">
+                    <b>Số điện thoại </b> <a class="float-right">{{ employee.phone }}</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Email</b> <a class="float-right">{{ employee.email }}</a>
+                  </li>
+                  <li class="list-group-item">
+                    <b>Địa chỉ liên lạc</b> <a class="float-right">{{ employee.address }}</a>
+                  </li>
+                </ul>
+
+                <div class="d-flex justify-content-between">
+                  <a href="{% url 'update_employee' employee.id %}" class="btn btn-warning flex-fill mr-1">
+                    <i class="fas fa-edit"></i> Cập nhật
+                  </a>
+                  <form action="{% url 'delete_employee' employee.id %}" method="post" class="flex-fill ml-1">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger w-100">
+                      <i class="fas fa-trash-alt"></i> Xóa
+                    </button>
+                  </form>
+                </div>
+
+                <a href="{% url 'employee_list' %}" class="btn btn-secondary btn-block mt-3">
+                  <i class="fas fa-arrow-left"></i> Quay lại danh sách
+                </a>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                  <li class="nav-item"><a class="nav-link active" href="#work_info" data-toggle="tab">Thông tin làm việc</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#personal_info" data-toggle="tab">Thông tin cá nhân</a></li>
+                  <li class="nav-item"><a class="nav-link" href="#education_certifcates" data-toggle="tab">Học vấn, Chứng chỉ</a></li>
+                </ul>
+              </div><!-- /.card-header -->
+              <div class="card-body">
+                <div class="tab-content">
+                  <div class="active tab-pane" id="work_info">
+                    <table class="table table-bordered">
+                      <tr>
+                        <th>Phòng ban:</th>
+                        <td>{{ employee.department.name }}</td>
+                      </tr>
+                      <tr>
+                        <th>Vị trí làm việc:</th>
+                        <td>{{ employee.job_position }}</td>
+                      </tr>
+                      <tr>
+                        <th>Chức vụ:</th>
+                        <td>{{ employee.job_title }}</td>
+                      </tr>
+                      <tr>
+                        <th>Lương cơ bản:</th>
+                        <td>{{ employee.salary }}</td>
+                      </tr>
+                      <tr>
+                        <th>Ngày bắt đầu hợp đồng:</th>
+                        <td>{{ employee.contract_start_date|date:"d/m/Y" }}</td>
+                      </tr>
+                      <tr>
+                        <th>Thời lượng hợp đồng (tháng):</th>
+                        <td>{{ employee.contract_duration }}</td>
+                      </tr>
+                      <tr>
+                        <th>Trạng thái:</th>
+                        <td>{{ employee.get_status_display }}</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <!-- /.tab-pane -->
+
+                  <div class="tab-pane" id="personal_info">
+                    <table class="table table-bordered">
+                      <tr>
+                        <th>Giới tính:</th>
+                        <td>{{ employee.get_gender_display }}</td>
+                      </tr>
+                      <tr>
+                        <th>Ngày sinh:</th>
+                        <td>{{ employee.birthday|date:"d/m/Y" }}</td>
+                      </tr>
+                      <tr>
+                        <th>Nơi sinh:</th>
+                        <td>{{ employee.place_of_birth }}</td>
+                      </tr>
+                      <tr>
+                        <th>Nguyên quán:</th>
+                        <td>{{ employee.place_of_origin }}</td>
+                      </tr>
+                      <tr>
+                        <th>Nơi thường trú:</th>
+                        <td>{{ employee.place_of_residence }}</td>
+                      </tr>
+                      <tr>
+                        <th>Căn cước công dân:</th>
+                        <td>{{ employee.identification }}</td>
+                      </tr>
+                      <tr>
+                        <th>Ngày cấp:</th>
+                        <td>{{ employee.date_of_issue|date:"d/m/Y" }}</td>
+                      </tr>
+                      <tr>
+                        <th>Nơi cấp:</th>
+                        <td>{{ employee.place_of_issue }}</td>
+                      </tr>
+                      <tr>
+                        <th>Quốc tịch:</th>
+                        <td>{{ employee.nationality }}</td>
+                      </tr>
+                      <tr>
+                        <th>Tôn giáo:</th>
+                        <td>{{ employee.nation }}</td>
+                      </tr>
+                      <tr>
+                        <th>Tình trạng hôn nhân:</th>
+                        <td>{{ employee.get_marital_status_display }}</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <!-- /.tab-pane -->
+
+                  <div class="tab-pane" id="education_certifcates">
+                    <table class="table table-bordered">
+                      <tr>
+                        <th>Trình độ:</th>
+                        <td>{{ employee.get_education_level_display }}</td>
+                      </tr>
+                      <tr>
+                        <th>Ngành/Lĩnh vực:</th>
+                        <td>{{ employee.major }}</td>
+                      </tr>
+                      <tr>
+                        <th>Trường:</th>
+                        <td>{{ employee.school }}</td>
+                      </tr>
+                      <tr>
+                        <th>Chứng chỉ</th>
+                        <td>{{ employee.certificate }}</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <!-- /.tab-pane -->
+                </div>
+                <!-- /.tab-content -->
+              </div><!-- /.card-body -->
+            </div>
+            <!-- /.nav-tabs-custom -->
+          </div>
+          <!-- /.col -->
+        {% else %}
+          <div class="alert alert-danger">Không tìm thấy thông tin nhân viên.</div>
+        {% endif %}
+      </div>
+      <!-- /.row -->
+    </div><!-- /.container-fluid -->
+  </section>
+  <!-- /.content -->
+{% endblock %}

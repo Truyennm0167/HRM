@@ -1,0 +1,131 @@
+{% extends 'hod_template/base_template.html'%}
+{% load humanize %}
+{% block page_title %}
+Trang chủ
+{% endblock page_title %}
+{% load static %}
+{% block main_content %}
+<!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>{{ employees.count }}</h3>
+
+                <p>Nhân viên</p>
+              </div>
+              <a href="\add_employee">
+                <div class="icon">
+                  <i class="ion ion-person-add"></i>
+                </div>
+              </a>
+              <a href="{% url 'employee_list' %}" class="small-box-footer">Chi tiết<i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>{{ departments.count }}</h3>
+
+                <p>Phòng ban</p>
+              </div>
+              <a href="{% url 'department_page' %}">
+                <div class="icon">
+                  <i class="ion ion-briefcase"></i>
+                </div>
+              </a>
+              <a href="{% url 'department_page' %}" class="small-box-footer">Chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>80,241,304{{ total_salary|floatformat:0|intcomma }} đ</h3>
+
+                <p>Tổng lương</p>
+              </div>
+              <a href="{% url 'manage_payroll' %}">
+                <div class="icon">
+                  <i class="ion ion-cash"></i>
+                </div>
+              </a>
+              <a href="{% url 'manage_payroll' %}" class="small-box-footer">Chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-danger">
+              <div class="inner">
+                <h3>4</h3>
+
+                <p>Nhân viên đang làm việc</p>
+              </div>
+              <div class="icon">
+                <i class="ion ion-pie-graph"></i>
+              </div>
+              <a href="#" class="small-box-footer">Chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+          </div>
+          <!-- ./col -->
+        </div>
+        <!-- /.row -->
+         
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Danh sách Nhân viên</h3>
+              </div>
+              <div class="card-body">
+                <table id="employeeTable" class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>STT</th>
+                      <th>Họ tên</th>
+                      <th>Giới tính</th>
+                      <th>Ngày sinh</th>
+                      <th>Vị trí làm việc</th>
+                      <th>Phòng ban</th>
+                      <th>Ngày vào làm</th>
+                      <th>Hành động</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for emp in employees %}
+                      <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ emp.name }}</td>
+                        <td>{{ emp.get_gender_display }}</td>
+                        <td>{{ emp.birthday|date:"d/m/Y" }}</td>
+                        <td>{{ emp.job_position }}</td>
+                        <td>{{ emp.department.name }}</td>
+                        <td>{{ emp.contract_start_date|date:"d/m/Y" }}</td>
+                        <td>
+                          <a href="{% url 'employee_detail' emp.id %}" class="btn btn-info btn-sm">
+                            <i class="fas fa-eye"></i> Xem
+                          </a>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- /.row -->
+
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+
+{% endblock main_content %}

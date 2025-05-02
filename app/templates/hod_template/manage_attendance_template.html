@@ -1,0 +1,54 @@
+{% extends 'hod_template/base_template.html' %}
+{% block page_title %}
+Quản lý bảng chấm công
+{% endblock page_title %}
+{% load static %}
+{% block main_content %}
+<!-- Main content -->
+<section class="content">
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-primary">
+        <div class="card-header">
+          <h3 class="card-title">Quản lý bảng chấm công</h3>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body">
+          <table id="attendance_table" class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Ngày</th>
+                <th>Mã nhân viên</th>
+                <th>Tên nhân viên</th>
+                <th>Trạng thái</th>
+                <th>Số giờ công</th>
+                <th>Ghi chú</th>
+                <th>Hành động</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for attendance in attendances %}
+              <tr>
+                <td>{{ attendance.date|date:"d/m/Y" }}</td>
+                <td>{{ attendance.employee.employee_id }}</td>
+                <td>{{ attendance.employee.name }}</td>
+                <td>{{ attendance.status }}</td>
+                <td>{{ attendance.working_hours }}</td>
+                <td>{{ attendance.notes }}</td>
+                <td>
+                  <a href="{% url 'attendance:update_attendance' attendance.id %}" class="btn btn-warning btn-sm">Cập nhật</a>
+                  <a href="{% url 'attendance:delete_attendance' attendance.id %}" class="btn btn-danger btn-sm">Xóa</a>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+      <!-- /.card -->
+    </div>
+  </div>
+</section>
+<!-- /.content -->
+{% endblock main_content %}

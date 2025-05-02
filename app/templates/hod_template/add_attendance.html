@@ -1,0 +1,160 @@
+{% extends 'hod_template/base_template.html' %}
+{% block page_title %}
+{% if edit_mode %}Cập Nhật{% else %}Thêm{% endif %} Bảng Chấm Công
+{% endblock page_title %}
+{% block main_content %}
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">{% if edit_mode %}Cập Nhật{% else %}Thêm{% endif %} Bảng Chấm Công</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label>Ngày Chấm Công</label>
+                            <input type="date" class="form-control" name="attendance_date" id="attendance_date" value="{{ attendance_date }}" required>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Bảng Chấm Công</h3>
+                    </div>
+                    <div class="card-body">
+                        <form role="form" action="{% url 'add_attendance_save' %}" method="post">
+                            {% csrf_token %}
+                            <input type="hidden" name="attendance_date" id="hidden_attendance_date" value="{{ attendance_date }}">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Mã Nhân Viên</th>
+                                        <th>Tên Nhân Viên</th>
+                                        <th>Trạng Thái</th>
+                                        <th>Số Giờ Công</th>
+                                        <th>Ghi Chú</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="attendance_table_body">
+                                    {% for employee in employees %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>{{ employee.employee_code }}</td>
+                                        <td>{{ employee.name }}</td>
+                                        <td>
+                                            <select name="status_{{ employee.id }}" class="form-control status-select" data-employee-id="{{ employee.id }}">
+                                                <option value="Có làm việc">Có làm việc</option>
+                                                <option value="Nghỉ phép">Nghỉ phép</option>
+                                                <option value="Nghỉ không phép">Nghỉ không phép</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="working_hours_{{ employee.id }}" class="form-control working-hours" value="8" min="0" max="24" step="0.5">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="notes_{{ employee.id }}" class="form-control">
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-primary" id="save_button">{% if edit_mode %}Cập Nhật{% else %}Lưu{% endif %} Bảng Chấm Công</button>
+                                <a href="{% url 'manage_attendance' %}" class="btn btn-secondary">Trở Về</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}
+{% block custom_js %}
+<script>
+    $(document).ready(function() {
+        // Xử lý khi thay đổi ngày
+        $("#attendance_date").change(function() {
+            var date = $(this).val();
+            if(date) {
+                $("#hidden_attendance_date").val(date);
+                checkAttendanceDate(date);
+            }
+        });
+
+        // Xử lý khi thay đổi trạng thái
+        $(".status-select").change(function() {
+            var status = $(this).val();
+            var employeeId = $(this).data('employee-id');
+            var workingHoursInput = $("input[name='working_hours_" + employeeId + "']");
+            
+            if(status === "Có làm việc") {
+                workingHoursInput.val(8);
+            } else {
+                workingHoursInput.val(0);
+            }
+        });
+
+        // Kiểm tra ngày chấm công
+        function checkAttendanceDate(date) {
+            $.ajax({
+                url: "{% url 'check_attendance_date' %}",
+                type: "POST",
+                data: {
+                    date: date,
+                    csrfmiddlewaretoken: "{{ csrf_token }}"
+                },
+                success: function(response) {
+                    if(response.status == "exists") {
+                        $("#save_button").text("Cập Nhật Bảng Chấm Công");
+                        loadAttendanceData(date);
+                    } else {
+                        $("#save_button").text("Lưu Bảng Chấm Công");
+                        resetForm();
+                    }
+                }
+            });
+        }
+
+        // Load dữ liệu chấm công
+        function loadAttendanceData(date) {
+            $.ajax({
+                url: "{% url 'get_attendance_data' %}",
+                type: "POST",
+                data: {
+                    date: date,
+                    csrfmiddlewaretoken: "{{ csrf_token }}"
+                },
+                success: function(response) {
+                    response.data.forEach(function(item) {
+                        $("select[name='status_" + item.employee_id + "']").val(item.status);
+                        $("input[name='working_hours_" + item.employee_id + "']").val(item.working_hours);
+                        $("input[name='notes_" + item.employee_id + "']").val(item.notes);
+                    });
+                }
+            });
+        }
+
+        // Reset form về giá trị mặc định
+        function resetForm() {
+            $(".status-select").val("Có làm việc");
+            $(".working-hours").val(8);
+            $("input[type='text']").val("");
+        }
+
+        // Nếu đang ở chế độ cập nhật, tự động kiểm tra ngày
+        {% if edit_mode %}
+        var date = $("#attendance_date").val();
+        if(date) {
+            checkAttendanceDate(date);
+        }
+        {% endif %}
+    });
+</script>
+{% endblock custom_js %} 
