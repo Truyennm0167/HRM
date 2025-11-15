@@ -118,74 +118,43 @@ class ContractForm(forms.ModelForm):
     class Meta:
         model = Contract
         fields = [
-            'contract_number', 'employee', 'contract_type', 'start_date', 'end_date',
-            'signed_date', 'salary', 'salary_coefficient', 'allowances', 'job_title',
-            'job_description', 'workplace', 'working_hours', 'terms', 'benefits',
-            'insurance_info', 'notes', 'contract_file', 'status'
+            'employee', 'contract_type', 'start_date', 'end_date', 'signed_date',
+            'base_salary', 'job_title', 'department', 'work_location', 
+            'working_hours', 'terms', 'notes', 'attachment', 'status'
         ]
         widgets = {
-            'contract_number': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Ví dụ: HD001/2025'
-            }),
             'employee': forms.Select(attrs={'class': 'form-control select2'}),
             'contract_type': forms.Select(attrs={'class': 'form-control'}),
             'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
             'signed_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
-            'salary': forms.NumberInput(attrs={
+            'base_salary': forms.NumberInput(attrs={
                 'class': 'form-control',
                 'min': 0,
                 'step': '100000',
-                'placeholder': 'Nhập mức lương (VNĐ)'
-            }),
-            'salary_coefficient': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'min': 0,
-                'step': '0.1',
-                'value': 1.0
-            }),
-            'allowances': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'min': 0,
-                'step': '100000',
-                'value': 0
+                'placeholder': 'Nhập mức lương cơ bản (VNĐ)'
             }),
             'job_title': forms.Select(attrs={'class': 'form-control'}),
-            'job_description': forms.Textarea(attrs={
-                'class': 'form-control',
-                'rows': 3,
-                'placeholder': 'Mô tả công việc...'
-            }),
-            'workplace': forms.TextInput(attrs={
+            'department': forms.Select(attrs={'class': 'form-control'}),
+            'work_location': forms.TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Địa điểm làm việc'
             }),
             'working_hours': forms.TextInput(attrs={
                 'class': 'form-control',
-                'value': '8 giờ/ngày, 5 ngày/tuần'
+                'placeholder': 'Ví dụ: 8:00-17:00'
             }),
             'terms': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 5,
                 'placeholder': 'Các điều khoản hợp đồng...'
             }),
-            'benefits': forms.Textarea(attrs={
-                'class': 'form-control',
-                'rows': 3,
-                'placeholder': 'Các quyền lợi...'
-            }),
-            'insurance_info': forms.Textarea(attrs={
-                'class': 'form-control',
-                'rows': 3,
-                'placeholder': 'Thông tin bảo hiểm...'
-            }),
             'notes': forms.Textarea(attrs={
                 'class': 'form-control',
                 'rows': 2,
                 'placeholder': 'Ghi chú...'
             }),
-            'contract_file': forms.FileInput(attrs={
+            'attachment': forms.FileInput(attrs={
                 'class': 'form-control-file',
                 'accept': '.pdf,.doc,.docx'
             }),
@@ -216,22 +185,11 @@ class ContractForm(forms.ModelForm):
         
         return cleaned_data
     
-    def clean_salary(self):
-        salary = self.cleaned_data.get('salary')
+    def clean_base_salary(self):
+        salary = self.cleaned_data.get('base_salary')
         if salary and salary <= 0:
             raise forms.ValidationError("Mức lương phải lớn hơn 0")
         return salary
-    
-    def clean_contract_number(self):
-        contract_number = self.cleaned_data.get('contract_number')
-        # Check uniqueness only for new contracts
-        if self.instance.pk is None:  # New contract
-            if Contract.objects.filter(contract_number=contract_number).exists():
-                raise forms.ValidationError("Số hợp đồng này đã tồn tại")
-        else:  # Editing existing contract
-            if Contract.objects.filter(contract_number=contract_number).exclude(pk=self.instance.pk).exists():
-                raise forms.ValidationError("Số hợp đồng này đã tồn tại")
-        return contract_number
 
 
 # ============= Recruitment Forms =============

@@ -1,4 +1,5 @@
 {% extends 'hod_template/base_template.html' %}
+{% load permission_tags %}
 
 {% block page_title %}
 Chi Tiết Chi Phí
@@ -108,14 +109,14 @@ Chi Tiết Chi Phí
                         <a href="{% url 'manage_expenses' %}" class="btn btn-default">
                             <i class="fas fa-arrow-left"></i> Quay Lại
                         </a>
-                        {% if expense.status == 'pending' %}
+                        {% if expense.status == 'pending' and request.user|user_in_groups:'HR,Manager' %}
                             <button type="button" class="btn btn-success" onclick="approveExpense()">
                                 <i class="fas fa-check"></i> Duyệt
                             </button>
                             <button type="button" class="btn btn-danger" onclick="rejectExpense()">
                                 <i class="fas fa-times"></i> Từ Chối
                             </button>
-                        {% elif expense.status == 'approved' %}
+                        {% elif expense.status == 'approved' and request.user|user_in_group:'HR' %}
                             <button type="button" class="btn btn-primary" onclick="markAsPaid()">
                                 <i class="fas fa-dollar-sign"></i> Đánh Dấu Đã Thanh Toán
                             </button>

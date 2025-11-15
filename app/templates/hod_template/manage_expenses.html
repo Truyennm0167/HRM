@@ -1,4 +1,5 @@
 {% extends 'hod_template/base_template.html' %}
+{% load permission_tags %}
 
 {% block page_title %}
 Quản Lý Chi Phí
@@ -204,14 +205,14 @@ Quản Lý Chi Phí
                                     <a href="{% url 'view_expense' expense.id %}" class="btn btn-info btn-xs">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    {% if expense.status == 'pending' %}
+                                    {% if expense.status == 'pending' and request.user|user_in_groups:'HR,Manager' %}
                                         <button type="button" class="btn btn-success btn-xs" onclick="approveExpense({{ expense.id }})">
                                             <i class="fas fa-check"></i>
                                         </button>
                                         <button type="button" class="btn btn-danger btn-xs" onclick="rejectExpense({{ expense.id }})">
                                             <i class="fas fa-times"></i>
                                         </button>
-                                    {% elif expense.status == 'approved' %}
+                                    {% elif expense.status == 'approved' and request.user|user_in_group:'HR' %}
                                         <button type="button" class="btn btn-primary btn-xs" onclick="markAsPaid({{ expense.id }})">
                                             <i class="fas fa-dollar-sign"></i> Thanh toán
                                         </button>

@@ -1,0 +1,68 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}Tạo mẫu quy tắc lương{% endblock page_title %}
+
+{% block content %}
+<div class="content-wrapper">
+  <section class="content pt-4">
+    <div class="container-fluid">
+      <div class="card">
+        <div class="card-header"><h3 class="card-title">Tạo mẫu quy tắc lương</h3></div>
+        <form method="POST">
+          {% csrf_token %}
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Tên mẫu <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" name="name" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox mt-4">
+                    <input type="checkbox" class="custom-control-input" id="is_active" name="is_active" checked>
+                    <label class="custom-control-label" for="is_active">Kích hoạt</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label>Mô tả</label>
+              <textarea class="form-control" name="description" rows="2"></textarea>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Áp dụng cho chức vụ</label>
+                  <select class="form-control" name="job_title_id">
+                    <option value="">-- Không chọn --</option>
+                    {% for jt in job_titles %}
+                    <option value="{{ jt.id }}">{{ jt.name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Hoặc phòng ban</label>
+                  <select class="form-control" name="department_id">
+                    <option value="">-- Không chọn --</option>
+                    {% for dept in departments %}
+                    <option value="{{ dept.id }}">{{ dept.name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Tạo mẫu</button>
+            <a href="{% url 'salary_rule_templates' %}" class="btn btn-secondary"><i class="fas fa-times"></i> Hủy</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock content %}

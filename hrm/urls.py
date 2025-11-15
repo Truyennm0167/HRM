@@ -79,13 +79,14 @@ urlpatterns = [
     path('portal/attendance/', HodViews.my_attendance, name='my_attendance'),
 
     # Contract Management URLs
-    path('contracts/', HodViews.list_contracts, name='list_contracts'),
+    path('contracts/', HodViews.manage_contracts, name='manage_contracts'),
     path('contracts/create/', HodViews.create_contract, name='create_contract'),
     path('contracts/<int:contract_id>/', HodViews.contract_detail, name='contract_detail'),
     path('contracts/<int:contract_id>/edit/', HodViews.edit_contract, name='edit_contract'),
     path('contracts/<int:contract_id>/renew/', HodViews.renew_contract, name='renew_contract'),
-    path('contracts/<int:contract_id>/terminate/', HodViews.terminate_contract, name='terminate_contract'),
     path('contracts/<int:contract_id>/delete/', HodViews.delete_contract, name='delete_contract'),
+    path('contracts/expiring/', HodViews.expiring_contracts, name='expiring_contracts'),
+    path('contracts/employee/<int:employee_id>/', HodViews.employee_contracts, name='employee_contracts'),
 
     # Public Career Pages (No login required)
     path('careers/', views.careers_list, name='careers_list'),
@@ -104,6 +105,26 @@ urlpatterns = [
     path('recruitment/applications/<int:application_id>/status/', HodViews.update_application_status, name='update_application_status'),
     path('recruitment/applications/<int:application_id>/note/', HodViews.add_application_note, name='add_application_note'),
     path('recruitment/applications/<int:application_id>/convert/', HodViews.convert_to_employee, name='convert_to_employee'),
+
+    # Org Chart URL
+    path('org-chart/', HodViews.org_chart, name='org_chart'),
+
+    # Salary Rules URLs
+    path('salary-rules/components/', HodViews.salary_components, name='salary_components'),
+    path('salary-rules/components/create/', HodViews.create_salary_component, name='create_salary_component'),
+    path('salary-rules/components/<int:component_id>/edit/', HodViews.edit_salary_component, name='edit_salary_component'),
+    path('salary-rules/components/<int:component_id>/delete/', HodViews.delete_salary_component, name='delete_salary_component'),
+    path('salary-rules/employee/<int:employee_id>/', HodViews.employee_salary_rules, name='employee_salary_rules'),
+    path('salary-rules/employee/<int:employee_id>/assign/', HodViews.assign_salary_rule, name='assign_salary_rule'),
+    path('salary-rules/rule/<int:rule_id>/delete/', HodViews.delete_salary_rule, name='delete_salary_rule'),
+    path('salary-rules/employee/<int:employee_id>/preview/', HodViews.calculate_salary_preview, name='calculate_salary_preview'),
+    path('salary-rules/bulk-assign/', HodViews.bulk_assign_salary_rules, name='bulk_assign_salary_rules'),
+    path('salary-rules/templates/', HodViews.salary_rule_templates, name='salary_rule_templates'),
+    path('salary-rules/templates/create/', HodViews.create_salary_rule_template, name='create_salary_rule_template'),
+    path('salary-rules/templates/<int:template_id>/edit/', HodViews.edit_salary_rule_template, name='edit_salary_rule_template'),
+    path('salary-rules/template-item/<int:item_id>/delete/', HodViews.delete_template_item, name='delete_template_item'),
+    path('salary-rules/template/<int:template_id>/apply/<int:employee_id>/', HodViews.apply_template_to_employee, name='apply_template_to_employee'),
+    path('salary-rules/history/', HodViews.salary_calculation_history, name='salary_calculation_history'),
 
     # AI Recruitment URLs
     path('ai/upload-resume/', ai_views.upload_resume, name='upload_resume'),

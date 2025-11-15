@@ -58,6 +58,14 @@ class Employee(models.Model):
     certificate = models.TextField(blank=True)  # nhập cách nhau bởi dấu ","
     created_at = models.DateField(auto_now_add=True)
 
+    class Meta:
+        permissions = [
+            ('view_team_employees', 'Can view team employees'),
+            ('view_employee_salary', 'Can view employee salary information'),
+            ('view_all_employees', 'Can view all employees across departments'),
+            ('manage_employee_contracts', 'Can manage employee contracts'),
+        ]
+
     def __str__(self):
         return self.name
 
@@ -219,6 +227,10 @@ class LeaveRequest(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+        permissions = [
+            ('approve_leave_request', 'Can approve leave requests'),
+            ('view_team_leave_requests', 'Can view team leave requests'),
+        ]
 
     def __str__(self):
         return f"{self.employee.name} - {self.leave_type.name} ({self.start_date} to {self.end_date})"
@@ -320,6 +332,10 @@ class Expense(models.Model):
         ordering = ['-created_at']
         verbose_name = 'Expense'
         verbose_name_plural = 'Expenses'
+        permissions = [
+            ('approve_expense', 'Can approve expense claims'),
+            ('pay_expense', 'Can pay approved expenses'),
+        ]
 
     def __str__(self):
         return f"{self.employee.name} - {self.category.name} - {self.amount:,.0f} VNĐ ({self.get_status_display()})"
@@ -331,117 +347,6 @@ class Expense(models.Model):
     def can_be_cancelled(self):
         """Cho phép hủy khi status = pending hoặc approved"""
         return self.status in ['pending', 'approved']
-
-
-class Contract(models.Model):
-    """Model quản lý hợp đồng lao động"""
-    CONTRACT_TYPE_CHOICES = [
-        ('probation', 'Hợp đồng thử việc'),
-        ('definite', 'Hợp đồng xác định thời hạn'),
-        ('indefinite', 'Hợp đồng không xác định thời hạn'),
-        ('seasonal', 'Hợp đồng theo mùa vụ'),
-        ('project', 'Hợp đồng theo dự án'),
-    ]
-    
-    STATUS_CHOICES = [
-        ('draft', 'Nháp'),
-        ('active', 'Đang hiệu lực'),
-        ('expired', 'Hết hạn'),
-        ('terminated', 'Đã chấm dứt'),
-        ('renewed', 'Đã gia hạn'),
-    ]
-    
-    # Basic Information
-    contract_number = models.CharField(max_length=50, unique=True, help_text="Số hợp đồng")
-    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='contracts')
-    contract_type = models.CharField(max_length=20, choices=CONTRACT_TYPE_CHOICES)
-    
-    # Dates
-    start_date = models.DateField(help_text="Ngày bắt đầu")
-    end_date = models.DateField(null=True, blank=True, help_text="Ngày kết thúc (null nếu vô thời hạn)")
-    signed_date = models.DateField(help_text="Ngày ký")
-    
-    # Financial
-    salary = models.FloatField(help_text="Mức lương theo hợp đồng")
-    salary_coefficient = models.FloatField(default=1.0, help_text="Hệ số lương")
-    allowances = models.FloatField(default=0, help_text="Phụ cấp")
-    
-    # Contract Details
-    job_title = models.ForeignKey(JobTitle, on_delete=models.SET_NULL, null=True)
-    job_description = models.TextField(blank=True, help_text="Mô tả công việc")
-    workplace = models.CharField(max_length=300, help_text="Địa điểm làm việc")
-    working_hours = models.CharField(max_length=100, default="8 giờ/ngày, 5 ngày/tuần", help_text="Thời gian làm việc")
-    
-    # Terms and Conditions
-    terms = models.TextField(help_text="Các điều khoản hợp đồng")
-    benefits = models.TextField(blank=True, help_text="Các quyền lợi")
-    insurance_info = models.TextField(blank=True, help_text="Thông tin bảo hiểm")
-    
-    # Status and Notes
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
-    termination_reason = models.TextField(blank=True, help_text="Lý do chấm dứt")
-    termination_date = models.DateField(null=True, blank=True, help_text="Ngày chấm dứt")
-    notes = models.TextField(blank=True, help_text="Ghi chú")
-    
-    # File Attachment
-    contract_file = models.FileField(upload_to='contracts/', blank=True, help_text="File hợp đồng scan")
-    
-    # Renewal Reference
-    renewed_from = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, 
-                                     related_name='renewals', help_text="Hợp đồng được gia hạn từ")
-    
-    # Metadata
-    created_by = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True, 
-                                   related_name='created_contracts', help_text="Người tạo")
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-    
-    class Meta:
-        ordering = ['-created_at']
-        verbose_name = 'Contract'
-        verbose_name_plural = 'Contracts'
-    
-    def __str__(self):
-        return f"{self.contract_number} - {self.employee.name} ({self.get_contract_type_display()})"
-    
-    def is_active(self):
-        """Kiểm tra hợp đồng còn hiệu lực"""
-        from django.utils import timezone
-        today = timezone.now().date()
-        
-        if self.status != 'active':
-            return False
-        
-        if self.start_date > today:
-            return False
-        
-        if self.end_date and self.end_date < today:
-            return False
-        
-        return True
-    
-    def days_until_expiration(self):
-        """Số ngày còn lại đến khi hết hạn"""
-        if not self.end_date or self.status != 'active':
-            return None
-        
-        from django.utils import timezone
-        today = timezone.now().date()
-        delta = self.end_date - today
-        return delta.days if delta.days > 0 else 0
-    
-    def is_expiring_soon(self, days=30):
-        """Kiểm tra hợp đồng sắp hết hạn (mặc định 30 ngày)"""
-        days_left = self.days_until_expiration()
-        return days_left is not None and 0 < days_left <= days
-    
-    def can_be_renewed(self):
-        """Kiểm tra có thể gia hạn hay không"""
-        return self.status == 'active' and self.contract_type in ['probation', 'definite', 'seasonal', 'project']
-    
-    def can_be_terminated(self):
-        """Kiểm tra có thể chấm dứt hay không"""
-        return self.status == 'active'
 
 
 # ============= Recruitment Models =============
@@ -684,3 +589,456 @@ class ApplicationNote(models.Model):
     
     def __str__(self):
         return f"Note by {self.author} on {self.application.application_code}"
+
+
+# ============================================================================
+# SALARY RULES ENGINE
+# ============================================================================
+
+class SalaryComponent(models.Model):
+    """
+    Các thành phần lương có thể cấu hình:
+    - Allowances (Phụ cấp): position, transport, meal, housing
+    - Bonuses (Thưởng): performance, attendance, project
+    - Deductions (Khấu trừ): insurance, tax, late, absence
+    """
+    COMPONENT_TYPES = [
+        ('allowance', 'Phụ cấp'),
+        ('bonus', 'Thưởng'),
+        ('deduction', 'Khấu trừ'),
+        ('overtime', 'Làm thêm giờ'),
+    ]
+    
+    CALCULATION_METHODS = [
+        ('fixed', 'Cố định'),
+        ('percentage', 'Phần trăm lương cơ bản'),
+        ('formula', 'Công thức tùy chỉnh'),
+        ('hourly', 'Theo giờ'),
+        ('daily', 'Theo ngày'),
+    ]
+    
+    code = models.CharField(max_length=50, unique=True, help_text="Mã thành phần (VD: PC_VITRI, TH_HIEUSUAT)")
+    name = models.CharField(max_length=100, help_text="Tên thành phần")
+    component_type = models.CharField(max_length=20, choices=COMPONENT_TYPES)
+    calculation_method = models.CharField(max_length=20, choices=CALCULATION_METHODS)
+    
+    # For fixed amount
+    default_amount = models.FloatField(default=0, help_text="Số tiền mặc định")
+    
+    # For percentage calculation
+    percentage = models.FloatField(default=0, help_text="Phần trăm (0-100)")
+    
+    # For formula calculation
+    formula = models.TextField(blank=True, help_text="Công thức Python (VD: base_salary * 0.1 + bonus)")
+    
+    # Settings
+    is_taxable = models.BooleanField(default=True, help_text="Tính thuế TNCN")
+    is_mandatory = models.BooleanField(default=False, help_text="Bắt buộc áp dụng cho tất cả")
+    is_active = models.BooleanField(default=True)
+    
+    description = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['component_type', 'name']
+    
+    def __str__(self):
+        return f"{self.get_component_type_display()} - {self.name}"
+    
+    def calculate(self, base_salary=0, **kwargs):
+        """Calculate component value based on method"""
+        if self.calculation_method == 'fixed':
+            return self.default_amount
+        elif self.calculation_method == 'percentage':
+            return base_salary * (self.percentage / 100)
+        elif self.calculation_method == 'formula':
+            if self.formula:
+                try:
+                    # Create safe evaluation context
+                    context = {
+                        'base_salary': base_salary,
+                        **kwargs
+                    }
+                    return eval(self.formula, {"__builtins__": {}}, context)
+                except:
+                    return 0
+            return 0
+        elif self.calculation_method == 'hourly':
+            hours = kwargs.get('hours', 0)
+            return self.default_amount * hours
+        elif self.calculation_method == 'daily':
+            days = kwargs.get('days', 0)
+            return self.default_amount * days
+        return 0
+
+
+class EmployeeSalaryRule(models.Model):
+    """
+    Quy tắc lương áp dụng cho từng nhân viên cụ thể.
+    Override các giá trị mặc định từ SalaryComponent.
+    """
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='salary_rules')
+    component = models.ForeignKey(SalaryComponent, on_delete=models.CASCADE)
+    
+    # Override values
+    custom_amount = models.FloatField(null=True, blank=True, help_text="Số tiền tùy chỉnh (override default)")
+    custom_percentage = models.FloatField(null=True, blank=True, help_text="Phần trăm tùy chỉnh")
+    custom_formula = models.TextField(blank=True, help_text="Công thức tùy chỉnh")
+    
+    # Effective period
+    effective_from = models.DateField(help_text="Có hiệu lực từ ngày")
+    effective_to = models.DateField(null=True, blank=True, help_text="Hết hiệu lực (null = vô thời hạn)")
+    
+    is_active = models.BooleanField(default=True)
+    notes = models.TextField(blank=True)
+    
+    created_by = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True, 
+                                   related_name='created_salary_rules')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['-effective_from']
+        unique_together = ('employee', 'component', 'effective_from')
+    
+    def __str__(self):
+        return f"{self.employee.name} - {self.component.name}"
+    
+    def get_amount(self):
+        """Get the custom amount or default from component"""
+        if self.custom_amount is not None:
+            return self.custom_amount
+        return self.component.default_amount
+    
+    def get_percentage(self):
+        """Get custom percentage or default"""
+        if self.custom_percentage is not None:
+            return self.custom_percentage
+        return self.component.percentage
+    
+    def calculate(self, base_salary=0, **kwargs):
+        """Calculate with custom values"""
+        if self.component.calculation_method == 'fixed':
+            return self.get_amount()
+        elif self.component.calculation_method == 'percentage':
+            return base_salary * (self.get_percentage() / 100)
+        elif self.component.calculation_method == 'formula':
+            formula = self.custom_formula or self.component.formula
+            if formula:
+                try:
+                    context = {'base_salary': base_salary, **kwargs}
+                    return eval(formula, {"__builtins__": {}}, context)
+                except:
+                    return 0
+            return 0
+        elif self.component.calculation_method == 'hourly':
+            hours = kwargs.get('hours', 0)
+            return self.get_amount() * hours
+        elif self.component.calculation_method == 'daily':
+            days = kwargs.get('days', 0)
+            return self.get_amount() * days
+        return 0
+
+
+class PayrollCalculationLog(models.Model):
+    """
+    Log chi tiết của việc tính lương, lưu breakdown của từng component
+    """
+    payroll = models.ForeignKey(Payroll, on_delete=models.CASCADE, related_name='calculation_logs')
+    
+    # Breakdown
+    base_salary = models.FloatField()
+    total_allowances = models.FloatField(default=0)
+    total_bonuses = models.FloatField(default=0)
+    total_deductions = models.FloatField(default=0)
+    total_overtime = models.FloatField(default=0)
+    
+    # Tax
+    taxable_income = models.FloatField(default=0)
+    personal_income_tax = models.FloatField(default=0)
+    
+    # Insurance
+    social_insurance = models.FloatField(default=0)
+    health_insurance = models.FloatField(default=0)
+    unemployment_insurance = models.FloatField(default=0)
+    
+    # Final
+    gross_salary = models.FloatField(help_text="Tổng lương trước thuế và bảo hiểm")
+    net_salary = models.FloatField(help_text="Lương thực nhận")
+    
+    calculation_details = models.JSONField(default=dict, help_text="Chi tiết từng component")
+    
+    calculated_at = models.DateTimeField(auto_now_add=True)
+    calculated_by = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
+    
+    class Meta:
+        ordering = ['-calculated_at']
+    
+    def __str__(self):
+        return f"Calculation for {self.payroll}"
+
+
+class SalaryRuleTemplate(models.Model):
+    """
+    Template cho việc gán rules mặc định theo chức vụ hoặc phòng ban
+    """
+    name = models.CharField(max_length=100, help_text="Tên template (VD: Template Giám đốc)")
+    description = models.TextField(blank=True)
+    
+    # Apply to specific job title or department
+    job_title = models.ForeignKey(JobTitle, on_delete=models.SET_NULL, null=True, blank=True)
+    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, blank=True)
+    
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['name']
+    
+    def __str__(self):
+        target = self.job_title.name if self.job_title else (self.department.name if self.department else "General")
+        return f"{self.name} ({target})"
+    
+    def apply_to_employee(self, employee, created_by=None, effective_from=None):
+        """Apply this template's rules to an employee"""
+        from datetime import date
+        if not effective_from:
+            effective_from = date.today()
+        
+        applied_count = 0
+        for item in self.template_items.filter(is_active=True):
+            # Check if rule already exists
+            existing = EmployeeSalaryRule.objects.filter(
+                employee=employee,
+                component=item.component,
+                is_active=True
+            ).first()
+            
+            if not existing:
+                EmployeeSalaryRule.objects.create(
+                    employee=employee,
+                    component=item.component,
+                    custom_amount=item.custom_amount,
+                    custom_percentage=item.custom_percentage,
+                    custom_formula=item.custom_formula,
+                    effective_from=effective_from,
+                    notes=f"Auto-applied from template: {self.name}",
+                    created_by=created_by
+                )
+                applied_count += 1
+        
+        return applied_count
+
+
+class SalaryRuleTemplateItem(models.Model):
+    """
+    Các component trong template
+    """
+    template = models.ForeignKey(SalaryRuleTemplate, on_delete=models.CASCADE, related_name='template_items')
+    component = models.ForeignKey(SalaryComponent, on_delete=models.CASCADE)
+    
+    # Override values (null = use component defaults)
+    custom_amount = models.FloatField(null=True, blank=True)
+    custom_percentage = models.FloatField(null=True, blank=True)
+    custom_formula = models.TextField(blank=True)
+    
+    is_active = models.BooleanField(default=True)
+    order = models.IntegerField(default=0, help_text="Display order")
+    
+    class Meta:
+        ordering = ['order', 'component__name']
+        unique_together = ('template', 'component')
+    
+    def __str__(self):
+        return f"{self.template.name} - {self.component.name}"
+
+
+# ============================================================================
+# CONTRACT MANAGEMENT
+# ============================================================================
+
+class Contract(models.Model):
+    """
+    Hợp đồng lao động của nhân viên
+    Một nhân viên có thể có nhiều hợp đồng (gia hạn, ký mới)
+    """
+    CONTRACT_TYPE_CHOICES = [
+        ('probation', 'Thử việc'),
+        ('fixed_term', 'Xác định thời hạn'),
+        ('indefinite', 'Không xác định thời hạn'),
+        ('seasonal', 'Thời vụ'),
+        ('part_time', 'Bán thời gian'),
+    ]
+    
+    STATUS_CHOICES = [
+        ('draft', 'Nháp'),
+        ('active', 'Đang hiệu lực'),
+        ('expired', 'Hết hạn'),
+        ('terminated', 'Chấm dứt'),
+        ('renewed', 'Đã gia hạn'),
+    ]
+    
+    # Basic Information
+    contract_code = models.CharField(max_length=20, unique=True, default='TEMP', help_text="Mã hợp đồng")
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='contracts')
+    contract_type = models.CharField(max_length=20, choices=CONTRACT_TYPE_CHOICES)
+    
+    # Dates
+    start_date = models.DateField(help_text="Ngày bắt đầu hiệu lực")
+    end_date = models.DateField(null=True, blank=True, help_text="Ngày kết thúc (null nếu không xác định thời hạn)")
+    signed_date = models.DateField(null=True, blank=True, help_text="Ngày ký")
+    
+    # Salary Information
+    base_salary = models.DecimalField(max_digits=15, decimal_places=2, default=0, help_text="Lương cơ bản")
+    allowances = models.JSONField(default=dict, blank=True, help_text="Phụ cấp dạng JSON")
+    
+    # Work Information
+    job_title = models.ForeignKey(JobTitle, on_delete=models.SET_NULL, null=True)
+    department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True)
+    work_location = models.CharField(max_length=255, blank=True)
+    working_hours = models.CharField(max_length=100, default="8:00-17:00", help_text="Giờ làm việc")
+    
+    # Status
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
+    
+    # Additional Information
+    terms = models.TextField(blank=True, help_text="Điều khoản hợp đồng")
+    notes = models.TextField(blank=True)
+    attachment = models.FileField(upload_to='contracts/', blank=True, help_text="File hợp đồng PDF")
+    
+    # Tracking
+    created_by = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True, related_name='contracts_created')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    # Renewal tracking
+    renewed_from = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, 
+                                     related_name='renewals', help_text="Hợp đồng cũ được gia hạn")
+    
+    class Meta:
+        ordering = ['-start_date']
+        indexes = [
+            models.Index(fields=['employee', 'status']),
+            models.Index(fields=['end_date']),
+            models.Index(fields=['status']),
+        ]
+    
+    def __str__(self):
+        return f"{self.contract_code} - {self.employee.name} ({self.get_contract_type_display()})"
+    
+    def is_active(self):
+        """Check if contract is currently active"""
+        from django.utils import timezone
+        today = timezone.now().date()
+        return (
+            self.status == 'active' and
+            self.start_date <= today and
+            (self.end_date is None or self.end_date >= today)
+        )
+    
+    def days_until_expiry(self):
+        """Calculate days until contract expires"""
+        if not self.end_date:
+            return None
+        from django.utils import timezone
+        today = timezone.now().date()
+        delta = self.end_date - today
+        return delta.days
+    
+    def is_expiring_soon(self, days=30):
+        """Check if contract is expiring within specified days"""
+        days_left = self.days_until_expiry()
+        if days_left is None:
+            return False
+        return 0 < days_left <= days
+    
+    def save(self, *args, **kwargs):
+        """Auto-generate contract code if not set"""
+        if not self.contract_code or self.contract_code == 'TEMP':
+            from django.utils import timezone
+            import uuid
+            date_str = timezone.now().strftime('%Y%m%d')
+            unique_str = uuid.uuid4().hex[:6].upper()
+            self.contract_code = f"HD{date_str}{unique_str}"
+        super().save(*args, **kwargs)
+
+
+class ContractHistory(models.Model):
+    """
+    Lịch sử thay đổi hợp đồng (gia hạn, điều chỉnh lương, chấm dứt)
+    """
+    ACTION_CHOICES = [
+        ('created', 'Tạo mới'),
+        ('renewed', 'Gia hạn'),
+        ('salary_adjusted', 'Điều chỉnh lương'),
+        ('terminated', 'Chấm dứt'),
+        ('status_changed', 'Thay đổi trạng thái'),
+    ]
+    
+    contract = models.ForeignKey(Contract, on_delete=models.CASCADE, related_name='history')
+    action = models.CharField(max_length=20, choices=ACTION_CHOICES)
+    description = models.TextField(help_text="Mô tả chi tiết thay đổi")
+    old_value = models.JSONField(null=True, blank=True, help_text="Giá trị cũ (nếu có)")
+    new_value = models.JSONField(null=True, blank=True, help_text="Giá trị mới")
+    
+    performed_by = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True)
+    performed_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['-performed_at']
+        verbose_name_plural = "Contract histories"
+    
+    def __str__(self):
+        return f"{self.contract.contract_code} - {self.get_action_display()} ({self.performed_at.strftime('%d/%m/%Y')})"
+
+
+class PermissionAuditLog(models.Model):
+    """
+    Audit log for permission denials and access attempts
+    Tracks security events for compliance and monitoring
+    """
+    ACTION_CHOICES = [
+        ('denied', 'Access Denied'),
+        ('granted', 'Access Granted'),
+        ('attempted', 'Access Attempted'),
+    ]
+    
+    # Who
+    user = models.ForeignKey('auth.User', on_delete=models.SET_NULL, null=True, related_name='audit_logs')
+    username = models.CharField(max_length=150, help_text="Username at time of action")
+    user_groups = models.JSONField(default=list, help_text="User's groups at time of action")
+    
+    # What
+    action = models.CharField(max_length=20, choices=ACTION_CHOICES, default='denied')
+    resource_type = models.CharField(max_length=50, help_text="Contract, LeaveRequest, Expense, Payroll, etc.")
+    resource_id = models.IntegerField(null=True, blank=True, help_text="ID of the resource accessed")
+    permission_required = models.CharField(max_length=100, help_text="Permission that was checked")
+    
+    # When & Where
+    timestamp = models.DateTimeField(auto_now_add=True)
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    user_agent = models.TextField(blank=True)
+    
+    # Why
+    reason = models.TextField(help_text="Reason for denial or additional context")
+    view_name = models.CharField(max_length=100, blank=True, help_text="Django view name")
+    url_path = models.CharField(max_length=500, blank=True)
+    
+    # Additional Context
+    extra_data = models.JSONField(default=dict, blank=True, help_text="Additional context (department, etc.)")
+    
+    class Meta:
+        ordering = ['-timestamp']
+        verbose_name = "Permission Audit Log"
+        verbose_name_plural = "Permission Audit Logs"
+        indexes = [
+            models.Index(fields=['-timestamp']),
+            models.Index(fields=['user', '-timestamp']),
+            models.Index(fields=['action', '-timestamp']),
+            models.Index(fields=['resource_type', 'resource_id']),
+        ]
+    
+    def __str__(self):
+        return f"{self.get_action_display()}: {self.username} -> {self.resource_type} ({self.timestamp.strftime('%Y-%m-%d %H:%M')})"

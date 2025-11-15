@@ -52,8 +52,8 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="#" class="nav-link {% if '/contract' in request.path %}active{% endif %}">
-                <i class="nav-icon fas fa-file-alt"></i>
+              <a href="{% url 'manage_contracts' %}" class="nav-link {% if '/contracts' in request.path %}active{% endif %}">
+                <i class="nav-icon fas fa-file-contract"></i>
                 <p>Hợp đồng</p>
               </a>
             </li>
@@ -244,8 +244,8 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="{% url 'list_contracts' %}" class="nav-link {% if '/contracts' in request.path and 'create' not in request.path %}active{% endif %}">
-                <i class="nav-icon fas fa-list"></i>
+              <a href="{% url 'manage_contracts' %}" class="nav-link {% if '/contracts' in request.path and 'create' not in request.path %}active{% endif %}">
+                <i class="nav-icon fas fa-file-alt"></i>
                 <p>Danh sách hợp đồng</p>
               </a>
             </li>
@@ -290,6 +290,51 @@
               <a href="{% url 'careers_list' %}" class="nav-link" target="_blank">
                 <i class="nav-icon fas fa-external-link-alt"></i>
                 <p>Trang công khai</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Org Chart -->
+        <li class="nav-item">
+          <a href="{% url 'org_chart' %}" class="nav-link {% if '/org-chart' in request.path %}active{% endif %}">
+            <i class="nav-icon fas fa-sitemap"></i>
+            <p>Biểu đồ tổ chức</p>
+          </a>
+        </li>
+
+        <!-- Salary Rules Engine -->
+        <li class="nav-item has-treeview {% if '/salary-rules' in request.path %}menu-open{% endif %}">
+          <a href="#" class="nav-link {% if '/salary-rules' in request.path %}active{% endif %}">
+            <i class="nav-icon fas fa-calculator"></i>
+            <p>
+              Cấu hình lương
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'salary_components' %}" class="nav-link {% if 'components' in request.path %}active{% endif %}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Thành phần lương</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'bulk_assign_salary_rules' %}" class="nav-link {% if 'bulk-assign' in request.path %}active{% endif %}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Gán hàng loạt</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'salary_rule_templates' %}" class="nav-link {% if 'templates' in request.path %}active{% endif %}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Mẫu quy tắc</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'salary_calculation_history' %}" class="nav-link {% if 'history' in request.path %}active{% endif %}">
+                <i class="far fa-circle nav-icon"></i>
+                <p>Lịch sử tính lương</p>
               </a>
             </li>
           </ul>

@@ -12,8 +12,9 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_POST
 from django.core.exceptions import ValidationError
 
-from .models import JobTitle, Department, Employee, Attendance, Reward, Discipline, Payroll, LeaveType, LeaveRequest, LeaveBalance, ExpenseCategory, Expense
-from .forms import EmployeeForm, LeaveTypeForm, LeaveRequestForm, ExpenseCategoryForm, ExpenseForm
+from .models import JobTitle, Department, Employee, Attendance, Reward, Discipline, Payroll, LeaveType, LeaveRequest, LeaveBalance, ExpenseCategory, Expense, SalaryComponent, EmployeeSalaryRule, PayrollCalculationLog, SalaryRuleTemplate, SalaryRuleTemplateItem, Contract, ContractHistory
+from .forms import EmployeeForm, LeaveTypeForm, LeaveRequestForm, ExpenseCategoryForm, ExpenseForm, ContractForm
+from .permissions import require_hr, require_hr_or_manager, can_manage_contract
 from .validators import (
     validate_image_file, 
     validate_document_file, 
@@ -27,6 +28,8 @@ from datetime import datetime, timedelta
 import json
 import xlwt
 import calendar
+import re
+import logging
 from django.db.models import Sum
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 import logging
@@ -48,13 +51,26 @@ def admin_home(request):
     return render(request, "hod_template/home_content.html", context)
 
 def generate_employee_code():
-    last_employee = Employee.objects.order_by('-id').first()
-    if last_employee and last_employee.employee_code:
-        last_code = last_employee.employee_code
-        number = int(last_code.replace("NV", ""))
-        new_number = number + 1
-    else:
+    """Generate next employee code in format NV0001, NV0002, etc."""
+    try:
+        last_employee = Employee.objects.order_by('-id').first()
+        if last_employee and last_employee.employee_code:
+            last_code = last_employee.employee_code
+            # Extract number from code (e.g., "NV0001" -> 1, "EMP001" -> 1)
+            # Try to find digits in the code
+            match = re.search(r'(\d+)$', last_code)
+            if match:
+                number = int(match.group(1))
+                new_number = number + 1
+            else:
+                # If no number found, start from 1
+                new_number = 1
+        else:
+            new_number = 1
+    except (ValueError, AttributeError) as e:
+        logger.warning(f"Error generating employee code: {e}. Starting from 1.")
         new_number = 1
+    
     return f"NV{new_number:04d}"  # định dạng NV0001, NV0002,...
 
 @login_required
@@ -99,6 +115,24 @@ def add_employee_save(request):
             employee_job_position = request.POST.get("employee_job_position")
             department_id = request.POST.get("employee_department")
             employee_salary = request.POST.get("employee_salary")
+
+            # Convert IDs to int if not empty
+            if job_title_id:
+                try:
+                    job_title_id = int(job_title_id)
+                except (ValueError, TypeError):
+                    messages.error(request, f"ID chức danh không hợp lệ: {job_title_id}")
+                    logger.error(f"Invalid job_title_id: {job_title_id}")
+                    return redirect('add_employee')
+            
+            if department_id:
+                try:
+                    department_id = int(department_id)
+                except (ValueError, TypeError):
+                    messages.error(request, f"ID phòng ban không hợp lệ: {department_id}")
+                    logger.error(f"Invalid department_id: {department_id}")
+                    return redirect('add_employee')
+
             employee_contract_start_date = request.POST.get("employee_contract_start_date")
             employee_contract_duration = request.POST.get("employee_contract_duration")
             employee_status = request.POST.get("employee_status")
@@ -813,20 +847,42 @@ def save_payroll(request):
             return redirect("calculate_payroll")
 
 @login_required
+@login_required
+@require_hr_or_manager
 def manage_payroll(request):
+    """Quản lý bảng lương (HR: all, Manager: department only with salary hidden)"""
+    # Get current user's employee record
+    try:
+        user_employee = Employee.objects.get(email=request.user.email)
+    except Employee.DoesNotExist:
+        messages.error(request, "Không tìm thấy hồ sơ nhân viên của bạn")
+        return redirect('admin_home')
+    
     # Optimize query with select_related
     payrolls = Payroll.objects.select_related('employee', 'employee__department').all().order_by('-year', '-month')
+    
+    # Row-level filtering: Managers see only their department's payrolls
+    if not request.user.groups.filter(name='HR').exists():
+        payrolls = payrolls.filter(employee__department=user_employee.department)
+    
     departments = Department.objects.all()
     current_year = datetime.now().year
     years = range(current_year, current_year - 5, -1)
+    
+    # Pass flag to template to hide salary info for non-HR
+    is_hr = request.user.groups.filter(name='HR').exists()
+    
     return render(request, "hod_template/manage_payroll.html", {
         "payrolls": payrolls,
         "departments": departments,
-        "years": years
+        "years": years,
+        "is_hr": is_hr
     })
 
 @login_required
+@require_hr
 def edit_payroll(request, payroll_id):
+    """Chỉnh sửa bảng lương (HR only)"""
     try:
         payroll = Payroll.objects.select_related('employee', 'employee__job_title').get(id=payroll_id)
         if payroll.status == 'confirmed':
@@ -852,12 +908,15 @@ def edit_payroll(request, payroll_id):
 
 @login_required
 @require_POST
+@require_hr
 def delete_payroll(request):
+    """Xóa bảng lương (HR only)"""
     payroll_id = request.POST.get("id")
     try:
         payroll = Payroll.objects.get(id=payroll_id)
         if payroll.status == 'pending':
             payroll.delete()
+            logger.info(f"Payroll {payroll_id} deleted by {request.user.username}")
             return JsonResponse({"status": "success"})
         return JsonResponse({"status": "error", "message": "Không thể xóa bảng lương đã xác nhận"})
     except Exception as e:
@@ -866,7 +925,9 @@ def delete_payroll(request):
 
 @login_required
 @require_POST
+@require_hr
 def confirm_payroll(request):
+    """Xác nhận bảng lương (HR only)"""
     payroll_id = request.POST.get("id")
     try:
         payroll = Payroll.objects.get(id=payroll_id)
@@ -879,10 +940,30 @@ def confirm_payroll(request):
         return JsonResponse({"status": "error"})
 
 @login_required
+@require_hr_or_manager
 def view_payroll(request, payroll_id):
+    """Xem chi tiết bảng lương (HR: full info, Manager: department only, no salary for Manager)"""
+    from .permissions import can_view_employee_salary
+    
     payroll = get_object_or_404(Payroll, id=payroll_id)
+    
+    # Check row-level permission for Managers
+    if not request.user.groups.filter(name='HR').exists():
+        try:
+            user_employee = Employee.objects.get(email=request.user.email)
+            if payroll.employee.department != user_employee.department:
+                messages.error(request, "Bạn không có quyền xem bảng lương này")
+                return redirect('manage_payroll')
+        except Employee.DoesNotExist:
+            messages.error(request, "Không tìm thấy hồ sơ nhân viên của bạn")
+            return redirect('manage_payroll')
+    
+    # Check if user can view salary information
+    can_view_salary = can_view_employee_salary(request.user, payroll.employee)
+    
     return render(request, "hod_template/view_payroll.html", {
-        "payroll": payroll
+        "payroll": payroll,
+        "can_view_salary": can_view_salary
     })
 
 @login_required
@@ -1069,13 +1150,28 @@ def leave_history(request):
     })
 
 @login_required
+@login_required
+@require_hr_or_manager
 def manage_leave_requests(request):
-    """HR/Manager xem tất cả đơn xin nghỉ phép"""
+    """HR/Manager xem tất cả đơn xin nghỉ phép (HR: all, Manager: department only)"""
+    from .permissions import can_approve_leave
+    
+    # Get current user's employee record
+    try:
+        user_employee = Employee.objects.get(email=request.user.email)
+    except Employee.DoesNotExist:
+        messages.error(request, "Không tìm thấy hồ sơ nhân viên của bạn")
+        return redirect('admin_home')
+    
     # Filter options
     status_filter = request.GET.get('status', '')
     employee_filter = request.GET.get('employee', '')
     
     leave_requests = LeaveRequest.objects.select_related('employee', 'leave_type', 'approved_by').all()
+    
+    # Row-level filtering: Managers see only their department's leave requests
+    if not request.user.groups.filter(name='HR').exists():
+        leave_requests = leave_requests.filter(employee__department=user_employee.department)
     
     if status_filter:
         leave_requests = leave_requests.filter(status=status_filter)
@@ -1088,23 +1184,35 @@ def manage_leave_requests(request):
     paginator = Paginator(leave_requests, 20)
     page = request.GET.get('page')
     try:
-        leave_requests = paginator.page(page)
+        leave_requests_page = paginator.page(page)
     except PageNotAnInteger:
-        leave_requests = paginator.page(1)
+        leave_requests_page = paginator.page(1)
     except EmptyPage:
-        leave_requests = paginator.page(paginator.num_pages)
+        leave_requests_page = paginator.page(paginator.num_pages)
     
-    employees = Employee.objects.all()
+    # Filter employees based on department (for managers)
+    if request.user.groups.filter(name='HR').exists():
+        employees = Employee.objects.all()
+    else:
+        employees = Employee.objects.filter(department=user_employee.department)
     
     return render(request, "hod_template/manage_leave_requests.html", {
-        "leave_requests": leave_requests,
+        "leave_requests": leave_requests_page,
         "employees": employees
     })
 
 @login_required
+@require_hr_or_manager
 def view_leave_request(request, request_id):
-    """Xem chi tiết đơn xin nghỉ phép"""
+    """Xem chi tiết đơn xin nghỉ phép (with row-level permission check)"""
+    from .permissions import can_approve_leave
+    
     leave_request = get_object_or_404(LeaveRequest, id=request_id)
+    
+    # Check row-level permission
+    if not can_approve_leave(request.user, leave_request):
+        messages.error(request, "Bạn không có quyền xem đơn xin nghỉ này")
+        return redirect('manage_leave_requests')
     
     # Get leave balance
     try:
@@ -1123,10 +1231,21 @@ def view_leave_request(request, request_id):
 
 @login_required
 @require_POST
+@login_required
+@require_POST
+@require_hr_or_manager
 def approve_leave_request(request, request_id):
-    """Duyệt đơn xin nghỉ phép"""
+    """Duyệt đơn xin nghỉ phép (HR/Manager only with row-level check)"""
+    from .permissions import can_approve_leave
+    
     try:
         leave_request = LeaveRequest.objects.get(id=request_id)
+        
+        # Check row-level permission
+        if not can_approve_leave(request.user, leave_request):
+            messages.error(request, "Bạn không có quyền duyệt đơn này")
+            logger.warning(f"Permission denied: {request.user.username} tried to approve leave request {request_id}")
+            return redirect("manage_leave_requests")
         
         if leave_request.status != 'pending':
             messages.error(request, "Đơn này đã được xử lý rồi")
@@ -1173,10 +1292,19 @@ def approve_leave_request(request, request_id):
 
 @login_required
 @require_POST
+@require_hr_or_manager
 def reject_leave_request(request, request_id):
-    """Từ chối đơn xin nghỉ phép"""
+    """Từ chối đơn xin nghỉ phép (HR/Manager only with row-level check)"""
+    from .permissions import can_approve_leave
+    
     try:
         leave_request = LeaveRequest.objects.get(id=request_id)
+        
+        # Check row-level permission
+        if not can_approve_leave(request.user, leave_request):
+            messages.error(request, "Bạn không có quyền từ chối đơn này")
+            logger.warning(f"Permission denied: {request.user.username} tried to reject leave request {request_id}")
+            return redirect("manage_leave_requests")
         
         if leave_request.status != 'pending':
             messages.error(request, "Đơn này đã được xử lý rồi")
@@ -1392,11 +1520,23 @@ def expense_history(request):
     return render(request, 'hod_template/expense_history.html', context)
 
 @login_required
+@require_hr_or_manager
 def manage_expenses(request):
-    """HR/Manager quản lý tất cả yêu cầu chi phí"""
+    """HR/Manager quản lý tất cả yêu cầu chi phí (HR: all, Manager: department only)"""
+    # Get current user's employee record
+    try:
+        user_employee = Employee.objects.get(email=request.user.email)
+    except Employee.DoesNotExist:
+        messages.error(request, "Không tìm thấy hồ sơ nhân viên của bạn")
+        return redirect('admin_home')
+    
     # Lọc theo status
     status_filter = request.GET.get('status', '')
     expenses = Expense.objects.all().order_by('-created_at')
+    
+    # Row-level filtering: Managers see only their department's expenses
+    if not request.user.groups.filter(name='HR').exists():
+        expenses = expenses.filter(employee__department=user_employee.department)
     
     if status_filter:
         expenses = expenses.filter(status=status_filter)
@@ -1423,9 +1563,9 @@ def manage_expenses(request):
     paginator = Paginator(expenses, 10)
     page = request.GET.get('page')
     try:
-        expenses = paginator.page(page)
+        expenses_page = paginator.page(page)
     except PageNotAnInteger:
-        expenses = paginator.page(1)
+        expenses_page = paginator.page(1)
     except EmptyPage:
         expenses = paginator.page(paginator.num_pages)
     
@@ -1456,10 +1596,19 @@ def manage_expenses(request):
     return render(request, 'hod_template/manage_expenses.html', context)
 
 @login_required
+@require_hr_or_manager
 def view_expense(request, expense_id):
-    """Xem chi tiết yêu cầu chi phí"""
+    """Xem chi tiết yêu cầu chi phí (with row-level permission check)"""
+    from .permissions import can_approve_expense
+    
     try:
         expense = Expense.objects.get(id=expense_id)
+        
+        # Check row-level permission
+        if not can_approve_expense(request.user, expense):
+            messages.error(request, "Bạn không có quyền xem yêu cầu chi phí này")
+            return redirect('manage_expenses')
+        
         context = {
             'expense': expense,
         }
@@ -1471,11 +1620,20 @@ def view_expense(request, expense_id):
 
 @login_required
 @require_POST
+@require_hr_or_manager
 def approve_expense(request, expense_id):
-    """Duyệt yêu cầu chi phí"""
+    """Duyệt yêu cầu chi phí (HR/Manager only with row-level check)"""
+    from .permissions import can_approve_expense
+    
     try:
         expense = Expense.objects.get(id=expense_id)
         approver = Employee.objects.get(email=request.user.email)
+        
+        # Check row-level permission
+        if not can_approve_expense(request.user, expense):
+            messages.error(request, "Bạn không có quyền duyệt yêu cầu chi phí này")
+            logger.warning(f"Permission denied: {request.user.username} tried to approve expense {expense_id}")
+            return redirect("manage_expenses")
         
         if expense.status != 'pending':
             messages.error(request, "Yêu cầu chi phí này đã được xử lý")
@@ -1501,11 +1659,20 @@ def approve_expense(request, expense_id):
 
 @login_required
 @require_POST
+@require_hr_or_manager
 def reject_expense(request, expense_id):
-    """Từ chối yêu cầu chi phí"""
+    """Từ chối yêu cầu chi phí (HR/Manager only with row-level check)"""
+    from .permissions import can_approve_expense
+    
     try:
         expense = Expense.objects.get(id=expense_id)
         rejector = Employee.objects.get(email=request.user.email)
+        
+        # Check row-level permission
+        if not can_approve_expense(request.user, expense):
+            messages.error(request, "Bạn không có quyền từ chối yêu cầu chi phí này")
+            logger.warning(f"Permission denied: {request.user.username} tried to reject expense {expense_id}")
+            return redirect("manage_expenses")
         
         if expense.status != 'pending':
             messages.error(request, "Yêu cầu chi phí này đã được xử lý")
@@ -1872,302 +2039,6 @@ def my_attendance(request):
     }
     logger.info(f"Attendance viewed by {employee.name}")
     return render(request, 'hod_template/my_attendance.html', context)
-
-
-# ================================
-# CONTRACT MANAGEMENT VIEWS
-# ================================
-
-@login_required
-def list_contracts(request):
-    """Danh sách tất cả hợp đồng với filter và search"""
-    from app.models import Contract, Department
-    from django.db.models import Q
-    from datetime import timedelta
-    
-    contracts = Contract.objects.select_related('employee', 'job_title', 'employee__department').all()
-    
-    # Filter by status
-    status_filter = request.GET.get('status')
-    if status_filter:
-        contracts = contracts.filter(status=status_filter)
-    
-    # Filter by contract type
-    type_filter = request.GET.get('contract_type')
-    if type_filter:
-        contracts = contracts.filter(contract_type=type_filter)
-    
-    # Filter by department
-    department_filter = request.GET.get('department')
-    if department_filter:
-        contracts = contracts.filter(employee__department_id=department_filter)
-    
-    # Search by employee name or contract number
-    search_query = request.GET.get('search')
-    if search_query:
-        contracts = contracts.filter(
-            Q(employee__name__icontains=search_query) |
-            Q(contract_number__icontains=search_query) |
-            Q(employee__employee_code__icontains=search_query)
-        )
-    
-    # Filter expiring soon (within 30 days)
-    expiring_filter = request.GET.get('expiring')
-    if expiring_filter == 'true':
-        today = timezone.now().date()
-        thirty_days = today + timedelta(days=30)
-        contracts = contracts.filter(
-            status='active',
-            end_date__isnull=False,
-            end_date__lte=thirty_days,
-            end_date__gte=today
-        )
-    
-    # Pagination
-    from django.core.paginator import Paginator
-    paginator = Paginator(contracts, 15)
-    page_number = request.GET.get('page')
-    contracts = paginator.get_page(page_number)
-    
-    # Statistics
-    total_contracts = Contract.objects.count()
-    active_contracts = Contract.objects.filter(status='active').count()
-    expiring_contracts = Contract.objects.filter(
-        status='active',
-        end_date__isnull=False,
-        end_date__lte=timezone.now().date() + timedelta(days=30),
-        end_date__gte=timezone.now().date()
-    ).count()
-    
-    departments = Department.objects.all()
-    
-    context = {
-        'contracts': contracts,
-        'departments': departments,
-        'total_contracts': total_contracts,
-        'active_contracts': active_contracts,
-        'expiring_contracts': expiring_contracts,
-        'status_filter': status_filter,
-        'type_filter': type_filter,
-        'department_filter': department_filter,
-        'search_query': search_query,
-        'expiring_filter': expiring_filter,
-        'CONTRACT_TYPE_CHOICES': Contract.CONTRACT_TYPE_CHOICES,
-        'STATUS_CHOICES': Contract.STATUS_CHOICES,
-    }
-    return render(request, 'hod_template/list_contracts.html', context)
-
-
-@login_required
-def contract_detail(request, contract_id):
-    """Xem chi tiết hợp đồng"""
-    from app.models import Contract
-    
-    contract = get_object_or_404(Contract, pk=contract_id)
-    
-    # Get renewal history
-    renewals = Contract.objects.filter(renewed_from=contract).order_by('-created_at')
-    
-    # Check if this contract was renewed from another
-    original_contract = contract.renewed_from
-    
-    context = {
-        'contract': contract,
-        'renewals': renewals,
-        'original_contract': original_contract,
-        'can_renew': contract.can_be_renewed(),
-        'can_terminate': contract.can_be_terminated(),
-        'is_expiring_soon': contract.is_expiring_soon(),
-        'days_until_expiration': contract.days_until_expiration(),
-    }
-    return render(request, 'hod_template/contract_detail.html', context)
-
-
-@login_required
-def create_contract(request):
-    """Tạo hợp đồng mới"""
-    from app.forms import ContractForm
-    from app.models import Employee
-    
-    if request.method == 'POST':
-        form = ContractForm(request.POST, request.FILES)
-        if form.is_valid():
-            contract = form.save(commit=False)
-            # Set created_by to current user's employee (if exists)
-            try:
-                current_employee = Employee.objects.get(email=request.user.email)
-                contract.created_by = current_employee
-            except Employee.DoesNotExist:
-                pass
-            
-            contract.save()
-            messages.success(request, f'Hợp đồng {contract.contract_number} đã được tạo thành công!')
-            logger.info(f"Contract {contract.contract_number} created for {contract.employee.name}")
-            return redirect('contract_detail', contract_id=contract.pk)
-        else:
-            messages.error(request, 'Có lỗi trong form. Vui lòng kiểm tra lại!')
-    else:
-        form = ContractForm()
-    
-    context = {
-        'form': form,
-        'title': 'Tạo hợp đồng mới',
-        'action': 'create',
-    }
-    return render(request, 'hod_template/create_edit_contract.html', context)
-
-
-@login_required
-def edit_contract(request, contract_id):
-    """Chỉnh sửa hợp đồng"""
-    from app.forms import ContractForm
-    from app.models import Contract
-    
-    contract = get_object_or_404(Contract, pk=contract_id)
-    
-    # Chỉ cho phép sửa hợp đồng draft hoặc active
-    if contract.status not in ['draft', 'active']:
-        messages.error(request, 'Không thể sửa hợp đồng đã hết hạn hoặc chấm dứt!')
-        return redirect('contract_detail', contract_id=contract.pk)
-    
-    if request.method == 'POST':
-        form = ContractForm(request.POST, request.FILES, instance=contract)
-        if form.is_valid():
-            contract = form.save()
-            messages.success(request, f'Hợp đồng {contract.contract_number} đã được cập nhật!')
-            logger.info(f"Contract {contract.contract_number} updated")
-            return redirect('contract_detail', contract_id=contract.pk)
-        else:
-            messages.error(request, 'Có lỗi trong form. Vui lòng kiểm tra lại!')
-    else:
-        form = ContractForm(instance=contract)
-    
-    context = {
-        'form': form,
-        'contract': contract,
-        'title': f'Chỉnh sửa hợp đồng {contract.contract_number}',
-        'action': 'edit',
-    }
-    return render(request, 'hod_template/create_edit_contract.html', context)
-
-
-@login_required
-def renew_contract(request, contract_id):
-    """Gia hạn hợp đồng - tạo hợp đồng mới kế tiếp"""
-    from app.forms import ContractForm
-    from app.models import Contract
-    from datetime import timedelta
-    
-    old_contract = get_object_or_404(Contract, pk=contract_id)
-    
-    if not old_contract.can_be_renewed():
-        messages.error(request, 'Hợp đồng này không thể gia hạn!')
-        return redirect('contract_detail', contract_id=contract_id)
-    
-    if request.method == 'POST':
-        form = ContractForm(request.POST, request.FILES)
-        if form.is_valid():
-            new_contract = form.save(commit=False)
-            new_contract.renewed_from = old_contract
-            
-            # Set created_by
-            try:
-                current_employee = Employee.objects.get(email=request.user.email)
-                new_contract.created_by = current_employee
-            except Employee.DoesNotExist:
-                pass
-            
-            new_contract.save()
-            
-            # Update old contract status
-            old_contract.status = 'renewed'
-            old_contract.save()
-            
-            messages.success(request, f'Hợp đồng mới {new_contract.contract_number} đã được tạo từ hợp đồng {old_contract.contract_number}!')
-            logger.info(f"Contract {old_contract.contract_number} renewed to {new_contract.contract_number}")
-            return redirect('contract_detail', contract_id=new_contract.pk)
-        else:
-            messages.error(request, 'Có lỗi trong form. Vui lòng kiểm tra lại!')
-    else:
-        # Pre-fill form with data from old contract
-        initial_data = {
-            'employee': old_contract.employee,
-            'contract_type': old_contract.contract_type,
-            'start_date': old_contract.end_date + timedelta(days=1) if old_contract.end_date else None,
-            'salary': old_contract.salary,
-            'salary_coefficient': old_contract.salary_coefficient,
-            'allowances': old_contract.allowances,
-            'job_title': old_contract.job_title,
-            'job_description': old_contract.job_description,
-            'workplace': old_contract.workplace,
-            'working_hours': old_contract.working_hours,
-            'terms': old_contract.terms,
-            'benefits': old_contract.benefits,
-            'insurance_info': old_contract.insurance_info,
-            'status': 'active',
-        }
-        form = ContractForm(initial=initial_data)
-    
-    context = {
-        'form': form,
-        'old_contract': old_contract,
-        'title': f'Gia hạn hợp đồng {old_contract.contract_number}',
-        'action': 'renew',
-    }
-    return render(request, 'hod_template/create_edit_contract.html', context)
-
-
-@login_required
-def terminate_contract(request, contract_id):
-    """Chấm dứt hợp đồng"""
-    from app.models import Contract
-    from django.utils import timezone
-    
-    contract = get_object_or_404(Contract, pk=contract_id)
-    
-    if not contract.can_be_terminated():
-        messages.error(request, 'Hợp đồng này không thể chấm dứt!')
-        return redirect('contract_detail', contract_id=contract_id)
-    
-    if request.method == 'POST':
-        termination_reason = request.POST.get('termination_reason')
-        termination_date = request.POST.get('termination_date')
-        
-        if not termination_reason:
-            messages.error(request, 'Vui lòng nhập lý do chấm dứt!')
-            return redirect('contract_detail', contract_id=contract_id)
-        
-        contract.status = 'terminated'
-        contract.termination_reason = termination_reason
-        contract.termination_date = termination_date if termination_date else timezone.now().date()
-        contract.save()
-        
-        messages.success(request, f'Hợp đồng {contract.contract_number} đã được chấm dứt!')
-        logger.info(f"Contract {contract.contract_number} terminated. Reason: {termination_reason}")
-        return redirect('contract_detail', contract_id=contract_id)
-    
-    return redirect('contract_detail', contract_id=contract_id)
-
-
-@login_required
-def delete_contract(request, contract_id):
-    """Xóa hợp đồng (chỉ với draft)"""
-    from app.models import Contract
-    
-    contract = get_object_or_404(Contract, pk=contract_id)
-    
-    if contract.status != 'draft':
-        messages.error(request, 'Chỉ có thể xóa hợp đồng ở trạng thái nháp!')
-        return redirect('contract_detail', contract_id=contract_id)
-    
-    if request.method == 'POST':
-        contract_number = contract.contract_number
-        contract.delete()
-        messages.success(request, f'Hợp đồng {contract_number} đã được xóa!')
-        logger.info(f"Contract {contract_number} deleted")
-        return redirect('list_contracts')
-    
-    return redirect('contract_detail', contract_id=contract_id)
 
 
 # ============= Recruitment Admin Views =============
@@ -2595,4 +2466,1044 @@ def convert_to_employee(request, application_id):
         logger.error(f"Error converting application to employee: {str(e)}")
         messages.error(request, f'Có lỗi xảy ra: {str(e)}')
         return redirect('application_detail', application_id=application_id)
+
+
+@login_required
+def org_chart(request):
+    """Admin - Biểu đồ cơ cấu tổ chức"""
+    from app.models import Employee, Department
+    import json
+    
+    # Get all departments with employee counts
+    departments = Department.objects.prefetch_related('employee_set').all().order_by('name')
+    
+    # Get all employees with their relationships
+    employees = Employee.objects.select_related('department', 'job_title').filter(
+        status__in=[0, 1, 2]  # Only active employees
+    ).order_by('department', '-is_manager', 'name')
+    
+    # Build org chart data structure
+    org_data = []
+    
+    # Add CEO/Directors (managers without department or top-level managers)
+    top_managers = employees.filter(is_manager=True, department__isnull=True)
+    for manager in top_managers:
+        org_data.append({
+            'id': f'emp_{manager.id}',
+            'name': manager.name,
+            'title': manager.job_position or 'N/A',
+            'department': 'Ban Giám Đốc',
+            'employee_code': manager.employee_code,
+            'email': manager.email,
+            'phone': manager.phone,
+            'is_manager': True,
+            'avatar': manager.avatar.url if manager.avatar else None,
+            'parent': None,
+        })
+    
+    # Add departments and their employees
+    for dept in departments:
+        dept_employees = employees.filter(department=dept)
+        
+        # Add department node
+        dept_manager = dept_employees.filter(is_manager=True).first()
+        dept_id = f'dept_{dept.id}'
+        
+        org_data.append({
+            'id': dept_id,
+            'name': dept.name,
+            'title': f'{dept_employees.count()} nhân viên',
+            'department': dept.name,
+            'is_department': True,
+            'parent': 'emp_1' if top_managers.exists() else None,  # Link to CEO if exists
+        })
+        
+        # Add department manager
+        if dept_manager:
+            org_data.append({
+                'id': f'emp_{dept_manager.id}',
+                'name': dept_manager.name,
+                'title': dept_manager.job_position or 'Trưởng phòng',
+                'department': dept.name,
+                'employee_code': dept_manager.employee_code,
+                'email': dept_manager.email,
+                'phone': dept_manager.phone,
+                'is_manager': True,
+                'avatar': dept_manager.avatar.url if dept_manager.avatar else None,
+                'parent': dept_id,
+            })
+            
+            # Add department staff (non-managers)
+            staff = dept_employees.filter(is_manager=False)
+            for emp in staff:
+                org_data.append({
+                    'id': f'emp_{emp.id}',
+                    'name': emp.name,
+                    'title': emp.job_position or 'N/A',
+                    'department': dept.name,
+                    'employee_code': emp.employee_code,
+                    'email': emp.email,
+                    'phone': emp.phone,
+                    'is_manager': False,
+                    'avatar': emp.avatar.url if emp.avatar else None,
+                    'parent': f'emp_{dept_manager.id}',
+                })
+        else:
+            # No manager, add all staff directly under department
+            for emp in dept_employees:
+                org_data.append({
+                    'id': f'emp_{emp.id}',
+                    'name': emp.name,
+                    'title': emp.job_position or 'N/A',
+                    'department': dept.name,
+                    'employee_code': emp.employee_code,
+                    'email': emp.email,
+                    'phone': emp.phone,
+                    'is_manager': False,
+                    'avatar': emp.avatar.url if emp.avatar else None,
+                    'parent': dept_id,
+                })
+    
+    # Statistics
+    total_employees = employees.count()
+    total_departments = departments.count()
+    total_managers = employees.filter(is_manager=True).count()
+    
+    context = {
+        'org_data_json': json.dumps(org_data),
+        'total_employees': total_employees,
+        'total_departments': total_departments,
+        'total_managers': total_managers,
+        'departments': departments,
+    }
+    
+    return render(request, 'hod_template/org_chart.html', context)
+
+
+# ============================================================================
+# SALARY RULES ENGINE
+# ============================================================================
+
+@login_required
+def salary_components(request):
+    """List all salary components with CRUD operations"""
+    components = SalaryComponent.objects.all().order_by('component_type', 'name')
+    
+    context = {
+        'components': components,
+        'active_count': components.filter(is_active=True).count(),
+        'mandatory_count': components.filter(is_mandatory=True).count(),
+    }
+    
+    return render(request, 'hod_template/salary_components.html', context)
+
+
+@login_required
+def create_salary_component(request):
+    """Create new salary component"""
+    if request.method == 'POST':
+        try:
+            component = SalaryComponent(
+                code=request.POST.get('code'),
+                name=request.POST.get('name'),
+                component_type=request.POST.get('component_type'),
+                calculation_method=request.POST.get('calculation_method'),
+                default_amount=float(request.POST.get('default_amount', 0)),
+                percentage=float(request.POST.get('percentage', 0)),
+                formula=request.POST.get('formula', ''),
+                is_taxable=request.POST.get('is_taxable') == 'on',
+                is_mandatory=request.POST.get('is_mandatory') == 'on',
+                is_active=request.POST.get('is_active') == 'on',
+                description=request.POST.get('description', ''),
+            )
+            component.save()
+            messages.success(request, f'Đã tạo thành phần lương: {component.name}')
+            return redirect('salary_components')
+        except Exception as e:
+            messages.error(request, f'Lỗi: {str(e)}')
+    
+    context = {
+        'component_types': SalaryComponent.COMPONENT_TYPES,
+        'calculation_methods': SalaryComponent.CALCULATION_METHODS,
+    }
+    
+    return render(request, 'hod_template/create_salary_component.html', context)
+
+
+@login_required
+def edit_salary_component(request, component_id):
+    """Edit existing salary component"""
+    component = get_object_or_404(SalaryComponent, id=component_id)
+    
+    if request.method == 'POST':
+        try:
+            component.code = request.POST.get('code')
+            component.name = request.POST.get('name')
+            component.component_type = request.POST.get('component_type')
+            component.calculation_method = request.POST.get('calculation_method')
+            component.default_amount = float(request.POST.get('default_amount', 0))
+            component.percentage = float(request.POST.get('percentage', 0))
+            component.formula = request.POST.get('formula', '')
+            component.is_taxable = request.POST.get('is_taxable') == 'on'
+            component.is_mandatory = request.POST.get('is_mandatory') == 'on'
+            component.is_active = request.POST.get('is_active') == 'on'
+            component.description = request.POST.get('description', '')
+            component.save()
+            
+            messages.success(request, f'Đã cập nhật: {component.name}')
+            return redirect('salary_components')
+        except Exception as e:
+            messages.error(request, f'Lỗi: {str(e)}')
+    
+    context = {
+        'component': component,
+        'component_types': SalaryComponent.COMPONENT_TYPES,
+        'calculation_methods': SalaryComponent.CALCULATION_METHODS,
+    }
+    
+    return render(request, 'hod_template/edit_salary_component.html', context)
+
+
+@login_required
+def delete_salary_component(request, component_id):
+    """Delete salary component (soft delete by setting is_active=False)"""
+    component = get_object_or_404(SalaryComponent, id=component_id)
+    
+    if request.method == 'POST':
+        try:
+            # Check if component is used
+            rules_count = EmployeeSalaryRule.objects.filter(component=component, is_active=True).count()
+            
+            if rules_count > 0:
+                messages.warning(request, f'Không thể xóa! Thành phần này đang được sử dụng bởi {rules_count} nhân viên.')
+            else:
+                component.is_active = False
+                component.save()
+                messages.success(request, f'Đã vô hiệu hóa: {component.name}')
+        except Exception as e:
+            messages.error(request, f'Lỗi: {str(e)}')
+    
+    return redirect('salary_components')
+
+
+@login_required
+def employee_salary_rules(request, employee_id):
+    """View and manage salary rules for specific employee"""
+    employee = get_object_or_404(Employee, id=employee_id)
+    
+    # Get active rules
+    active_rules = EmployeeSalaryRule.objects.filter(
+        employee=employee,
+        is_active=True
+    ).select_related('component', 'created_by')
+    
+    # Get available components not assigned
+    assigned_component_ids = active_rules.values_list('component_id', flat=True)
+    available_components = SalaryComponent.objects.filter(
+        is_active=True
+    ).exclude(id__in=assigned_component_ids)
+    
+    # Get mandatory components that must be assigned
+    mandatory_components = SalaryComponent.objects.filter(is_mandatory=True, is_active=True)
+    missing_mandatory = mandatory_components.exclude(id__in=assigned_component_ids)
+    
+    context = {
+        'employee': employee,
+        'active_rules': active_rules,
+        'available_components': available_components,
+        'missing_mandatory': missing_mandatory,
+    }
+    
+    return render(request, 'hod_template/employee_salary_rules.html', context)
+
+
+@login_required
+def assign_salary_rule(request, employee_id):
+    """Assign new salary rule to employee"""
+    employee = get_object_or_404(Employee, id=employee_id)
+    
+    if request.method == 'POST':
+        try:
+            component_id = request.POST.get('component_id')
+            component = get_object_or_404(SalaryComponent, id=component_id)
+            
+            # Check if rule already exists
+            existing = EmployeeSalaryRule.objects.filter(
+                employee=employee,
+                component=component,
+                is_active=True
+            ).first()
+            
+            if existing:
+                messages.warning(request, f'{component.name} đã được gán cho nhân viên này!')
+            else:
+                rule = EmployeeSalaryRule(
+                    employee=employee,
+                    component=component,
+                    custom_amount=request.POST.get('custom_amount') or None,
+                    custom_percentage=request.POST.get('custom_percentage') or None,
+                    custom_formula=request.POST.get('custom_formula', ''),
+                    effective_from=request.POST.get('effective_from'),
+                    effective_to=request.POST.get('effective_to') or None,
+                    notes=request.POST.get('notes', ''),
+                    created_by=Employee.objects.get(admin=request.user)
+                )
+                rule.save()
+                messages.success(request, f'Đã gán {component.name} cho {employee.name}')
+        except Exception as e:
+            messages.error(request, f'Lỗi: {str(e)}')
+    
+    return redirect('employee_salary_rules', employee_id=employee_id)
+
+
+@login_required
+def delete_salary_rule(request, rule_id):
+    """Delete (deactivate) salary rule"""
+    rule = get_object_or_404(EmployeeSalaryRule, id=rule_id)
+    employee_id = rule.employee.id
+    
+    if request.method == 'POST':
+        try:
+            rule.is_active = False
+            rule.save()
+            messages.success(request, f'Đã xóa quy tắc: {rule.component.name}')
+        except Exception as e:
+            messages.error(request, f'Lỗi: {str(e)}')
+    
+    return redirect('employee_salary_rules', employee_id=employee_id)
+
+
+@login_required
+def calculate_salary_preview(request, employee_id):
+    """Preview salary calculation with breakdown"""
+    employee = get_object_or_404(Employee, id=employee_id)
+    
+    # Get active rules
+    active_rules = EmployeeSalaryRule.objects.filter(
+        employee=employee,
+        is_active=True
+    ).select_related('component')
+    
+    # Base salary
+    base_salary = employee.salary or 0
+    
+    # Calculate each component
+    breakdown = []
+    total_allowances = 0
+    total_bonuses = 0
+    total_deductions = 0
+    total_overtime = 0
+    
+    for rule in active_rules:
+        amount = rule.calculate(
+            base_salary=base_salary,
+            hours=float(request.GET.get('overtime_hours', 0)),
+            days=float(request.GET.get('working_days', 22))
+        )
+        
+        breakdown.append({
+            'rule': rule,
+            'amount': amount,
+        })
+        
+        # Sum by type
+        if rule.component.component_type == 'allowance':
+            total_allowances += amount
+        elif rule.component.component_type == 'bonus':
+            total_bonuses += amount
+        elif rule.component.component_type == 'deduction':
+            total_deductions += amount
+        elif rule.component.component_type == 'overtime':
+            total_overtime += amount
+    
+    # Calculate insurance (simplified - 10.5% for employee)
+    gross_salary = base_salary + total_allowances + total_bonuses + total_overtime
+    social_insurance = gross_salary * 0.08
+    health_insurance = gross_salary * 0.015
+    unemployment_insurance = gross_salary * 0.01
+    total_insurance = social_insurance + health_insurance + unemployment_insurance
+    
+    # Calculate tax (simplified progressive rate)
+    taxable_income = gross_salary - total_insurance - 11000000  # 11M personal deduction
+    if taxable_income <= 0:
+        tax = 0
+    elif taxable_income <= 5000000:
+        tax = taxable_income * 0.05
+    elif taxable_income <= 10000000:
+        tax = taxable_income * 0.1 - 250000
+    elif taxable_income <= 18000000:
+        tax = taxable_income * 0.15 - 750000
+    else:
+        tax = taxable_income * 0.2 - 1650000
+    
+    # Net salary
+    net_salary = gross_salary - total_deductions - total_insurance - tax
+    
+    context = {
+        'employee': employee,
+        'base_salary': base_salary,
+        'breakdown': breakdown,
+        'total_allowances': total_allowances,
+        'total_bonuses': total_bonuses,
+        'total_deductions': total_deductions,
+        'total_overtime': total_overtime,
+        'gross_salary': gross_salary,
+        'social_insurance': social_insurance,
+        'health_insurance': health_insurance,
+        'unemployment_insurance': unemployment_insurance,
+        'total_insurance': total_insurance,
+        'taxable_income': max(0, taxable_income),
+        'tax': max(0, tax),
+        'net_salary': net_salary,
+    }
+    
+    return render(request, 'hod_template/salary_calculation_preview.html', context)
+
+
+@login_required
+def bulk_assign_salary_rules(request):
+    """Bulk assign salary rules to multiple employees"""
+    departments = Department.objects.all()
+    components = SalaryComponent.objects.filter(is_active=True)
+    
+    if request.method == 'POST':
+        try:
+            employee_ids = request.POST.getlist('employee_ids[]')
+            component_id = request.POST.get('component_id')
+            custom_amount = request.POST.get('custom_amount') or None
+            custom_percentage = request.POST.get('custom_percentage') or None
+            custom_formula = request.POST.get('custom_formula', '')
+            effective_from = request.POST.get('effective_from')
+            effective_to = request.POST.get('effective_to') or None
+            notes = request.POST.get('notes', '')
+            
+            component = get_object_or_404(SalaryComponent, id=component_id)
+            created_by = Employee.objects.get(admin=request.user)
+            
+            created_count = 0
+            skipped_count = 0
+            
+            for emp_id in employee_ids:
+                employee = Employee.objects.get(id=emp_id)
+                
+                # Check if rule already exists
+                existing = EmployeeSalaryRule.objects.filter(
+                    employee=employee,
+                    component=component,
+                    is_active=True
+                ).first()
+                
+                if existing:
+                    skipped_count += 1
+                    continue
+                
+                # Create new rule
+                EmployeeSalaryRule.objects.create(
+                    employee=employee,
+                    component=component,
+                    custom_amount=custom_amount,
+                    custom_percentage=custom_percentage,
+                    custom_formula=custom_formula,
+                    effective_from=effective_from,
+                    effective_to=effective_to,
+                    notes=notes,
+                    created_by=created_by
+                )
+                created_count += 1
+            
+            messages.success(request, f'Đã gán quy tắc cho {created_count} nhân viên. Bỏ qua {skipped_count} nhân viên (đã có quy tắc).')
+            return redirect('bulk_assign_salary_rules')
+            
+        except Exception as e:
+            messages.error(request, f'Lỗi: {str(e)}')
+    
+    # Get employees with their current rules count
+    employees = Employee.objects.all().select_related('department', 'job_title')
+    
+    context = {
+        'departments': departments,
+        'components': components,
+        'employees': employees,
+    }
+    
+    return render(request, 'hod_template/bulk_assign_salary_rules.html', context)
+
+
+@login_required
+def salary_rule_templates(request):
+    """List all salary rule templates"""
+    templates = SalaryRuleTemplate.objects.all().select_related('job_title', 'department')
+    
+    context = {
+        'templates': templates,
+    }
+    
+    return render(request, 'hod_template/salary_rule_templates.html', context)
+
+
+@login_required
+def create_salary_rule_template(request):
+    """Create new salary rule template"""
+    if request.method == 'POST':
+        try:
+            template = SalaryRuleTemplate(
+                name=request.POST.get('name'),
+                description=request.POST.get('description', ''),
+                job_title_id=request.POST.get('job_title_id') or None,
+                department_id=request.POST.get('department_id') or None,
+                is_active=request.POST.get('is_active') == 'on'
+            )
+            template.save()
+            messages.success(request, f'Đã tạo template: {template.name}')
+            return redirect('edit_salary_rule_template', template_id=template.id)
+        except Exception as e:
+            messages.error(request, f'Lỗi: {str(e)}')
+    
+    job_titles = JobTitle.objects.all()
+    departments = Department.objects.all()
+    
+    context = {
+        'job_titles': job_titles,
+        'departments': departments,
+    }
+    
+    return render(request, 'hod_template/create_salary_rule_template.html', context)
+
+
+@login_required
+def edit_salary_rule_template(request, template_id):
+    """Edit salary rule template and manage its items"""
+    template = get_object_or_404(SalaryRuleTemplate, id=template_id)
+    
+    if request.method == 'POST':
+        action = request.POST.get('action')
+        
+        if action == 'update_template':
+            try:
+                template.name = request.POST.get('name')
+                template.description = request.POST.get('description', '')
+                template.job_title_id = request.POST.get('job_title_id') or None
+                template.department_id = request.POST.get('department_id') or None
+                template.is_active = request.POST.get('is_active') == 'on'
+                template.save()
+                messages.success(request, 'Đã cập nhật template')
+            except Exception as e:
+                messages.error(request, f'Lỗi: {str(e)}')
+        
+        elif action == 'add_component':
+            try:
+                component_id = request.POST.get('component_id')
+                component = get_object_or_404(SalaryComponent, id=component_id)
+                
+                # Check if already exists
+                existing = SalaryRuleTemplateItem.objects.filter(
+                    template=template,
+                    component=component
+                ).first()
+                
+                if existing:
+                    messages.warning(request, 'Component đã có trong template!')
+                else:
+                    item = SalaryRuleTemplateItem(
+                        template=template,
+                        component=component,
+                        custom_amount=request.POST.get('custom_amount') or None,
+                        custom_percentage=request.POST.get('custom_percentage') or None,
+                        custom_formula=request.POST.get('custom_formula', ''),
+                        order=template.template_items.count()
+                    )
+                    item.save()
+                    messages.success(request, f'Đã thêm {component.name}')
+            except Exception as e:
+                messages.error(request, f'Lỗi: {str(e)}')
+        
+        return redirect('edit_salary_rule_template', template_id=template_id)
+    
+    job_titles = JobTitle.objects.all()
+    departments = Department.objects.all()
+    available_components = SalaryComponent.objects.filter(is_active=True).exclude(
+        id__in=template.template_items.values_list('component_id', flat=True)
+    )
+    
+    context = {
+        'template': template,
+        'job_titles': job_titles,
+        'departments': departments,
+        'available_components': available_components,
+    }
+    
+    return render(request, 'hod_template/edit_salary_rule_template.html', context)
+
+
+@login_required
+def delete_template_item(request, item_id):
+    """Delete component from template"""
+    item = get_object_or_404(SalaryRuleTemplateItem, id=item_id)
+    template_id = item.template.id
+    
+    if request.method == 'POST':
+        try:
+            item.delete()
+            messages.success(request, 'Đã xóa component khỏi template')
+        except Exception as e:
+            messages.error(request, f'Lỗi: {str(e)}')
+    
+    return redirect('edit_salary_rule_template', template_id=template_id)
+
+
+@login_required
+def apply_template_to_employee(request, template_id, employee_id):
+    """Apply a template to specific employee"""
+    template = get_object_or_404(SalaryRuleTemplate, id=template_id)
+    employee = get_object_or_404(Employee, id=employee_id)
+    
+    if request.method == 'POST':
+        try:
+            created_by = Employee.objects.get(admin=request.user)
+            effective_from = request.POST.get('effective_from')
+            
+            if effective_from:
+                from datetime import datetime
+                effective_from = datetime.strptime(effective_from, '%Y-%m-d').date()
+            
+            count = template.apply_to_employee(employee, created_by, effective_from)
+            messages.success(request, f'Đã áp dụng template. Tạo {count} quy tắc mới.')
+        except Exception as e:
+            messages.error(request, f'Lỗi: {str(e)}')
+    
+    return redirect('employee_salary_rules', employee_id=employee_id)
+
+
+@login_required
+def salary_calculation_history(request):
+    """View calculation history/audit log"""
+    logs = PayrollCalculationLog.objects.all().select_related(
+        'payroll__employee',
+        'calculated_by'
+    ).order_by('-calculated_at')
+    
+    # Filters
+    employee_filter = request.GET.get('employee')
+    month_filter = request.GET.get('month')
+    year_filter = request.GET.get('year')
+    
+    if employee_filter:
+        logs = logs.filter(payroll__employee_id=employee_filter)
+    if month_filter:
+        logs = logs.filter(payroll__month=month_filter)
+    if year_filter:
+        logs = logs.filter(payroll__year=year_filter)
+    
+    # Pagination
+    from django.core.paginator import Paginator
+    paginator = Paginator(logs, 20)
+    page = request.GET.get('page', 1)
+    logs_page = paginator.get_page(page)
+    
+    employees = Employee.objects.all().order_by('name')
+    months = list(range(1, 13))
+    years = Payroll.objects.values_list('year', flat=True).distinct().order_by('-year')
+    
+    context = {
+        'logs': logs_page,
+        'employees': employees,
+        'months': months,
+        'years': years,
+        'current_filters': {
+            'employee': employee_filter,
+            'month': month_filter,
+            'year': year_filter,
+        }
+    }
+    
+    return render(request, 'hod_template/salary_calculation_history.html', context)
+
+
+# ============================================================================
+# CONTRACT MANAGEMENT
+# ============================================================================
+
+@login_required
+@require_hr_or_manager
+def manage_contracts(request):
+    """List all contracts with filters (HR: all, Manager: department only)"""
+    from django.db.models import Q
+    
+    # Filters
+    employee_filter = request.GET.get('employee')
+    status_filter = request.GET.get('status')
+    contract_type_filter = request.GET.get('contract_type')
+    expiring_soon = request.GET.get('expiring_soon')
+    
+    contracts = Contract.objects.select_related('employee', 'job_title', 'department', 'created_by').all()
+    
+    # Row-level filtering for Managers (only their department)
+    if not request.user.is_superuser and not request.user.groups.filter(name='HR').exists():
+        try:
+            user_employee = request.user.employee
+            if user_employee.is_manager:
+                contracts = contracts.filter(employee__department=user_employee.department)
+        except:
+            contracts = Contract.objects.none()
+    
+    if employee_filter:
+        contracts = contracts.filter(employee_id=employee_filter)
+    
+    if status_filter:
+        contracts = contracts.filter(status=status_filter)
+    
+    if contract_type_filter:
+        contracts = contracts.filter(contract_type=contract_type_filter)
+    
+    if expiring_soon == 'yes':
+        # Contracts expiring in next 30 days
+        today = timezone.now().date()
+        thirty_days_later = today + timedelta(days=30)
+        contracts = contracts.filter(
+            status='active',
+            end_date__isnull=False,
+            end_date__lte=thirty_days_later,
+            end_date__gte=today
+        )
+    
+    # Pagination
+    paginator = Paginator(contracts, 20)
+    page = request.GET.get('page')
+    contracts_page = paginator.get_page(page)
+    
+    # Statistics
+    total_contracts = Contract.objects.count()
+    active_contracts = Contract.objects.filter(status='active').count()
+    expiring_contracts = Contract.objects.filter(
+        status='active',
+        end_date__isnull=False,
+        end_date__lte=timezone.now().date() + timedelta(days=30),
+        end_date__gte=timezone.now().date()
+    ).count()
+    
+    employees = Employee.objects.filter(status__in=[0, 1, 2]).order_by('name')
+    
+    context = {
+        'contracts': contracts_page,
+        'employees': employees,
+        'total_contracts': total_contracts,
+        'active_contracts': active_contracts,
+        'expiring_contracts': expiring_contracts,
+        'CONTRACT_TYPE_CHOICES': Contract.CONTRACT_TYPE_CHOICES,
+        'STATUS_CHOICES': Contract.STATUS_CHOICES,
+        'current_filters': {
+            'employee': employee_filter,
+            'status': status_filter,
+            'contract_type': contract_type_filter,
+            'expiring_soon': expiring_soon,
+        }
+    }
+    
+    return render(request, 'hod_template/list_contracts.html', context)
+
+
+@login_required
+@require_hr
+def create_contract(request):
+    """Create new contract (HR only)"""
+    if request.method == 'POST':
+        form = ContractForm(request.POST, request.FILES)
+        if form.is_valid():
+            contract = form.save(commit=False)
+            # Set created_by
+            try:
+                creator = Employee.objects.get(email=request.user.email)
+                contract.created_by = creator
+            except Employee.DoesNotExist:
+                pass
+            
+            contract.save()
+            
+            # Log history
+            ContractHistory.objects.create(
+                contract=contract,
+                action='created',
+                description=f"Hợp đồng {contract.contract_code} được tạo mới",
+                performed_by=contract.created_by
+            )
+            
+            messages.success(request, f'Hợp đồng {contract.contract_code} đã được tạo thành công!')
+            logger.info(f"Contract {contract.contract_code} created by {request.user.email}")
+            return redirect('contract_detail', contract_id=contract.id)
+    else:
+        form = ContractForm()
+    
+    employees = Employee.objects.filter(status__in=[0, 1, 2]).order_by('name')
+    job_titles = JobTitle.objects.all()
+    departments = Department.objects.all()
+    
+    context = {
+        'form': form,
+        'employees': employees,
+        'job_titles': job_titles,
+        'departments': departments,
+    }
+    
+    return render(request, 'hod_template/create_edit_contract.html', context)
+
+
+@login_required
+@require_hr_or_manager
+def contract_detail(request, contract_id):
+    """View contract details (HR: all, Manager: department only)"""
+    contract = get_object_or_404(Contract.objects.select_related(
+        'employee', 'job_title', 'department', 'created_by'
+    ), pk=contract_id)
+    
+    # Check row-level permission for managers
+    if not can_manage_contract(request.user, contract):
+        messages.error(request, 'Bạn không có quyền xem hợp đồng này.')
+        return redirect('manage_contracts')
+    
+    # Get history
+    history = contract.history.select_related('performed_by').all()[:10]
+    
+    # Check if expiring
+    days_left = contract.days_until_expiry()
+    is_expiring = contract.is_expiring_soon(30)
+    
+    context = {
+        'contract': contract,
+        'history': history,
+        'days_left': days_left,
+        'is_expiring': is_expiring,
+    }
+    
+    return render(request, 'hod_template/contract_detail.html', context)
+
+
+@login_required
+@require_hr
+def edit_contract(request, contract_id):
+    """Edit existing contract (HR only)"""
+    contract = get_object_or_404(Contract, pk=contract_id)
+    
+    # Save old values for history
+    if request.method == 'POST':
+        old_salary = contract.base_salary
+        old_status = contract.status
+        old_end_date = contract.end_date
+        
+        form = ContractForm(request.POST, request.FILES, instance=contract)
+        if form.is_valid():
+            contract = form.save()
+            
+            # Log changes
+            try:
+                performer = Employee.objects.get(email=request.user.email)
+            except Employee.DoesNotExist:
+                performer = None
+            
+            # Log salary change
+            if old_salary != contract.base_salary:
+                ContractHistory.objects.create(
+                    contract=contract,
+                    action='salary_adjusted',
+                    description=f"Lương thay đổi từ {old_salary:,.0f} VNĐ sang {contract.base_salary:,.0f} VNĐ",
+                    old_value={'base_salary': float(old_salary)},
+                    new_value={'base_salary': float(contract.base_salary)},
+                    performed_by=performer
+                )
+            
+            # Log status change
+            if old_status != contract.status:
+                ContractHistory.objects.create(
+                    contract=contract,
+                    action='status_changed',
+                    description=f"Trạng thái thay đổi từ {contract.get_status_display()} sang {dict(Contract.STATUS_CHOICES)[contract.status]}",
+                    old_value={'status': old_status},
+                    new_value={'status': contract.status},
+                    performed_by=performer
+                )
+            
+            messages.success(request, f'Hợp đồng {contract.contract_code} đã được cập nhật!')
+            logger.info(f"Contract {contract.contract_code} updated by {request.user.email}")
+            return redirect('contract_detail', contract_id=contract.id)
+    else:
+        form = ContractForm(instance=contract)
+    
+    employees = Employee.objects.filter(status__in=[0, 1, 2]).order_by('name')
+    job_titles = JobTitle.objects.all()
+    departments = Department.objects.all()
+    
+    context = {
+        'form': form,
+        'contract': contract,
+        'employees': employees,
+        'job_titles': job_titles,
+        'departments': departments,
+    }
+    
+    return render(request, 'hod_template/create_edit_contract.html', context)
+
+
+@login_required
+@require_hr
+@require_POST
+def delete_contract(request, contract_id):
+    """Delete contract (only if draft, HR only)"""
+    contract = get_object_or_404(Contract, pk=contract_id)
+    
+    if contract.status != 'draft':
+        messages.error(request, 'Chỉ có thể xóa hợp đồng ở trạng thái Nháp!')
+        return redirect('contract_detail', contract_id=contract.id)
+    
+    contract_code = contract.contract_code
+    contract.delete()
+    
+    messages.success(request, f'Hợp đồng {contract_code} đã được xóa!')
+    logger.info(f"Contract {contract_code} deleted by {request.user.email}")
+    return redirect('manage_contracts')
+
+
+@login_required
+@require_hr
+@require_POST
+def renew_contract(request, contract_id):
+    """Renew contract - create new contract based on old one (HR only)"""
+    old_contract = get_object_or_404(Contract, pk=contract_id)
+    
+    # Parse dates from request
+    new_start_date = request.POST.get('new_start_date')
+    new_end_date = request.POST.get('new_end_date')
+    
+    if not new_start_date:
+        messages.error(request, 'Vui lòng nhập ngày bắt đầu hợp đồng mới!')
+        return redirect('contract_detail', contract_id=contract_id)
+    
+    # Create new contract
+    new_contract = Contract.objects.create(
+        employee=old_contract.employee,
+        contract_type=old_contract.contract_type,
+        start_date=new_start_date,
+        end_date=new_end_date if new_end_date else None,
+        base_salary=old_contract.base_salary,
+        allowances=old_contract.allowances,
+        job_title=old_contract.job_title,
+        department=old_contract.department,
+        work_location=old_contract.work_location,
+        working_hours=old_contract.working_hours,
+        terms=old_contract.terms,
+        notes=f"Gia hạn từ hợp đồng {old_contract.contract_code}",
+        status='draft',
+        renewed_from=old_contract,
+        created_by=old_contract.created_by
+    )
+    
+    # Update old contract status
+    old_contract.status = 'renewed'
+    old_contract.save()
+    
+    # Log history for both contracts
+    try:
+        performer = Employee.objects.get(email=request.user.email)
+    except Employee.DoesNotExist:
+        performer = None
+    
+    ContractHistory.objects.create(
+        contract=old_contract,
+        action='renewed',
+        description=f"Hợp đồng được gia hạn thành {new_contract.contract_code}",
+        performed_by=performer
+    )
+    
+    ContractHistory.objects.create(
+        contract=new_contract,
+        action='created',
+        description=f"Hợp đồng mới được tạo từ gia hạn {old_contract.contract_code}",
+        performed_by=performer
+    )
+    
+    messages.success(request, f'Đã tạo hợp đồng gia hạn {new_contract.contract_code}!')
+    logger.info(f"Contract {old_contract.contract_code} renewed to {new_contract.contract_code}")
+    return redirect('contract_detail', contract_id=new_contract.id)
+
+
+@login_required
+@require_hr_or_manager
+def expiring_contracts(request):
+    """List contracts expiring soon (HR: all, Manager: department only)"""
+    days_ahead = int(request.GET.get('days', 30))
+    
+    today = timezone.now().date()
+    future_date = today + timedelta(days=days_ahead)
+    
+    contracts = Contract.objects.filter(
+        status='active',
+        end_date__isnull=False,
+        end_date__lte=future_date,
+        end_date__gte=today
+    ).select_related('employee', 'job_title', 'department').order_by('end_date')
+    
+    # Row-level filtering for managers
+    if not request.user.is_superuser and not request.user.groups.filter(name='HR').exists():
+        try:
+            user_employee = request.user.employee
+            if user_employee.is_manager:
+                contracts = contracts.filter(employee__department=user_employee.department)
+        except:
+            contracts = Contract.objects.none()
+    
+    # Calculate statistics
+    urgent_count = contracts.filter(end_date__lte=today + timedelta(days=7)).count()
+    warning_count = contracts.filter(end_date__lte=today + timedelta(days=15), end_date__gt=today + timedelta(days=7)).count()
+    notice_count = contracts.filter(end_date__gt=today + timedelta(days=15)).count()
+    
+    context = {
+        'contracts': contracts,
+        'days_ahead': days_ahead,
+        'today': today,
+        'urgent_count': urgent_count,
+        'warning_count': warning_count,
+        'notice_count': notice_count,
+    }
+    
+    return render(request, 'hod_template/expiring_contracts.html', context)
+
+
+@login_required
+@require_hr_or_manager
+def employee_contracts(request, employee_id):
+    """View all contracts of an employee (HR: all, Manager: department only)"""
+    employee = get_object_or_404(Employee, pk=employee_id)
+    
+    # Check row-level permission for managers
+    if not request.user.is_superuser and not request.user.groups.filter(name='HR').exists():
+        try:
+            user_employee = request.user.employee
+            if not user_employee.is_manager or employee.department != user_employee.department:
+                messages.error(request, 'Bạn không có quyền xem hợp đồng của nhân viên này.')
+                return redirect('manage_contracts')
+        except:
+            messages.error(request, 'Bạn không có quyền truy cập.')
+            return redirect('manage_contracts')
+    
+    contracts = Contract.objects.filter(employee=employee).order_by('-start_date')
+    
+    # Calculate statistics
+    active_count = contracts.filter(status='active').count()
+    expired_count = contracts.filter(status='expired').count()
+    renewed_count = contracts.filter(status='renewed').count()
+    draft_count = contracts.filter(status='draft').count()
+    
+    # Get active contract
+    active_contract = contracts.filter(status='active').first()
+    
+    context = {
+        'employee': employee,
+        'contracts': contracts,
+        'active_contract': active_contract,
+        'active_count': active_count,
+        'expired_count': expired_count,
+        'renewed_count': renewed_count,
+        'draft_count': draft_count,
+    }
+    
+    return render(request, 'hod_template/employee_contracts.html', context)
+
 

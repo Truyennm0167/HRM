@@ -43,8 +43,8 @@ Contract Management
 RBAC cải tiến
 Phase 2: Core Features (Tuần 3-4)
 Module Chi phí
-Recruitment Workflow hoàn chỉnh
-Org Chart visualization
+Recruitment Workflow hoàn chỉnh ✅
+Org Chart visualization ✅
 Email notifications
 Phase 3: Advanced (Tuần 5-6)
 Dashboard & Analytics

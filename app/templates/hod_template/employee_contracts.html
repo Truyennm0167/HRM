@@ -1,0 +1,280 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}
+Hợp đồng của {{ employee.name }}
+{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1><i class="fas fa-file-contract"></i> Hợp đồng của nhân viên</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'manage_contracts' %}">Hợp đồng</a></li>
+                    <li class="breadcrumb-item active">{{ employee.name }}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        
+        <!-- Employee Info Card -->
+        <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-user"></i> Thông tin nhân viên</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2 text-center">
+                        {% if employee.avatar %}
+                        <img src="{{ employee.avatar.url }}" class="img-circle img-fluid" 
+                             alt="{{ employee.name }}" style="max-width: 120px;">
+                        {% else %}
+                        <img src="{% static 'dist/img/avatar.png' %}" class="img-circle img-fluid" 
+                             alt="{{ employee.name }}" style="max-width: 120px;">
+                        {% endif %}
+                    </div>
+                    <div class="col-md-10">
+                        <dl class="row">
+                            <dt class="col-sm-3">Mã nhân viên:</dt>
+                            <dd class="col-sm-3">{{ employee.employee_code }}</dd>
+                            
+                            <dt class="col-sm-3">Họ và tên:</dt>
+                            <dd class="col-sm-3"><strong>{{ employee.name }}</strong></dd>
+                            
+                            <dt class="col-sm-3">Email:</dt>
+                            <dd class="col-sm-3">{{ employee.email }}</dd>
+                            
+                            <dt class="col-sm-3">Điện thoại:</dt>
+                            <dd class="col-sm-3">{{ employee.phone|default:"N/A" }}</dd>
+                            
+                            <dt class="col-sm-3">Phòng ban:</dt>
+                            <dd class="col-sm-3">{{ employee.department.name|default:"N/A" }}</dd>
+                            
+                            <dt class="col-sm-3">Chức danh:</dt>
+                            <dd class="col-sm-3">{{ employee.job_title.name|default:"N/A" }}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <a href="{% url 'manage_contracts' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Quay lại
+                </a>
+                <a href="{% url 'create_contract' %}?employee={{ employee.id }}" class="btn btn-success">
+                    <i class="fas fa-plus"></i> Tạo hợp đồng mới
+                </a>
+            </div>
+        </div>
+
+        <!-- Contracts Timeline -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-history"></i> 
+                            Lịch sử hợp đồng ({{ contracts.count }} hợp đồng)
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        {% if contracts %}
+                        <div class="timeline">
+                            {% for contract in contracts %}
+                            <div>
+                                <i class="fas fa-file-contract bg-{% if contract.status == 'active' %}success{% elif contract.status == 'expired' %}warning{% elif contract.status == 'terminated' %}danger{% elif contract.status == 'renewed' %}info{% else %}secondary{% endif %}"></i>
+                                <div class="timeline-item">
+                                    <span class="time">
+                                        <i class="fas fa-clock"></i> 
+                                        {{ contract.start_date|date:"d/m/Y" }} - 
+                                        {% if contract.end_date %}{{ contract.end_date|date:"d/m/Y" }}{% else %}Vô thời hạn{% endif %}
+                                    </span>
+                                    <h3 class="timeline-header">
+                                        <a href="{% url 'contract_detail' contract.id %}">{{ contract.contract_code }}</a>
+                                        <span class="badge badge-{% if contract.status == 'active' %}success{% elif contract.status == 'expired' %}warning{% elif contract.status == 'terminated' %}danger{% elif contract.status == 'renewed' %}info{% else %}secondary{% endif %}">
+                                            {{ contract.get_status_display }}
+                                        </span>
+                                    </h3>
+                                    <div class="timeline-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <p><strong>Loại hợp đồng:</strong> {{ contract.get_contract_type_display }}</p>
+                                                <p><strong>Lương cơ bản:</strong> {{ contract.base_salary|floatformat:0 }} VNĐ</p>
+                                                {% if contract.job_title %}
+                                                <p><strong>Chức danh:</strong> {{ contract.job_title.name }}</p>
+                                                {% endif %}
+                                            </div>
+                                            <div class="col-md-6">
+                                                {% if contract.department %}
+                                                <p><strong>Phòng ban:</strong> {{ contract.department.name }}</p>
+                                                {% endif %}
+                                                <p><strong>Nơi làm việc:</strong> {{ contract.work_location|default:"N/A" }}</p>
+                                                <p><strong>Giờ làm việc:</strong> {{ contract.working_hours }}</p>
+                                            </div>
+                                        </div>
+                                        
+                                        {% if contract.status == 'active' %}
+                                        <div class="alert alert-success mb-0 mt-2">
+                                            <i class="fas fa-check-circle"></i> <strong>Hợp đồng đang hiệu lực</strong>
+                                            {% if contract.end_date %}
+                                                - Còn {{ contract.days_until_expiry }} ngày
+                                                {% if contract.is_expiring_soon %}
+                                                    <span class="badge badge-warning ml-2">
+                                                        <i class="fas fa-exclamation-triangle"></i> Sắp hết hạn
+                                                    </span>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                        {% endif %}
+                                        
+                                        {% if contract.renewed_from %}
+                                        <div class="alert alert-info mb-0 mt-2">
+                                            <i class="fas fa-info-circle"></i> 
+                                            Gia hạn từ hợp đồng 
+                                            <a href="{% url 'contract_detail' contract.renewed_from.id %}" class="alert-link">
+                                                {{ contract.renewed_from.contract_code }}
+                                            </a>
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="timeline-footer">
+                                        <a href="{% url 'contract_detail' contract.id %}" class="btn btn-info btn-sm">
+                                            <i class="fas fa-eye"></i> Xem chi tiết
+                                        </a>
+                                        {% if contract.status == 'draft' or contract.status == 'active' %}
+                                        <a href="{% url 'edit_contract' contract.id %}" class="btn btn-warning btn-sm">
+                                            <i class="fas fa-edit"></i> Sửa
+                                        </a>
+                                        {% endif %}
+                                        {% if contract.status == 'active' and contract.end_date %}
+                                        <button type="button" class="btn btn-success btn-sm" 
+                                                data-toggle="modal" 
+                                                data-target="#renewModal{{ contract.id }}">
+                                            <i class="fas fa-redo"></i> Gia hạn
+                                        </button>
+                                        {% endif %}
+                                        {% if contract.attachment %}
+                                        <a href="{{ contract.attachment.url }}" class="btn btn-secondary btn-sm" target="_blank">
+                                            <i class="fas fa-download"></i> File HĐ
+                                        </a>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Renew Modal for each contract -->
+                            {% if contract.status == 'active' and contract.end_date %}
+                            <div class="modal fade" id="renewModal{{ contract.id }}" tabindex="-1" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <form method="post" action="{% url 'renew_contract' contract.id %}">
+                                            {% csrf_token %}
+                                            <div class="modal-header bg-success">
+                                                <h5 class="modal-title">Gia hạn {{ contract.contract_code }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label>Ngày bắt đầu mới: <span class="text-danger">*</span></label>
+                                                    <input type="date" name="new_start_date" class="form-control" 
+                                                           value="{{ contract.end_date|date:'Y-m-d' }}" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>Ngày kết thúc mới:</label>
+                                                    <input type="date" name="new_end_date" class="form-control">
+                                                    <small class="text-muted">Để trống nếu không xác định thời hạn</small>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                                <button type="submit" class="btn btn-success">Xác nhận</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+                            <div>
+                                <i class="fas fa-clock bg-gray"></i>
+                            </div>
+                        </div>
+                        {% else %}
+                        <div class="text-center text-muted py-5">
+                            <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
+                            <h5>Nhân viên chưa có hợp đồng nào</h5>
+                            <a href="{% url 'create_contract' %}?employee={{ employee.id }}" class="btn btn-success mt-3">
+                                <i class="fas fa-plus"></i> Tạo hợp đồng đầu tiên
+                            </a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        {% if contracts %}
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{ active_count }}</h3>
+                        <p>Đang hiệu lực</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{ expired_count }}</h3>
+                        <p>Đã hết hạn</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>{{ renewed_count }}</h3>
+                        <p>Đã gia hạn</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-redo"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-secondary">
+                    <div class="inner">
+                        <h3>{{ draft_count }}</h3>
+                        <p>Nháp</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-file"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+{% endblock main_content %}

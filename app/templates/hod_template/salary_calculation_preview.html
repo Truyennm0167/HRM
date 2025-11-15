@@ -1,0 +1,213 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Bản tính lương - {{ employee.name }}
+{% endblock page_title %}
+
+{% block content %}
+
+<div class="content-wrapper">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Bản tính lương</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+            <li class="breadcrumb-item active">Tính lương</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="content">
+    <div class="container-fluid">
+      
+      <!-- Employee Info -->
+      <div class="card card-primary">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-2">
+              <img src="{{ employee.avatar.url }}" class="img-fluid img-thumbnail" alt="{{ employee.name }}" onerror="this.src='/static/dist/img/user-icon.png'">
+            </div>
+            <div class="col-md-10">
+              <h3>{{ employee.name }}</h3>
+              <p class="mb-1"><strong>Mã NV:</strong> {{ employee.employee_code }}</p>
+              <p class="mb-1"><strong>Chức vụ:</strong> {{ employee.job_title.name }}</p>
+              <p class="mb-1"><strong>Phòng ban:</strong> {{ employee.department.name }}</p>
+              <p class="mb-1"><strong>Lương cơ bản:</strong> <span class="text-lg text-success">{{ base_salary|floatformat:0 }} VNĐ</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <!-- Allowances -->
+        <div class="col-md-3">
+          <div class="small-box bg-info">
+            <div class="inner">
+              <h3>{{ total_allowances|floatformat:0 }}</h3>
+              <p>Tổng phụ cấp</p>
+            </div>
+            <div class="icon"><i class="fas fa-hand-holding-usd"></i></div>
+          </div>
+        </div>
+        <!-- Bonuses -->
+        <div class="col-md-3">
+          <div class="small-box bg-success">
+            <div class="inner">
+              <h3>{{ total_bonuses|floatformat:0 }}</h3>
+              <p>Tổng thưởng</p>
+            </div>
+            <div class="icon"><i class="fas fa-gift"></i></div>
+          </div>
+        </div>
+        <!-- Deductions -->
+        <div class="col-md-3">
+          <div class="small-box bg-danger">
+            <div class="inner">
+              <h3>{{ total_deductions|floatformat:0 }}</h3>
+              <p>Tổng khấu trừ</p>
+            </div>
+            <div class="icon"><i class="fas fa-minus-circle"></i></div>
+          </div>
+        </div>
+        <!-- Net Salary -->
+        <div class="col-md-3">
+          <div class="small-box bg-warning">
+            <div class="inner">
+              <h3>{{ net_salary|floatformat:0 }}</h3>
+              <p>Lương thực nhận</p>
+            </div>
+            <div class="icon"><i class="fas fa-wallet"></i></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Breakdown -->
+      <div class="card">
+        <div class="card-header bg-gradient-primary">
+          <h3 class="card-title">Chi tiết các thành phần</h3>
+        </div>
+        <div class="card-body">
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Thành phần</th>
+                <th>Loại</th>
+                <th class="text-right">Số tiền (VNĐ)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="bg-light">
+                <td colspan="2"><strong>Lương cơ bản</strong></td>
+                <td class="text-right"><strong>{{ base_salary|floatformat:0 }}</strong></td>
+              </tr>
+              {% for item in breakdown %}
+              <tr>
+                <td>{{ item.rule.component.name }}</td>
+                <td>
+                  {% if item.rule.component.component_type == 'allowance' %}
+                    <span class="badge badge-info">Phụ cấp</span>
+                  {% elif item.rule.component.component_type == 'bonus' %}
+                    <span class="badge badge-success">Thưởng</span>
+                  {% elif item.rule.component.component_type == 'deduction' %}
+                    <span class="badge badge-danger">Khấu trừ</span>
+                  {% elif item.rule.component.component_type == 'overtime' %}
+                    <span class="badge badge-warning">OT</span>
+                  {% endif %}
+                </td>
+                <td class="text-right">{{ item.amount|floatformat:0 }}</td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="3" class="text-center text-muted">Chưa có thành phần nào được áp dụng</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Calculation Summary -->
+      <div class="card">
+        <div class="card-header bg-gradient-success">
+          <h3 class="card-title">Tổng kết tính lương</h3>
+        </div>
+        <div class="card-body">
+          <table class="table table-sm">
+            <tr>
+              <td><strong>Lương cơ bản</strong></td>
+              <td class="text-right">{{ base_salary|floatformat:0 }} VNĐ</td>
+            </tr>
+            <tr>
+              <td>Phụ cấp</td>
+              <td class="text-right text-info">+ {{ total_allowances|floatformat:0 }} VNĐ</td>
+            </tr>
+            <tr>
+              <td>Thưởng</td>
+              <td class="text-right text-success">+ {{ total_bonuses|floatformat:0 }} VNĐ</td>
+            </tr>
+            <tr>
+              <td>Làm thêm giờ</td>
+              <td class="text-right text-warning">+ {{ total_overtime|floatformat:0 }} VNĐ</td>
+            </tr>
+            <tr class="bg-light">
+              <td><strong>Tổng lương gộp</strong></td>
+              <td class="text-right"><strong>{{ gross_salary|floatformat:0 }} VNĐ</strong></td>
+            </tr>
+            <tr>
+              <td>Bảo hiểm xã hội (8%)</td>
+              <td class="text-right text-danger">- {{ social_insurance|floatformat:0 }} VNĐ</td>
+            </tr>
+            <tr>
+              <td>Bảo hiểm y tế (1.5%)</td>
+              <td class="text-right text-danger">- {{ health_insurance|floatformat:0 }} VNĐ</td>
+            </tr>
+            <tr>
+              <td>Bảo hiểm thất nghiệp (1%)</td>
+              <td class="text-right text-danger">- {{ unemployment_insurance|floatformat:0 }} VNĐ</td>
+            </tr>
+            <tr>
+              <td>Thuế TNCN</td>
+              <td class="text-right text-danger">- {{ tax|floatformat:0 }} VNĐ</td>
+            </tr>
+            <tr>
+              <td>Khấu trừ khác</td>
+              <td class="text-right text-danger">- {{ total_deductions|floatformat:0 }} VNĐ</td>
+            </tr>
+            <tr class="bg-success">
+              <td><strong style="font-size: 1.2em;">LƯƠNG THỰC NHẬN</strong></td>
+              <td class="text-right"><strong style="font-size: 1.2em;">{{ net_salary|floatformat:0 }} VNĐ</strong></td>
+            </tr>
+          </table>
+        </div>
+        <div class="card-footer">
+          <p class="text-muted mb-0">
+            <small>
+              <i class="fas fa-info-circle"></i> Thu nhập chịu thuế: {{ taxable_income|floatformat:0 }} VNĐ<br>
+              <i class="fas fa-info-circle"></i> Tổng bảo hiểm: {{ total_insurance|floatformat:0 }} VNĐ
+            </small>
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-12">
+          <a href="{% url 'employee_salary_rules' employee.id %}" class="btn btn-primary">
+            <i class="fas fa-arrow-left"></i> Quay lại
+          </a>
+          <button onclick="window.print()" class="btn btn-secondary">
+            <i class="fas fa-print"></i> In bản tính lương
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+{% endblock content %}

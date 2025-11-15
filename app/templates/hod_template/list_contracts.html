@@ -1,12 +1,13 @@
 {% extends 'hod_template/base_template.html' %}
 {% load static %}
+{% load permission_tags %}
 
 {% block page_title %}
 Quản lý Hợp đồng
 {% endblock page_title %}
 
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="{% url 'home' %}">Trang chủ</a></li>
+<li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
 <li class="breadcrumb-item active">Quản lý hợp đồng</li>
 {% endblock breadcrumb %}
 
@@ -152,7 +153,7 @@ Quản lý Hợp đồng
                     
                     <div class="row">
                         <div class="col-md-12">
-                            <a href="{% url 'list_contracts' %}" class="btn btn-secondary btn-sm">
+                            <a href="{% url 'manage_contracts' %}" class="btn btn-secondary btn-sm">
                                 <i class="fas fa-redo"></i> Xóa bộ lọc
                             </a>
                         </div>
@@ -166,9 +167,16 @@ Quản lý Hợp đồng
             <div class="card-header">
                 <h3 class="card-title"><i class="fas fa-list"></i> Danh sách hợp đồng</h3>
                 <div class="card-tools">
+                    {% if user|has_any_group:'HR,Manager' %}
+                    <a href="{% url 'expiring_contracts' %}" class="btn btn-warning btn-sm mr-2">
+                        <i class="fas fa-exclamation-triangle"></i> HĐ sắp hết hạn
+                    </a>
+                    {% endif %}
+                    {% if user|has_group:'HR' %}
                     <a href="{% url 'create_contract' %}" class="btn btn-success btn-sm">
                         <i class="fas fa-plus"></i> Tạo hợp đồng mới
                     </a>
+                    {% endif %}
                 </div>
             </div>
             <div class="card-body table-responsive p-0">
@@ -190,12 +198,12 @@ Quản lý Hợp đồng
                         {% for contract in contracts %}
                         <tr>
                             <td>{{ forloop.counter }}</td>
-                            <td><strong>{{ contract.contract_number }}</strong></td>
+                            <td><strong>{{ contract.contract_code }}</strong></td>
                             <td>
                                 <strong>{{ contract.employee.name }}</strong><br>
                                 <small class="text-muted">{{ contract.employee.employee_code }}</small>
                             </td>
-                            <td>{{ contract.employee.department.name|default:"N/A" }}</td>
+                            <td>{{ contract.department.name|default:"N/A" }}</td>
                             <td>{{ contract.get_contract_type_display }}</td>
                             <td>{{ contract.start_date|date:"d/m/Y" }}</td>
                             <td>
@@ -229,11 +237,13 @@ Quản lý Hợp đồng
                                        class="btn btn-info btn-sm" title="Xem chi tiết">
                                         <i class="fas fa-eye"></i>
                                     </a>
-                                    {% if contract.status == 'draft' or contract.status == 'active' %}
-                                    <a href="{% url 'edit_contract' contract.id %}" 
-                                       class="btn btn-warning btn-sm" title="Sửa">
-                                        <i class="fas fa-edit"></i>
-                                    </a>
+                                    {% if user|has_group:'HR' %}
+                                        {% if contract.status == 'draft' or contract.status == 'active' %}
+                                        <a href="{% url 'edit_contract' contract.id %}" 
+                                           class="btn btn-warning btn-sm" title="Sửa">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        {% endif %}
                                     {% endif %}
                                 </div>
                             </td>

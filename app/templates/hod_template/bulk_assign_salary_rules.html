@@ -1,0 +1,288 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Gán quy tắc lương hàng loạt
+{% endblock page_title %}
+
+{% block content %}
+
+<div class="content-wrapper">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Gán quy tắc lương hàng loạt</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'salary_components' %}">Cấu hình lương</a></li>
+            <li class="breadcrumb-item active">Gán hàng loạt</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="content">
+    <div class="container-fluid">
+      
+      <form method="POST" id="bulkAssignForm">
+        {% csrf_token %}
+        
+        <!-- Step 1: Select Employees -->
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Bước 1: Chọn nhân viên</h3>
+          </div>
+          <div class="card-body">
+            <div class="row mb-3">
+              <div class="col-md-4">
+                <label>Lọc theo phòng ban:</label>
+                <select class="form-control" id="departmentFilter">
+                  <option value="">-- Tất cả phòng ban --</option>
+                  {% for dept in departments %}
+                  <option value="{{ dept.id }}">{{ dept.name }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <div class="col-md-8">
+                <label>&nbsp;</label><br>
+                <button type="button" class="btn btn-sm btn-info" onclick="selectAll()">
+                  <i class="fas fa-check-square"></i> Chọn tất cả
+                </button>
+                <button type="button" class="btn btn-sm btn-secondary" onclick="deselectAll()">
+                  <i class="fas fa-square"></i> Bỏ chọn tất cả
+                </button>
+                <span class="ml-3" id="selectedCount">Đã chọn: <strong>0</strong> nhân viên</span>
+              </div>
+            </div>
+            
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover" id="employeeTable">
+                <thead>
+                  <tr>
+                    <th width="50">
+                      <input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll()">
+                    </th>
+                    <th>Mã NV</th>
+                    <th>Họ tên</th>
+                    <th>Phòng ban</th>
+                    <th>Chức vụ</th>
+                    <th>Lương cơ bản</th>
+                    <th>Quy tắc hiện tại</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for emp in employees %}
+                  <tr data-department-id="{{ emp.department.id }}">
+                    <td>
+                      <input type="checkbox" name="employee_ids[]" value="{{ emp.id }}" class="employee-checkbox" onchange="updateSelectedCount()">
+                    </td>
+                    <td>{{ emp.employee_code }}</td>
+                    <td>{{ emp.name }}</td>
+                    <td>{{ emp.department.name }}</td>
+                    <td>{{ emp.job_title.name }}</td>
+                    <td>{{ emp.salary|floatformat:0 }} VNĐ</td>
+                    <td>
+                      <span class="badge badge-info">{{ emp.salary_rules.filter.is_active__True.count }}</span>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Select Component and Values -->
+        <div class="card card-success">
+          <div class="card-header">
+            <h3 class="card-title">Bước 2: Chọn thành phần lương và giá trị</h3>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Thành phần lương <span class="text-danger">*</span></label>
+                  <select class="form-control" name="component_id" id="componentSelect" required>
+                    <option value="">-- Chọn thành phần --</option>
+                    {% for comp in components %}
+                    <option value="{{ comp.id }}" 
+                            data-type="{{ comp.component_type }}"
+                            data-method="{{ comp.calculation_method }}"
+                            data-amount="{{ comp.default_amount }}"
+                            data-percentage="{{ comp.percentage }}">
+                      {{ comp.name }} ({{ comp.get_component_type_display }})
+                    </option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Phương thức tính</label>
+                  <input type="text" class="form-control" id="calculationMethod" readonly placeholder="Chọn thành phần để xem">
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Số tiền tùy chỉnh (VNĐ)</label>
+                  <input type="number" class="form-control" name="custom_amount" step="1000" placeholder="Để trống = dùng mặc định">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Phần trăm tùy chỉnh (%)</label>
+                  <input type="number" class="form-control" name="custom_percentage" step="0.1" min="0" max="100" placeholder="Để trống = dùng mặc định">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Công thức tùy chỉnh</label>
+                  <input type="text" class="form-control" name="custom_formula" placeholder="base_salary * 0.2">
+                </div>
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Từ ngày <span class="text-danger">*</span></label>
+                  <input type="date" class="form-control" name="effective_from" required value="{{ today|date:'Y-m-d' }}">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Đến ngày</label>
+                  <input type="date" class="form-control" name="effective_to">
+                  <small class="text-muted">Để trống = vô thời hạn</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Ghi chú</label>
+                  <input type="text" class="form-control" name="notes" placeholder="Lý do gán quy tắc">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit -->
+        <div class="card">
+          <div class="card-footer">
+            <button type="submit" class="btn btn-success btn-lg" id="submitBtn" disabled>
+              <i class="fas fa-check"></i> Gán quy tắc cho <span id="submitCount">0</span> nhân viên
+            </button>
+            <a href="{% url 'salary_components' %}" class="btn btn-secondary btn-lg">
+              <i class="fas fa-times"></i> Hủy
+            </a>
+          </div>
+        </div>
+        
+      </form>
+
+    </div>
+  </section>
+</div>
+
+<script>
+// Update component info when selected
+$('#componentSelect').on('change', function() {
+  const option = $(this).find('option:selected');
+  const method = option.data('method');
+  const amount = option.data('amount');
+  const percentage = option.data('percentage');
+  
+  let methodText = '';
+  if (method === 'fixed') methodText = `Cố định: ${amount.toLocaleString()} VNĐ`;
+  else if (method === 'percentage') methodText = `Phần trăm: ${percentage}%`;
+  else if (method === 'formula') methodText = 'Công thức tùy chỉnh';
+  else if (method === 'hourly') methodText = `Theo giờ: ${amount.toLocaleString()} VNĐ/giờ`;
+  else if (method === 'daily') methodText = `Theo ngày: ${amount.toLocaleString()} VNĐ/ngày`;
+  
+  $('#calculationMethod').val(methodText);
+});
+
+// Department filter
+$('#departmentFilter').on('change', function() {
+  const deptId = $(this).val();
+  
+  if (deptId === '') {
+    $('#employeeTable tbody tr').show();
+  } else {
+    $('#employeeTable tbody tr').each(function() {
+      if ($(this).data('department-id') == deptId) {
+        $(this).show();
+      } else {
+        $(this).hide();
+        $(this).find('.employee-checkbox').prop('checked', false);
+      }
+    });
+  }
+  
+  updateSelectedCount();
+});
+
+// Select/deselect all
+function toggleSelectAll() {
+  const checked = $('#selectAllCheckbox').is(':checked');
+  $('#employeeTable tbody tr:visible .employee-checkbox').prop('checked', checked);
+  updateSelectedCount();
+}
+
+function selectAll() {
+  $('#employeeTable tbody tr:visible .employee-checkbox').prop('checked', true);
+  $('#selectAllCheckbox').prop('checked', true);
+  updateSelectedCount();
+}
+
+function deselectAll() {
+  $('.employee-checkbox').prop('checked', false);
+  $('#selectAllCheckbox').prop('checked', false);
+  updateSelectedCount();
+}
+
+// Update selected count
+function updateSelectedCount() {
+  const count = $('.employee-checkbox:checked').length;
+  $('#selectedCount strong').text(count);
+  $('#submitCount').text(count);
+  
+  if (count > 0) {
+    $('#submitBtn').prop('disabled', false);
+  } else {
+    $('#submitBtn').prop('disabled', true);
+  }
+}
+
+// Form validation
+$('#bulkAssignForm').on('submit', function(e) {
+  const selectedCount = $('.employee-checkbox:checked').length;
+  const componentId = $('#componentSelect').val();
+  
+  if (selectedCount === 0) {
+    e.preventDefault();
+    alert('Vui lòng chọn ít nhất 1 nhân viên!');
+    return false;
+  }
+  
+  if (!componentId) {
+    e.preventDefault();
+    alert('Vui lòng chọn thành phần lương!');
+    return false;
+  }
+  
+  const confirmed = confirm(`Xác nhận gán quy tắc cho ${selectedCount} nhân viên?`);
+  if (!confirmed) {
+    e.preventDefault();
+    return false;
+  }
+});
+</script>
+
+{% endblock content %}

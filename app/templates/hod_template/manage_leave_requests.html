@@ -1,4 +1,5 @@
 {% extends 'hod_template/base_template.html' %}
+{% load permission_tags %}
 
 {% block page_title %}
 Quản Lý Đơn Nghỉ Phép
@@ -151,20 +152,22 @@ Quản Lý Đơn Nghỉ Phép
                                         <i class="fas fa-eye"></i>
                                     </a>
                                     {% if request.status == 'pending' %}
-                                    <form method="post" action="{% url 'approve_leave_request' request.id %}" 
-                                          style="display: inline;">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn btn-sm btn-success" 
-                                                title="Duyệt">
-                                            <i class="fas fa-check"></i>
+                                        {% if request.user|user_in_groups:'HR,Manager' %}
+                                        <form method="post" action="{% url 'approve_leave_request' request.id %}" 
+                                              style="display: inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-success" 
+                                                    title="Duyệt">
+                                                <i class="fas fa-check"></i>
+                                            </button>
+                                        </form>
+                                        <button type="button" class="btn btn-sm btn-danger" 
+                                                data-toggle="modal" 
+                                                data-target="#rejectModal{{ request.id }}"
+                                                title="Từ chối">
+                                            <i class="fas fa-times"></i>
                                         </button>
-                                    </form>
-                                    <button type="button" class="btn btn-sm btn-danger" 
-                                            data-toggle="modal" 
-                                            data-target="#rejectModal{{ request.id }}"
-                                            title="Từ chối">
-                                        <i class="fas fa-times"></i>
-                                    </button>
+                                        {% endif %}
 
                                     <!-- Reject Modal -->
                                     <div class="modal fade" id="rejectModal{{ request.id }}">

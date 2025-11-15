@@ -1,0 +1,195 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Tạo thành phần lương
+{% endblock page_title %}
+
+{% block content %}
+
+<div class="content-wrapper">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Tạo thành phần lương</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'salary_components' %}">Thành phần lương</a></li>
+            <li class="breadcrumb-item active">Tạo mới</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="content">
+    <div class="container-fluid">
+      
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Thông tin thành phần lương</h3>
+        </div>
+        <form method="POST" action="{% url 'create_salary_component' %}">
+          {% csrf_token %}
+          <div class="card-body">
+            
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="code">Mã thành phần <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="code" name="code" required placeholder="VD: PC_VITRI, TH_HIEUSUAT">
+                  <small class="form-text text-muted">Mã duy nhất, không dấu, viết hoa</small>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="name">Tên thành phần <span class="text-danger">*</span></label>
+                  <input type="text" class="form-control" id="name" name="name" required placeholder="Phụ cấp vị trí">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="component_type">Loại thành phần <span class="text-danger">*</span></label>
+                  <select class="form-control" id="component_type" name="component_type" required>
+                    <option value="">-- Chọn loại --</option>
+                    {% for type_code, type_name in component_types %}
+                    <option value="{{ type_code }}">{{ type_name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="calculation_method">Phương thức tính <span class="text-danger">*</span></label>
+                  <select class="form-control" id="calculation_method" name="calculation_method" required onchange="toggleCalculationFields()">
+                    <option value="">-- Chọn phương thức --</option>
+                    {% for method_code, method_name in calculation_methods %}
+                    <option value="{{ method_code }}">{{ method_name }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" id="fixedAmountField" style="display: none;">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="default_amount">Số tiền cố định (VNĐ)</label>
+                  <input type="number" class="form-control" id="default_amount" name="default_amount" value="0" step="1000">
+                </div>
+              </div>
+            </div>
+
+            <div class="row" id="percentageField" style="display: none;">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="percentage">Phần trăm (%)</label>
+                  <input type="number" class="form-control" id="percentage" name="percentage" value="0" step="0.1" min="0" max="100">
+                  <small class="form-text text-muted">% của lương cơ bản</small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" id="formulaField" style="display: none;">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="formula">Công thức tính</label>
+                  <textarea class="form-control" id="formula" name="formula" rows="3" placeholder="base_salary * 0.1 + bonus"></textarea>
+                  <small class="form-text text-muted">
+                    <strong>Biến có sẵn:</strong> base_salary, hours, days, bonus<br>
+                    <strong>Ví dụ:</strong> base_salary * 0.15 (15% lương cơ bản)
+                  </small>
+                </div>
+              </div>
+            </div>
+
+            <div class="row" id="hourlyDailyField" style="display: none;">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="default_amount_rate">Đơn giá (VNĐ/giờ hoặc ngày)</label>
+                  <input type="number" class="form-control" id="default_amount_rate" name="default_amount" value="0" step="1000">
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="description">Mô tả</label>
+                  <textarea class="form-control" id="description" name="description" rows="3" placeholder="Mô tả chi tiết về thành phần lương này"></textarea>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="is_taxable" name="is_taxable" checked>
+                    <label class="custom-control-label" for="is_taxable">Tính thuế TNCN</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="is_mandatory" name="is_mandatory">
+                    <label class="custom-control-label" for="is_mandatory">Bắt buộc áp dụng</label>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="is_active" name="is_active" checked>
+                    <label class="custom-control-label" for="is_active">Kích hoạt</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-save"></i> Lưu
+            </button>
+            <a href="{% url 'salary_components' %}" class="btn btn-secondary">
+              <i class="fas fa-times"></i> Hủy
+            </a>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+<script>
+function toggleCalculationFields() {
+  const method = $('#calculation_method').val();
+  
+  // Hide all fields first
+  $('#fixedAmountField').hide();
+  $('#percentageField').hide();
+  $('#formulaField').hide();
+  $('#hourlyDailyField').hide();
+  
+  // Show relevant field
+  if (method === 'fixed') {
+    $('#fixedAmountField').show();
+  } else if (method === 'percentage') {
+    $('#percentageField').show();
+  } else if (method === 'formula') {
+    $('#formulaField').show();
+  } else if (method === 'hourly' || method === 'daily') {
+    $('#hourlyDailyField').show();
+  }
+}
+</script>
+
+{% endblock content %}

@@ -1,0 +1,216 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Quy tắc lương - {{ employee.name }}
+{% endblock page_title %}
+
+{% block content %}
+
+<div class="content-wrapper">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Quy tắc lương - {{ employee.name }}</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+            <li class="breadcrumb-item"><a href="{% url 'manage_employee' %}">Nhân viên</a></li>
+            <li class="breadcrumb-item active">Quy tắc lương</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="content">
+    <div class="container-fluid">
+      
+      <!-- Employee Info Card -->
+      <div class="card card-primary">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3">
+              <strong><i class="fas fa-user mr-1"></i> Mã NV:</strong> {{ employee.employee_code }}
+            </div>
+            <div class="col-md-3">
+              <strong><i class="fas fa-briefcase mr-1"></i> Chức vụ:</strong> {{ employee.job_title.name }}
+            </div>
+            <div class="col-md-3">
+              <strong><i class="fas fa-building mr-1"></i> Phòng ban:</strong> {{ employee.department.name }}
+            </div>
+            <div class="col-md-3">
+              <strong><i class="fas fa-money-bill mr-1"></i> Lương cơ bản:</strong> {{ employee.salary|floatformat:0 }} VNĐ
+            </div>
+          </div>
+          <div class="row mt-2">
+            <div class="col-12">
+              <a href="{% url 'calculate_salary_preview' employee.id %}" class="btn btn-success" target="_blank">
+                <i class="fas fa-calculator"></i> Xem bản tính lương
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% if missing_mandatory %}
+      <div class="alert alert-warning">
+        <h5><i class="icon fas fa-exclamation-triangle"></i> Thiếu thành phần bắt buộc!</h5>
+        Các thành phần sau cần được gán cho nhân viên:
+        <ul>
+          {% for comp in missing_mandatory %}
+          <li>{{ comp.name }} ({{ comp.get_component_type_display }})</li>
+          {% endfor %}
+        </ul>
+      </div>
+      {% endif %}
+
+      <!-- Active Rules -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Quy tắc đang áp dụng ({{ active_rules.count }})</h3>
+        </div>
+        <div class="card-body">
+          {% if active_rules %}
+          <table class="table table-bordered table-hover">
+            <thead>
+              <tr>
+                <th>Thành phần</th>
+                <th>Loại</th>
+                <th>Giá trị</th>
+                <th>Từ ngày</th>
+                <th>Đến ngày</th>
+                <th>Ghi chú</th>
+                <th>Thao tác</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for rule in active_rules %}
+              <tr>
+                <td><strong>{{ rule.component.name }}</strong></td>
+                <td>
+                  {% if rule.component.component_type == 'allowance' %}
+                    <span class="badge badge-info">{{ rule.component.get_component_type_display }}</span>
+                  {% elif rule.component.component_type == 'bonus' %}
+                    <span class="badge badge-success">{{ rule.component.get_component_type_display }}</span>
+                  {% elif rule.component.component_type == 'deduction' %}
+                    <span class="badge badge-danger">{{ rule.component.get_component_type_display }}</span>
+                  {% else %}
+                    <span class="badge badge-warning">{{ rule.component.get_component_type_display }}</span>
+                  {% endif %}
+                </td>
+                <td>
+                  {% if rule.custom_amount %}
+                    {{ rule.custom_amount|floatformat:0 }} VNĐ
+                  {% elif rule.custom_percentage %}
+                    {{ rule.custom_percentage }}%
+                  {% elif rule.custom_formula %}
+                    <code>{{ rule.custom_formula|truncatewords:5 }}</code>
+                  {% else %}
+                    Mặc định
+                  {% endif %}
+                </td>
+                <td>{{ rule.effective_from|date:"d/m/Y" }}</td>
+                <td>
+                  {% if rule.effective_to %}
+                    {{ rule.effective_to|date:"d/m/Y" }}
+                  {% else %}
+                    <em class="text-muted">Vô thời hạn</em>
+                  {% endif %}
+                </td>
+                <td>{{ rule.notes|truncatewords:5 }}</td>
+                <td>
+                  <form method="POST" action="{% url 'delete_salary_rule' rule.id %}" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Xác nhận xóa quy tắc này?')">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </form>
+                </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          {% else %}
+          <p class="text-muted text-center">Chưa có quy tắc nào được gán.</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Assign New Rule -->
+      <div class="card card-success">
+        <div class="card-header">
+          <h3 class="card-title">Gán quy tắc mới</h3>
+        </div>
+        <form method="POST" action="{% url 'assign_salary_rule' employee.id %}">
+          {% csrf_token %}
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Thành phần <span class="text-danger">*</span></label>
+                  <select class="form-control" name="component_id" required>
+                    <option value="">-- Chọn thành phần --</option>
+                    {% for comp in available_components %}
+                    <option value="{{ comp.id }}">{{ comp.name }} ({{ comp.get_component_type_display }})</option>
+                    {% endfor %}
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Số tiền tùy chỉnh (VNĐ)</label>
+                  <input type="number" class="form-control" name="custom_amount" step="1000">
+                </div>
+              </div>
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Phần trăm tùy chỉnh</label>
+                  <input type="number" class="form-control" name="custom_percentage" step="0.1" min="0" max="100">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Công thức tùy chỉnh</label>
+                  <input type="text" class="form-control" name="custom_formula" placeholder="base_salary * 0.2">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Từ ngày <span class="text-danger">*</span></label>
+                  <input type="date" class="form-control" name="effective_from" required value="{{ today|date:'Y-m-d' }}">
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Đến ngày</label>
+                  <input type="date" class="form-control" name="effective_to">
+                  <small class="text-muted">Để trống = vô thời hạn</small>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Ghi chú</label>
+                  <input type="text" class="form-control" name="notes">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-success">
+              <i class="fas fa-plus"></i> Gán quy tắc
+            </button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </section>
+</div>
+
+{% endblock content %}

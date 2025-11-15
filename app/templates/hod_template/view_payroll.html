@@ -1,5 +1,6 @@
 {% extends 'hod_template/base_template.html' %}
 {% load humanize %}
+{% load permission_tags %}
 {% block page_title %}
 Chi Tiết Bảng Lương
 {% endblock page_title %}
@@ -41,6 +42,7 @@ Chi Tiết Bảng Lương
                                 </div>
                             </div>
                         </div>
+                        {% if can_view_salary %}
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
@@ -97,6 +99,16 @@ Chi Tiết Bảng Lương
                                 </div>
                             </div>
                         </div>
+                        {% else %}
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="alert alert-info">
+                                    <i class="fas fa-info-circle"></i>
+                                    Bạn không có quyền xem thông tin lương chi tiết.
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">

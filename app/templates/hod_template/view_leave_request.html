@@ -1,4 +1,5 @@
 {% extends 'hod_template/base_template.html' %}
+{% load permission_tags %}
 
 {% block page_title %}
 Chi Tiết Đơn Nghỉ Phép
@@ -121,7 +122,7 @@ Chi Tiết Đơn Nghỉ Phép
                         <a href="{% url 'manage_leave_requests' %}" class="btn btn-default">
                             <i class="fas fa-arrow-left"></i> Quay lại
                         </a>
-                        {% if leave_request.status == 'pending' %}
+                        {% if leave_request.status == 'pending' and request.user|user_in_groups:'HR,Manager' %}
                         <form method="post" action="{% url 'approve_leave_request' leave_request.id %}" 
                               style="display: inline;">
                             {% csrf_token %}

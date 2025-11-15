@@ -1,0 +1,113 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}Lịch sử tính lương{% endblock page_title %}
+
+{% block content %}
+<div class="content-wrapper">
+  <section class="content pt-4">
+    <div class="container-fluid">
+      
+      <!-- Filters -->
+      <div class="card">
+        <div class="card-body">
+          <form method="GET" class="form-inline">
+            <div class="form-group mr-2">
+              <label class="mr-2">Nhân viên:</label>
+              <select name="employee" class="form-control">
+                <option value="">-- Tất cả --</option>
+                {% for emp in employees %}
+                <option value="{{ emp.id }}" {% if current_filters.employee == emp.id|stringformat:"s" %}selected{% endif %}>
+                  {{ emp.employee_code }} - {{ emp.name }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group mr-2">
+              <label class="mr-2">Tháng:</label>
+              <select name="month" class="form-control">
+                <option value="">-- Tất cả --</option>
+                {% for m in months %}
+                <option value="{{ m }}" {% if current_filters.month == m|stringformat:"s" %}selected{% endif %}>Tháng {{ m }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="form-group mr-2">
+              <label class="mr-2">Năm:</label>
+              <select name="year" class="form-control">
+                <option value="">-- Tất cả --</option>
+                {% for y in years %}
+                <option value="{{ y }}" {% if current_filters.year == y|stringformat:"s" %}selected{% endif %}>{{ y }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-search"></i> Lọc</button>
+            <a href="{% url 'salary_calculation_history' %}" class="btn btn-secondary ml-2"><i class="fas fa-redo"></i> Reset</a>
+          </form>
+        </div>
+      </div>
+
+      <!-- History Table -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Lịch sử tính lương ({{ logs.paginator.count }} bản ghi)</h3>
+        </div>
+        <div class="card-body table-responsive p-0">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Thời gian</th>
+                <th>Nhân viên</th>
+                <th>Kỳ lương</th>
+                <th>Lương cơ bản</th>
+                <th>Phụ cấp</th>
+                <th>Thưởng</th>
+                <th>Khấu trừ</th>
+                <th>Lương Gross</th>
+                <th>Lương Net</th>
+                <th>Người tính</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for log in logs %}
+              <tr>
+                <td>{{ log.calculated_at|date:"d/m/Y H:i" }}</td>
+                <td>
+                  <strong>{{ log.payroll.employee.name }}</strong><br>
+                  <small class="text-muted">{{ log.payroll.employee.employee_code }}</small>
+                </td>
+                <td>{{ log.payroll.month }}/{{ log.payroll.year }}</td>
+                <td>{{ log.base_salary|floatformat:0 }}</td>
+                <td class="text-success">+{{ log.total_allowances|floatformat:0 }}</td>
+                <td class="text-success">+{{ log.total_bonuses|floatformat:0 }}</td>
+                <td class="text-danger">-{{ log.total_deductions|floatformat:0 }}</td>
+                <td><strong>{{ log.gross_salary|floatformat:0 }}</strong></td>
+                <td><strong class="text-primary">{{ log.net_salary|floatformat:0 }} VNĐ</strong></td>
+                <td>{{ log.calculated_by.name|default:"System" }}</td>
+              </tr>
+              {% empty %}
+              <tr>
+                <td colspan="10" class="text-center text-muted">Không có dữ liệu</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        {% if logs.has_other_pages %}
+        <div class="card-footer clearfix">
+          <ul class="pagination pagination-sm m-0 float-right">
+            {% if logs.has_previous %}
+            <li class="page-item"><a class="page-link" href="?page={{ logs.previous_page_number }}">«</a></li>
+            {% endif %}
+            <li class="page-item active"><a class="page-link" href="#">{{ logs.number }}</a></li>
+            {% if logs.has_next %}
+            <li class="page-item"><a class="page-link" href="?page={{ logs.next_page_number }}">»</a></li>
+            {% endif %}
+          </ul>
+        </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </section>
+</div>
+{% endblock content %}

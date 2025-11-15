@@ -1,5 +1,6 @@
 {% extends 'hod_template/base_template.html' %}
 {% load humanize %}
+{% load permission_tags %}
 {% block page_title %}
 Quản Lý Bảng Lương
 {% endblock page_title %}
@@ -75,7 +76,9 @@ Quản Lý Bảng Lương
                                             <th>Mã NV</th>
                                             <th>Tên NV</th>
                                             <th>Phòng Ban</th>
+                                            {% if is_hr %}
                                             <th>Tổng Lương</th>
+                                            {% endif %}
                                             <th>Trạng Thái</th>
                                             <th>Thao Tác</th>
                                         </tr>
@@ -88,7 +91,9 @@ Quản Lý Bảng Lương
                                             <td>{{ payroll.employee.employee_code }}</td>
                                             <td>{{ payroll.employee.name }}</td>
                                             <td>{{ payroll.employee.department.name }}</td>
+                                            {% if is_hr %}
                                             <td>{{ payroll.total_salary|floatformat:0|intcomma }} VNĐ</td>
+                                            {% endif %}
                                             <td>
                                                 {% if payroll.status == 'pending' %}
                                                 <button class="btn btn-warning btn-sm">Chưa xác nhận</button>
@@ -97,7 +102,7 @@ Quản Lý Bảng Lương
                                                 {% endif %}
                                             </td>
                                             <td>
-                                                {% if payroll.status == 'pending' %}
+                                                {% if payroll.status == 'pending' and request.user|user_in_group:'HR' %}
                                                 <a href="{% url 'edit_payroll' payroll.id %}" class="btn btn-primary btn-sm">Cập nhật</a>
                                                 <button class="btn btn-danger btn-sm delete-payroll" data-id="{{ payroll.id }}">Xóa</button>
                                                 <button class="btn btn-success btn-sm confirm-payroll" data-id="{{ payroll.id }}">Xác nhận</button>

@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import (
     JobTitle, Department, Employee, Attendance, Reward, Discipline, 
     Payroll, Evaluation, LeaveType, LeaveRequest, LeaveBalance,
-    ExpenseCategory, Expense
+    ExpenseCategory, Expense, PermissionAuditLog
 )
 
 # Register your models here.
@@ -94,3 +94,25 @@ class ExpenseAdmin(admin.ModelAdmin):
     date_hierarchy = 'date'
     ordering = ['-created_at']
     readonly_fields = ['created_at', 'updated_at']
+
+@admin.register(PermissionAuditLog)
+class PermissionAuditLogAdmin(admin.ModelAdmin):
+    list_display = ['timestamp', 'username', 'action', 'resource_type', 'resource_id', 'permission_required', 'ip_address']
+    list_filter = ['action', 'resource_type', 'timestamp']
+    search_fields = ['username', 'reason', 'view_name', 'url_path']
+    date_hierarchy = 'timestamp'
+    ordering = ['-timestamp']
+    readonly_fields = [
+        'user', 'username', 'user_groups', 'action', 'resource_type', 
+        'resource_id', 'permission_required', 'timestamp', 'ip_address', 
+        'user_agent', 'reason', 'view_name', 'url_path', 'extra_data'
+    ]
+    
+    def has_add_permission(self, request):
+        # Audit logs should only be created by the system
+        return False
+    
+    def has_delete_permission(self, request, obj=None):
+        # Only superusers can delete audit logs
+        return request.user.is_superuser
+

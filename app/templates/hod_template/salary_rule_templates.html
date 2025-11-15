@@ -1,0 +1,86 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Mẫu quy tắc lương
+{% endblock page_title %}
+
+{% block content %}
+
+<div class="content-wrapper">
+  <div class="content-header">
+    <div class="container-fluid">
+      <div class="row mb-2">
+        <div class="col-sm-6">
+          <h1 class="m-0">Mẫu quy tắc lương</h1>
+        </div>
+        <div class="col-sm-6">
+          <ol class="breadcrumb float-sm-right">
+            <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+            <li class="breadcrumb-item active">Mẫu quy tắc</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="content">
+    <div class="container-fluid">
+      
+      <div class="row mb-3">
+        <div class="col-12">
+          <a href="{% url 'create_salary_rule_template' %}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Tạo mẫu mới
+          </a>
+        </div>
+      </div>
+
+      <div class="row">
+        {% for template in templates %}
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="card-title"><strong>{{ template.name }}</strong></h3>
+              <div class="card-tools">
+                {% if template.is_active %}
+                <span class="badge badge-success">Active</span>
+                {% else %}
+                <span class="badge badge-secondary">Inactive</span>
+                {% endif %}
+              </div>
+            </div>
+            <div class="card-body">
+              <p class="text-muted">{{ template.description|default:"Chưa có mô tả" }}</p>
+              <ul class="list-unstyled">
+                <li><strong>Áp dụng cho:</strong> 
+                  {% if template.job_title %}
+                    Chức vụ: {{ template.job_title.name }}
+                  {% elif template.department %}
+                    Phòng ban: {{ template.department.name }}
+                  {% else %}
+                    Tất cả
+                  {% endif %}
+                </li>
+                <li><strong>Số lượng components:</strong> {{ template.template_items.count }}</li>
+              </ul>
+            </div>
+            <div class="card-footer">
+              <a href="{% url 'edit_salary_rule_template' template.id %}" class="btn btn-sm btn-info">
+                <i class="fas fa-edit"></i> Chỉnh sửa
+              </a>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+          <div class="alert alert-info">
+            <i class="icon fas fa-info"></i> Chưa có mẫu nào. Tạo mẫu để áp dụng nhanh quy tắc cho nhiều nhân viên.
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+    </div>
+  </section>
+</div>
+
+{% endblock content %}
