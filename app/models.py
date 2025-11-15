@@ -331,3 +331,114 @@ class Expense(models.Model):
     def can_be_cancelled(self):
         """Cho phép hủy khi status = pending hoặc approved"""
         return self.status in ['pending', 'approved']
+
+
+class Contract(models.Model):
+    """Model quản lý hợp đồng lao động"""
+    CONTRACT_TYPE_CHOICES = [
+        ('probation', 'Hợp đồng thử việc'),
+        ('definite', 'Hợp đồng xác định thời hạn'),
+        ('indefinite', 'Hợp đồng không xác định thời hạn'),
+        ('seasonal', 'Hợp đồng theo mùa vụ'),
+        ('project', 'Hợp đồng theo dự án'),
+    ]
+    
+    STATUS_CHOICES = [
+        ('draft', 'Nháp'),
+        ('active', 'Đang hiệu lực'),
+        ('expired', 'Hết hạn'),
+        ('terminated', 'Đã chấm dứt'),
+        ('renewed', 'Đã gia hạn'),
+    ]
+    
+    # Basic Information
+    contract_number = models.CharField(max_length=50, unique=True, help_text="Số hợp đồng")
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='contracts')
+    contract_type = models.CharField(max_length=20, choices=CONTRACT_TYPE_CHOICES)
+    
+    # Dates
+    start_date = models.DateField(help_text="Ngày bắt đầu")
+    end_date = models.DateField(null=True, blank=True, help_text="Ngày kết thúc (null nếu vô thời hạn)")
+    signed_date = models.DateField(help_text="Ngày ký")
+    
+    # Financial
+    salary = models.FloatField(help_text="Mức lương theo hợp đồng")
+    salary_coefficient = models.FloatField(default=1.0, help_text="Hệ số lương")
+    allowances = models.FloatField(default=0, help_text="Phụ cấp")
+    
+    # Contract Details
+    job_title = models.ForeignKey(JobTitle, on_delete=models.SET_NULL, null=True)
+    job_description = models.TextField(blank=True, help_text="Mô tả công việc")
+    workplace = models.CharField(max_length=300, help_text="Địa điểm làm việc")
+    working_hours = models.CharField(max_length=100, default="8 giờ/ngày, 5 ngày/tuần", help_text="Thời gian làm việc")
+    
+    # Terms and Conditions
+    terms = models.TextField(help_text="Các điều khoản hợp đồng")
+    benefits = models.TextField(blank=True, help_text="Các quyền lợi")
+    insurance_info = models.TextField(blank=True, help_text="Thông tin bảo hiểm")
+    
+    # Status and Notes
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
+    termination_reason = models.TextField(blank=True, help_text="Lý do chấm dứt")
+    termination_date = models.DateField(null=True, blank=True, help_text="Ngày chấm dứt")
+    notes = models.TextField(blank=True, help_text="Ghi chú")
+    
+    # File Attachment
+    contract_file = models.FileField(upload_to='contracts/', blank=True, help_text="File hợp đồng scan")
+    
+    # Renewal Reference
+    renewed_from = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, 
+                                     related_name='renewals', help_text="Hợp đồng được gia hạn từ")
+    
+    # Metadata
+    created_by = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True, 
+                                   related_name='created_contracts', help_text="Người tạo")
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = 'Contract'
+        verbose_name_plural = 'Contracts'
+    
+    def __str__(self):
+        return f"{self.contract_number} - {self.employee.name} ({self.get_contract_type_display()})"
+    
+    def is_active(self):
+        """Kiểm tra hợp đồng còn hiệu lực"""
+        from django.utils import timezone
+        today = timezone.now().date()
+        
+        if self.status != 'active':
+            return False
+        
+        if self.start_date > today:
+            return False
+        
+        if self.end_date and self.end_date < today:
+            return False
+        
+        return True
+    
+    def days_until_expiration(self):
+        """Số ngày còn lại đến khi hết hạn"""
+        if not self.end_date or self.status != 'active':
+            return None
+        
+        from django.utils import timezone
+        today = timezone.now().date()
+        delta = self.end_date - today
+        return delta.days if delta.days > 0 else 0
+    
+    def is_expiring_soon(self, days=30):
+        """Kiểm tra hợp đồng sắp hết hạn (mặc định 30 ngày)"""
+        days_left = self.days_until_expiration()
+        return days_left is not None and 0 < days_left <= days
+    
+    def can_be_renewed(self):
+        """Kiểm tra có thể gia hạn hay không"""
+        return self.status == 'active' and self.contract_type in ['probation', 'definite', 'seasonal', 'project']
+    
+    def can_be_terminated(self):
+        """Kiểm tra có thể chấm dứt hay không"""
+        return self.status == 'active'
