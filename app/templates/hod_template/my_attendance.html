@@ -1,0 +1,265 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Chấm Công Của Tôi
+{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1><i class="fas fa-calendar-check"></i> Chấm Công Của Tôi</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'employee_dashboard' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Chấm công</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Statistics -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{ total_days }}</h3>
+                        <p>Ngày Làm Việc</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>{{ total_hours|floatformat:1 }}</h3>
+                        <p>Tổng Giờ Công</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{ leave_days }}</h3>
+                        <p>Ngày Nghỉ Phép</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-umbrella-beach"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>{{ absent_days }}</h3>
+                        <p>Ngày Vắng Mặt</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter and List -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-list"></i> Lịch Sử Chấm Công</h3>
+                <div class="card-tools">
+                    <form method="get" class="form-inline">
+                        <div class="form-group mr-2">
+                            <select name="month" class="form-control form-control-sm">
+                                <option value="">Tháng</option>
+                                {% for month in months %}
+                                    <option value="{{ month }}" {% if month_filter == month|stringformat:"s" %}selected{% endif %}>
+                                        Tháng {{ month }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-group mr-2">
+                            <select name="year" class="form-control form-control-sm">
+                                <option value="">Năm</option>
+                                {% for year in years %}
+                                    <option value="{{ year }}" {% if year_filter == year|stringformat:"s" %}selected{% endif %}>
+                                        {{ year }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            <i class="fas fa-filter"></i> Lọc
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Ngày</th>
+                            <th>Thứ</th>
+                            <th>Trạng thái</th>
+                            <th>Giờ công</th>
+                            <th>Ghi chú</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if attendances %}
+                            {% for attendance in attendances %}
+                            <tr>
+                                <td><strong>{{ attendance.date|date:"d/m/Y" }}</strong></td>
+                                <td>{{ attendance.date|date:"l" }}</td>
+                                <td>
+                                    {% if attendance.status == 'Có làm việc' %}
+                                        <span class="badge badge-success">
+                                            <i class="fas fa-check"></i> Có làm việc
+                                        </span>
+                                    {% elif attendance.status == 'Nghỉ phép' %}
+                                        <span class="badge badge-warning">
+                                            <i class="fas fa-umbrella-beach"></i> Nghỉ phép
+                                        </span>
+                                    {% elif attendance.status == 'Nghỉ không phép' %}
+                                        <span class="badge badge-danger">
+                                            <i class="fas fa-times"></i> Nghỉ không phép
+                                        </span>
+                                    {% else %}
+                                        <span class="badge badge-secondary">{{ attendance.status }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if attendance.status == 'Có làm việc' %}
+                                        <strong>{{ attendance.working_hours }}h</strong>
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if attendance.notes %}
+                                        <small>{{ attendance.notes }}</small>
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="5" class="text-center">
+                                    <p class="text-muted my-3">Không có dữ liệu chấm công</p>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            {% if attendances.has_other_pages %}
+            <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                    {% if attendances.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1{% if month_filter %}&month={{ month_filter }}{% endif %}{% if year_filter %}&year={{ year_filter }}{% endif %}">&laquo; Đầu</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ attendances.previous_page_number }}{% if month_filter %}&month={{ month_filter }}{% endif %}{% if year_filter %}&year={{ year_filter }}{% endif %}">Trước</a>
+                        </li>
+                    {% endif %}
+                    
+                    <li class="page-item active">
+                        <a class="page-link">Trang {{ attendances.number }} / {{ attendances.paginator.num_pages }}</a>
+                    </li>
+                    
+                    {% if attendances.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ attendances.next_page_number }}{% if month_filter %}&month={{ month_filter }}{% endif %}{% if year_filter %}&year={{ year_filter }}{% endif %}">Sau</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ attendances.paginator.num_pages }}{% if month_filter %}&month={{ month_filter }}{% endif %}{% if year_filter %}&year={{ year_filter }}{% endif %}">Cuối &raquo;</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Attendance Summary Card -->
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-chart-pie"></i> Tổng Kết Chấm Công</h3>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="info-box bg-success">
+                            <span class="info-box-icon"><i class="fas fa-check-circle"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Làm việc</span>
+                                <span class="info-box-number">{{ total_days }} ngày</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-box bg-info">
+                            <span class="info-box-icon"><i class="fas fa-clock"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Tổng giờ</span>
+                                <span class="info-box-number">{{ total_hours|floatformat:1 }}h</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-box bg-warning">
+                            <span class="info-box-icon"><i class="fas fa-umbrella-beach"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Nghỉ phép</span>
+                                <span class="info-box-number">{{ leave_days }} ngày</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="info-box bg-danger">
+                            <span class="info-box-icon"><i class="fas fa-exclamation-triangle"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Vắng mặt</span>
+                                <span class="info-box-number">{{ absent_days }} ngày</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if month_filter and year_filter %}
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    Thống kê cho <strong>Tháng {{ month_filter }}/{{ year_filter }}</strong>
+                </div>
+                {% else %}
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i>
+                    Thống kê cho <strong>Tháng hiện tại</strong>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}

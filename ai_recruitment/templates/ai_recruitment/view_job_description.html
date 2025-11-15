@@ -1,0 +1,90 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}
+    <h1>Chi tiết Job Description</h1>
+{% endblock page_title %}
+
+{% block main_content %}
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">{{ jd.title }}</h3>
+            <div class="card-tools">
+              <a href="{% url 'job_description_list' %}" class="btn btn-default">
+                <i class="fas fa-arrow-left"></i> Quay lại
+              </a>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label>Mô tả công việc:</label>
+              <div class="p-2 bg-light">{{ jd.description|linebreaks }}</div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Kỹ năng yêu cầu:</label>
+                  <ul class="list-group">
+                    {% for skill in jd.required_skills %}
+                      <li class="list-group-item">{{ skill }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Kỹ năng ưu tiên:</label>
+                  <ul class="list-group">
+                    {% for skill in jd.nice_to_have_skills %}
+                      <li class="list-group-item">{{ skill }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Số năm kinh nghiệm yêu cầu:</label>
+                  <p>{{ jd.required_years_experience }} năm</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Yêu cầu bằng cấp:</label>
+                  <ul class="list-group">
+                    {% for degree in jd.required_degrees %}
+                      <li class="list-group-item">{{ degree }}</li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="row mt-3">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Ngày tạo:</label>
+                  <p>{{ jd.created_at|date:"d/m/Y H:i" }}</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label>Cập nhật lần cuối:</label>
+                  <p>{{ jd.updated_at|date:"d/m/Y H:i" }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main_content %}

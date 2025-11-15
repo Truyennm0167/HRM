@@ -1,0 +1,1895 @@
+INFO 2025-11-13 01:11:51,494 autoreload Watching for file changes with StatReloader
+INFO 2025-11-13 01:11:54,266 HodViews Admin home accessed by admin
+INFO 2025-11-13 01:11:54,307 basehttp "GET / HTTP/1.1" 200 20144
+INFO 2025-11-13 01:11:54,672 basehttp "GET /static/plugins/fontawesome-free/css/all.min.css HTTP/1.1" 200 56842
+INFO 2025-11-13 01:11:54,676 basehttp "GET /static/plugins/daterangepicker/daterangepicker.css HTTP/1.1" 200 8069
+INFO 2025-11-13 01:11:54,681 basehttp "GET /static/plugins/summernote/summernote-bs4.css HTTP/1.1" 200 18647
+INFO 2025-11-13 01:11:54,684 basehttp "GET /static/plugins/jquery/jquery.min.js HTTP/1.1" 200 88145
+INFO 2025-11-13 01:11:54,692 basehttp "GET /static/dist/img/user1-128x128.jpg HTTP/1.1" 200 2879
+INFO 2025-11-13 01:11:54,697 basehttp "GET /static/dist/img/user8-128x128.jpg HTTP/1.1" 200 5060
+INFO 2025-11-13 01:11:54,702 basehttp "GET /static/dist/img/user3-128x128.jpg HTTP/1.1" 200 3511
+INFO 2025-11-13 01:11:54,704 basehttp "GET /static/plugins/jqvmap/jqvmap.min.css HTTP/1.1" 200 613
+INFO 2025-11-13 01:11:54,708 basehttp "GET /static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css HTTP/1.1" 200 9071
+INFO 2025-11-13 01:11:54,708 basehttp "GET /static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css HTTP/1.1" 200 19470
+INFO 2025-11-13 01:11:54,708 basehttp "GET /static/plugins/icheck-bootstrap/icheck-bootstrap.min.css HTTP/1.1" 200 12505
+INFO 2025-11-13 01:11:54,722 basehttp "GET /static/dist/img/AdminLTELogo.png HTTP/1.1" 200 10380
+INFO 2025-11-13 01:11:54,727 basehttp "GET /static/dist/css/adminlte.min.css HTTP/1.1" 200 656504
+INFO 2025-11-13 01:11:54,731 basehttp "GET /static/dist/img/Logo-TITOPS.png HTTP/1.1" 200 17797
+INFO 2025-11-13 01:11:54,735 basehttp "GET /static/plugins/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 78635
+INFO 2025-11-13 01:11:54,737 basehttp "GET /static/plugins/chart.js/Chart.min.js HTTP/1.1" 200 172812
+INFO 2025-11-13 01:11:54,738 basehttp "GET /static/plugins/jquery-ui/jquery-ui.min.js HTTP/1.1" 200 253669
+INFO 2025-11-13 01:11:54,739 basehttp "GET /static/plugins/sparklines/sparkline.js HTTP/1.1" 200 7219
+INFO 2025-11-13 01:11:54,743 basehttp "GET /static/plugins/jqvmap/jquery.vmap.min.js HTTP/1.1" 200 21150
+INFO 2025-11-13 01:11:54,750 basehttp "GET /static/plugins/jqvmap/maps/jquery.vmap.usa.js HTTP/1.1" 200 47712
+INFO 2025-11-13 01:11:54,754 basehttp "GET /static/plugins/jquery-knob/jquery.knob.min.js HTTP/1.1" 200 10804
+INFO 2025-11-13 01:11:54,755 basehttp "GET /static/plugins/moment/moment.min.js HTTP/1.1" 200 53324
+INFO 2025-11-13 01:11:54,760 basehttp "GET /static/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js HTTP/1.1" 200 56879
+INFO 2025-11-13 01:11:54,760 basehttp "GET /static/plugins/daterangepicker/daterangepicker.js HTTP/1.1" 200 67268
+INFO 2025-11-13 01:11:54,762 basehttp "GET /static/plugins/summernote/summernote-bs4.min.js HTTP/1.1" 200 127927
+INFO 2025-11-13 01:11:54,765 basehttp "GET /static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js HTTP/1.1" 200 42076
+INFO 2025-11-13 01:11:54,768 basehttp "GET /static/dist/js/adminlte.js HTTP/1.1" 200 55314
+INFO 2025-11-13 01:11:54,771 basehttp "GET /static/dist/js/pages/dashboard.js HTTP/1.1" 200 7577
+INFO 2025-11-13 01:11:54,775 basehttp "GET /static/dist/js/demo.js HTTP/1.1" 200 12351
+INFO 2025-11-13 01:11:54,871 basehttp "GET /static/plugins/fontawesome-free/webfonts/fa-regular-400.woff2 HTTP/1.1" 200 13584
+INFO 2025-11-13 01:11:54,873 basehttp "GET /static/plugins/fontawesome-free/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 75728
+WARNING 2025-11-13 01:11:55,553 log Not Found: /favicon.ico
+WARNING 2025-11-13 01:11:55,554 basehttp "GET /favicon.ico HTTP/1.1" 404 8366
+INFO 2025-11-13 01:12:02,488 basehttp "GET /department HTTP/1.1" 301 0
+INFO 2025-11-13 01:12:02,508 basehttp "GET /department/ HTTP/1.1" 200 22694
+INFO 2025-11-13 01:12:02,696 basehttp "GET /static/plugins/summernote/font/summernote.woff?1d9aeaaff0a8939558a45be6cd52cd4c HTTP/1.1" 200 10604
+INFO 2025-11-13 01:12:03,467 basehttp "GET /job_title HTTP/1.1" 200 22940
+INFO 2025-11-13 01:12:05,331 basehttp "GET /add_employee HTTP/1.1" 200 27158
+INFO 2025-11-13 01:12:05,401 basehttp "GET /add_employee HTTP/1.1" 200 27158
+INFO 2025-11-13 01:12:06,176 basehttp "GET /employee_list HTTP/1.1" 200 19633
+INFO 2025-11-13 01:12:08,263 basehttp "GET /payroll/calculate/ HTTP/1.1" 200 28279
+INFO 2025-11-13 01:12:09,975 basehttp "GET /payroll/manage/ HTTP/1.1" 200 25589
+INFO 2025-11-13 01:12:12,400 basehttp "GET /attendance/add/ HTTP/1.1" 200 23440
+INFO 2025-11-13 01:12:13,530 basehttp "GET /attendance/manage/ HTTP/1.1" 200 21724
+INFO 2025-11-13 01:12:16,683 basehttp "GET /ai/create-job-description/ HTTP/1.1" 200 19033
+INFO 2025-11-13 01:12:17,995 basehttp "GET /ai/job-descriptions/ HTTP/1.1" 200 18429
+WARNING 2025-11-13 01:12:24,773 log Not Found: /ai/job-descriptions/index3.html
+WARNING 2025-11-13 01:12:24,774 basehttp "GET /ai/job-descriptions/index3.html HTTP/1.1" 404 8426
+INFO 2025-11-13 01:12:29,500 HodViews Admin home accessed by admin
+INFO 2025-11-13 01:12:29,512 basehttp "GET / HTTP/1.1" 200 20144
+INFO 2025-11-13 01:13:05,336 autoreload D:\Study\CT201\Project\hrm\app\validators.py changed, reloading.
+INFO 2025-11-13 01:13:06,447 autoreload Watching for file changes with StatReloader
+INFO 2025-11-13 01:13:08,362 HodViews Admin home accessed by admin
+INFO 2025-11-13 01:13:08,418 basehttp "GET / HTTP/1.1" 200 20144
+INFO 2025-11-13 01:13:11,942 HodViews Admin home accessed by admin
+INFO 2025-11-13 01:13:11,955 basehttp "GET / HTTP/1.1" 200 20144
+INFO 2025-11-13 01:13:15,060 basehttp "GET /department/ HTTP/1.1" 200 22694
+INFO 2025-11-13 01:13:15,980 basehttp "GET /job_title HTTP/1.1" 200 22940
+INFO 2025-11-13 01:13:18,032 basehttp "GET /department/ HTTP/1.1" 200 22694
+INFO 2025-11-13 01:13:32,312 basehttp "GET /attendance/add/ HTTP/1.1" 200 23440
+INFO 2025-11-13 01:13:34,350 basehttp "GET /attendance/manage/ HTTP/1.1" 200 21724
+INFO 2025-11-13 01:14:29,648 basehttp "GET /attendance/add/ HTTP/1.1" 200 23440
+INFO 2025-11-13 01:14:33,815 basehttp "GET /payroll/calculate/ HTTP/1.1" 200 28279
+INFO 2025-11-13 01:14:35,523 basehttp "GET /payroll/manage/ HTTP/1.1" 200 25589
+INFO 2025-11-13 01:14:36,927 HodViews Admin home accessed by admin
+INFO 2025-11-13 01:14:36,936 basehttp "GET / HTTP/1.1" 200 20144
+INFO 2025-11-13 01:37:15,362 autoreload Watching for file changes with StatReloader
+INFO 2025-11-13 01:37:17,519 HodViews Admin home accessed by admin
+INFO 2025-11-13 01:37:17,567 basehttp "GET / HTTP/1.1" 200 20144
+INFO 2025-11-13 01:37:21,707 basehttp "GET /payroll/manage/ HTTP/1.1" 200 25589
+INFO 2025-11-13 01:37:27,658 basehttp "GET /payroll/calculate/ HTTP/1.1" 200 28279
+ERROR 2025-11-13 01:37:30,561 log Internal Server Error: /payroll/save/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 702, in save_payroll
+    month = int(request.POST.get("month"))
+ValueError: invalid literal for int() with base 10: ''
+ERROR 2025-11-13 01:37:30,566 basehttp "POST /payroll/save/ HTTP/1.1" 500 80998
+INFO 2025-11-13 01:37:38,776 basehttp "POST /payroll/get-data/ HTTP/1.1" 200 206
+INFO 2025-11-13 01:37:41,872 basehttp "POST /payroll/save/ HTTP/1.1" 302 0
+INFO 2025-11-13 01:37:41,898 basehttp "GET /payroll/manage/ HTTP/1.1" 200 26990
+INFO 2025-11-13 01:37:45,715 HodViews Payroll ID 1 confirmed by admin
+INFO 2025-11-13 01:37:45,717 basehttp "POST /payroll/confirm/ HTTP/1.1" 200 21
+INFO 2025-11-13 01:37:45,774 basehttp "GET /payroll/manage/ HTTP/1.1" 200 26725
+INFO 2025-11-13 01:55:28,133 basehttp "GET /payroll/view/1/ HTTP/1.1" 200 20919
+INFO 2025-11-13 01:55:30,271 basehttp "GET /payroll/manage/ HTTP/1.1" 200 26725
+INFO 2025-11-13 01:55:31,742 basehttp "GET /payroll/calculate/ HTTP/1.1" 200 28279
+INFO 2025-11-13 01:55:32,467 basehttp "GET /payroll/manage/ HTTP/1.1" 200 26725
+INFO 2025-11-13 01:55:36,239 basehttp "GET /payroll/export/ HTTP/1.1" 200 5632
+INFO 2025-11-13 02:13:13,230 basehttp "GET /payroll/manage/ HTTP/1.1" 200 26725
+INFO 2025-11-13 02:14:15,296 autoreload D:\Study\CT201\Project\hrm\hrm\urls.py changed, reloading.
+INFO 2025-11-13 02:14:16,585 autoreload Watching for file changes with StatReloader
+INFO 2025-11-13 10:10:00,286 autoreload D:\Study\CT201\Project\hrm\app\urls.py changed, reloading.
+INFO 2025-11-13 10:10:04,910 autoreload Watching for file changes with StatReloader
+INFO 2025-11-13 10:10:13,215 basehttp "GET /payroll/manage/ HTTP/1.1" 200 26725
+INFO 2025-11-13 10:10:15,497 HodViews Admin home accessed by admin
+INFO 2025-11-13 10:10:15,535 basehttp "GET / HTTP/1.1" 200 20144
+INFO 2025-11-13 14:32:22,990 basehttp "GET /ai/job-descriptions/ HTTP/1.1" 200 18610
+WARNING 2025-11-13 14:32:23,833 log Not Found: /favicon.ico
+WARNING 2025-11-13 14:32:23,835 basehttp "GET /favicon.ico HTTP/1.1" 404 8702
+INFO 2025-11-13 14:32:26,969 basehttp "GET /login HTTP/1.1" 301 0
+INFO 2025-11-13 14:32:27,024 basehttp "GET /login/ HTTP/1.1" 200 15336
+INFO 2025-11-13 14:37:40,915 autoreload D:\Study\CT201\Project\hrm\hrm\settings.py changed, reloading.
+INFO 2025-11-13 14:37:44,562 autoreload Watching for file changes with StatReloader
+INFO 2025-11-13 14:39:46,163 autoreload Watching for file changes with StatReloader
+ERROR 2025-11-13 14:43:03,952 log Internal Server Error: /login/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 505, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 90, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 72, in resolve_template
+    return select_template(template, using=self.using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 42, in select_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 507, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 568, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 11: 'static'. Did you forget to register or load this tag?
+ERROR 2025-11-13 14:43:03,957 basehttp "GET /login/?id=33eee223-d53e-4c09-a6bc-103cc59d39c0&vscodeBrowserReqId=1763019783524 HTTP/1.1" 500 156105
+INFO 2025-11-13 14:45:00,394 basehttp "GET /test-login/ HTTP/1.1" 200 17764
+INFO 2025-11-13 14:45:09,906 basehttp "GET /logout/ HTTP/1.1" 302 0
+ERROR 2025-11-13 14:45:09,949 log Internal Server Error: /login/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 505, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 90, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 72, in resolve_template
+    return select_template(template, using=self.using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 42, in select_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 507, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 568, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 11: 'static'. Did you forget to register or load this tag?
+ERROR 2025-11-13 14:45:09,953 basehttp "GET /login/ HTTP/1.1" 500 156529
+ERROR 2025-11-13 14:45:15,334 log Internal Server Error: /login/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 505, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 90, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 72, in resolve_template
+    return select_template(template, using=self.using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 42, in select_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 507, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 568, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 11: 'static'. Did you forget to register or load this tag?
+ERROR 2025-11-13 14:45:15,339 basehttp "GET /login/ HTTP/1.1" 500 156367
+INFO 2025-11-13 14:45:38,137 basehttp "GET / HTTP/1.1" 302 0
+ERROR 2025-11-13 14:45:38,211 log Internal Server Error: /login/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 505, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 90, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 72, in resolve_template
+    return select_template(template, using=self.using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 42, in select_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 507, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 568, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 11: 'static'. Did you forget to register or load this tag?
+ERROR 2025-11-13 14:45:38,215 basehttp "GET /login/?next=/ HTTP/1.1" 500 156687
+INFO 2025-11-13 14:45:41,212 basehttp "GET / HTTP/1.1" 302 0
+ERROR 2025-11-13 14:45:41,270 log Internal Server Error: /login/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 505, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 90, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 72, in resolve_template
+    return select_template(template, using=self.using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 42, in select_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 507, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 568, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 11: 'static'. Did you forget to register or load this tag?
+ERROR 2025-11-13 14:45:41,274 basehttp "GET /login/?next=/ HTTP/1.1" 500 156687
+INFO 2025-11-13 14:46:02,867 autoreload D:\Study\CT201\Project\hrm\app\urls.py changed, reloading.
+INFO 2025-11-13 14:46:04,114 autoreload Watching for file changes with StatReloader
+ERROR 2025-11-13 14:46:07,839 log Internal Server Error: /login/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 505, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 90, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 72, in resolve_template
+    return select_template(template, using=self.using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 42, in select_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 507, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 568, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 11: 'static'. Did you forget to register or load this tag?
+ERROR 2025-11-13 14:46:07,847 basehttp "GET /login/?next=/ HTTP/1.1" 500 156824
+ERROR 2025-11-13 14:46:09,018 log Internal Server Error: /login/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 505, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 90, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 72, in resolve_template
+    return select_template(template, using=self.using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 42, in select_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 507, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 568, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 11: 'static'. Did you forget to register or load this tag?
+ERROR 2025-11-13 14:46:09,023 basehttp "GET /login/?next=/ HTTP/1.1" 500 156824
+ERROR 2025-11-13 14:46:11,784 log Internal Server Error: /login/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 505, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 90, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 72, in resolve_template
+    return select_template(template, using=self.using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 42, in select_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 507, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 568, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 11: 'static'. Did you forget to register or load this tag?
+ERROR 2025-11-13 14:46:11,790 basehttp "GET /login/ HTTP/1.1" 500 156367
+INFO 2025-11-13 14:46:16,096 basehttp "GET / HTTP/1.1" 302 0
+ERROR 2025-11-13 14:46:16,155 log Internal Server Error: /login/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 505, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 220, in _get_response
+    response = response.render()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 114, in render
+    self.content = self.rendered_content
+                   ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 90, in rendered_content
+    template = self.resolve_template(self.template_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\response.py", line 72, in resolve_template
+    return select_template(template, using=self.using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 42, in select_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 507, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 568, in invalid_block_tag
+    raise self.error(
+    ...<3 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 11: 'static'. Did you forget to register or load this tag?
+ERROR 2025-11-13 14:46:16,160 basehttp "GET /login/?next=/ HTTP/1.1" 500 156687
+INFO 2025-11-13 14:46:20,266 basehttp "GET /admin HTTP/1.1" 301 0
+INFO 2025-11-13 14:46:20,288 basehttp "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-11-13 14:46:20,554 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4181
+INFO 2025-11-13 14:46:20,805 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2694
+INFO 2025-11-13 14:46:20,805 basehttp "GET /static/admin/css/login.css HTTP/1.1" 200 958
+INFO 2025-11-13 14:46:20,807 basehttp "GET /static/admin/css/base.css HTTP/1.1" 200 21310
+INFO 2025-11-13 14:46:20,808 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 200 18559
+INFO 2025-11-13 14:46:20,821 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2929
+INFO 2025-11-13 14:46:20,821 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 200 1943
+INFO 2025-11-13 14:46:20,846 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-11-13 14:46:28,236 basehttp "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2025-11-13 14:46:28,319 basehttp "GET /admin/ HTTP/1.1" 200 6745
+INFO 2025-11-13 14:46:28,403 basehttp "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+INFO 2025-11-13 14:46:28,422 basehttp "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+INFO 2025-11-13 14:46:28,422 basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+INFO 2025-11-13 14:46:33,227 basehttp "GET /admin/auth/user/ HTTP/1.1" 200 11344
+INFO 2025-11-13 14:46:33,325 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-13 14:46:33,330 basehttp "GET /static/admin/css/changelists.css HTTP/1.1" 200 6566
+INFO 2025-11-13 14:46:33,336 basehttp "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+INFO 2025-11-13 14:46:33,343 basehttp "GET /static/admin/js/core.js HTTP/1.1" 200 5682
+INFO 2025-11-13 14:46:33,345 basehttp "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 8943
+INFO 2025-11-13 14:46:33,364 basehttp "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+INFO 2025-11-13 14:46:33,371 basehttp "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+INFO 2025-11-13 14:46:33,373 basehttp "GET /static/admin/js/actions.js HTTP/1.1" 200 7872
+INFO 2025-11-13 14:46:33,374 basehttp "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+INFO 2025-11-13 14:46:33,379 basehttp "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 292458
+INFO 2025-11-13 14:46:33,383 basehttp "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+INFO 2025-11-13 14:46:33,423 basehttp "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+INFO 2025-11-13 14:46:33,475 basehttp "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 232381
+INFO 2025-11-13 14:46:33,500 basehttp "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+INFO 2025-11-13 14:46:33,507 basehttp "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+INFO 2025-11-13 14:47:32,899 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-13 14:47:32,996 basehttp "GET /static/dist/js/adminlte.min.js HTTP/1.1" 200 24244
+INFO 2025-11-13 14:47:38,291 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-13 14:47:38,311 HodViews Admin home accessed by admin
+INFO 2025-11-13 14:47:38,332 basehttp "GET / HTTP/1.1" 200 20621
+INFO 2025-11-13 14:47:48,636 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-13 14:47:48,650 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-13 14:48:03,913 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-13 14:48:03,925 HodViews Admin home accessed by admin
+INFO 2025-11-13 14:48:03,934 basehttp "GET / HTTP/1.1" 200 20621
+INFO 2025-11-13 14:48:18,917 basehttp "GET /test-login/ HTTP/1.1" 200 17764
+WARNING 2025-11-13 14:49:17,143 log Not Found: /home
+WARNING 2025-11-13 14:49:17,144 basehttp "GET /home HTTP/1.1" 404 8858
+INFO 2025-11-13 14:51:54,799 HodViews Admin home accessed by admin
+INFO 2025-11-13 14:51:54,809 basehttp "GET / HTTP/1.1" 200 20621
+INFO 2025-11-13 14:52:19,687 basehttp "GET /department/ HTTP/1.1" 200 23171
+INFO 2025-11-13 14:52:20,937 basehttp "GET /job_title HTTP/1.1" 200 23417
+INFO 2025-11-13 14:52:21,875 basehttp "GET /department/ HTTP/1.1" 200 23171
+INFO 2025-11-13 14:52:23,442 basehttp "GET /add_employee HTTP/1.1" 200 27635
+INFO 2025-11-13 14:52:23,523 basehttp "GET /add_employee HTTP/1.1" 200 27635
+INFO 2025-11-13 14:52:30,312 basehttp "GET /employee_list HTTP/1.1" 200 20110
+INFO 2025-11-13 14:52:35,745 basehttp "GET /payroll/calculate/ HTTP/1.1" 200 28756
+INFO 2025-11-13 14:52:36,971 basehttp "GET /payroll/manage/ HTTP/1.1" 200 27202
+INFO 2025-11-13 14:52:39,689 basehttp "GET /attendance/add/ HTTP/1.1" 200 23917
+INFO 2025-11-13 14:52:41,860 basehttp "GET /attendance/manage/ HTTP/1.1" 200 22201
+INFO 2025-11-13 14:59:57,908 basehttp "GET /department/ HTTP/1.1" 200 23171
+INFO 2025-11-13 15:12:55,012 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-13 15:12:55,021 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-13 15:12:59,093 basehttp "GET /employee_list HTTP/1.1" 302 0
+INFO 2025-11-13 15:12:59,112 basehttp "GET /login/?next=/employee_list HTTP/1.1" 200 2905
+INFO 2025-11-13 15:13:08,744 basehttp "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-11-13 15:13:08,771 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4181
+INFO 2025-11-13 15:13:16,353 basehttp "GET /department/ HTTP/1.1" 302 0
+INFO 2025-11-13 15:13:16,377 basehttp "GET /login/?next=/department/ HTTP/1.1" 200 2905
+INFO 2025-11-13 15:13:20,044 basehttp "POST /login/?next=/department/ HTTP/1.1" 302 0
+INFO 2025-11-13 15:13:20,097 basehttp "GET /department/ HTTP/1.1" 200 23171
+INFO 2025-11-13 15:15:23,322 basehttp "GET /job_title HTTP/1.1" 200 23417
+INFO 2025-11-13 15:15:26,091 basehttp "GET /department/ HTTP/1.1" 200 23171
+INFO 2025-11-13 15:15:27,484 basehttp "GET /add_employee HTTP/1.1" 200 27635
+INFO 2025-11-13 15:15:27,567 basehttp "GET /add_employee HTTP/1.1" 200 27635
+INFO 2025-11-13 15:15:35,692 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-13 15:15:35,701 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-13 15:15:38,787 basehttp "GET /add_employee HTTP/1.1" 302 0
+INFO 2025-11-13 15:15:38,803 basehttp "GET /login/?next=/add_employee HTTP/1.1" 200 2905
+INFO 2025-11-13 15:15:43,000 basehttp "POST /login/?next=/add_employee HTTP/1.1" 302 0
+INFO 2025-11-13 15:15:43,024 basehttp "GET /add_employee HTTP/1.1" 200 27635
+INFO 2025-11-13 15:15:43,137 basehttp "GET /add_employee HTTP/1.1" 200 27635
+INFO 2025-11-13 15:15:46,432 basehttp "GET /employee_list HTTP/1.1" 200 20110
+INFO 2025-11-13 15:21:53,691 HodViews Admin home accessed by admin
+INFO 2025-11-13 15:21:53,704 basehttp "GET / HTTP/1.1" 200 20621
+INFO 2025-11-13 15:21:58,140 basehttp "GET /department/ HTTP/1.1" 200 23171
+INFO 2025-11-13 15:22:01,782 basehttp "GET /job_title HTTP/1.1" 200 23417
+INFO 2025-11-13 15:22:02,910 basehttp "GET /department/ HTTP/1.1" 200 23171
+INFO 2025-11-13 15:22:04,650 basehttp "GET /job_title HTTP/1.1" 200 23417
+INFO 2025-11-13 15:22:08,298 basehttp "GET /add_employee HTTP/1.1" 200 27635
+INFO 2025-11-13 15:22:08,407 basehttp "GET /add_employee HTTP/1.1" 200 27635
+INFO 2025-11-13 15:22:10,519 basehttp "GET /employee_list HTTP/1.1" 200 20110
+INFO 2025-11-13 15:22:12,930 basehttp "GET /payroll/calculate/ HTTP/1.1" 200 28756
+INFO 2025-11-13 15:22:14,128 basehttp "GET /payroll/manage/ HTTP/1.1" 200 27202
+INFO 2025-11-13 15:22:16,621 basehttp "GET /attendance/add/ HTTP/1.1" 200 23917
+INFO 2025-11-13 15:22:19,455 basehttp "GET /attendance/manage/ HTTP/1.1" 200 22201
+INFO 2025-11-13 15:22:24,205 basehttp "GET /attendance/add/ HTTP/1.1" 200 23917
+INFO 2025-11-13 15:22:25,053 basehttp "GET /attendance/manage/ HTTP/1.1" 200 22201
+INFO 2025-11-13 15:22:25,926 basehttp "GET /attendance/add/ HTTP/1.1" 200 23917
+INFO 2025-11-13 15:22:27,544 basehttp "GET /attendance/add/ HTTP/1.1" 200 23917
+INFO 2025-11-13 15:22:28,755 basehttp "GET /attendance/manage/ HTTP/1.1" 200 22201
+INFO 2025-11-13 15:22:31,263 basehttp "GET /attendance/add/ HTTP/1.1" 200 23917
+INFO 2025-11-13 15:22:35,040 HodViews Admin home accessed by admin
+INFO 2025-11-13 15:22:35,050 basehttp "GET / HTTP/1.1" 200 20621
+INFO 2025-11-13 15:25:11,415 basehttp "GET /ai/create-job-description/ HTTP/1.1" 200 19510
+INFO 2025-11-13 15:25:13,098 basehttp "GET /ai/job-descriptions/ HTTP/1.1" 200 18906
+INFO 2025-11-13 15:25:15,905 basehttp "GET /ai/create-job-description/ HTTP/1.1" 200 19510
+INFO 2025-11-13 15:25:17,219 basehttp "GET /ai/job-descriptions/ HTTP/1.1" 200 18906
+INFO 2025-11-13 15:25:20,350 basehttp "GET /ai/upload-resume/ HTTP/1.1" 200 17180
+INFO 2025-11-13 15:25:21,786 basehttp "GET /ai/resumes/ HTTP/1.1" 200 22221
+INFO 2025-11-13 15:25:41,342 basehttp "GET /ai/create-job-description/ HTTP/1.1" 200 19510
+INFO 2025-11-13 15:25:44,472 basehttp "GET /attendance/add/ HTTP/1.1" 200 23917
+INFO 2025-11-13 15:25:46,019 basehttp "GET /payroll/calculate/ HTTP/1.1" 200 28756
+INFO 2025-11-13 15:43:03,343 HodViews Admin home accessed by admin
+INFO 2025-11-13 15:43:03,355 basehttp "GET / HTTP/1.1" 200 20621
+INFO 2025-11-13 15:43:05,213 basehttp "GET /department/ HTTP/1.1" 200 23171
+INFO 2025-11-13 15:47:47,971 basehttp "GET /department/ HTTP/1.1" 200 23162
+INFO 2025-11-13 17:19:29,578 autoreload Watching for file changes with StatReloader
+INFO 2025-11-13 17:19:32,007 HodViews Admin home accessed by admin
+INFO 2025-11-13 17:19:32,065 basehttp "GET / HTTP/1.1" 200 20612
+INFO 2025-11-13 17:19:37,065 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-13 17:19:37,076 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-13 17:19:41,982 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-13 17:19:41,997 HodViews Admin home accessed by admin
+INFO 2025-11-13 17:19:42,007 basehttp "GET / HTTP/1.1" 200 20612
+INFO 2025-11-13 17:26:50,330 basehttp "GET /department/ HTTP/1.1" 200 23162
+INFO 2025-11-13 17:35:55,575 autoreload Watching for file changes with StatReloader
+INFO 2025-11-13 17:35:58,941 HodViews Admin home accessed by admin
+INFO 2025-11-13 17:35:59,000 basehttp "GET / HTTP/1.1" 200 20667
+INFO 2025-11-13 17:37:10,997 basehttp "GET /department/ HTTP/1.1" 200 23217
+INFO 2025-11-13 17:37:19,008 basehttp "GET /job_title HTTP/1.1" 200 23463
+INFO 2025-11-13 17:37:24,746 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-13 17:37:24,833 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-13 17:37:26,779 basehttp "GET /employee_list HTTP/1.1" 200 20156
+INFO 2025-11-13 17:39:20,864 HodViews Admin home accessed by admin
+INFO 2025-11-13 17:39:20,876 basehttp "GET / HTTP/1.1" 200 20667
+INFO 2025-11-13 17:39:23,690 basehttp "GET /department/ HTTP/1.1" 200 23217
+INFO 2025-11-13 17:39:26,842 basehttp "GET /payroll/calculate/ HTTP/1.1" 200 28802
+INFO 2025-11-13 17:39:29,605 basehttp "GET /job_title HTTP/1.1" 200 23463
+INFO 2025-11-13 17:40:41,883 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-13 17:40:41,974 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-13 21:38:54,562 basehttp "GET /department/ HTTP/1.1" 200 23217
+INFO 2025-11-13 21:38:55,475 basehttp "GET /job_title HTTP/1.1" 200 23463
+INFO 2025-11-13 21:38:57,160 HodViews Admin home accessed by admin
+INFO 2025-11-13 21:38:57,179 basehttp "GET / HTTP/1.1" 200 20667
+INFO 2025-11-13 21:47:47,285 autoreload D:\Study\CT201\Project\hrm\hrm\settings.py changed, reloading.
+INFO 2025-11-13 21:47:48,680 autoreload Watching for file changes with StatReloader
+INFO 2025-11-13 21:48:03,054 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-13 21:48:04,198 autoreload Watching for file changes with StatReloader
+INFO 2025-11-13 22:18:31,951 autoreload Watching for file changes with StatReloader
+INFO 2025-11-13 22:20:25,642 basehttp "GET /department/ HTTP/1.1" 200 23217
+INFO 2025-11-13 22:20:27,884 basehttp "GET /job_title HTTP/1.1" 200 23463
+INFO 2025-11-13 22:20:28,901 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-13 22:20:29,006 basehttp "GET /add_employee HTTP/1.1" 200 27681
+WARNING 2025-11-14 09:32:37,589 HodViews Validation error in add_employee: ['Địa chỉ email không hợp lệ']
+ERROR 2025-11-14 09:32:37,591 HodViews Error adding employee: Reverse for 'add_employee' not found. 'add_employee' is not a valid view function or pattern name.
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 112, in add_employee_save
+    validate_email(employee_email)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\app\validators.py", line 125, in validate_email
+    raise ValidationError(_('Địa chỉ email không hợp lệ'))
+django.core.exceptions.ValidationError: ['Địa chỉ email không hợp lệ']
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 118, in add_employee_save
+    return redirect('add_employee')
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 48, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+                          ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 145, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'add_employee' not found. 'add_employee' is not a valid view function or pattern name.
+INFO 2025-11-14 09:32:37,736 basehttp "POST /add_employee_save HTTP/1.1" 302 0
+INFO 2025-11-14 09:32:37,767 basehttp "GET /add_employee HTTP/1.1" 200 27962
+INFO 2025-11-14 09:32:37,886 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-14 09:32:40,260 basehttp "GET /employee_list HTTP/1.1" 200 20156
+INFO 2025-11-14 09:33:06,591 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-14 09:33:06,661 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-14 09:33:14,435 basehttp "GET /employee_list HTTP/1.1" 200 20156
+INFO 2025-11-14 09:33:16,468 basehttp "GET /employee/1/ HTTP/1.1" 200 23102
+INFO 2025-11-14 09:33:16,643 basehttp "GET /media/avatars/MinhTruyen_1x1_2sQsC1Q.jpg HTTP/1.1" 200 411816
+INFO 2025-11-14 09:33:23,587 basehttp "GET /employee_list HTTP/1.1" 200 20156
+INFO 2025-11-14 09:33:25,189 basehttp "GET /employee/1/ HTTP/1.1" 200 23102
+INFO 2025-11-14 09:33:26,994 basehttp "GET /employee_list HTTP/1.1" 200 20156
+INFO 2025-11-14 09:34:19,260 basehttp "GET /employee_list?search=&department=1&status= HTTP/1.1" 200 19387
+INFO 2025-11-14 09:34:21,431 basehttp "GET /employee_list?search=&department=2&status= HTTP/1.1" 200 19398
+INFO 2025-11-14 09:34:23,191 basehttp "GET /employee_list?search=&department=2&status=0 HTTP/1.1" 200 18629
+INFO 2025-11-14 09:34:30,281 basehttp "GET /employee_list?search=&department=2&status=2 HTTP/1.1" 200 19406
+INFO 2025-11-14 09:34:33,784 basehttp "GET /employee_list?search=&department=2&status= HTTP/1.1" 200 19398
+INFO 2025-11-14 09:34:34,953 basehttp "GET /employee_list?search=&department=2&status= HTTP/1.1" 200 19398
+INFO 2025-11-14 09:34:38,499 basehttp "GET /employee_list?search=&department=2&status= HTTP/1.1" 200 19398
+INFO 2025-11-14 10:00:50,770 basehttp "GET /employee_list?search=&department=&status= HTTP/1.1" 200 20156
+INFO 2025-11-14 10:00:54,470 basehttp "GET /employee_list?search=&department=&status=0 HTTP/1.1" 200 19387
+INFO 2025-11-14 10:00:56,970 basehttp "GET /employee_list?search=&department=&status= HTTP/1.1" 200 20156
+INFO 2025-11-14 10:01:00,881 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-14 10:01:00,962 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-14 10:01:02,526 basehttp "GET /employee_list HTTP/1.1" 200 20156
+INFO 2025-11-14 10:01:03,472 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-14 10:01:03,550 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-14 10:04:20,432 HodViews Employee Nguyễn Sơn Tùng (NV0003) created by admin
+INFO 2025-11-14 10:04:20,433 basehttp "POST /add_employee_save HTTP/1.1" 302 0
+INFO 2025-11-14 10:04:20,452 basehttp "GET /add_employee HTTP/1.1" 200 27803
+INFO 2025-11-14 10:04:20,558 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-14 10:04:24,800 basehttp "GET /employee_list HTTP/1.1" 200 20921
+INFO 2025-11-14 10:04:26,855 basehttp "GET /employee/3/ HTTP/1.1" 200 23079
+INFO 2025-11-14 10:04:26,955 basehttp "GET /media/avatars/d1ce923ba8234cec9ffae94871ba99a1_sontung.jpg HTTP/1.1" 200 576065
+INFO 2025-11-14 10:04:42,533 basehttp "GET /employee/update/3/ HTTP/1.1" 200 26147
+INFO 2025-11-14 10:04:42,629 basehttp "GET /employee/update/3/ HTTP/1.1" 200 26147
+INFO 2025-11-14 10:04:47,102 basehttp "POST /update_employee_save/ HTTP/1.1" 302 0
+INFO 2025-11-14 10:04:47,120 basehttp "GET /employee/3/ HTTP/1.1" 200 23079
+INFO 2025-11-14 10:04:47,192 basehttp "GET /media/avatars/d1ce923ba8234cec9ffae94871ba99a1_sontung.jpg HTTP/1.1" 304 0
+INFO 2025-11-14 10:04:54,381 basehttp "GET /employee_list HTTP/1.1" 200 20921
+INFO 2025-11-14 10:04:57,430 basehttp "GET /payroll/calculate/ HTTP/1.1" 200 28939
+INFO 2025-11-14 10:05:00,688 basehttp "GET /payroll/manage/ HTTP/1.1" 200 27248
+INFO 2025-11-14 10:05:02,454 basehttp "GET /attendance/add/ HTTP/1.1" 200 25290
+INFO 2025-11-14 10:05:45,611 basehttp "GET /attendance/manage/ HTTP/1.1" 200 22247
+INFO 2025-11-14 13:18:49,543 HodViews Admin home accessed by admin
+INFO 2025-11-14 13:18:49,737 basehttp "GET / HTTP/1.1" 200 21272
+INFO 2025-11-14 13:18:52,549 basehttp "GET /add_employee HTTP/1.1" 200 27807
+INFO 2025-11-14 13:18:52,637 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-14 13:18:54,213 HodViews Admin home accessed by admin
+INFO 2025-11-14 13:18:54,224 basehttp "GET / HTTP/1.1" 200 21272
+INFO 2025-11-14 13:18:55,937 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-14 13:18:56,020 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-14 13:18:57,778 basehttp "GET /department/ HTTP/1.1" 200 23301
+INFO 2025-11-14 13:18:58,571 basehttp "GET /job_title HTTP/1.1" 200 23463
+INFO 2025-11-14 13:19:03,345 basehttp "GET /department/ HTTP/1.1" 200 23301
+INFO 2025-11-14 13:19:12,520 basehttp "GET /job_title HTTP/1.1" 200 23463
+INFO 2025-11-14 13:19:18,131 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-14 13:19:18,215 basehttp "GET /add_employee HTTP/1.1" 200 27681
+WARNING 2025-11-14 13:19:23,610 log Not Found: /index3.html
+WARNING 2025-11-14 13:19:23,611 basehttp "GET /index3.html HTTP/1.1" 404 8879
+INFO 2025-11-14 13:19:27,753 HodViews Admin home accessed by admin
+INFO 2025-11-14 13:19:27,770 basehttp "GET / HTTP/1.1" 200 21272
+INFO 2025-11-14 13:19:37,550 basehttp "GET /ai/create-job-description/ HTTP/1.1" 200 19556
+INFO 2025-11-14 13:20:21,274 basehttp "GET /ai/job-descriptions/ HTTP/1.1" 200 18952
+INFO 2025-11-14 13:20:23,760 basehttp "GET /ai/upload-resume/ HTTP/1.1" 200 17226
+INFO 2025-11-14 13:20:25,432 basehttp "GET /ai/resumes/ HTTP/1.1" 200 22267
+INFO 2025-11-14 13:30:23,004 basehttp "GET /department/ HTTP/1.1" 200 23301
+INFO 2025-11-14 13:30:26,542 basehttp "GET /job_title HTTP/1.1" 200 23463
+INFO 2025-11-14 13:30:27,946 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-14 13:30:28,030 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-14 13:30:28,644 basehttp "GET /employee_list HTTP/1.1" 200 20921
+INFO 2025-11-14 13:30:31,167 basehttp "GET /employee/1/ HTTP/1.1" 200 23102
+INFO 2025-11-14 13:30:38,564 basehttp "GET /payroll/calculate/ HTTP/1.1" 200 28939
+INFO 2025-11-14 13:30:43,846 HodViews Admin home accessed by admin
+INFO 2025-11-14 13:30:43,867 basehttp "GET / HTTP/1.1" 200 21272
+INFO 2025-11-14 13:30:48,143 basehttp "GET /employee_list HTTP/1.1" 200 20921
+INFO 2025-11-14 13:31:43,529 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-14 13:31:43,620 basehttp "GET /add_employee HTTP/1.1" 200 27681
+INFO 2025-11-14 13:31:45,355 basehttp "GET /employee_list HTTP/1.1" 200 20921
+INFO 2025-11-14 13:31:57,388 basehttp "GET /ai/create-job-description/ HTTP/1.1" 200 19556
+INFO 2025-11-14 13:32:09,982 basehttp "GET /ai/job-descriptions/ HTTP/1.1" 200 18952
+INFO 2025-11-14 13:32:42,963 basehttp "GET /attendance/add/ HTTP/1.1" 200 25290
+INFO 2025-11-14 13:32:45,026 basehttp "GET /attendance/manage/ HTTP/1.1" 200 22247
+INFO 2025-11-14 13:49:24,672 autoreload Watching for file changes with StatReloader
+INFO 2025-11-14 13:49:33,131 basehttp "GET /attendance/manage/ HTTP/1.1" 200 22247
+INFO 2025-11-14 16:54:22,461 HodViews Admin home accessed by admin
+INFO 2025-11-14 16:54:22,538 basehttp "GET / HTTP/1.1" 200 21272
+INFO 2025-11-14 16:54:34,038 basehttp "GET /department/ HTTP/1.1" 200 23301
+INFO 2025-11-14 16:54:35,627 basehttp "GET /employee_list HTTP/1.1" 200 20921
+INFO 2025-11-14 16:54:37,898 basehttp "GET /employee/1/ HTTP/1.1" 200 23102
+INFO 2025-11-14 16:54:43,311 basehttp "GET /ai/create-job-description/ HTTP/1.1" 200 19556
+INFO 2025-11-14 16:54:45,980 basehttp "GET /ai/job-descriptions/ HTTP/1.1" 200 18952
+INFO 2025-11-14 16:54:47,642 basehttp "GET /ai/resumes/ HTTP/1.1" 200 22267
+INFO 2025-11-14 16:54:52,912 basehttp "GET /ai/resume/1/ HTTP/1.1" 200 24746
+INFO 2025-11-14 16:55:32,081 basehttp "GET /ai/resume/1/ HTTP/1.1" 200 24746
+INFO 2025-11-14 16:55:39,583 basehttp "GET /ai/create-job-description/ HTTP/1.1" 200 19556
+INFO 2025-11-14 16:55:40,158 basehttp "GET /ai/job-descriptions/ HTTP/1.1" 200 18952
+INFO 2025-11-14 16:55:43,488 basehttp "GET /ai/job-description/1/ HTTP/1.1" 200 20514
+INFO 2025-11-14 16:55:52,096 basehttp "GET /ai/create-job-description/ HTTP/1.1" 200 19556
+INFO 2025-11-14 16:55:52,686 basehttp "GET /ai/resumes/ HTTP/1.1" 200 22267
+INFO 2025-11-14 16:55:57,001 basehttp "GET /ai/resume/2/ HTTP/1.1" 200 24941
+INFO 2025-11-14 16:56:09,922 basehttp "GET /ai/resumes/ HTTP/1.1" 200 22267
+INFO 2025-11-14 16:56:11,882 basehttp "GET /ai/resume/1/ HTTP/1.1" 200 24746
+INFO 2025-11-14 16:56:34,133 basehttp "GET /ai/resumes/ HTTP/1.1" 200 22267
+INFO 2025-11-14 16:56:37,830 basehttp "GET /ai/job-descriptions/ HTTP/1.1" 200 18952
+INFO 2025-11-14 16:56:39,917 basehttp "GET /ai/resumes/ HTTP/1.1" 200 22267
+INFO 2025-11-14 16:56:41,687 basehttp "GET /ai/resume/2/ HTTP/1.1" 200 24941
+INFO 2025-11-14 17:09:47,952 autoreload D:\Study\CT201\Project\hrm\app\models.py changed, reloading.
+INFO 2025-11-14 17:09:52,330 autoreload Watching for file changes with StatReloader
+INFO 2025-11-14 17:22:02,500 autoreload Watching for file changes with StatReloader
+INFO 2025-11-14 17:22:09,812 basehttp "GET /ai/resume/2/ HTTP/1.1" 200 26258
+ERROR 2025-11-14 17:22:12,958 log Internal Server Error: /leave/request/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 1053, in request_leave
+    return render(request, "hod_template/request_leave.html", {
+        "form": form,
+        "leave_balances": leave_balances
+    })
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'admin_home' not found. 'admin_home' is not a valid view function or pattern name.
+ERROR 2025-11-14 17:22:12,972 basehttp "GET /leave/request/ HTTP/1.1" 500 167386
+ERROR 2025-11-14 17:22:23,276 log Internal Server Error: /leave/history/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 1067, in leave_history
+    return render(request, "hod_template/leave_history.html", {
+        "leave_requests": leave_requests
+    })
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'admin_home' not found. 'admin_home' is not a valid view function or pattern name.
+ERROR 2025-11-14 17:22:23,282 basehttp "GET /leave/history/ HTTP/1.1" 500 162417
+ERROR 2025-11-14 17:22:43,961 log Internal Server Error: /leave/request/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 1053, in request_leave
+    return render(request, "hod_template/request_leave.html", {
+        "form": form,
+        "leave_balances": leave_balances
+    })
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'admin_home' not found. 'admin_home' is not a valid view function or pattern name.
+ERROR 2025-11-14 17:22:43,965 basehttp "GET /leave/request/ HTTP/1.1" 500 167386
+INFO 2025-11-14 17:23:54,009 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-14 17:23:55,123 autoreload Watching for file changes with StatReloader
+INFO 2025-11-14 17:23:58,528 basehttp "GET /ai/resume/2/ HTTP/1.1" 200 26258
+INFO 2025-11-14 17:23:59,809 HodViews Admin home accessed by admin
+INFO 2025-11-14 17:23:59,826 basehttp "GET / HTTP/1.1" 200 22589
+ERROR 2025-11-14 17:24:03,060 log Internal Server Error: /leave/request/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 1053, in request_leave
+    return render(request, "hod_template/request_leave.html", {
+        "form": form,
+        "leave_balances": leave_balances
+    })
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'admin_home' not found. 'admin_home' is not a valid view function or pattern name.
+ERROR 2025-11-14 17:24:03,070 basehttp "GET /leave/request/ HTTP/1.1" 500 167374
+INFO 2025-11-14 21:56:51,225 basehttp "GET /admin HTTP/1.1" 301 0
+INFO 2025-11-14 21:56:51,537 basehttp "GET /admin/ HTTP/1.1" 200 11666
+INFO 2025-11-14 21:56:51,898 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2929
+INFO 2025-11-14 21:56:51,898 basehttp "GET /static/admin/css/base.css HTTP/1.1" 200 21310
+INFO 2025-11-14 21:56:51,908 basehttp "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+INFO 2025-11-14 21:56:51,912 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2694
+INFO 2025-11-14 21:56:51,913 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 200 18559
+INFO 2025-11-14 21:56:51,937 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-11-14 21:56:51,937 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 200 1943
+INFO 2025-11-14 21:56:51,946 basehttp "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+INFO 2025-11-14 21:56:51,946 basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+INFO 2025-11-14 21:57:03,437 basehttp "GET /admin/app/attendance/add/ HTTP/1.1" 200 16157
+INFO 2025-11-14 21:57:03,566 basehttp "GET /static/admin/css/forms.css HTTP/1.1" 200 9090
+INFO 2025-11-14 21:57:03,570 basehttp "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+INFO 2025-11-14 21:57:03,579 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-14 21:57:03,581 basehttp "GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 200 19319
+INFO 2025-11-14 21:57:03,582 basehttp "GET /static/admin/js/calendar.js HTTP/1.1" 200 8466
+INFO 2025-11-14 21:57:03,602 basehttp "GET /static/admin/css/widgets.css HTTP/1.1" 200 11921
+INFO 2025-11-14 21:57:03,609 basehttp "GET /static/admin/js/core.js HTTP/1.1" 200 5682
+INFO 2025-11-14 21:57:03,609 basehttp "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 8943
+INFO 2025-11-14 21:57:03,610 basehttp "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+INFO 2025-11-14 21:57:03,621 basehttp "GET /static/admin/js/actions.js HTTP/1.1" 200 7872
+INFO 2025-11-14 21:57:03,630 basehttp "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+INFO 2025-11-14 21:57:03,637 basehttp "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 292458
+INFO 2025-11-14 21:57:03,639 basehttp "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 586
+INFO 2025-11-14 21:57:03,645 basehttp "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+INFO 2025-11-14 21:57:03,683 basehttp "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 232381
+INFO 2025-11-14 21:57:03,686 basehttp "GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+INFO 2025-11-14 21:57:03,779 basehttp "GET /static/admin/img/icon-clock.svg HTTP/1.1" 200 677
+INFO 2025-11-14 21:57:03,779 basehttp "GET /static/admin/img/icon-calendar.svg HTTP/1.1" 200 1086
+INFO 2025-11-14 21:57:11,061 basehttp "GET /admin/app/attendance/ HTTP/1.1" 200 12991
+INFO 2025-11-14 21:57:11,161 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-14 21:57:11,172 basehttp "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+INFO 2025-11-14 21:57:11,172 basehttp "GET /static/admin/css/changelists.css HTTP/1.1" 200 6566
+INFO 2025-11-14 21:57:11,208 basehttp "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+INFO 2025-11-14 21:57:11,217 basehttp "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+INFO 2025-11-14 21:57:14,321 basehttp "GET /admin/app/department/ HTTP/1.1" 200 13580
+INFO 2025-11-14 21:57:14,430 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-14 21:57:16,625 basehttp "GET /admin/app/discipline/ HTTP/1.1" 200 12494
+INFO 2025-11-14 21:57:16,709 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-14 21:57:18,975 basehttp "GET /admin/app/employee/ HTTP/1.1" 200 16070
+INFO 2025-11-14 21:57:19,064 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-14 21:57:22,445 basehttp "GET /admin/app/evaluation/ HTTP/1.1" 200 11946
+INFO 2025-11-14 21:57:22,527 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-14 21:57:23,432 basehttp "GET /admin/app/jobtitle/ HTTP/1.1" 200 13224
+INFO 2025-11-14 21:57:23,525 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-14 21:57:24,754 basehttp "GET /admin/app/leavebalance/ HTTP/1.1" 200 12677
+INFO 2025-11-14 21:57:24,838 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-14 21:57:25,805 basehttp "GET /admin/app/leaverequest/ HTTP/1.1" 200 13602
+INFO 2025-11-14 21:57:25,892 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-14 21:57:27,904 basehttp "GET /admin/app/leavetype/ HTTP/1.1" 200 18473
+INFO 2025-11-14 21:57:28,037 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-14 21:57:28,053 basehttp "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+INFO 2025-11-14 21:57:28,075 basehttp "GET /static/admin/img/icon-no.svg HTTP/1.1" 200 560
+INFO 2025-11-14 21:57:28,088 basehttp "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+INFO 2025-11-14 21:57:28,631 basehttp "GET /admin/app/payroll/ HTTP/1.1" 200 15035
+INFO 2025-11-14 21:57:28,730 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-14 21:57:30,020 basehttp "GET /admin/app/leavetype/ HTTP/1.1" 200 18473
+INFO 2025-11-14 21:57:30,102 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-14 21:57:33,263 basehttp "GET /admin/app/payroll/ HTTP/1.1" 200 15035
+INFO 2025-11-14 21:57:33,354 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-14 21:57:34,844 basehttp "GET /admin/app/reward/ HTTP/1.1" 200 12772
+INFO 2025-11-14 21:57:34,913 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-14 21:57:38,164 basehttp "GET /admin/auth/user/ HTTP/1.1" 200 14832
+INFO 2025-11-14 21:57:38,247 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-14 22:01:40,241 HodViews Admin home accessed by admin
+INFO 2025-11-14 22:01:40,269 basehttp "GET / HTTP/1.1" 200 22589
+ERROR 2025-11-14 22:01:44,140 log Internal Server Error: /leave/request/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 1053, in request_leave
+    return render(request, "hod_template/request_leave.html", {
+        "form": form,
+        "leave_balances": leave_balances
+    })
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for '' not found. '' is not a valid view function or pattern name.
+ERROR 2025-11-14 22:01:44,148 basehttp "GET /leave/request/ HTTP/1.1" 500 167129
+ERROR 2025-11-14 22:01:58,657 log Internal Server Error: /leave/request/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 1053, in request_leave
+    return render(request, "hod_template/request_leave.html", {
+        "form": form,
+        "leave_balances": leave_balances
+    })
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'admin_home' not found. 'admin_home' is not a valid view function or pattern name.
+ERROR 2025-11-14 22:01:58,663 basehttp "GET /leave/request/ HTTP/1.1" 500 167511
+ERROR 2025-11-14 22:02:24,483 log Internal Server Error: /leave/request/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 1053, in request_leave
+    return render(request, "hod_template/request_leave.html", {
+        "form": form,
+        "leave_balances": leave_balances
+    })
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'admin_home' not found. 'admin_home' is not a valid view function or pattern name.
+ERROR 2025-11-14 22:02:24,487 basehttp "GET /leave/request/ HTTP/1.1" 500 167550
+ERROR 2025-11-14 22:02:29,300 log Internal Server Error: /leave/request/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 1053, in request_leave
+    return render(request, "hod_template/request_leave.html", {
+        "form": form,
+        "leave_balances": leave_balances
+    })
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'admin_home' not found. 'admin_home' is not a valid view function or pattern name.
+ERROR 2025-11-14 22:02:29,306 basehttp "GET /leave/request/ HTTP/1.1" 500 167550
+ERROR 2025-11-14 22:03:20,126 log Internal Server Error: /leave/request/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 1053, in request_leave
+    return render(request, "hod_template/request_leave.html", {
+        "form": form,
+        "leave_balances": leave_balances
+    })
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'admin_home' not found. 'admin_home' is not a valid view function or pattern name.
+ERROR 2025-11-14 22:03:20,132 basehttp "GET /leave/request/ HTTP/1.1" 500 167511
+INFO 2025-11-14 22:04:08,727 autoreload Watching for file changes with StatReloader
+WARNING 2025-11-14 22:04:10,384 log Not Found: /leave
+WARNING 2025-11-14 22:04:10,385 basehttp "GET /leave HTTP/1.1" 404 10389
+INFO 2025-11-14 22:04:18,336 autoreload D:\Study\CT201\Project\hrm\hrm\urls.py changed, reloading.
+INFO 2025-11-14 22:04:19,661 autoreload Watching for file changes with StatReloader
+INFO 2025-11-14 22:04:33,941 autoreload D:\Study\CT201\Project\hrm\hrm\urls.py changed, reloading.
+INFO 2025-11-14 22:04:35,065 autoreload Watching for file changes with StatReloader
+INFO 2025-11-14 22:04:41,848 HodViews Admin home accessed by admin
+INFO 2025-11-14 22:04:41,916 basehttp "GET / HTTP/1.1" 200 22589
+INFO 2025-11-14 22:04:42,379 autoreload D:\Study\CT201\Project\hrm\hrm\urls.py changed, reloading.
+INFO 2025-11-14 22:04:43,953 autoreload Watching for file changes with StatReloader
+INFO 2025-11-14 22:04:45,246 basehttp "GET /leave/types/ HTTP/1.1" 200 40572
+INFO 2025-11-14 22:05:05,433 autoreload Watching for file changes with StatReloader
+INFO 2025-11-14 22:05:12,500 basehttp "GET /leave/request/ HTTP/1.1" 200 22695
+INFO 2025-11-14 22:05:31,935 basehttp "GET /leave/history/ HTTP/1.1" 200 20281
+INFO 2025-11-14 22:05:36,064 basehttp "GET /leave/manage/ HTTP/1.1" 200 22144
+INFO 2025-11-14 22:05:42,973 HodViews Admin home accessed by admin
+INFO 2025-11-14 22:05:42,997 basehttp "GET / HTTP/1.1" 200 22589
+INFO 2025-11-14 22:05:46,033 basehttp "GET /leave/request/ HTTP/1.1" 200 22695
+INFO 2025-11-14 22:05:49,732 basehttp "GET /leave/history/ HTTP/1.1" 200 20281
+INFO 2025-11-14 22:05:53,665 basehttp "GET /leave/manage/ HTTP/1.1" 200 22144
+INFO 2025-11-14 22:05:58,420 basehttp "GET /leave/history/ HTTP/1.1" 200 20281
+INFO 2025-11-14 22:05:59,512 basehttp "GET /leave/request/ HTTP/1.1" 200 22695
+INFO 2025-11-14 22:06:02,893 basehttp "GET /leave/types/ HTTP/1.1" 200 40572
+INFO 2025-11-14 22:06:39,231 basehttp "GET /leave/request/ HTTP/1.1" 200 22695
+INFO 2025-11-14 22:06:40,413 basehttp "GET /leave/types/ HTTP/1.1" 200 40572
+INFO 2025-11-14 22:06:57,423 basehttp "GET /leave/manage/ HTTP/1.1" 200 22144
+INFO 2025-11-14 22:06:58,452 basehttp "GET /leave/history/ HTTP/1.1" 200 20281
+INFO 2025-11-14 22:06:59,199 basehttp "GET /leave/request/ HTTP/1.1" 200 22695
+INFO 2025-11-14 22:08:11,369 basehttp "GET /leave/types/ HTTP/1.1" 200 40572
+INFO 2025-11-14 22:08:12,553 basehttp "GET /leave/request/ HTTP/1.1" 200 22695
+INFO 2025-11-14 22:08:54,823 basehttp "POST /leave/request/ HTTP/1.1" 302 0
+INFO 2025-11-14 22:08:54,846 basehttp "GET /leave/request/ HTTP/1.1" 200 22695
+INFO 2025-11-14 22:08:56,975 basehttp "GET /leave/manage/ HTTP/1.1" 200 22144
+INFO 2025-11-14 22:08:59,178 basehttp "GET /leave/manage/ HTTP/1.1" 200 22144
+INFO 2025-11-14 22:09:01,865 basehttp "GET /leave/request/ HTTP/1.1" 200 22695
+INFO 2025-11-14 22:09:03,169 basehttp "GET /leave/history/ HTTP/1.1" 200 20281
+INFO 2025-11-14 22:09:04,715 basehttp "GET /leave/request/ HTTP/1.1" 200 22695
+INFO 2025-11-14 22:09:43,878 basehttp "POST /leave/request/ HTTP/1.1" 302 0
+INFO 2025-11-14 22:09:43,898 basehttp "GET /leave/request/ HTTP/1.1" 200 22695
+INFO 2025-11-14 22:12:35,900 basehttp "GET /leave/request/ HTTP/1.1" 200 22695
+INFO 2025-11-14 22:13:05,780 basehttp "POST /leave/request/ HTTP/1.1" 302 0
+INFO 2025-11-14 22:13:05,796 basehttp "GET /leave/request/ HTTP/1.1" 200 22695
+INFO 2025-11-14 22:15:01,374 autoreload D:\Study\CT201\Project\hrm\hrm\urls.py changed, reloading.
+INFO 2025-11-14 22:15:02,754 autoreload Watching for file changes with StatReloader
+INFO 2025-11-14 22:15:21,905 basehttp "GET /leave/history/ HTTP/1.1" 200 20281
+INFO 2025-11-14 22:15:22,802 basehttp "GET /leave/manage/ HTTP/1.1" 200 22144
+INFO 2025-11-14 22:17:01,750 autoreload D:\Study\CT201\Project\hrm\app\models.py changed, reloading.
+INFO 2025-11-14 22:17:03,137 autoreload Watching for file changes with StatReloader
+INFO 2025-11-14 22:33:18,610 autoreload Watching for file changes with StatReloader
+INFO 2025-11-14 22:33:19,594 HodViews Admin home accessed by admin
+INFO 2025-11-14 22:33:19,717 basehttp "GET / HTTP/1.1" 200 23892
+INFO 2025-11-14 22:33:31,914 basehttp "GET /expense/create/ HTTP/1.1" 302 0
+INFO 2025-11-14 22:33:31,935 HodViews Admin home accessed by admin
+INFO 2025-11-14 22:33:31,952 basehttp "GET / HTTP/1.1" 200 23892
+INFO 2025-11-14 22:33:34,488 basehttp "GET /expense/create/ HTTP/1.1" 302 0
+INFO 2025-11-14 22:33:34,506 HodViews Admin home accessed by admin
+INFO 2025-11-14 22:33:34,527 basehttp "GET / HTTP/1.1" 200 23892
+INFO 2025-11-14 22:33:36,132 basehttp "GET /expense/history/ HTTP/1.1" 302 0
+INFO 2025-11-14 22:33:36,149 HodViews Admin home accessed by admin
+INFO 2025-11-14 22:33:36,162 basehttp "GET / HTTP/1.1" 200 23892
+INFO 2025-11-14 22:33:38,222 HodViews All expenses viewed by admin
+INFO 2025-11-14 22:33:38,374 basehttp "GET /expense/manage/ HTTP/1.1" 200 32235
+INFO 2025-11-14 22:33:41,543 HodViews Expense categories viewed by admin
+INFO 2025-11-14 22:33:41,651 basehttp "GET /expense/categories/ HTTP/1.1" 200 40457
+INFO 2025-11-15 13:37:41,509 HodViews All expenses viewed by admin
+INFO 2025-11-15 13:37:41,567 basehttp "GET /expense/manage/ HTTP/1.1" 200 32235
+INFO 2025-11-15 13:37:43,148 basehttp "GET /expense/history/ HTTP/1.1" 302 0
+INFO 2025-11-15 13:37:43,178 HodViews Admin home accessed by admin
+INFO 2025-11-15 13:37:43,193 basehttp "GET / HTTP/1.1" 200 23892
+INFO 2025-11-15 13:37:53,282 autoreload D:\Study\CT201\Project\hrm\hrm\urls.py changed, reloading.
+INFO 2025-11-15 13:37:55,579 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 13:40:14,613 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-15 13:40:19,349 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 13:44:05,814 autoreload D:\Study\CT201\Project\hrm\hrm\urls.py changed, reloading.
+INFO 2025-11-15 13:44:07,023 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 13:47:48,756 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 13:50:23,732 basehttp "GET /portal/dashboard/?id=2b1d4bc6-626b-4c86-9c91-3a956f127120&vscodeBrowserReqId=1763189423702 HTTP/1.1" 302 0
+INFO 2025-11-15 13:50:23,788 basehttp "GET /login/?next=/portal/dashboard/%3Fid%3D2b1d4bc6-626b-4c86-9c91-3a956f127120%26vscodeBrowserReqId%3D1763189423702 HTTP/1.1" 200 2905
+INFO 2025-11-15 13:50:45,986 autoreload Watching for file changes with StatReloader
+WARNING 2025-11-15 13:52:19,897 log Not Found: /accounts/login/
+WARNING 2025-11-15 13:52:19,899 basehttp "GET /accounts/login/?id=2b1d4bc6-626b-4c86-9c91-3a956f127120&vscodeBrowserReqId=1763189539598 HTTP/1.1" 404 13173
+WARNING 2025-11-15 13:54:59,527 log Not Found: /accounts/login/
+WARNING 2025-11-15 13:54:59,528 basehttp "GET /accounts/login/ HTTP/1.1" 404 13096
+INFO 2025-11-15 13:55:11,246 HodViews Admin home accessed by admin
+INFO 2025-11-15 13:55:11,470 basehttp "GET / HTTP/1.1" 200 25198
+INFO 2025-11-15 13:55:14,121 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-15 13:55:14,133 basehttp "GET /login/ HTTP/1.1" 200 3832
+INFO 2025-11-15 13:55:14,415 basehttp "GET /static/dist/js/adminlte.min.js HTTP/1.1" 200 24244
+INFO 2025-11-15 13:55:29,957 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-15 13:55:29,975 HodViews Admin home accessed by nv0001
+INFO 2025-11-15 13:55:29,986 basehttp "GET / HTTP/1.1" 200 25199
+INFO 2025-11-15 13:55:40,256 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-15 13:55:40,268 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-15 13:55:49,586 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-15 13:55:49,603 HodViews Admin home accessed by admin
+INFO 2025-11-15 13:55:49,616 basehttp "GET / HTTP/1.1" 200 25198
+INFO 2025-11-15 13:59:57,835 basehttp "GET /portal/dashboard/ HTTP/1.1" 302 0
+INFO 2025-11-15 13:59:57,853 HodViews Admin home accessed by admin
+INFO 2025-11-15 13:59:57,863 basehttp "GET / HTTP/1.1" 200 25198
+INFO 2025-11-15 13:59:59,596 basehttp "GET /portal/dashboard/ HTTP/1.1" 302 0
+INFO 2025-11-15 13:59:59,612 HodViews Admin home accessed by admin
+INFO 2025-11-15 13:59:59,622 basehttp "GET / HTTP/1.1" 200 25198
+INFO 2025-11-15 14:00:01,257 basehttp "GET /portal/profile/ HTTP/1.1" 302 0
+INFO 2025-11-15 14:00:01,271 HodViews Admin home accessed by admin
+INFO 2025-11-15 14:00:01,282 basehttp "GET / HTTP/1.1" 200 25198
+INFO 2025-11-15 14:00:02,980 basehttp "GET /portal/payrolls/ HTTP/1.1" 302 0
+INFO 2025-11-15 14:00:02,995 HodViews Admin home accessed by admin
+INFO 2025-11-15 14:00:03,006 basehttp "GET / HTTP/1.1" 200 25198
+INFO 2025-11-15 14:00:23,865 basehttp "GET /portal/dashboard/ HTTP/1.1" 302 0
+INFO 2025-11-15 14:00:23,892 HodViews Admin home accessed by admin
+INFO 2025-11-15 14:00:23,909 basehttp "GET / HTTP/1.1" 200 25198
+INFO 2025-11-15 14:00:44,685 basehttp "GET /portal/dashboard/ HTTP/1.1" 302 0
+INFO 2025-11-15 14:00:44,714 HodViews Admin home accessed by admin
+INFO 2025-11-15 14:00:44,724 basehttp "GET / HTTP/1.1" 200 25198
+INFO 2025-11-15 14:01:06,230 basehttp "GET /portal/dashboard/ HTTP/1.1" 302 0
+INFO 2025-11-15 14:01:06,242 basehttp "GET /login/?next=/portal/dashboard/ HTTP/1.1" 200 2905
+INFO 2025-11-15 14:01:06,322 basehttp "GET /static/dist/js/adminlte.min.js HTTP/1.1" 200 24244
+INFO 2025-11-15 14:01:06,351 basehttp "GET /static/plugins/icheck-bootstrap/icheck-bootstrap.min.css HTTP/1.1" 200 12505
+INFO 2025-11-15 14:01:06,352 basehttp "GET /static/plugins/fontawesome-free/css/all.min.css HTTP/1.1" 200 56842
+INFO 2025-11-15 14:01:06,365 basehttp "GET /static/dist/css/adminlte.min.css HTTP/1.1" 200 656504
+INFO 2025-11-15 14:01:06,396 basehttp "GET /static/plugins/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 78635
+INFO 2025-11-15 14:01:06,398 basehttp "GET /static/plugins/jquery/jquery.min.js HTTP/1.1" 200 88145
+INFO 2025-11-15 14:01:06,616 basehttp "GET /static/plugins/fontawesome-free/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 75728
+INFO 2025-11-15 14:01:25,758 basehttp "POST /login/?next=/portal/dashboard/ HTTP/1.1" 302 0
+INFO 2025-11-15 14:01:25,810 HodViews Employee dashboard accessed by Nguyễn Minh Truyền
+INFO 2025-11-15 14:01:25,851 basehttp "GET /portal/dashboard/ HTTP/1.1" 200 27416
+INFO 2025-11-15 14:01:25,914 basehttp "GET /static/plugins/jqvmap/jqvmap.min.css HTTP/1.1" 200 613
+INFO 2025-11-15 14:01:25,918 basehttp "GET /static/plugins/summernote/summernote-bs4.css HTTP/1.1" 200 18647
+INFO 2025-11-15 14:01:25,918 basehttp "GET /static/plugins/daterangepicker/daterangepicker.css HTTP/1.1" 200 8069
+INFO 2025-11-15 14:01:25,919 basehttp "GET /static/dist/img/Logo-TITOPS.png HTTP/1.1" 200 17797
+INFO 2025-11-15 14:01:25,921 basehttp "GET /static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css HTTP/1.1" 200 19470
+INFO 2025-11-15 14:01:25,921 basehttp "GET /static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css HTTP/1.1" 200 9071
+INFO 2025-11-15 14:01:25,932 basehttp "GET /static/dist/img/AdminLTELogo.png HTTP/1.1" 200 10380
+INFO 2025-11-15 14:01:25,946 basehttp "GET /static/dist/img/user8-128x128.jpg HTTP/1.1" 200 5060
+INFO 2025-11-15 14:01:25,947 basehttp "GET /static/dist/img/user1-128x128.jpg HTTP/1.1" 200 2879
+INFO 2025-11-15 14:01:25,949 basehttp "GET /media/avatars/MinhTruyen_1x1_2sQsC1Q.jpg HTTP/1.1" 200 411816
+INFO 2025-11-15 14:01:25,962 basehttp "GET /static/dist/img/user3-128x128.jpg HTTP/1.1" 200 3511
+INFO 2025-11-15 14:01:25,978 basehttp "GET /static/plugins/sparklines/sparkline.js HTTP/1.1" 200 7219
+INFO 2025-11-15 14:01:25,984 basehttp "GET /static/plugins/jqvmap/maps/jquery.vmap.usa.js HTTP/1.1" 200 47712
+INFO 2025-11-15 14:01:25,996 basehttp "GET /static/plugins/jqvmap/jquery.vmap.min.js HTTP/1.1" 200 21150
+INFO 2025-11-15 14:01:26,012 basehttp "GET /static/plugins/chart.js/Chart.min.js HTTP/1.1" 200 172812
+INFO 2025-11-15 14:01:26,020 basehttp "GET /static/plugins/jquery-knob/jquery.knob.min.js HTTP/1.1" 200 10804
+INFO 2025-11-15 14:01:26,027 basehttp "GET /static/plugins/moment/moment.min.js HTTP/1.1" 200 53324
+INFO 2025-11-15 14:01:26,030 basehttp "GET /static/plugins/jquery-ui/jquery-ui.min.js HTTP/1.1" 200 253669
+INFO 2025-11-15 14:01:26,034 basehttp "GET /static/plugins/daterangepicker/daterangepicker.js HTTP/1.1" 200 67268
+INFO 2025-11-15 14:01:26,053 basehttp "GET /static/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js HTTP/1.1" 200 56879
+INFO 2025-11-15 14:01:26,054 basehttp "GET /static/plugins/summernote/summernote-bs4.min.js HTTP/1.1" 200 127927
+INFO 2025-11-15 14:01:26,059 basehttp "GET /static/dist/js/pages/dashboard.js HTTP/1.1" 200 7577
+INFO 2025-11-15 14:01:26,076 basehttp "GET /static/plugins/fontawesome-free/webfonts/fa-regular-400.woff2 HTTP/1.1" 200 13584
+INFO 2025-11-15 14:01:26,081 basehttp "GET /static/dist/js/demo.js HTTP/1.1" 200 12351
+INFO 2025-11-15 14:01:26,092 basehttp "GET /static/dist/js/adminlte.js HTTP/1.1" 200 55314
+INFO 2025-11-15 14:01:26,093 basehttp "GET /static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js HTTP/1.1" 200 42076
+INFO 2025-11-15 14:01:29,109 basehttp "GET /department HTTP/1.1" 301 0
+INFO 2025-11-15 14:01:29,201 basehttp "GET /department/ HTTP/1.1" 200 27228
+INFO 2025-11-15 14:01:29,477 basehttp "GET /static/plugins/summernote/font/summernote.woff?1d9aeaaff0a8939558a45be6cd52cd4c HTTP/1.1" 200 10604
+INFO 2025-11-15 14:01:33,437 HodViews Employee dashboard accessed by Nguyễn Minh Truyền
+INFO 2025-11-15 14:01:33,448 basehttp "GET /portal/dashboard/ HTTP/1.1" 200 27416
+INFO 2025-11-15 14:01:43,479 HodViews Profile viewed by Nguyễn Minh Truyền
+ERROR 2025-11-15 14:01:43,910 log Internal Server Error: /portal/profile/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 1711, in employee_profile
+    return render(request, 'hod_template/employee_profile.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1064, in render
+    output = self.filter_expression.resolve(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 742, in resolve
+    new_obj = func(obj, *arg_vals)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaultfilters.py", line 785, in date
+    return formats.date_format(value, arg)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\utils\formats.py", line 158, in date_format
+    return dateformat.format(
+           ~~~~~~~~~~~~~~~~~^
+        value, get_format(format or "DATE_FORMAT", use_l10n=use_l10n)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\utils\dateformat.py", line 324, in format
+    return df.format(format_string)
+           ~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\utils\dateformat.py", line 44, in format
+    raise TypeError(
+    ...<2 lines>...
+    )
+TypeError: The format for date objects may not contain time-related format specifiers (found 'H').
+ERROR 2025-11-15 14:01:43,929 basehttp "GET /portal/profile/ HTTP/1.1" 500 183947
+INFO 2025-11-15 14:01:48,603 HodViews Profile viewed by Nguyễn Minh Truyền
+ERROR 2025-11-15 14:01:48,663 log Internal Server Error: /portal/profile/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 1711, in employee_profile
+    return render(request, 'hod_template/employee_profile.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1064, in render
+    output = self.filter_expression.resolve(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 742, in resolve
+    new_obj = func(obj, *arg_vals)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaultfilters.py", line 785, in date
+    return formats.date_format(value, arg)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\utils\formats.py", line 158, in date_format
+    return dateformat.format(
+           ~~~~~~~~~~~~~~~~~^
+        value, get_format(format or "DATE_FORMAT", use_l10n=use_l10n)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\utils\dateformat.py", line 324, in format
+    return df.format(format_string)
+           ~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\utils\dateformat.py", line 44, in format
+    raise TypeError(
+    ...<2 lines>...
+    )
+TypeError: The format for date objects may not contain time-related format specifiers (found 'H').
+ERROR 2025-11-15 14:01:48,667 basehttp "GET /portal/profile/ HTTP/1.1" 500 183947
+INFO 2025-11-15 14:01:55,286 HodViews Payrolls viewed by Nguyễn Minh Truyền
+INFO 2025-11-15 14:01:55,360 basehttp "GET /portal/payrolls/ HTTP/1.1" 200 32277
+INFO 2025-11-15 14:02:30,136 basehttp "GET /payroll/view/2/ HTTP/1.1" 200 25393
+INFO 2025-11-15 14:02:59,412 HodViews Attendance viewed by Nguyễn Minh Truyền
+INFO 2025-11-15 14:02:59,464 basehttp "GET /portal/attendance/ HTTP/1.1" 200 39205
+INFO 2025-11-15 14:03:13,630 HodViews Employee dashboard accessed by Nguyễn Minh Truyền
+INFO 2025-11-15 14:03:13,637 basehttp "GET /portal/dashboard/ HTTP/1.1" 200 27416
+INFO 2025-11-15 14:03:56,266 autoreload D:\Study\CT201\Project\hrm\hrm\urls.py changed, reloading.
+INFO 2025-11-15 14:03:56,768 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-15 14:03:57,375 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 14:03:57,789 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 14:04:14,252 HodViews Admin home accessed by nv0001
+INFO 2025-11-15 14:04:14,326 basehttp "GET / HTTP/1.1" 200 25199
+INFO 2025-11-15 14:04:34,150 basehttp "GET /department/ HTTP/1.1" 200 27228
+INFO 2025-11-15 14:04:35,615 basehttp "GET /job_title HTTP/1.1" 200 27390
+INFO 2025-11-15 14:04:41,685 basehttp "GET /expense/create/ HTTP/1.1" 200 28099
+INFO 2025-11-15 14:06:17,254 HodViews Expense history viewed by Nguyễn Minh Truyền
+INFO 2025-11-15 14:06:17,314 basehttp "GET /expense/history/ HTTP/1.1" 200 25469
+INFO 2025-11-15 14:06:18,829 basehttp "GET /expense/create/ HTTP/1.1" 200 28099
+INFO 2025-11-15 14:06:26,773 HodViews Expense history viewed by Nguyễn Minh Truyền
+INFO 2025-11-15 14:06:26,780 basehttp "GET /expense/history/ HTTP/1.1" 200 25469
+INFO 2025-11-15 14:06:28,392 HodViews All expenses viewed by nv0001
+INFO 2025-11-15 14:06:28,460 basehttp "GET /expense/manage/ HTTP/1.1" 200 33542
+INFO 2025-11-15 14:06:30,030 HodViews Expense history viewed by Nguyễn Minh Truyền
+INFO 2025-11-15 14:06:30,036 basehttp "GET /expense/history/ HTTP/1.1" 200 25469
+INFO 2025-11-15 14:06:30,633 HodViews All expenses viewed by nv0001
+INFO 2025-11-15 14:06:30,642 basehttp "GET /expense/manage/ HTTP/1.1" 200 33542
+INFO 2025-11-15 14:06:31,228 HodViews Expense history viewed by Nguyễn Minh Truyền
+INFO 2025-11-15 14:06:31,232 basehttp "GET /expense/history/ HTTP/1.1" 200 25469
+INFO 2025-11-15 14:06:31,776 HodViews All expenses viewed by nv0001
+INFO 2025-11-15 14:06:31,786 basehttp "GET /expense/manage/ HTTP/1.1" 200 33542
+INFO 2025-11-15 14:06:32,650 HodViews Expense categories viewed by nv0001
+INFO 2025-11-15 14:06:32,722 basehttp "GET /expense/categories/ HTTP/1.1" 200 41764
+INFO 2025-11-15 14:06:36,526 HodViews All expenses viewed by nv0001
+INFO 2025-11-15 14:06:36,535 basehttp "GET /expense/manage/ HTTP/1.1" 200 33542
+INFO 2025-11-15 14:06:40,258 basehttp "GET /expense/create/ HTTP/1.1" 200 28099
+INFO 2025-11-15 14:08:39,344 HodViews Expense created by Nguyễn Minh Truyền: 0 VND
+INFO 2025-11-15 14:08:39,348 basehttp "POST /expense/create/ HTTP/1.1" 302 0
+INFO 2025-11-15 14:08:39,367 HodViews Expense history viewed by Nguyễn Minh Truyền
+INFO 2025-11-15 14:08:39,374 basehttp "GET /expense/history/ HTTP/1.1" 200 26324
+INFO 2025-11-15 14:08:42,412 HodViews Expense 1 viewed by nv0001
+INFO 2025-11-15 14:08:42,429 basehttp "GET /expense/view/1/ HTTP/1.1" 200 30301
+INFO 2025-11-15 14:08:42,576 basehttp "GET /media/receipts/FB_IMG_1718704415129.jpg HTTP/1.1" 200 159235
+INFO 2025-11-15 14:08:47,748 HodViews All expenses viewed by nv0001
+INFO 2025-11-15 14:08:47,761 basehttp "GET /expense/manage/ HTTP/1.1" 200 35150
+INFO 2025-11-15 14:08:49,079 HodViews Expense history viewed by Nguyễn Minh Truyền
+INFO 2025-11-15 14:08:49,087 basehttp "GET /expense/history/ HTTP/1.1" 200 26324
+INFO 2025-11-15 14:08:50,876 basehttp "GET /expense/create/ HTTP/1.1" 200 28099
+INFO 2025-11-15 14:09:12,840 HodViews All expenses viewed by admin
+INFO 2025-11-15 14:09:12,855 basehttp "GET /expense/manage/ HTTP/1.1" 200 35149
+INFO 2025-11-15 14:09:15,108 basehttp "GET /media/receipts/FB_IMG_1718704415129.jpg HTTP/1.1" 200 159235
+INFO 2025-11-15 14:09:19,907 HodViews Expense 1 viewed by admin
+INFO 2025-11-15 14:09:19,916 basehttp "GET /expense/view/1/ HTTP/1.1" 200 30300
+INFO 2025-11-15 14:09:20,003 basehttp "GET /media/receipts/FB_IMG_1718704415129.jpg HTTP/1.1" 304 0
+INFO 2025-11-15 14:09:29,053 HodViews All expenses viewed by admin
+INFO 2025-11-15 14:09:29,066 basehttp "GET /expense/manage/ HTTP/1.1" 200 35149

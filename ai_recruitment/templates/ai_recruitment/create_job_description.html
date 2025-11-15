@@ -1,0 +1,97 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}
+    <h1>Tạo Job Description</h1>
+{% endblock page_title %}
+
+{% block main_content %}
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Tạo mới Job Description</h3>
+            <div class="card-tools">
+              <a href="{% url 'job_description_list' %}" class="btn btn-default">
+                <i class="fas fa-arrow-left"></i> Quay lại
+              </a>
+            </div>
+          </div>
+          <div class="card-body">
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show">
+                  {{ message }}
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+              {% endfor %}
+            {% endif %}
+
+            <form method="post">
+              {% csrf_token %}
+              
+              <div class="form-group">
+                <label for="{{ form.title.id_for_label }}">Tên vị trí <span class="text-danger">*</span></label>
+                {{ form.title }}
+                {% if form.title.errors %}
+                  <div class="text-danger">{{ form.title.errors }}</div>
+                {% endif %}
+                <small class="form-text text-muted">Ví dụ: Python Developer, Senior Java Engineer</small>
+              </div>
+
+              <div class="form-group">
+                <label for="{{ form.description.id_for_label }}">Mô tả công việc <span class="text-danger">*</span></label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                  <div class="text-danger">{{ form.description.errors }}</div>
+                {% endif %}
+              </div>
+
+              <div class="form-group">
+                <label for="{{ form.required_skills.id_for_label }}">Kỹ năng yêu cầu <span class="text-danger">*</span></label>
+                {{ form.required_skills }}
+                {% if form.required_skills.errors %}
+                  <div class="text-danger">{{ form.required_skills.errors }}</div>
+                {% endif %}
+                <small class="form-text text-muted">{{ form.required_skills.help_text }}</small>
+              </div>
+
+              <div class="form-group">
+                <label for="{{ form.nice_to_have_skills.id_for_label }}">Kỹ năng ưu tiên</label>
+                {{ form.nice_to_have_skills }}
+                {% if form.nice_to_have_skills.errors %}
+                  <div class="text-danger">{{ form.nice_to_have_skills.errors }}</div>
+                {% endif %}
+                <small class="form-text text-muted">{{ form.nice_to_have_skills.help_text }}</small>
+              </div>
+
+              <div class="form-group">
+                <label for="{{ form.required_years_experience.id_for_label }}">Số năm kinh nghiệm yêu cầu <span class="text-danger">*</span></label>
+                {{ form.required_years_experience }}
+                {% if form.required_years_experience.errors %}
+                  <div class="text-danger">{{ form.required_years_experience.errors }}</div>
+                {% endif %}
+              </div>
+
+              <div class="form-group">
+                <label for="{{ form.required_degrees.id_for_label }}">Yêu cầu bằng cấp</label>
+                {{ form.required_degrees }}
+                {% if form.required_degrees.errors %}
+                  <div class="text-danger">{{ form.required_degrees.errors }}</div>
+                {% endif %}
+                <small class="form-text text-muted">{{ form.required_degrees.help_text }}</small>
+              </div>
+
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-save"></i> Lưu Job Description
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main_content %}

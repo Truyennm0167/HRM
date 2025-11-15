@@ -1,0 +1,170 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Tạo Yêu Cầu Chi Phí
+{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1><i class="fas fa-receipt"></i> Tạo Yêu Cầu Chi Phí</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'expense_history' %}">Lịch sử chi phí</a></li>
+                    <li class="breadcrumb-item active">Tạo yêu cầu</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Guidelines Card -->
+            <div class="col-md-4">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-info-circle"></i> Hướng Dẫn</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success"></i> Chọn danh mục chi phí phù hợp</li>
+                            <li><i class="fas fa-check text-success"></i> Nhập số tiền chính xác</li>
+                            <li><i class="fas fa-check text-success"></i> Mô tả chi tiết mục đích chi phí</li>
+                            <li><i class="fas fa-check text-success"></i> Đính kèm hóa đơn/biên lai (nếu có)</li>
+                            <li><i class="fas fa-check text-success"></i> Yêu cầu sẽ được gửi tới quản lý duyệt</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-exclamation-triangle"></i> Lưu Ý</h3>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled text-sm">
+                            <li><i class="fas fa-info-circle text-info"></i> Hóa đơn phải rõ ràng, đầy đủ thông tin</li>
+                            <li><i class="fas fa-info-circle text-info"></i> Chỉ chấp nhận file ảnh (JPG, PNG)</li>
+                            <li><i class="fas fa-info-circle text-info"></i> Kích thước tối đa: 5MB</li>
+                            <li><i class="fas fa-info-circle text-info"></i> Yêu cầu có thể bị từ chối nếu không đủ căn cứ</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Expense Form -->
+            <div class="col-md-8">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-edit"></i> Thông Tin Chi Phí</h3>
+                    </div>
+                    <form method="post" action="{% url 'create_expense' %}" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Nhân viên</label>
+                                <input type="text" class="form-control" value="{{ employee.name }} ({{ employee.employee_code }})" disabled>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Danh mục chi phí <span class="text-danger">*</span></label>
+                                {{ form.category }}
+                                {% if form.category.errors %}
+                                    <span class="text-danger">{{ form.category.errors }}</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Số tiền (VND) <span class="text-danger">*</span></label>
+                                        {{ form.amount }}
+                                        {% if form.amount.errors %}
+                                            <span class="text-danger">{{ form.amount.errors }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Ngày phát sinh <span class="text-danger">*</span></label>
+                                        {{ form.date }}
+                                        {% if form.date.errors %}
+                                            <span class="text-danger">{{ form.date.errors }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Mô tả chi tiết <span class="text-danger">*</span></label>
+                                {{ form.description }}
+                                {% if form.description.errors %}
+                                    <span class="text-danger">{{ form.description.errors }}</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label>Hóa đơn/Biên lai</label>
+                                {{ form.receipt }}
+                                {% if form.receipt.errors %}
+                                    <span class="text-danger">{{ form.receipt.errors }}</span>
+                                {% endif %}
+                                <small class="form-text text-muted">
+                                    Chấp nhận: JPG, PNG. Tối đa: 5MB
+                                </small>
+                            </div>
+
+                            <!-- Preview receipt -->
+                            <div class="form-group" id="receipt-preview" style="display: none;">
+                                <label>Xem trước hóa đơn:</label>
+                                <div>
+                                    <img id="preview-image" src="" alt="Receipt Preview" class="img-thumbnail" style="max-width: 100%; max-height: 300px;">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-paper-plane"></i> Gửi Yêu Cầu
+                            </button>
+                            <a href="{% url 'expense_history' %}" class="btn btn-default">
+                                <i class="fas fa-times"></i> Hủy
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+// Preview receipt image before upload
+document.getElementById('id_receipt').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('preview-image').src = e.target.result;
+            document.getElementById('receipt-preview').style.display = 'block';
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// Format amount input
+document.getElementById('id_amount').addEventListener('blur', function(e) {
+    let value = parseFloat(this.value.replace(/,/g, ''));
+    if (!isNaN(value)) {
+        this.value = value.toLocaleString('vi-VN');
+    }
+});
+</script>
+{% endblock main_content %}

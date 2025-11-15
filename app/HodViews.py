@@ -1,14 +1,26 @@
 from django.http import HttpResponse, HttpResponseRedirect
 
-from django.core.files.storage import FileSystemStorage
+from django.core.files.storage import FileSystemStorage, default_storage
+from django.utils.text import get_valid_filename
+import uuid
 from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_http_methods, require_POST
+from django.core.exceptions import ValidationError
 
-from .models import JobTitle, Department, Employee, Attendance, Reward, Discipline, Payroll
-from .forms import EmployeeForm
+from .models import JobTitle, Department, Employee, Attendance, Reward, Discipline, Payroll, LeaveType, LeaveRequest, LeaveBalance, ExpenseCategory, Expense
+from .forms import EmployeeForm, LeaveTypeForm, LeaveRequestForm, ExpenseCategoryForm, ExpenseForm
+from .validators import (
+    validate_image_file, 
+    validate_document_file, 
+    validate_salary,
+    validate_phone_number,
+    validate_email
+)
 
 from django.http import JsonResponse
 from datetime import datetime, timedelta
@@ -17,7 +29,12 @@ import xlwt
 import calendar
 from django.db.models import Sum
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
+import logging
 
+# Configure logger
+logger = logging.getLogger(__name__)
+
+@login_required
 def admin_home(request):
     employees = Employee.objects.all()
     departments = Department.objects.all()
@@ -27,6 +44,7 @@ def admin_home(request):
         "departments": departments,
         "payrolls": payrolls
     }
+    logger.info(f"Admin home accessed by {request.user.username}")
     return render(request, "hod_template/home_content.html", context)
 
 def generate_employee_code():
@@ -39,6 +57,8 @@ def generate_employee_code():
         new_number = 1
     return f"NV{new_number:04d}"  # định dạng NV0001, NV0002,...
 
+@login_required
+@require_http_methods(["GET", "POST"])
 def add_employee(request):
     employee_code = generate_employee_code()
     job_titles = JobTitle.objects.all()
@@ -51,6 +71,8 @@ def add_employee(request):
 
     return render(request, "hod_template/add_employee_template.html", context)
 
+@login_required
+@require_POST
 def add_employee_save(request):
     if request.method != "POST":
         return HttpResponse("Phương thức không cho phép")
@@ -85,13 +107,31 @@ def add_employee_save(request):
             employee_school = request.POST.get("employee_school")
             employee_certificate = request.POST.get("employee_certificate")
 
+            # Validate inputs
+            try:
+                validate_email(employee_email)
+                validate_phone_number(employee_phone)
+                employee_salary = validate_salary(employee_salary)
+            except ValidationError as e:
+                messages.error(request, str(e))
+                logger.warning(f"Validation error in add_employee: {e}")
+                return redirect('add_employee')
+
             # Xử lý avatar nếu có
             avatar_url = None
             if 'employee_avatar' in request.FILES:
                 avatar = request.FILES['employee_avatar']
-                fs = FileSystemStorage(location='media/avatars')  # Tạo thư mục 'avatars' trong 'media'
-                filename = fs.save(avatar.name, avatar)
-                avatar_url = 'avatars/' + filename  # lưu đường dẫn tương đối trong DB
+                try:
+                    validate_image_file(avatar)
+                    # sanitize and generate unique filename
+                    filename = get_valid_filename(avatar.name)
+                    unique_name = f"{uuid.uuid4().hex}_{filename}"
+                    saved_path = default_storage.save(f"avatars/{unique_name}", avatar)
+                    avatar_url = saved_path
+                except ValidationError as e:
+                    messages.error(request, str(e))
+                    logger.warning(f"Avatar validation error: {e}")
+                    return redirect('add_employee')
 
             employee = Employee(
                 employee_code=employee_code,
@@ -125,15 +165,21 @@ def add_employee_save(request):
                 certificate=employee_certificate,
             )
             employee.save()
+            logger.info(f"Employee {employee.name} ({employee.employee_code}) created by {request.user.username}")
             messages.success(request, "Thêm Nhân viên thành công.")
 
             return redirect("/add_employee")
+        except ValidationError as e:
+            logger.error(f"Validation error adding employee: {e}")
+            messages.error(request, f"Lỗi validation: {str(e)}")
+            return redirect("/add_employee")
         except Exception as e:
-            print("Lỗi khi thêm nhân viên:", e)
-            messages.error(request, "Thêm Nhân viên không thành công")
+            logger.error(f"Error adding employee: {e}", exc_info=True)
+            messages.error(request, "Thêm Nhân viên không thành công. Vui lòng kiểm tra lại thông tin.")
             return redirect("/add_employee")
 
 
+@login_required
 def department_page(request):
     departments = Department.objects.all()
     employees = Employee.objects.all()
@@ -157,6 +203,8 @@ def department_page(request):
     }
     return render(request, "hod_template/department_template.html", context)
 
+@login_required
+@require_POST
 def add_department_save(request):
     if request.method != "POST":
         return HttpResponse("Phương thức không cho phép")
@@ -208,13 +256,18 @@ def add_department_save(request):
 
 
 
+@login_required
+@require_POST
 def delete_department(request, department_id):
     try:
         department = Department.objects.get(id=department_id)
         if Employee.objects.filter(department=department).exists():
             messages.error(request, "Không thể xóa phòng ban vì vẫn còn nhân viên trực thuộc.")
-            return redirect('department_page')  # hoặc đường dẫn tương ứng
+            logger.warning(f"Attempt to delete department {department.name} with existing employees by {request.user.username}")
+            return redirect('department_page')
+        department_name = department.name
         department.delete()
+        logger.info(f"Department {department_name} deleted by {request.user.username}")
         messages.success(request, "Xóa phòng ban thành công.")
     except Department.DoesNotExist:
         messages.error(request, "Không tìm thấy phòng ban.")
@@ -223,6 +276,7 @@ def delete_department(request, department_id):
 
     return redirect('department_page')
 
+@login_required
 def job_title(request):
     job_titles = JobTitle.objects.all()
     context = {
@@ -230,6 +284,7 @@ def job_title(request):
     }
     return render(request, "hod_template/job_title_template.html", context)
 
+@login_required
 def view_job_title(request, job_title_id):
     job_titles = JobTitle.objects.all()
     job = get_object_or_404(JobTitle, id=job_title_id)
@@ -239,6 +294,8 @@ def view_job_title(request, job_title_id):
     }
     return render(request, "hod_template/job_title_template.html", context)
 
+@login_required
+@require_POST
 def add_job_title_save(request):
     if request.method == "POST":
         job_title_id = request.POST.get("id_job_title")
@@ -264,15 +321,20 @@ def add_job_title_save(request):
         return redirect("job_title")
 
 
+@login_required
+@require_POST
 def delete_job_title(request, job_title_id):
     try:
         job = JobTitle.objects.get(id=job_title_id)
+        job_name = job.name
         job.delete()
+        logger.info(f"Job title {job_name} deleted by {request.user.username}")
         messages.success(request, "Xóa chức vụ thành công.")
     except JobTitle.DoesNotExist:
         messages.error(request, "Chức vụ không tồn tại.")
     return redirect("/job_title")
 
+@login_required
 def employee_list(request):
     # Lấy các tham số lọc từ request
     search_query = request.GET.get('search', '')
@@ -309,6 +371,7 @@ def employee_list(request):
     }
     return render(request, "hod_template/employee_list_template.html", context)
 
+@login_required
 def employee_detail_view(request, employee_id):
     employee = get_object_or_404(Employee, pk=employee_id)
 
@@ -333,6 +396,7 @@ def employee_detail_view(request, employee_id):
         'form': form,
     })
 
+@login_required
 def update_employee(request, employee_id):
     employee = get_object_or_404(Employee, pk=employee_id)
     departments = Department.objects.all()
@@ -346,6 +410,8 @@ def update_employee(request, employee_id):
 
     return render(request, "hod_template/update_employee_template.html", context)
 
+@login_required
+@require_POST
 def update_employee_save(request):
     if request.method == "POST":
         employee_id = request.POST.get("employee_id")
@@ -387,7 +453,15 @@ def update_employee_save(request):
         # Cập nhật ảnh đại diện nếu có
         if "employee_avatar" in request.FILES:
             avatar = request.FILES["employee_avatar"]
-            employee.avatar.save(avatar.name, avatar)
+            try:
+                validate_image_file(avatar)
+                filename = get_valid_filename(avatar.name)
+                unique_name = f"{uuid.uuid4().hex}_{filename}"
+                employee.avatar.save(unique_name, avatar)
+            except ValidationError as e:
+                messages.error(request, str(e))
+                logger.warning(f"Avatar validation error during update: {e}")
+                return redirect('edit_employee', employee_id=employee_id)
 
         # Lưu thay đổi vào cơ sở dữ liệu
         employee.save()
@@ -398,24 +472,34 @@ def update_employee_save(request):
     else:
         return redirect('employee_list')
 
+@login_required
+@require_POST
 def delete_employee(request, employee_id):
     employee = get_object_or_404(Employee, id=employee_id)
     if request.method == 'POST':
+        employee_name = employee.name
+        employee_code = employee.employee_code
+        logger.info(f"Employee {employee_name} ({employee_code}) deleted by {request.user.username}")
         employee.delete()
-        return redirect('employee_list')  # hoặc nơi bạn muốn chuyển hướng sau khi xóa
+        return redirect('employee_list')
 
+@login_required
 def manage_attendance(request):
-    attendances = Attendance.objects.all().order_by('-date')
+    # Optimize query with select_related to avoid N+1 problem
+    attendances = Attendance.objects.select_related('employee', 'employee__department').all().order_by('-date')
     departments = Department.objects.all()
     return render(request, "hod_template/manage_attendance.html", {
         "attendances": attendances,
         "departments": departments
     })
 
+@login_required
 def add_attendance(request):
-    employees = Employee.objects.all()
+    employees = Employee.objects.select_related('department').all()
     return render(request, "hod_template/add_attendance.html", {"employees": employees})
 
+@login_required
+@require_POST
 def add_attendance_save(request):
     if request.method == "POST":
         attendance_date = request.POST.get("attendance_date")
@@ -444,12 +528,16 @@ def add_attendance_save(request):
     else:
         return redirect("add_attendance")
 
+@login_required
+@require_POST
 def check_attendance_date(request):
     if request.method == "POST":
         date = request.POST.get("date")
         exists = Attendance.objects.filter(date=date).exists()
         return JsonResponse({"status": "exists" if exists else "new"})
 
+@login_required
+@require_POST
 def get_attendance_data(request):
     if request.method == "POST":
         date = request.POST.get("date")
@@ -464,9 +552,10 @@ def get_attendance_data(request):
             })
         return JsonResponse({"data": data})
 
+@login_required
 def edit_attendance(request, attendance_id):
-    attendance = Attendance.objects.get(id=attendance_id)
-    employees = Employee.objects.all()
+    attendance = Attendance.objects.select_related('employee').get(id=attendance_id)
+    employees = Employee.objects.select_related('department').all()
     return render(request, "hod_template/add_attendance.html", {
         "attendance": attendance,
         "employees": employees,
@@ -474,19 +563,25 @@ def edit_attendance(request, attendance_id):
         "attendance_date": attendance.date.strftime('%Y-%m-%d')
     })
 
+@login_required
+@require_POST
 def delete_attendance(request):
     if request.method == "POST":
         attendance_id = request.POST.get("id")
         try:
+            logger.info(f"Deleting attendance ID {attendance_id} by {request.user.username}")
             attendance = Attendance.objects.get(id=attendance_id)
             attendance.delete()
             return JsonResponse({"status": "success"})
-        except:
+        except Exception as e:
+            logger.error(f"Error deleting attendance: {e}")
             return JsonResponse({"status": "error"})
 
+@login_required
 def export_attendance(request):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="attendance_report.xls"'
+    logger.info(f"Attendance report exported by {request.user.username}")
     
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('Bảng Chấm Công')
@@ -523,8 +618,9 @@ def export_attendance(request):
     wb.save(response)
     return response
 
+@login_required
 def calculate_payroll(request):
-    employees = Employee.objects.all()
+    employees = Employee.objects.select_related('job_title', 'department').all()
     current_year = datetime.now().year
     years = range(current_year, current_year - 5, -1)
     return render(request, "hod_template/calculate_payroll.html", {
@@ -532,6 +628,8 @@ def calculate_payroll(request):
         "years": years
     })
 
+@login_required
+@require_POST
 def get_payroll_data(request):
     if request.method == "POST":
         employee_id = request.POST.get("employee_id")
@@ -566,8 +664,29 @@ def get_payroll_data(request):
                 status="Có làm việc"
             ).aggregate(total=Sum('working_hours'))['total'] or 0
 
+            # Tính số ngày nghỉ phép có lương (approved paid leave)
+            paid_leave_days = LeaveRequest.objects.filter(
+                employee=employee,
+                status='approved',
+                leave_type__is_paid=True,
+                start_date__year=year,
+                start_date__month=month
+            ).aggregate(total=Sum('total_days'))['total'] or 0
+            
+            # Tính số ngày nghỉ phép không lương
+            unpaid_leave_days = LeaveRequest.objects.filter(
+                employee=employee,
+                status='approved',
+                leave_type__is_paid=False,
+                start_date__year=year,
+                start_date__month=month
+            ).aggregate(total=Sum('total_days'))['total'] or 0
+
             # Tính lương theo giờ
             hourly_rate = (employee.salary * employee.job_title.salary_coefficient) / (standard_working_days * 8)
+
+            # Tính lương cho ngày nghỉ phép có lương (8 giờ/ngày)
+            paid_leave_salary = paid_leave_days * 8 * hourly_rate
 
             # Tính thưởng/phạt
             bonus = Reward.objects.filter(
@@ -582,14 +701,17 @@ def get_payroll_data(request):
                 date__month=month
             ).aggregate(total=Sum('amount'))['total'] or 0
 
-            # Tính tổng lương
-            total_salary = (hourly_rate * total_hours) + bonus - penalty
+            # Tính tổng lương: lương làm việc + lương nghỉ phép có lương + thưởng - phạt
+            total_salary = (hourly_rate * total_hours) + paid_leave_salary + bonus - penalty
 
             data = {
                 "base_salary": employee.salary,
                 "salary_coefficient": employee.job_title.salary_coefficient,
                 "hourly_rate": hourly_rate,
                 "total_working_hours": total_hours,
+                "paid_leave_days": paid_leave_days,
+                "unpaid_leave_days": unpaid_leave_days,
+                "paid_leave_salary": paid_leave_salary,
                 "bonus": bonus,
                 "penalty": penalty,
                 "total_salary": total_salary,
@@ -608,14 +730,25 @@ def get_payroll_data(request):
                 "message": str(e)
             })
 
+@login_required
+@require_POST
 def save_payroll(request):
     if request.method == "POST":
         employee_id = request.POST.get("employee_id")
-        month = int(request.POST.get("month"))
-        year = int(request.POST.get("year"))
+        # Validate month and year safely to avoid ValueError on empty/invalid input
+        month_raw = request.POST.get("month")
+        year_raw = request.POST.get("year")
+        try:
+            month = int(month_raw)
+            year = int(year_raw)
+            if month < 1 or month > 12:
+                raise ValueError("Invalid month")
+        except (TypeError, ValueError):
+            messages.error(request, "Dữ liệu tháng/năm không hợp lệ. Vui lòng kiểm tra lại.")
+            return redirect("calculate_payroll")
 
         try:
-            employee = Employee.objects.get(id=employee_id)
+            employee = Employee.objects.select_related('job_title').get(id=employee_id)
 
             # Kiểm tra bảng lương đã tồn tại
             existing_payroll = Payroll.objects.filter(
@@ -670,15 +803,19 @@ def save_payroll(request):
                     notes=notes
                 )
                 payroll.save()
+                logger.info(f"Payroll created for {employee.name} ({month}/{year}) by {request.user.username}")
 
             messages.success(request, "Bảng lương đã được lưu thành công")
             return redirect("manage_payroll")
         except Exception as e:
+            logger.error(f"Error saving payroll: {e}", exc_info=True)
             messages.error(request, f"Có lỗi xảy ra: {str(e)}")
             return redirect("calculate_payroll")
 
+@login_required
 def manage_payroll(request):
-    payrolls = Payroll.objects.all().order_by('-year', '-month')
+    # Optimize query with select_related
+    payrolls = Payroll.objects.select_related('employee', 'employee__department').all().order_by('-year', '-month')
     departments = Department.objects.all()
     current_year = datetime.now().year
     years = range(current_year, current_year - 5, -1)
@@ -688,14 +825,15 @@ def manage_payroll(request):
         "years": years
     })
 
+@login_required
 def edit_payroll(request, payroll_id):
     try:
-        payroll = Payroll.objects.get(id=payroll_id)
+        payroll = Payroll.objects.select_related('employee', 'employee__job_title').get(id=payroll_id)
         if payroll.status == 'confirmed':
             messages.error(request, "Không thể chỉnh sửa bảng lương đã xác nhận")
             return redirect("manage_payroll")
 
-        employees = Employee.objects.all()
+        employees = Employee.objects.select_related('job_title', 'department').all()
         current_year = datetime.now().year
         years = range(current_year, current_year - 5, -1)
         
@@ -712,35 +850,42 @@ def edit_payroll(request, payroll_id):
         messages.error(request, "Không tìm thấy bảng lương")
         return redirect("manage_payroll")
 
+@login_required
+@require_POST
 def delete_payroll(request):
-    if request.method == "POST":
-        payroll_id = request.POST.get("id")
-        try:
-            payroll = Payroll.objects.get(id=payroll_id)
-            if payroll.status == 'pending':
-                payroll.delete()
-                return JsonResponse({"status": "success"})
-            return JsonResponse({"status": "error", "message": "Không thể xóa bảng lương đã xác nhận"})
-        except:
-            return JsonResponse({"status": "error"})
-
-def confirm_payroll(request):
-    if request.method == "POST":
-        payroll_id = request.POST.get("id")
-        try:
-            payroll = Payroll.objects.get(id=payroll_id)
-            payroll.status = 'confirmed'
-            payroll.save()
+    payroll_id = request.POST.get("id")
+    try:
+        payroll = Payroll.objects.get(id=payroll_id)
+        if payroll.status == 'pending':
+            payroll.delete()
             return JsonResponse({"status": "success"})
-        except:
-            return JsonResponse({"status": "error"})
+        return JsonResponse({"status": "error", "message": "Không thể xóa bảng lương đã xác nhận"})
+    except Exception as e:
+        logger.error(f"Error deleting payroll: {e}")
+        return JsonResponse({"status": "error"})
 
+@login_required
+@require_POST
+def confirm_payroll(request):
+    payroll_id = request.POST.get("id")
+    try:
+        payroll = Payroll.objects.get(id=payroll_id)
+        payroll.status = 'confirmed'
+        payroll.save()
+        logger.info(f"Payroll ID {payroll_id} confirmed by {request.user.username}")
+        return JsonResponse({"status": "success"})
+    except Exception as e:
+        logger.error(f"Error confirming payroll: {e}")
+        return JsonResponse({"status": "error"})
+
+@login_required
 def view_payroll(request, payroll_id):
-    payroll = Payroll.objects.get(id=payroll_id)
+    payroll = get_object_or_404(Payroll, id=payroll_id)
     return render(request, "hod_template/view_payroll.html", {
         "payroll": payroll
     })
 
+@login_required
 def export_payroll(request):
     response = HttpResponse(content_type='application/ms-excel')
     response['Content-Disposition'] = 'attachment; filename="payroll_report.xls"'
@@ -786,3 +931,945 @@ def export_payroll(request):
     
     wb.save(response)
     return response
+
+
+# ============================================================================
+# LEAVE MANAGEMENT VIEWS
+# ============================================================================
+
+@login_required
+def manage_leave_types(request):
+    """Quản lý các loại nghỉ phép (HR only)"""
+    leave_types = LeaveType.objects.all()
+    return render(request, "hod_template/manage_leave_types.html", {
+        "leave_types": leave_types
+    })
+
+@login_required
+@require_POST
+def add_leave_type_save(request):
+    """Thêm/sửa loại nghỉ phép"""
+    leave_type_id = request.POST.get("leave_type_id")
+    
+    try:
+        if leave_type_id:
+            # Update existing
+            leave_type = LeaveType.objects.get(id=leave_type_id)
+            form = LeaveTypeForm(request.POST, instance=leave_type)
+        else:
+            # Create new
+            form = LeaveTypeForm(request.POST)
+        
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Lưu loại nghỉ phép thành công")
+            logger.info(f"Leave type saved by {request.user.username}")
+        else:
+            messages.error(request, "Dữ liệu không hợp lệ")
+            
+    except Exception as e:
+        logger.error(f"Error saving leave type: {e}")
+        messages.error(request, f"Lỗi: {str(e)}")
+    
+    return redirect("manage_leave_types")
+
+@login_required
+@require_POST
+def delete_leave_type(request, leave_type_id):
+    """Xóa loại nghỉ phép"""
+    try:
+        leave_type = LeaveType.objects.get(id=leave_type_id)
+        leave_type_name = leave_type.name
+        leave_type.delete()
+        logger.info(f"Leave type {leave_type_name} deleted by {request.user.username}")
+        messages.success(request, "Xóa loại nghỉ phép thành công")
+    except LeaveType.DoesNotExist:
+        messages.error(request, "Không tìm thấy loại nghỉ phép")
+    except Exception as e:
+        messages.error(request, f"Lỗi: {str(e)}")
+    
+    return redirect("manage_leave_types")
+
+@login_required
+def request_leave(request):
+    """Nhân viên tạo đơn xin nghỉ phép"""
+    if request.method == 'POST':
+        form = LeaveRequestForm(request.POST)
+        if form.is_valid():
+            leave_request = form.save(commit=False)
+            
+            # Gán employee từ user hiện tại
+            try:
+                employee = Employee.objects.get(email=request.user.email)
+                leave_request.employee = employee
+            except Employee.DoesNotExist:
+                messages.error(request, "Không tìm thấy hồ sơ nhân viên của bạn")
+                return redirect("request_leave")
+            
+            # Tính số ngày nghỉ
+            leave_request.total_days = leave_request.calculate_working_days()
+            
+            # Kiểm tra số ngày phép còn lại
+            try:
+                leave_balance = LeaveBalance.objects.get(
+                    employee=employee,
+                    leave_type=leave_request.leave_type,
+                    year=leave_request.start_date.year
+                )
+                
+                if leave_balance.remaining_days < leave_request.total_days:
+                    messages.error(request, f"Bạn chỉ còn {leave_balance.remaining_days} ngày phép, không đủ để xin nghỉ {leave_request.total_days} ngày")
+                    return redirect("request_leave")
+                    
+            except LeaveBalance.DoesNotExist:
+                # Tạo leave balance mới nếu chưa có
+                LeaveBalance.objects.create(
+                    employee=employee,
+                    leave_type=leave_request.leave_type,
+                    year=leave_request.start_date.year,
+                    total_days=leave_request.leave_type.max_days_per_year,
+                    used_days=0,
+                    remaining_days=leave_request.leave_type.max_days_per_year
+                )
+            
+            leave_request.save()
+            logger.info(f"Leave request created by {employee.name}: {leave_request.total_days} days")
+            messages.success(request, "Đơn xin nghỉ phép đã được gửi thành công")
+            return redirect("leave_history")
+    else:
+        form = LeaveRequestForm()
+    
+    # Lấy leave balance của nhân viên
+    try:
+        employee = Employee.objects.get(email=request.user.email)
+        leave_balances = LeaveBalance.objects.filter(
+            employee=employee,
+            year=datetime.now().year
+        )
+    except Employee.DoesNotExist:
+        employee = None
+        leave_balances = []
+    
+    return render(request, "hod_template/request_leave.html", {
+        "form": form,
+        "leave_balances": leave_balances
+    })
+
+@login_required
+def leave_history(request):
+    """Xem lịch sử đơn xin nghỉ phép của nhân viên"""
+    try:
+        employee = Employee.objects.get(email=request.user.email)
+        leave_requests = LeaveRequest.objects.filter(employee=employee).order_by('-created_at')
+    except Employee.DoesNotExist:
+        leave_requests = []
+    
+    return render(request, "hod_template/leave_history.html", {
+        "leave_requests": leave_requests
+    })
+
+@login_required
+def manage_leave_requests(request):
+    """HR/Manager xem tất cả đơn xin nghỉ phép"""
+    # Filter options
+    status_filter = request.GET.get('status', '')
+    employee_filter = request.GET.get('employee', '')
+    
+    leave_requests = LeaveRequest.objects.select_related('employee', 'leave_type', 'approved_by').all()
+    
+    if status_filter:
+        leave_requests = leave_requests.filter(status=status_filter)
+    if employee_filter:
+        leave_requests = leave_requests.filter(employee_id=employee_filter)
+    
+    leave_requests = leave_requests.order_by('-created_at')
+    
+    # Pagination
+    paginator = Paginator(leave_requests, 20)
+    page = request.GET.get('page')
+    try:
+        leave_requests = paginator.page(page)
+    except PageNotAnInteger:
+        leave_requests = paginator.page(1)
+    except EmptyPage:
+        leave_requests = paginator.page(paginator.num_pages)
+    
+    employees = Employee.objects.all()
+    
+    return render(request, "hod_template/manage_leave_requests.html", {
+        "leave_requests": leave_requests,
+        "employees": employees
+    })
+
+@login_required
+def view_leave_request(request, request_id):
+    """Xem chi tiết đơn xin nghỉ phép"""
+    leave_request = get_object_or_404(LeaveRequest, id=request_id)
+    
+    # Get leave balance
+    try:
+        leave_balance = LeaveBalance.objects.get(
+            employee=leave_request.employee,
+            leave_type=leave_request.leave_type,
+            year=leave_request.start_date.year
+        )
+    except LeaveBalance.DoesNotExist:
+        leave_balance = None
+    
+    return render(request, "hod_template/view_leave_request.html", {
+        "leave_request": leave_request,
+        "leave_balance": leave_balance
+    })
+
+@login_required
+@require_POST
+def approve_leave_request(request, request_id):
+    """Duyệt đơn xin nghỉ phép"""
+    try:
+        leave_request = LeaveRequest.objects.get(id=request_id)
+        
+        if leave_request.status != 'pending':
+            messages.error(request, "Đơn này đã được xử lý rồi")
+            return redirect("manage_leave_requests")
+        
+        # Get approver employee
+        try:
+            approver = Employee.objects.get(email=request.user.email)
+        except Employee.DoesNotExist:
+            messages.error(request, "Không tìm thấy hồ sơ nhân viên của bạn")
+            return redirect("manage_leave_requests")
+        
+        # Update status
+        leave_request.status = 'approved'
+        leave_request.approved_by = approver
+        leave_request.approved_at = timezone.now()
+        leave_request.save()
+        
+        # Update leave balance
+        leave_balance, created = LeaveBalance.objects.get_or_create(
+            employee=leave_request.employee,
+            leave_type=leave_request.leave_type,
+            year=leave_request.start_date.year,
+            defaults={
+                'total_days': leave_request.leave_type.max_days_per_year,
+                'used_days': 0,
+                'remaining_days': leave_request.leave_type.max_days_per_year
+            }
+        )
+        
+        leave_balance.used_days += leave_request.total_days
+        leave_balance.save()  # Auto-calculate remaining_days
+        
+        logger.info(f"Leave request {request_id} approved by {approver.name}")
+        messages.success(request, "Đã duyệt đơn xin nghỉ phép")
+        
+    except LeaveRequest.DoesNotExist:
+        messages.error(request, "Không tìm thấy đơn xin nghỉ phép")
+    except Exception as e:
+        logger.error(f"Error approving leave request: {e}")
+        messages.error(request, f"Lỗi: {str(e)}")
+    
+    return redirect("manage_leave_requests")
+
+@login_required
+@require_POST
+def reject_leave_request(request, request_id):
+    """Từ chối đơn xin nghỉ phép"""
+    try:
+        leave_request = LeaveRequest.objects.get(id=request_id)
+        
+        if leave_request.status != 'pending':
+            messages.error(request, "Đơn này đã được xử lý rồi")
+            return redirect("manage_leave_requests")
+        
+        # Get approver employee
+        try:
+            approver = Employee.objects.get(email=request.user.email)
+        except Employee.DoesNotExist:
+            messages.error(request, "Không tìm thấy hồ sơ nhân viên của bạn")
+            return redirect("manage_leave_requests")
+        
+        # Update status
+        leave_request.status = 'rejected'
+        leave_request.approved_by = approver
+        leave_request.approved_at = timezone.now()
+        leave_request.rejection_reason = request.POST.get('rejection_reason', '')
+        leave_request.save()
+        
+        logger.info(f"Leave request {request_id} rejected by {approver.name}")
+        messages.success(request, "Đã từ chối đơn xin nghỉ phép")
+        
+    except LeaveRequest.DoesNotExist:
+        messages.error(request, "Không tìm thấy đơn xin nghỉ phép")
+    except Exception as e:
+        logger.error(f"Error rejecting leave request: {e}")
+        messages.error(request, f"Lỗi: {str(e)}")
+    
+    return redirect("manage_leave_requests")
+
+@login_required
+@require_POST
+def cancel_leave_request(request, request_id):
+    """Nhân viên hủy đơn xin nghỉ phép của mình"""
+    try:
+        employee = Employee.objects.get(email=request.user.email)
+        leave_request = LeaveRequest.objects.get(id=request_id, employee=employee)
+        
+        if leave_request.status != 'pending':
+            messages.error(request, "Chỉ có thể hủy đơn đang chờ duyệt")
+            return redirect("leave_history")
+        
+        leave_request.status = 'cancelled'
+        leave_request.save()
+        
+        logger.info(f"Leave request {request_id} cancelled by {employee.name}")
+        messages.success(request, "Đã hủy đơn xin nghỉ phép")
+        
+    except Employee.DoesNotExist:
+        messages.error(request, "Không tìm thấy hồ sơ nhân viên")
+    except LeaveRequest.DoesNotExist:
+        messages.error(request, "Không tìm thấy đơn xin nghỉ phép")
+    except Exception as e:
+        logger.error(f"Error cancelling leave request: {e}")
+        messages.error(request, f"Lỗi: {str(e)}")
+    
+    return redirect("leave_history")
+
+# ====================== Expense Management Views ======================
+
+@login_required
+def manage_expense_categories(request):
+    """Quản lý danh mục chi phí"""
+    categories = ExpenseCategory.objects.all().order_by('name')
+    form = ExpenseCategoryForm()
+    
+    context = {
+        'categories': categories,
+        'form': form,
+    }
+    logger.info(f"Expense categories viewed by {request.user.username}")
+    return render(request, 'hod_template/manage_expense_categories.html', context)
+
+@login_required
+@require_POST
+def add_expense_category_save(request):
+    """Thêm danh mục chi phí mới"""
+    try:
+        form = ExpenseCategoryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            logger.info(f"Expense category {form.cleaned_data['name']} created")
+            messages.success(request, "Đã thêm danh mục chi phí thành công")
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
+    except Exception as e:
+        logger.error(f"Error adding expense category: {e}")
+        messages.error(request, f"Lỗi: {str(e)}")
+    
+    return redirect("manage_expense_categories")
+
+@login_required
+@require_POST
+def edit_expense_category_save(request):
+    """Chỉnh sửa danh mục chi phí"""
+    try:
+        category_id = request.POST.get('category_id')
+        category = ExpenseCategory.objects.get(id=category_id)
+        
+        form = ExpenseCategoryForm(request.POST, instance=category)
+        if form.is_valid():
+            form.save()
+            logger.info(f"Expense category {category.name} updated")
+            messages.success(request, "Đã cập nhật danh mục chi phí")
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
+    except ExpenseCategory.DoesNotExist:
+        messages.error(request, "Không tìm thấy danh mục chi phí")
+    except Exception as e:
+        logger.error(f"Error editing expense category: {e}")
+        messages.error(request, f"Lỗi: {str(e)}")
+    
+    return redirect("manage_expense_categories")
+
+@login_required
+@require_POST
+def delete_expense_category(request, category_id):
+    """Xóa danh mục chi phí"""
+    try:
+        category = ExpenseCategory.objects.get(id=category_id)
+        
+        # Kiểm tra xem có expense nào sử dụng category này không
+        if Expense.objects.filter(category=category).exists():
+            messages.error(request, "Không thể xóa danh mục chi phí đang được sử dụng")
+        else:
+            category_name = category.name
+            category.delete()
+            logger.info(f"Expense category {category_name} deleted")
+            messages.success(request, "Đã xóa danh mục chi phí")
+    except ExpenseCategory.DoesNotExist:
+        messages.error(request, "Không tìm thấy danh mục chi phí")
+    except Exception as e:
+        logger.error(f"Error deleting expense category: {e}")
+        messages.error(request, f"Lỗi: {str(e)}")
+    
+    return redirect("manage_expense_categories")
+
+@login_required
+def create_expense(request):
+    """Nhân viên tạo yêu cầu chi phí"""
+    try:
+        employee = Employee.objects.get(email=request.user.email)
+    except Employee.DoesNotExist:
+        messages.error(request, "Không tìm thấy hồ sơ nhân viên")
+        return redirect("admin_home")
+    
+    if request.method == 'POST':
+        form = ExpenseForm(request.POST, request.FILES)
+        if form.is_valid():
+            expense = form.save(commit=False)
+            expense.employee = employee
+            expense.save()
+            
+            logger.info(f"Expense created by {employee.name}: {expense.amount} VND")
+            messages.success(request, "Đã tạo yêu cầu chi phí thành công")
+            return redirect("expense_history")
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f"{field}: {error}")
+    else:
+        form = ExpenseForm()
+    
+    categories = ExpenseCategory.objects.filter(is_active=True)
+    context = {
+        'form': form,
+        'categories': categories,
+        'employee': employee,
+    }
+    return render(request, 'hod_template/create_expense.html', context)
+
+@login_required
+def expense_history(request):
+    """Lịch sử yêu cầu chi phí của nhân viên"""
+    try:
+        employee = Employee.objects.get(email=request.user.email)
+    except Employee.DoesNotExist:
+        messages.error(request, "Không tìm thấy hồ sơ nhân viên")
+        return redirect("admin_home")
+    
+    # Lấy danh sách expenses
+    expenses = Expense.objects.filter(employee=employee).order_by('-created_at')
+    
+    # Phân trang
+    paginator = Paginator(expenses, 10)  # 10 expenses per page
+    page = request.GET.get('page')
+    try:
+        expenses = paginator.page(page)
+    except PageNotAnInteger:
+        expenses = paginator.page(1)
+    except EmptyPage:
+        expenses = paginator.page(paginator.num_pages)
+    
+    # Thống kê
+    total_expenses = Expense.objects.filter(employee=employee).aggregate(Sum('amount'))['amount__sum'] or 0
+    approved_expenses = Expense.objects.filter(employee=employee, status='approved').aggregate(Sum('amount'))['amount__sum'] or 0
+    paid_expenses = Expense.objects.filter(employee=employee, status='paid').aggregate(Sum('amount'))['amount__sum'] or 0
+    pending_expenses = Expense.objects.filter(employee=employee, status='pending').aggregate(Sum('amount'))['amount__sum'] or 0
+    
+    context = {
+        'expenses': expenses,
+        'employee': employee,
+        'total_expenses': total_expenses,
+        'approved_expenses': approved_expenses,
+        'paid_expenses': paid_expenses,
+        'pending_expenses': pending_expenses,
+    }
+    logger.info(f"Expense history viewed by {employee.name}")
+    return render(request, 'hod_template/expense_history.html', context)
+
+@login_required
+def manage_expenses(request):
+    """HR/Manager quản lý tất cả yêu cầu chi phí"""
+    # Lọc theo status
+    status_filter = request.GET.get('status', '')
+    expenses = Expense.objects.all().order_by('-created_at')
+    
+    if status_filter:
+        expenses = expenses.filter(status=status_filter)
+    
+    # Lọc theo nhân viên
+    employee_filter = request.GET.get('employee', '')
+    if employee_filter:
+        expenses = expenses.filter(employee__id=employee_filter)
+    
+    # Lọc theo danh mục
+    category_filter = request.GET.get('category', '')
+    if category_filter:
+        expenses = expenses.filter(category__id=category_filter)
+    
+    # Lọc theo ngày
+    from_date = request.GET.get('from_date', '')
+    to_date = request.GET.get('to_date', '')
+    if from_date:
+        expenses = expenses.filter(date__gte=from_date)
+    if to_date:
+        expenses = expenses.filter(date__lte=to_date)
+    
+    # Phân trang
+    paginator = Paginator(expenses, 10)
+    page = request.GET.get('page')
+    try:
+        expenses = paginator.page(page)
+    except PageNotAnInteger:
+        expenses = paginator.page(1)
+    except EmptyPage:
+        expenses = paginator.page(paginator.num_pages)
+    
+    # Thống kê
+    total_amount = Expense.objects.all().aggregate(Sum('amount'))['amount__sum'] or 0
+    pending_count = Expense.objects.filter(status='pending').count()
+    approved_count = Expense.objects.filter(status='approved').count()
+    paid_count = Expense.objects.filter(status='paid').count()
+    
+    employees = Employee.objects.all()
+    categories = ExpenseCategory.objects.filter(is_active=True)
+    
+    context = {
+        'expenses': expenses,
+        'employees': employees,
+        'categories': categories,
+        'status_filter': status_filter,
+        'employee_filter': employee_filter,
+        'category_filter': category_filter,
+        'from_date': from_date,
+        'to_date': to_date,
+        'total_amount': total_amount,
+        'pending_count': pending_count,
+        'approved_count': approved_count,
+        'paid_count': paid_count,
+    }
+    logger.info(f"All expenses viewed by {request.user.username}")
+    return render(request, 'hod_template/manage_expenses.html', context)
+
+@login_required
+def view_expense(request, expense_id):
+    """Xem chi tiết yêu cầu chi phí"""
+    try:
+        expense = Expense.objects.get(id=expense_id)
+        context = {
+            'expense': expense,
+        }
+        logger.info(f"Expense {expense_id} viewed by {request.user.username}")
+        return render(request, 'hod_template/view_expense.html', context)
+    except Expense.DoesNotExist:
+        messages.error(request, "Không tìm thấy yêu cầu chi phí")
+        return redirect("manage_expenses")
+
+@login_required
+@require_POST
+def approve_expense(request, expense_id):
+    """Duyệt yêu cầu chi phí"""
+    try:
+        expense = Expense.objects.get(id=expense_id)
+        approver = Employee.objects.get(email=request.user.email)
+        
+        if expense.status != 'pending':
+            messages.error(request, "Yêu cầu chi phí này đã được xử lý")
+            return redirect("manage_expenses")
+        
+        expense.status = 'approved'
+        expense.approved_by = approver
+        expense.approved_at = timezone.now()
+        expense.save()
+        
+        logger.info(f"Expense {expense_id} approved by {approver.name}")
+        messages.success(request, "Đã duyệt yêu cầu chi phí")
+        
+    except Expense.DoesNotExist:
+        messages.error(request, "Không tìm thấy yêu cầu chi phí")
+    except Employee.DoesNotExist:
+        messages.error(request, "Không tìm thấy hồ sơ người duyệt")
+    except Exception as e:
+        logger.error(f"Error approving expense: {e}")
+        messages.error(request, f"Lỗi: {str(e)}")
+    
+    return redirect("manage_expenses")
+
+@login_required
+@require_POST
+def reject_expense(request, expense_id):
+    """Từ chối yêu cầu chi phí"""
+    try:
+        expense = Expense.objects.get(id=expense_id)
+        rejector = Employee.objects.get(email=request.user.email)
+        
+        if expense.status != 'pending':
+            messages.error(request, "Yêu cầu chi phí này đã được xử lý")
+            return redirect("manage_expenses")
+        
+        rejection_reason = request.POST.get('rejection_reason', '')
+        
+        expense.status = 'rejected'
+        expense.approved_by = rejector
+        expense.approved_at = timezone.now()
+        if rejection_reason:
+            expense.description += f"\n\nLý do từ chối: {rejection_reason}"
+        expense.save()
+        
+        logger.info(f"Expense {expense_id} rejected by {rejector.name}")
+        messages.success(request, "Đã từ chối yêu cầu chi phí")
+        
+    except Expense.DoesNotExist:
+        messages.error(request, "Không tìm thấy yêu cầu chi phí")
+    except Employee.DoesNotExist:
+        messages.error(request, "Không tìm thấy hồ sơ người từ chối")
+    except Exception as e:
+        logger.error(f"Error rejecting expense: {e}")
+        messages.error(request, f"Lỗi: {str(e)}")
+    
+    return redirect("manage_expenses")
+
+@login_required
+@require_POST
+def mark_expense_as_paid(request, expense_id):
+    """Đánh dấu chi phí đã thanh toán (cho Kế toán)"""
+    try:
+        expense = Expense.objects.get(id=expense_id)
+        payer = Employee.objects.get(email=request.user.email)
+        
+        if expense.status != 'approved':
+            messages.error(request, "Chỉ có thể thanh toán chi phí đã được duyệt")
+            return redirect("manage_expenses")
+        
+        expense.status = 'paid'
+        expense.paid_by = payer
+        expense.paid_at = timezone.now()
+        expense.save()
+        
+        logger.info(f"Expense {expense_id} marked as paid by {payer.name}")
+        messages.success(request, "Đã đánh dấu chi phí đã thanh toán")
+        
+    except Expense.DoesNotExist:
+        messages.error(request, "Không tìm thấy yêu cầu chi phí")
+    except Employee.DoesNotExist:
+        messages.error(request, "Không tìm thấy hồ sơ người thanh toán")
+    except Exception as e:
+        logger.error(f"Error marking expense as paid: {e}")
+        messages.error(request, f"Lỗi: {str(e)}")
+    
+    return redirect("manage_expenses")
+
+@login_required
+@require_POST
+def cancel_expense(request, expense_id):
+    """Nhân viên hủy yêu cầu chi phí của mình"""
+    try:
+        employee = Employee.objects.get(email=request.user.email)
+        expense = Expense.objects.get(id=expense_id, employee=employee)
+        
+        if expense.status != 'pending':
+            messages.error(request, "Chỉ có thể hủy yêu cầu chi phí đang chờ duyệt")
+            return redirect("expense_history")
+        
+        expense.status = 'cancelled'
+        expense.save()
+        
+        logger.info(f"Expense {expense_id} cancelled by {employee.name}")
+        messages.success(request, "Đã hủy yêu cầu chi phí")
+        
+    except Employee.DoesNotExist:
+        messages.error(request, "Không tìm thấy hồ sơ nhân viên")
+    except Expense.DoesNotExist:
+        messages.error(request, "Không tìm thấy yêu cầu chi phí")
+    except Exception as e:
+        logger.error(f"Error cancelling expense: {e}")
+        messages.error(request, f"Lỗi: {str(e)}")
+    
+    return redirect("expense_history")
+
+# ====================== Self-Service Portal Views ======================
+
+@login_required
+def employee_dashboard(request):
+    """Dashboard tổng quan cho nhân viên"""
+    try:
+        employee = Employee.objects.get(email=request.user.email)
+    except Employee.DoesNotExist:
+        messages.error(request, "Không tìm thấy hồ sơ nhân viên")
+        return redirect("admin_home")
+    
+    # Lấy tháng/năm hiện tại
+    now = timezone.now()
+    current_month = now.month
+    current_year = now.year
+    
+    # Thống kê chấm công tháng này
+    attendance_this_month = Attendance.objects.filter(
+        employee=employee,
+        date__year=current_year,
+        date__month=current_month
+    )
+    total_working_days = attendance_this_month.filter(status="Có làm việc").count()
+    total_working_hours = attendance_this_month.filter(status="Có làm việc").aggregate(Sum('working_hours'))['working_hours__sum'] or 0
+    
+    # Lương tháng này
+    current_payroll = Payroll.objects.filter(
+        employee=employee,
+        month=current_month,
+        year=current_year
+    ).first()
+    
+    # Nghỉ phép
+    leave_balance = LeaveBalance.objects.filter(
+        employee=employee,
+        year=current_year
+    ).first()
+    
+    pending_leave_requests = LeaveRequest.objects.filter(
+        employee=employee,
+        status='pending'
+    ).count()
+    
+    # Chi phí
+    pending_expenses = Expense.objects.filter(
+        employee=employee,
+        status='pending'
+    ).count()
+    
+    total_expenses_this_month = Expense.objects.filter(
+        employee=employee,
+        date__year=current_year,
+        date__month=current_month
+    ).aggregate(Sum('amount'))['amount__sum'] or 0
+    
+    # Hoạt động gần đây
+    recent_activities = []
+    
+    # Leave requests
+    recent_leaves = LeaveRequest.objects.filter(employee=employee).order_by('-created_at')[:5]
+    for leave in recent_leaves:
+        recent_activities.append({
+            'type': 'leave',
+            'icon': 'fa-umbrella-beach',
+            'color': 'info',
+            'title': f'Xin nghỉ phép {leave.leave_type.name}',
+            'description': f'{leave.start_date.strftime("%d/%m/%Y")} - {leave.end_date.strftime("%d/%m/%Y")}',
+            'status': leave.status,
+            'time': leave.created_at
+        })
+    
+    # Expenses
+    recent_expenses = Expense.objects.filter(employee=employee).order_by('-created_at')[:5]
+    for expense in recent_expenses:
+        recent_activities.append({
+            'type': 'expense',
+            'icon': 'fa-receipt',
+            'color': 'warning',
+            'title': f'Chi phí {expense.category.name}',
+            'description': f'{expense.amount:,.0f} VND',
+            'status': expense.status,
+            'time': expense.created_at
+        })
+    
+    # Sắp xếp theo thời gian
+    recent_activities = sorted(recent_activities, key=lambda x: x['time'], reverse=True)[:10]
+    
+    context = {
+        'employee': employee,
+        'total_working_days': total_working_days,
+        'total_working_hours': total_working_hours,
+        'current_payroll': current_payroll,
+        'leave_balance': leave_balance,
+        'pending_leave_requests': pending_leave_requests,
+        'pending_expenses': pending_expenses,
+        'total_expenses_this_month': total_expenses_this_month,
+        'recent_activities': recent_activities,
+        'current_month': current_month,
+        'current_year': current_year,
+    }
+    
+    logger.info(f"Employee dashboard accessed by {employee.name}")
+    return render(request, 'hod_template/employee_dashboard.html', context)
+
+@login_required
+def employee_profile(request):
+    """Xem hồ sơ cá nhân"""
+    try:
+        employee = Employee.objects.get(email=request.user.email)
+    except Employee.DoesNotExist:
+        messages.error(request, "Không tìm thấy hồ sơ nhân viên")
+        return redirect("admin_home")
+    
+    context = {
+        'employee': employee,
+    }
+    logger.info(f"Profile viewed by {employee.name}")
+    return render(request, 'hod_template/employee_profile.html', context)
+
+@login_required
+def edit_employee_profile(request):
+    """Chỉnh sửa thông tin cá nhân (giới hạn)"""
+    try:
+        employee = Employee.objects.get(email=request.user.email)
+    except Employee.DoesNotExist:
+        messages.error(request, "Không tìm thấy hồ sơ nhân viên")
+        return redirect("admin_home")
+    
+    if request.method == 'POST':
+        try:
+            # Chỉ cho phép cập nhật một số trường nhất định
+            employee.phone = request.POST.get('phone', employee.phone)
+            employee.address = request.POST.get('address', employee.address)
+            employee.place_of_residence = request.POST.get('place_of_residence', employee.place_of_residence)
+            
+            # Upload avatar
+            if 'avatar' in request.FILES:
+                avatar = request.FILES['avatar']
+                # Validate file
+                try:
+                    validate_image_file(avatar)
+                    # Generate unique filename
+                    ext = avatar.name.split('.')[-1]
+                    filename = f"{uuid.uuid4()}.{ext}"
+                    
+                    # Save file
+                    file_path = default_storage.save(f'avatars/{filename}', avatar)
+                    employee.avatar = file_path
+                except ValidationError as e:
+                    messages.error(request, str(e))
+                    return redirect('edit_employee_profile')
+            
+            employee.save()
+            logger.info(f"Profile updated by {employee.name}")
+            messages.success(request, "Đã cập nhật thông tin cá nhân")
+            return redirect("employee_profile")
+            
+        except Exception as e:
+            logger.error(f"Error updating profile: {e}")
+            messages.error(request, f"Lỗi: {str(e)}")
+    
+    context = {
+        'employee': employee,
+    }
+    return render(request, 'hod_template/edit_employee_profile.html', context)
+
+@login_required
+def my_payrolls(request):
+    """Xem bảng lương của nhân viên"""
+    try:
+        employee = Employee.objects.get(email=request.user.email)
+    except Employee.DoesNotExist:
+        messages.error(request, "Không tìm thấy hồ sơ nhân viên")
+        return redirect("admin_home")
+    
+    # Lọc theo năm
+    year_filter = request.GET.get('year', '')
+    payrolls = Payroll.objects.filter(employee=employee).order_by('-year', '-month')
+    
+    if year_filter:
+        payrolls = payrolls.filter(year=int(year_filter))
+    
+    # Phân trang
+    paginator = Paginator(payrolls, 12)  # 12 tháng per page
+    page = request.GET.get('page')
+    try:
+        payrolls = paginator.page(page)
+    except PageNotAnInteger:
+        payrolls = paginator.page(1)
+    except EmptyPage:
+        payrolls = paginator.page(paginator.num_pages)
+    
+    # Thống kê
+    total_salary = Payroll.objects.filter(employee=employee).aggregate(Sum('total_salary'))['total_salary__sum'] or 0
+    avg_salary = Payroll.objects.filter(employee=employee).aggregate(avg=Sum('total_salary'))['avg'] or 0
+    if Payroll.objects.filter(employee=employee).count() > 0:
+        avg_salary = avg_salary / Payroll.objects.filter(employee=employee).count()
+    
+    # Danh sách năm để filter
+    years = Payroll.objects.filter(employee=employee).values_list('year', flat=True).distinct().order_by('-year')
+    
+    context = {
+        'employee': employee,
+        'payrolls': payrolls,
+        'years': years,
+        'year_filter': year_filter,
+        'total_salary': total_salary,
+        'avg_salary': avg_salary,
+    }
+    logger.info(f"Payrolls viewed by {employee.name}")
+    return render(request, 'hod_template/my_payrolls.html', context)
+
+@login_required
+def my_attendance(request):
+    """Xem chấm công của nhân viên"""
+    try:
+        employee = Employee.objects.get(email=request.user.email)
+    except Employee.DoesNotExist:
+        messages.error(request, "Không tìm thấy hồ sơ nhân viên")
+        return redirect("admin_home")
+    
+    # Lọc theo tháng/năm
+    month_filter = request.GET.get('month', '')
+    year_filter = request.GET.get('year', '')
+    
+    attendances = Attendance.objects.filter(employee=employee).order_by('-date')
+    
+    if month_filter:
+        attendances = attendances.filter(date__month=int(month_filter))
+    if year_filter:
+        attendances = attendances.filter(date__year=int(year_filter))
+    
+    # Phân trang
+    paginator = Paginator(attendances, 31)  # 1 tháng per page
+    page = request.GET.get('page')
+    try:
+        attendances = paginator.page(page)
+    except PageNotAnInteger:
+        attendances = paginator.page(1)
+    except EmptyPage:
+        attendances = paginator.page(paginator.num_pages)
+    
+    # Thống kê
+    if month_filter and year_filter:
+        month_attendances = Attendance.objects.filter(
+            employee=employee,
+            date__month=int(month_filter),
+            date__year=int(year_filter)
+        )
+    else:
+        # Tháng hiện tại
+        now = timezone.now()
+        month_attendances = Attendance.objects.filter(
+            employee=employee,
+            date__month=now.month,
+            date__year=now.year
+        )
+    
+    total_days = month_attendances.filter(status="Có làm việc").count()
+    total_hours = month_attendances.filter(status="Có làm việc").aggregate(Sum('working_hours'))['working_hours__sum'] or 0
+    leave_days = month_attendances.filter(status="Nghỉ phép").count()
+    absent_days = month_attendances.filter(status="Nghỉ không phép").count()
+    
+    # Danh sách tháng/năm để filter
+    years = Attendance.objects.filter(employee=employee).values_list('date__year', flat=True).distinct().order_by('-date__year')
+    months = range(1, 13)
+    
+    context = {
+        'employee': employee,
+        'attendances': attendances,
+        'years': years,
+        'months': months,
+        'month_filter': month_filter,
+        'year_filter': year_filter,
+        'total_days': total_days,
+        'total_hours': total_hours,
+        'leave_days': leave_days,
+        'absent_days': absent_days,
+    }
+    logger.info(f"Attendance viewed by {employee.name}")
+    return render(request, 'hod_template/my_attendance.html', context)
+

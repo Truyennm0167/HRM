@@ -1,0 +1,253 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Chi Tiết Đơn Nghỉ Phép
+{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1><i class="fas fa-file-alt"></i> Chi Tiết Đơn Nghỉ Phép</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'manage_leave_requests' %}">Quản lý nghỉ phép</a></li>
+                    <li class="breadcrumb-item active">Chi tiết</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <!-- Leave Request Details -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-info-circle"></i> Thông Tin Đơn Nghỉ Phép</h3>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-4">Nhân viên:</dt>
+                            <dd class="col-sm-8">
+                                <strong>{{ leave_request.employee.name }}</strong>
+                                <br><small class="text-muted">{{ leave_request.employee.employee_code }}</small>
+                            </dd>
+
+                            <dt class="col-sm-4">Phòng ban:</dt>
+                            <dd class="col-sm-8">{{ leave_request.employee.department.name|default:"-" }}</dd>
+
+                            <dt class="col-sm-4">Loại nghỉ phép:</dt>
+                            <dd class="col-sm-8">
+                                <span class="badge badge-info">{{ leave_request.leave_type.name }}</span>
+                                {% if leave_request.leave_type.is_paid %}
+                                <span class="badge badge-success">Có lương</span>
+                                {% else %}
+                                <span class="badge badge-danger">Không lương</span>
+                                {% endif %}
+                            </dd>
+
+                            <dt class="col-sm-4">Từ ngày:</dt>
+                            <dd class="col-sm-8">{{ leave_request.start_date|date:"d/m/Y (l)" }}</dd>
+
+                            <dt class="col-sm-4">Đến ngày:</dt>
+                            <dd class="col-sm-8">{{ leave_request.end_date|date:"d/m/Y (l)" }}</dd>
+
+                            <dt class="col-sm-4">Số ngày nghỉ:</dt>
+                            <dd class="col-sm-8">
+                                <strong class="text-primary">{{ leave_request.total_days }} ngày làm việc</strong>
+                            </dd>
+
+                            <dt class="col-sm-4">Lý do:</dt>
+                            <dd class="col-sm-8">
+                                <div class="border p-2 bg-light">
+                                    {{ leave_request.reason }}
+                                </div>
+                            </dd>
+
+                            <dt class="col-sm-4">Trạng thái:</dt>
+                            <dd class="col-sm-8">
+                                {% if leave_request.status == 'pending' %}
+                                    <span class="badge badge-warning badge-lg">
+                                        <i class="fas fa-clock"></i> Chờ duyệt
+                                    </span>
+                                {% elif leave_request.status == 'approved' %}
+                                    <span class="badge badge-success badge-lg">
+                                        <i class="fas fa-check-circle"></i> Đã duyệt
+                                    </span>
+                                {% elif leave_request.status == 'rejected' %}
+                                    <span class="badge badge-danger badge-lg">
+                                        <i class="fas fa-times-circle"></i> Từ chối
+                                    </span>
+                                {% elif leave_request.status == 'cancelled' %}
+                                    <span class="badge badge-secondary badge-lg">
+                                        <i class="fas fa-ban"></i> Đã hủy
+                                    </span>
+                                {% endif %}
+                            </dd>
+
+                            {% if leave_request.approved_by %}
+                            <dt class="col-sm-4">Người duyệt:</dt>
+                            <dd class="col-sm-8">
+                                {{ leave_request.approved_by.name }}
+                                <br><small class="text-muted">{{ leave_request.approved_at|date:"d/m/Y H:i" }}</small>
+                            </dd>
+                            {% endif %}
+
+                            {% if leave_request.rejection_reason %}
+                            <dt class="col-sm-4">Lý do từ chối:</dt>
+                            <dd class="col-sm-8">
+                                <div class="border p-2 bg-danger text-white">
+                                    {{ leave_request.rejection_reason }}
+                                </div>
+                            </dd>
+                            {% endif %}
+
+                            <dt class="col-sm-4">Ngày gửi:</dt>
+                            <dd class="col-sm-8">{{ leave_request.created_at|date:"d/m/Y H:i:s" }}</dd>
+
+                            <dt class="col-sm-4">Cập nhật lần cuối:</dt>
+                            <dd class="col-sm-8">{{ leave_request.updated_at|date:"d/m/Y H:i:s" }}</dd>
+                        </dl>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'manage_leave_requests' %}" class="btn btn-default">
+                            <i class="fas fa-arrow-left"></i> Quay lại
+                        </a>
+                        {% if leave_request.status == 'pending' %}
+                        <form method="post" action="{% url 'approve_leave_request' leave_request.id %}" 
+                              style="display: inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-check"></i> Duyệt đơn
+                            </button>
+                        </form>
+                        <button type="button" class="btn btn-danger" 
+                                data-toggle="modal" data-target="#rejectModal">
+                            <i class="fas fa-times"></i> Từ chối
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar: Leave Balance -->
+            <div class="col-md-4">
+                {% if leave_balance %}
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-calendar-check"></i> Số Ngày Phép</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="text-center mb-3">
+                            <h3 class="text-info">
+                                {{ leave_balance.remaining_days }} / {{ leave_balance.total_days }}
+                            </h3>
+                            <p class="text-muted">Ngày còn lại / Tổng số ngày</p>
+                        </div>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success"></i> Đã sử dụng: <strong>{{ leave_balance.used_days }}</strong> ngày</li>
+                            <li><i class="fas fa-calendar-day text-info"></i> Còn lại: <strong>{{ leave_balance.remaining_days }}</strong> ngày</li>
+                            {% if leave_request.status == 'pending' %}
+                            <li class="mt-2">
+                                <div class="alert alert-warning">
+                                    <small>
+                                        Nếu duyệt, còn lại: 
+                                        <strong>{{ leave_balance.remaining_days|add:"-"|add:leave_request.total_days }}</strong> ngày
+                                    </small>
+                                </div>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Timeline -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-stream"></i> Timeline</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="timeline">
+                            <div class="time-label">
+                                <span class="bg-primary">{{ leave_request.created_at|date:"d/m/Y" }}</span>
+                            </div>
+                            <div>
+                                <i class="fas fa-paper-plane bg-blue"></i>
+                                <div class="timeline-item">
+                                    <span class="time"><i class="fas fa-clock"></i> {{ leave_request.created_at|date:"H:i" }}</span>
+                                    <h3 class="timeline-header">Đơn được gửi</h3>
+                                    <div class="timeline-body">
+                                        Nhân viên <strong>{{ leave_request.employee.name }}</strong> gửi đơn xin nghỉ phép
+                                    </div>
+                                </div>
+                            </div>
+
+                            {% if leave_request.approved_at %}
+                            <div class="time-label">
+                                <span class="{% if leave_request.status == 'approved' %}bg-success{% else %}bg-danger{% endif %}">
+                                    {{ leave_request.approved_at|date:"d/m/Y" }}
+                                </span>
+                            </div>
+                            <div>
+                                <i class="fas {% if leave_request.status == 'approved' %}fa-check bg-success{% else %}fa-times bg-danger{% endif %}"></i>
+                                <div class="timeline-item">
+                                    <span class="time"><i class="fas fa-clock"></i> {{ leave_request.approved_at|date:"H:i" }}</span>
+                                    <h3 class="timeline-header">
+                                        {% if leave_request.status == 'approved' %}Đơn được duyệt{% else %}Đơn bị từ chối{% endif %}
+                                    </h3>
+                                    <div class="timeline-body">
+                                        Bởi <strong>{{ leave_request.approved_by.name }}</strong>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endif %}
+
+                            <div>
+                                <i class="fas fa-clock bg-gray"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Reject Modal -->
+<div class="modal fade" id="rejectModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="{% url 'reject_leave_request' leave_request.id %}">
+                {% csrf_token %}
+                <div class="modal-header bg-danger">
+                    <h4 class="modal-title">Từ chối đơn nghỉ phép</h4>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc muốn từ chối đơn nghỉ phép của <strong>{{ leave_request.employee.name }}</strong>?</p>
+                    <div class="form-group">
+                        <label>Lý do từ chối:</label>
+                        <textarea name="rejection_reason" class="form-control" 
+                                  rows="3" placeholder="Nhập lý do..." required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger">Từ chối</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock main_content %}

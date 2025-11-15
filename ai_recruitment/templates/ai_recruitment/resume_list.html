@@ -1,0 +1,120 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}
+    <h1>Quản lý CV</h1>
+{% endblock page_title %}
+
+{% block main_content %}
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Danh sách CV</h3>
+            <div class="card-tools">
+              <a href="{% url 'upload_resume' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Upload CV mới
+              </a>
+            </div>
+          </div>
+          <div class="card-body">
+            <table id="resume_table" class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Họ tên</th>
+                  <th>Email</th>
+                  <th>File CV</th>
+                  <th>Kỹ năng</th>
+                  <th>Điểm số</th>
+                  <th>Ngày tạo</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for resume in resumes %}
+                <tr>
+                  <td>{{ resume.id }}</td>
+                  <td>{{ resume.parsed_data.name|default:"N/A" }}</td>
+                  <td>{{ resume.parsed_data.email|default:"N/A" }}</td>
+                  <td>
+                    <a href="{{ resume.file.url }}" target="_blank">
+                      {{ resume.file.name|cut:"resumes/"|truncatechars:30 }}
+                    </a>
+                  </td>
+                  <td>
+                    {% if resume.parsed_data.skills %}
+                      {% for skill in resume.parsed_data.skills|slice:":3" %}
+                        <span class="badge badge-info">{{ skill }}</span>
+                      {% endfor %}
+                      {% if resume.parsed_data.skills|length > 3 %}
+                        <span class="badge badge-secondary">+{{ resume.parsed_data.skills|length|add:"-3" }}</span>
+                      {% endif %}
+                    {% else %}
+                      N/A
+                    {% endif %}
+                  </td>
+                  <td>
+                    {% if resume.scores %}
+                      <span class="badge badge-success">{{ resume.scores.total_score }}%</span>
+                    {% else %}
+                      Chưa đánh giá
+                    {% endif %}
+                  </td>
+                  <td>{{ resume.created_at|date:"d/m/Y H:i" }}</td>
+                  <td>
+                    <a href="{% url 'view_resume' resume.id %}" class="btn btn-sm btn-info">
+                      <i class="fas fa-eye"></i>
+                    </a>
+                    <button class="btn btn-sm btn-danger delete-resume" data-id="{{ resume.id }}">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+  $(document).ready(function() {
+    $('#resume_table').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+
+    $('.delete-resume').click(function() {
+      var resumeId = $(this).data('id');
+      if (confirm('Bạn có chắc chắn muốn xóa CV này không?')) {
+        $.ajax({
+          url: '/ai/resume/' + resumeId + '/delete/',
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': '{{ csrf_token }}'
+          },
+          success: function(response) {
+            location.reload();
+          },
+          error: function(xhr, status, error) {
+            alert('Có lỗi xảy ra khi xóa CV. Vui lòng thử lại sau.');
+          }
+        });
+      }
+    });
+  });
+</script>
+{% endblock custom_js %}

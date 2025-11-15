@@ -1,0 +1,53 @@
+{
+    "name": "GIANG DAI HUY",
+    "email": "victor.dev001442@gmail.com",
+    "phone": "0782891924",
+    "skills": [
+        "Flutter",
+        "Dart",
+        "Bloc",
+        "Provider",
+        "Riverpod",
+        "Firebase",
+        "REST API",
+        "WebSocket",
+        "HTML",
+        "CSS",
+        "JavaScript",
+        "ObjectBox",
+        "Hive",
+        "Supabase",
+        "Firebase Realtime Database",
+        "MongoDB",
+        "Git",
+        "Github",
+        "Melos",
+        "Kotlin",
+        "Node.js",
+        "Socket.IO",
+        "Problem-Solving",
+        "Teamwork",
+        "Adaptability",
+        "Communication",
+        "Continuous Learning"
+    ],
+    "experience": [
+        {
+            "position": "Flutter Developer",
+            "company": "TQT Global",
+            "duration": "May 2025 - Jul 2025"
+        },
+        {
+            "position": "Mobile Developer",
+            "company": "SenseTech",
+            "duration": "Jan 2025 - Apr 2025"
+        }
+    ],
+    "education": [
+        {
+            "university": "Can Tho University",
+            "degree": "Information Technology Engineer",
+            "duration": "2020 - 2024"
+        }
+    ]
+}

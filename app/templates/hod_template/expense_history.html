@@ -1,0 +1,209 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Lịch Sử Chi Phí
+{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1><i class="fas fa-history"></i> Lịch Sử Chi Phí</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Lịch sử chi phí</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Statistics -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>{{ total_expenses|floatformat:0 }}</h3>
+                        <p>Tổng Chi Phí (VND)</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{ pending_expenses|floatformat:0 }}</h3>
+                        <p>Đang Chờ Duyệt (VND)</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{ approved_expenses|floatformat:0 }}</h3>
+                        <p>Đã Duyệt (VND)</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-primary">
+                    <div class="inner">
+                        <h3>{{ paid_expenses|floatformat:0 }}</h3>
+                        <p>Đã Thanh Toán (VND)</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Expense List -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-list"></i> Danh Sách Yêu Cầu Chi Phí</h3>
+                <div class="card-tools">
+                    <a href="{% url 'create_expense' %}" class="btn btn-primary btn-sm">
+                        <i class="fas fa-plus"></i> Tạo Yêu Cầu Mới
+                    </a>
+                </div>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Mã</th>
+                            <th>Danh mục</th>
+                            <th>Số tiền</th>
+                            <th>Ngày</th>
+                            <th>Trạng thái</th>
+                            <th>Người duyệt</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if expenses %}
+                            {% for expense in expenses %}
+                            <tr>
+                                <td>{{ expense.id }}</td>
+                                <td>{{ expense.category.name }}</td>
+                                <td>{{ expense.amount|floatformat:0 }} VND</td>
+                                <td>{{ expense.date|date:"d/m/Y" }}</td>
+                                <td>
+                                    {% if expense.status == 'pending' %}
+                                        <span class="badge badge-warning">Chờ duyệt</span>
+                                    {% elif expense.status == 'approved' %}
+                                        <span class="badge badge-success">Đã duyệt</span>
+                                    {% elif expense.status == 'rejected' %}
+                                        <span class="badge badge-danger">Từ chối</span>
+                                    {% elif expense.status == 'paid' %}
+                                        <span class="badge badge-primary">Đã thanh toán</span>
+                                    {% elif expense.status == 'cancelled' %}
+                                        <span class="badge badge-secondary">Đã hủy</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if expense.approved_by %}
+                                        {{ expense.approved_by.name }}
+                                    {% else %}
+                                        -
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'view_expense' expense.id %}" class="btn btn-info btn-xs">
+                                        <i class="fas fa-eye"></i> Xem
+                                    </a>
+                                    {% if expense.status == 'pending' %}
+                                        <button type="button" class="btn btn-danger btn-xs" onclick="cancelExpense({{ expense.id }})">
+                                            <i class="fas fa-times"></i> Hủy
+                                        </button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="text-center">
+                                    <p class="text-muted my-3">Chưa có yêu cầu chi phí nào</p>
+                                    <a href="{% url 'create_expense' %}" class="btn btn-primary">
+                                        <i class="fas fa-plus"></i> Tạo Yêu Cầu Đầu Tiên
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            {% if expenses.has_other_pages %}
+            <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                    {% if expenses.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page=1">&laquo; Đầu</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ expenses.previous_page_number }}">Trước</a></li>
+                    {% endif %}
+                    
+                    <li class="page-item active">
+                        <a class="page-link">Trang {{ expenses.number }} / {{ expenses.paginator.num_pages }}</a>
+                    </li>
+                    
+                    {% if expenses.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{ expenses.next_page_number }}">Sau</a></li>
+                        <li class="page-item"><a class="page-link" href="?page={{ expenses.paginator.num_pages }}">Cuối &raquo;</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- Cancel Modal -->
+<div class="modal fade" id="cancelModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title">Xác Nhận Hủy Yêu Cầu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="cancelForm" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn hủy yêu cầu chi phí này?</p>
+                    <p class="text-danger"><i class="fas fa-exclamation-triangle"></i> Hành động này không thể hoàn tác!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger">Xác Nhận Hủy</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function cancelExpense(expenseId) {
+    const form = document.getElementById('cancelForm');
+    form.action = `/expense/cancel/${expenseId}/`;
+    $('#cancelModal').modal('show');
+}
+</script>
+{% endblock main_content %}

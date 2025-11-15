@@ -1,0 +1,273 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Hồ Sơ Cá Nhân
+{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1><i class="fas fa-user"></i> Hồ Sơ Cá Nhân</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'employee_dashboard' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Hồ sơ</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Profile Card -->
+            <div class="col-md-4">
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            {% if employee.avatar %}
+                                <img class="profile-user-img img-fluid img-circle" src="{{ employee.avatar.url }}" alt="User profile picture">
+                            {% else %}
+                                <img class="profile-user-img img-fluid img-circle" src="https://via.placeholder.com/128" alt="User profile picture">
+                            {% endif %}
+                        </div>
+                        <h3 class="profile-username text-center">{{ employee.name }}</h3>
+                        <p class="text-muted text-center">{{ employee.job_title.name }}</p>
+                        
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b>Mã NV</b> <a class="float-right">{{ employee.employee_code }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Email</b> <a class="float-right">{{ employee.email }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Điện thoại</b> <a class="float-right">{{ employee.phone }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Phòng ban</b> <a class="float-right">{{ employee.department.name }}</a>
+                            </li>
+                        </ul>
+                        
+                        <a href="{% url 'edit_employee_profile' %}" class="btn btn-primary btn-block">
+                            <i class="fas fa-edit"></i> Chỉnh Sửa Thông Tin
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Employment Info -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-briefcase"></i> Thông Tin Công Việc</h3>
+                    </div>
+                    <div class="card-body">
+                        <strong><i class="fas fa-building mr-1"></i> Phòng ban</strong>
+                        <p class="text-muted">{{ employee.department.name }}</p>
+                        <hr>
+
+                        <strong><i class="fas fa-user-tie mr-1"></i> Chức vụ</strong>
+                        <p class="text-muted">{{ employee.job_title.name }}</p>
+                        <hr>
+
+                        <strong><i class="fas fa-briefcase mr-1"></i> Vị trí</strong>
+                        <p class="text-muted">{{ employee.job_position }}</p>
+                        <hr>
+
+                        <strong><i class="fas fa-graduation-cap mr-1"></i> Chuyên ngành</strong>
+                        <p class="text-muted">{{ employee.major|default:"N/A" }}</p>
+                        <hr>
+
+                        <strong><i class="fas fa-calendar-alt mr-1"></i> Trạng thái</strong>
+                        <p class="text-muted">
+                            {% if employee.status == 'working' %}
+                                <span class="badge badge-success">Đang làm việc</span>
+                            {% elif employee.status == 'on_leave' %}
+                                <span class="badge badge-warning">Đang nghỉ</span>
+                            {% elif employee.status == 'resigned' %}
+                                <span class="badge badge-danger">Đã nghỉ việc</span>
+                            {% endif %}
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Personal Information -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-user-circle"></i> Thông Tin Cá Nhân</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-user"></i> Họ và tên</label>
+                                    <p class="form-control-static">{{ employee.name }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-venus-mars"></i> Giới tính</label>
+                                    <p class="form-control-static">{{ employee.gender }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-birthday-cake"></i> Ngày sinh</label>
+                                    <p class="form-control-static">{{ employee.birthday|date:"d/m/Y" }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-map-marker-alt"></i> Nơi sinh</label>
+                                    <p class="form-control-static">{{ employee.place_of_birth }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-id-card"></i> CCCD/CMND</label>
+                                    <p class="form-control-static">{{ employee.identification }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-calendar"></i> Ngày cấp</label>
+                                    <p class="form-control-static">{{ employee.date_of_issue|date:"d/m/Y" }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-map-pin"></i> Nơi cấp</label>
+                            <p class="form-control-static">{{ employee.place_of_issue }}</p>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-globe"></i> Quốc tịch</label>
+                                    <p class="form-control-static">{{ employee.nationality }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-flag"></i> Dân tộc</label>
+                                    <p class="form-control-static">{{ employee.nation }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-praying-hands"></i> Tôn giáo</label>
+                                    <p class="form-control-static">{{ employee.religion }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-ring"></i> Tình trạng hôn nhân</label>
+                                    <p class="form-control-static">{{ employee.marital_status }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contact Information -->
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-address-book"></i> Thông Tin Liên Hệ</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-envelope"></i> Email</label>
+                                    <p class="form-control-static">{{ employee.email }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-phone"></i> Số điện thoại</label>
+                                    <p class="form-control-static">{{ employee.phone }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-home"></i> Địa chỉ thường trú</label>
+                            <p class="form-control-static">{{ employee.address }}</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-map-marked-alt"></i> Nguyên quán</label>
+                            <p class="form-control-static">{{ employee.place_of_origin }}</p>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-building"></i> Nơi ở hiện tại</label>
+                            <p class="form-control-static">{{ employee.place_of_residence }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Work History -->
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-history"></i> Lịch Sử Công Tác</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-school"></i> Trường học</label>
+                                    <p class="form-control-static">{{ employee.school|default:"N/A" }}</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-user-graduate"></i> Chuyên ngành</label>
+                                    <p class="form-control-static">{{ employee.major|default:"N/A" }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-money-bill-wave"></i> Lương cơ bản</label>
+                                    <p class="form-control-static">{{ employee.salary|floatformat:0 }} VND</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label><i class="fas fa-percentage"></i> Hệ số lương</label>
+                                    <p class="form-control-static">{{ employee.job_title.salary_coefficient }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label><i class="fas fa-calendar-plus"></i> Ngày gia nhập</label>
+                            <p class="form-control-static">{{ employee.created_at|date:"d/m/Y H:i" }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}

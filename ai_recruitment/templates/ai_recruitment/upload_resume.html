@@ -1,0 +1,54 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}
+    <h1>Upload CV</h1>
+{% endblock page_title %}
+
+{% block main_content %}
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Upload CV</h3>
+            <div class="card-tools">
+              <a href="{% url 'resume_list' %}" class="btn btn-default">
+                <i class="fas fa-arrow-left"></i> Quay lại
+              </a>
+            </div>
+          </div>
+          <div class="card-body">
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %} alert-dismissible fade show">
+                  {{ message }}
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                </div>
+              {% endfor %}
+            {% endif %}
+
+            <form method="post" enctype="multipart/form-data">
+              {% csrf_token %}
+              
+              <div class="form-group">
+                <label for="{{ form.file.id_for_label }}">Chọn file CV <span class="text-danger">*</span></label>
+                {{ form.file }}
+                {% if form.file.errors %}
+                  <div class="text-danger">{{ form.file.errors }}</div>
+                {% endif %}
+                <small class="form-text text-muted">Hỗ trợ file PDF, DOC, DOCX (tối đa 10MB)</small>
+              </div>
+
+              <button type="submit" class="btn btn-primary">
+                <i class="fas fa-upload"></i> Upload CV
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main_content %}

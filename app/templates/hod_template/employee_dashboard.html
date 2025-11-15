@@ -1,0 +1,250 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Dashboard Nhân Viên
+{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1><i class="fas fa-tachometer-alt"></i> Dashboard Nhân Viên</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Dashboard</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Welcome Card -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            {% if employee.avatar %}
+                                <img class="profile-user-img img-fluid img-circle" src="{{ employee.avatar.url }}" alt="User profile picture">
+                            {% else %}
+                                <img class="profile-user-img img-fluid img-circle" src="https://via.placeholder.com/128" alt="User profile picture">
+                            {% endif %}
+                        </div>
+                        <h3 class="profile-username text-center">{{ employee.name }}</h3>
+                        <p class="text-muted text-center">
+                            {{ employee.job_title.name }} - {{ employee.department.name }}
+                        </p>
+                        <p class="text-center">
+                            <span class="badge badge-info">{{ employee.employee_code }}</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>{{ total_working_days }}</h3>
+                        <p>Ngày Làm Việc Tháng {{ current_month }}</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <a href="{% url 'my_attendance' %}" class="small-box-footer">
+                        Chi tiết <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{ total_working_hours|floatformat:1 }}</h3>
+                        <p>Giờ Làm Việc Tháng {{ current_month }}</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <a href="{% url 'my_attendance' %}" class="small-box-footer">
+                        Chi tiết <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{% if current_payroll %}{{ current_payroll.total_salary|floatformat:0 }}{% else %}0{% endif %}</h3>
+                        <p>Lương Tháng {{ current_month }} (VND)</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <a href="{% url 'my_payrolls' %}" class="small-box-footer">
+                        Chi tiết <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-danger">
+                    <div class="inner">
+                        <h3>{% if leave_balance %}{{ leave_balance.remaining_days }}{% else %}0{% endif %}</h3>
+                        <p>Ngày Phép Còn Lại</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-umbrella-beach"></i>
+                    </div>
+                    <a href="{% url 'leave_history' %}" class="small-box-footer">
+                        Chi tiết <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Actions -->
+        <div class="row">
+            {% if pending_leave_requests > 0 %}
+            <div class="col-md-6">
+                <div class="info-box bg-warning">
+                    <span class="info-box-icon"><i class="fas fa-file-signature"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Đơn Nghỉ Phép Chờ Duyệt</span>
+                        <span class="info-box-number">{{ pending_leave_requests }}</span>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 100%"></div>
+                        </div>
+                        <span class="progress-description">
+                            <a href="{% url 'leave_history' %}" class="text-white">Xem chi tiết</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if pending_expenses > 0 %}
+            <div class="col-md-6">
+                <div class="info-box bg-info">
+                    <span class="info-box-icon"><i class="fas fa-receipt"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Chi Phí Chờ Duyệt</span>
+                        <span class="info-box-number">{{ pending_expenses }}</span>
+                        <div class="progress">
+                            <div class="progress-bar" style="width: 100%"></div>
+                        </div>
+                        <span class="progress-description">
+                            <a href="{% url 'expense_history' %}" class="text-white">Xem chi tiết</a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Quick Actions & Recent Activities -->
+        <div class="row">
+            <!-- Quick Actions -->
+            <div class="col-md-4">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-bolt"></i> Thao Tác Nhanh</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="list-group">
+                            <a href="{% url 'request_leave' %}" class="list-group-item list-group-item-action">
+                                <i class="fas fa-file-signature text-info"></i> Xin Nghỉ Phép
+                            </a>
+                            <a href="{% url 'create_expense' %}" class="list-group-item list-group-item-action">
+                                <i class="fas fa-receipt text-warning"></i> Tạo Yêu Cầu Chi Phí
+                            </a>
+                            <a href="{% url 'employee_profile' %}" class="list-group-item list-group-item-action">
+                                <i class="fas fa-user text-success"></i> Xem Hồ Sơ
+                            </a>
+                            <a href="{% url 'my_attendance' %}" class="list-group-item list-group-item-action">
+                                <i class="fas fa-calendar-check text-primary"></i> Xem Chấm Công
+                            </a>
+                            <a href="{% url 'my_payrolls' %}" class="list-group-item list-group-item-action">
+                                <i class="fas fa-money-bill-wave text-danger"></i> Xem Bảng Lương
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- This Month Expense -->
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-coins"></i> Chi Phí Tháng {{ current_month }}</h3>
+                    </div>
+                    <div class="card-body">
+                        <h4>{{ total_expenses_this_month|floatformat:0 }} VND</h4>
+                        <p class="text-muted">Tổng chi phí đã yêu cầu</p>
+                        <a href="{% url 'expense_history' %}" class="btn btn-warning btn-sm">
+                            <i class="fas fa-eye"></i> Xem Chi Tiết
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activities -->
+            <div class="col-md-8">
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-history"></i> Hoạt Động Gần Đây</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="timeline">
+                            {% for activity in recent_activities %}
+                            <div>
+                                <i class="fas {{ activity.icon }} bg-{{ activity.color }}"></i>
+                                <div class="timeline-item">
+                                    <span class="time">
+                                        <i class="fas fa-clock"></i> {{ activity.time|date:"H:i d/m/Y" }}
+                                    </span>
+                                    <h3 class="timeline-header">{{ activity.title }}</h3>
+                                    <div class="timeline-body">
+                                        {{ activity.description }}
+                                        <br>
+                                        <span class="badge badge-
+                                            {% if activity.status == 'pending' %}warning
+                                            {% elif activity.status == 'approved' %}success
+                                            {% elif activity.status == 'rejected' %}danger
+                                            {% elif activity.status == 'paid' %}primary
+                                            {% else %}secondary{% endif %}">
+                                            {% if activity.status == 'pending' %}Chờ duyệt
+                                            {% elif activity.status == 'approved' %}Đã duyệt
+                                            {% elif activity.status == 'rejected' %}Từ chối
+                                            {% elif activity.status == 'paid' %}Đã thanh toán
+                                            {% elif activity.status == 'cancelled' %}Đã hủy
+                                            {% else %}{{ activity.status }}{% endif %}
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% empty %}
+                            <div class="text-center text-muted py-4">
+                                <i class="fas fa-inbox fa-3x mb-3"></i>
+                                <p>Chưa có hoạt động nào</p>
+                            </div>
+                            {% endfor %}
+                            
+                            <div>
+                                <i class="fas fa-clock bg-gray"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}

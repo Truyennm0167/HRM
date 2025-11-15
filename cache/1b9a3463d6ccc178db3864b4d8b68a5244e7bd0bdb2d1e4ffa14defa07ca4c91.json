@@ -1,0 +1,54 @@
+{
+    "name": "Huynh Thi Cam Huong",
+    "email": "harlie.huynh@gmail.com",
+    "phone": "+84 935680089",
+    "skills": [
+        "English",
+        "Chinese",
+        "Python",
+        "Data analysis",
+        "Financial analysis",
+        "Credit evaluation",
+        "Research",
+        "Strategy development",
+        "Leadership",
+        "Team management",
+        "Stakeholder communication",
+        "Problem solving",
+        "Interpersonal communication"
+    ],
+    "experience": [
+        {
+            "position": "Deputy Head in charge, FDI Banking Department",
+            "company": "Vietnam Joint Stock Commercial Bank for Industry and Trade (VietinBank), Vietnam",
+            "duration": "2022 – 2023"
+        },
+        {
+            "position": "Deputy Head, Large Corporate Banking Department",
+            "company": "Vietnam Joint Stock Commercial Bank for Industry and Trade (VietinBank), Vietnam",
+            "duration": "2020 – 2022"
+        },
+        {
+            "position": "Senior Credit Officer",
+            "company": "Vietnam Joint Stock Commercial Bank for Industry and Trade (VietinBank), Vietnam",
+            "duration": "2015 – 2020"
+        },
+        {
+            "position": "Senior Audit Associate",
+            "company": "PwC Vietnam",
+            "duration": "2011 – 2015"
+        }
+    ],
+    "education": [
+        {
+            "university": "National Cheng Kung University (NCKU), Taiwan",
+            "degree": "MBA in International Management",
+            "duration": "2023 – 2025"
+        },
+        {
+            "university": "Ho Chi Minh University of Banking (HUB)",
+            "degree": "Bachelor of Finance and Banking",
+            "duration": "2007 – 2011"
+        }
+    ]
+}

@@ -1,0 +1,220 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Quản Lý Danh Mục Chi Phí
+{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1><i class="fas fa-tags"></i> Quản Lý Danh Mục Chi Phí</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Danh mục chi phí</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Add Category Form -->
+            <div class="col-md-4">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-plus"></i> Thêm Danh Mục Mới</h3>
+                    </div>
+                    <form method="post" action="{% url 'add_expense_category_save' %}">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Tên danh mục <span class="text-danger">*</span></label>
+                                {{ form.name }}
+                                {% if form.name.errors %}
+                                    <span class="text-danger">{{ form.name.errors }}</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <label>Mã danh mục <span class="text-danger">*</span></label>
+                                {{ form.code }}
+                                {% if form.code.errors %}
+                                    <span class="text-danger">{{ form.code.errors }}</span>
+                                {% endif %}
+                                <small class="form-text text-muted">Viết hoa, không dấu. VD: TRAVEL, MEAL</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Mô tả</label>
+                                {{ form.description }}
+                                {% if form.description.errors %}
+                                    <span class="text-danger">{{ form.description.errors }}</span>
+                                {% endif %}
+                            </div>
+
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    {{ form.is_active }}
+                                    <label class="custom-control-label" for="id_is_active">Kích hoạt</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Thêm Danh Mục
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Categories List -->
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-list"></i> Danh Sách Danh Mục</h3>
+                    </div>
+                    <div class="card-body table-responsive p-0">
+                        <table class="table table-hover text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th>Mã</th>
+                                    <th>Tên danh mục</th>
+                                    <th>Mô tả</th>
+                                    <th>Trạng thái</th>
+                                    <th>Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if categories %}
+                                    {% for category in categories %}
+                                    <tr>
+                                        <td>{{ category.code }}</td>
+                                        <td>{{ category.name }}</td>
+                                        <td>{{ category.description|truncatewords:10 }}</td>
+                                        <td>
+                                            {% if category.is_active %}
+                                                <span class="badge badge-success">Đang dùng</span>
+                                            {% else %}
+                                                <span class="badge badge-secondary">Vô hiệu</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <button type="button" class="btn btn-info btn-xs" onclick="editCategory({{ category.id }}, '{{ category.name }}', '{{ category.code }}', '{{ category.description|escapejs }}', {{ category.is_active|yesno:'true,false' }})">
+                                                <i class="fas fa-edit"></i> Sửa
+                                            </button>
+                                            <button type="button" class="btn btn-danger btn-xs" onclick="deleteCategory({{ category.id }}, '{{ category.name }}')">
+                                                <i class="fas fa-trash"></i> Xóa
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="5" class="text-center">
+                                            <p class="text-muted my-3">Chưa có danh mục chi phí nào</p>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-info">
+                <h5 class="modal-title">Chỉnh Sửa Danh Mục</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" action="{% url 'edit_expense_category_save' %}">
+                {% csrf_token %}
+                <input type="hidden" name="category_id" id="edit_category_id">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Tên danh mục <span class="text-danger">*</span></label>
+                        <input type="text" name="name" id="edit_name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mã danh mục <span class="text-danger">*</span></label>
+                        <input type="text" name="code" id="edit_code" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Mô tả</label>
+                        <textarea name="description" id="edit_description" class="form-control" rows="3"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" name="is_active" id="edit_is_active" value="1">
+                            <label class="custom-control-label" for="edit_is_active">Kích hoạt</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-info">Cập Nhật</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title">Xác Nhận Xóa</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="deleteForm" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn xóa danh mục "<span id="delete_category_name"></span>"?</p>
+                    <p class="text-danger"><i class="fas fa-exclamation-triangle"></i> Hành động này không thể hoàn tác!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-danger">Xác Nhận Xóa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function editCategory(id, name, code, description, isActive) {
+    document.getElementById('edit_category_id').value = id;
+    document.getElementById('edit_name').value = name;
+    document.getElementById('edit_code').value = code;
+    document.getElementById('edit_description').value = description;
+    document.getElementById('edit_is_active').checked = isActive;
+    $('#editModal').modal('show');
+}
+
+function deleteCategory(id, name) {
+    document.getElementById('delete_category_name').textContent = name;
+    document.getElementById('deleteForm').action = `/expense/category/delete/${id}/`;
+    $('#deleteModal').modal('show');
+}
+</script>
+{% endblock main_content %}

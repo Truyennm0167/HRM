@@ -1,0 +1,209 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Quản Lý Loại Nghỉ Phép
+{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản Lý Loại Nghỉ Phép</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Loại Nghỉ Phép</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <!-- Add/Edit Form -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-plus-circle"></i> Thêm/Sửa Loại Nghỉ Phép
+                        </h3>
+                    </div>
+                    <form method="post" action="{% url 'add_leave_type_save' %}">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <input type="hidden" name="leave_type_id" id="leave_type_id">
+                            
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Tên loại phép <span class="text-danger">*</span></label>
+                                        <input type="text" name="name" id="name" class="form-control" 
+                                               placeholder="Ví dụ: Phép năm" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Mã <span class="text-danger">*</span></label>
+                                        <input type="text" name="code" id="code" class="form-control" 
+                                               placeholder="Ví dụ: AL" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Số ngày tối đa/năm <span class="text-danger">*</span></label>
+                                        <input type="number" name="max_days_per_year" id="max_days_per_year" 
+                                               class="form-control" min="0" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Mô tả</label>
+                                <textarea name="description" id="description" class="form-control" 
+                                          rows="2"></textarea>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="requires_approval" id="requires_approval" 
+                                               class="form-check-input" checked>
+                                        <label class="form-check-label">Yêu cầu duyệt</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="is_paid" id="is_paid" 
+                                               class="form-check-input" checked>
+                                        <label class="form-check-label">Có lương</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-check">
+                                        <input type="checkbox" name="is_active" id="is_active" 
+                                               class="form-check-input" checked>
+                                        <label class="form-check-label">Kích hoạt</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Lưu
+                            </button>
+                            <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                                <i class="fas fa-times"></i> Hủy
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- List of Leave Types -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-list"></i> Danh Sách Loại Nghỉ Phép
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Tên</th>
+                                    <th>Mã</th>
+                                    <th>Số ngày tối đa</th>
+                                    <th>Yêu cầu duyệt</th>
+                                    <th>Có lương</th>
+                                    <th>Trạng thái</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for leave_type in leave_types %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ leave_type.name }}</td>
+                                    <td><span class="badge badge-info">{{ leave_type.code }}</span></td>
+                                    <td>{{ leave_type.max_days_per_year }} ngày</td>
+                                    <td>
+                                        {% if leave_type.requires_approval %}
+                                        <span class="badge badge-warning">Có</span>
+                                        {% else %}
+                                        <span class="badge badge-secondary">Không</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if leave_type.is_paid %}
+                                        <span class="badge badge-success">Có</span>
+                                        {% else %}
+                                        <span class="badge badge-danger">Không</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if leave_type.is_active %}
+                                        <span class="badge badge-success">Kích hoạt</span>
+                                        {% else %}
+                                        <span class="badge badge-secondary">Ngưng</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-sm btn-info" onclick="editLeaveType({{ leave_type.id }}, '{{ leave_type.name }}', '{{ leave_type.code }}', '{{ leave_type.description }}', {{ leave_type.max_days_per_year }}, {{ leave_type.requires_approval|yesno:'true,false' }}, {{ leave_type.is_paid|yesno:'true,false' }}, {{ leave_type.is_active|yesno:'true,false' }})">
+                                            <i class="fas fa-edit"></i> Sửa
+                                        </button>
+                                        <form method="post" action="{% url 'delete_leave_type' leave_type.id %}" style="display: inline;">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-danger" 
+                                                    onclick="return confirm('Bạn có chắc muốn xóa loại nghỉ phép này?')">
+                                                <i class="fas fa-trash"></i> Xóa
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="8" class="text-center">Chưa có loại nghỉ phép nào</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+function editLeaveType(id, name, code, description, maxDays, requiresApproval, isPaid, isActive) {
+    document.getElementById('leave_type_id').value = id;
+    document.getElementById('name').value = name;
+    document.getElementById('code').value = code;
+    document.getElementById('description').value = description;
+    document.getElementById('max_days_per_year').value = maxDays;
+    document.getElementById('requires_approval').checked = requiresApproval;
+    document.getElementById('is_paid').checked = isPaid;
+    document.getElementById('is_active').checked = isActive;
+    
+    // Scroll to form
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function resetForm() {
+    document.getElementById('leave_type_id').value = '';
+    document.getElementById('name').value = '';
+    document.getElementById('code').value = '';
+    document.getElementById('description').value = '';
+    document.getElementById('max_days_per_year').value = '';
+    document.getElementById('requires_approval').checked = true;
+    document.getElementById('is_paid').checked = true;
+    document.getElementById('is_active').checked = true;
+}
+</script>
+{% endblock main_content %}

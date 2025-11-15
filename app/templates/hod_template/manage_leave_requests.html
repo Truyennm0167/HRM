@@ -1,0 +1,241 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Quản Lý Đơn Nghỉ Phép
+{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1><i class="fas fa-clipboard-check"></i> Quản Lý Đơn Nghỉ Phép</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Quản lý nghỉ phép</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Filter Card -->
+        <div class="card collapsed-card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-filter"></i> Bộ Lọc</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body" style="display: none;">
+                <form method="get" action="{% url 'manage_leave_requests' %}">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Trạng thái</label>
+                                <select name="status" class="form-control">
+                                    <option value="">Tất cả</option>
+                                    <option value="pending">Chờ duyệt</option>
+                                    <option value="approved">Đã duyệt</option>
+                                    <option value="rejected">Từ chối</option>
+                                    <option value="cancelled">Đã hủy</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Nhân viên</label>
+                                <select name="employee" class="form-control">
+                                    <option value="">Tất cả</option>
+                                    {% for emp in employees %}
+                                    <option value="{{ emp.id }}">{{ emp.name }} ({{ emp.employee_code }})</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    <i class="fas fa-search"></i> Tìm kiếm
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Leave Requests Card -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-list"></i> Danh Sách Đơn Xin Nghỉ Phép</h3>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Nhân viên</th>
+                                <th>Phòng ban</th>
+                                <th>Loại phép</th>
+                                <th>Thời gian nghỉ</th>
+                                <th>Số ngày</th>
+                                <th>Lý do</th>
+                                <th>Trạng thái</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for request in leave_requests %}
+                            <tr class="{% if request.status == 'pending' %}table-warning{% endif %}">
+                                <td>{{ forloop.counter }}</td>
+                                <td>
+                                    <strong>{{ request.employee.name }}</strong>
+                                    <br><small class="text-muted">{{ request.employee.employee_code }}</small>
+                                </td>
+                                <td>{{ request.employee.department.name|default:"-" }}</td>
+                                <td>
+                                    <span class="badge badge-info">{{ request.leave_type.name }}</span>
+                                    {% if not request.leave_type.is_paid %}
+                                    <br><small class="text-danger">(Không lương)</small>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {{ request.start_date|date:"d/m/Y" }} 
+                                    <i class="fas fa-arrow-right"></i> 
+                                    {{ request.end_date|date:"d/m/Y" }}
+                                    <br><small class="text-muted">Gửi: {{ request.created_at|date:"d/m/Y H:i" }}</small>
+                                </td>
+                                <td class="text-center">
+                                    <strong>{{ request.total_days }}</strong> ngày
+                                </td>
+                                <td>{{ request.reason|truncatewords:15 }}</td>
+                                <td>
+                                    {% if request.status == 'pending' %}
+                                        <span class="badge badge-warning">
+                                            <i class="fas fa-clock"></i> Chờ duyệt
+                                        </span>
+                                    {% elif request.status == 'approved' %}
+                                        <span class="badge badge-success">
+                                            <i class="fas fa-check-circle"></i> Đã duyệt
+                                        </span>
+                                        {% if request.approved_by %}
+                                        <br><small>{{ request.approved_by.name }}</small>
+                                        {% endif %}
+                                    {% elif request.status == 'rejected' %}
+                                        <span class="badge badge-danger">
+                                            <i class="fas fa-times-circle"></i> Từ chối
+                                        </span>
+                                        {% if request.approved_by %}
+                                        <br><small>{{ request.approved_by.name }}</small>
+                                        {% endif %}
+                                    {% elif request.status == 'cancelled' %}
+                                        <span class="badge badge-secondary">
+                                            <i class="fas fa-ban"></i> Đã hủy
+                                        </span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <a href="{% url 'view_leave_request' request.id %}" 
+                                       class="btn btn-sm btn-info" title="Xem chi tiết">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    {% if request.status == 'pending' %}
+                                    <form method="post" action="{% url 'approve_leave_request' request.id %}" 
+                                          style="display: inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-sm btn-success" 
+                                                title="Duyệt">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                    </form>
+                                    <button type="button" class="btn btn-sm btn-danger" 
+                                            data-toggle="modal" 
+                                            data-target="#rejectModal{{ request.id }}"
+                                            title="Từ chối">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+
+                                    <!-- Reject Modal -->
+                                    <div class="modal fade" id="rejectModal{{ request.id }}">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <form method="post" action="{% url 'reject_leave_request' request.id %}">
+                                                    {% csrf_token %}
+                                                    <div class="modal-header bg-danger">
+                                                        <h4 class="modal-title">Từ chối đơn nghỉ phép</h4>
+                                                        <button type="button" class="close" data-dismiss="modal">
+                                                            <span>&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <p>Bạn có chắc muốn từ chối đơn nghỉ phép của <strong>{{ request.employee.name }}</strong>?</p>
+                                                        <div class="form-group">
+                                                            <label>Lý do từ chối:</label>
+                                                            <textarea name="rejection_reason" class="form-control" 
+                                                                      rows="3" placeholder="Nhập lý do..."></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Hủy</button>
+                                                        <button type="submit" class="btn btn-danger">Từ chối</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="9" class="text-center text-muted">
+                                    Không có đơn xin nghỉ phép nào
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Pagination -->
+                {% if leave_requests.has_other_pages %}
+                <div class="mt-3">
+                    <ul class="pagination pagination-sm float-right">
+                        {% if leave_requests.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ leave_requests.previous_page_number }}">«</a>
+                        </li>
+                        {% endif %}
+                        
+                        {% for num in leave_requests.paginator.page_range %}
+                            {% if leave_requests.number == num %}
+                            <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                            {% else %}
+                            <li class="page-item"><a class="page-link" href="?page={{ num }}">{{ num }}</a></li>
+                            {% endif %}
+                        {% endfor %}
+                        
+                        {% if leave_requests.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ leave_requests.next_page_number }}">»</a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}

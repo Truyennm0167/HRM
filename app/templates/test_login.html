@@ -1,0 +1,70 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Test Login/Logout
+{% endblock page_title %}
+
+{% block main_content %}
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Kiểm tra tính năng Login/Logout</h3>
+          </div>
+          <div class="card-body">
+            <div class="alert alert-success">
+              <h5><i class="icon fas fa-check"></i> Đăng nhập thành công!</h5>
+              <p>Bạn đã đăng nhập với tài khoản: <strong>{{ user.username }}</strong></p>
+            </div>
+
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Thông tin người dùng</h3>
+              </div>
+              <div class="card-body">
+                <table class="table table-bordered">
+                  <tr>
+                    <th style="width: 200px;">Tên đăng nhập:</th>
+                    <td>{{ user.username }}</td>
+                  </tr>
+                  <tr>
+                    <th>Email:</th>
+                    <td>{{ user.email|default:"Chưa cập nhật" }}</td>
+                  </tr>
+                  <tr>
+                    <th>Họ tên:</th>
+                    <td>{{ user.get_full_name|default:"Chưa cập nhật" }}</td>
+                  </tr>
+                  <tr>
+                    <th>Quyền:</th>
+                    <td>
+                      {% if user.is_superuser %}
+                        <span class="badge badge-danger">Superuser</span>
+                      {% elif user.is_staff %}
+                        <span class="badge badge-warning">Staff</span>
+                      {% else %}
+                        <span class="badge badge-info">User</span>
+                      {% endif %}
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+            <div class="mt-3">
+              <a href="{% url 'logout' %}" class="btn btn-danger">
+                <i class="fas fa-sign-out-alt"></i> Đăng xuất
+              </a>
+              <a href="/" class="btn btn-primary">
+                <i class="fas fa-home"></i> Về trang chủ
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main_content %}

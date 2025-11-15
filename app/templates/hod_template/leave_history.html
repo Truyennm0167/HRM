@@ -1,0 +1,132 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Lịch Sử Nghỉ Phép
+{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1><i class="fas fa-history"></i> Lịch Sử Nghỉ Phép</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Lịch sử nghỉ phép</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-list"></i> Danh Sách Đơn Xin Nghỉ Phép</h3>
+                        <div class="card-tools">
+                            <a href="{% url 'request_leave' %}" class="btn btn-primary btn-sm">
+                                <i class="fas fa-plus"></i> Tạo đơn mới
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>STT</th>
+                                        <th>Loại phép</th>
+                                        <th>Từ ngày</th>
+                                        <th>Đến ngày</th>
+                                        <th>Số ngày</th>
+                                        <th>Lý do</th>
+                                        <th>Trạng thái</th>
+                                        <th>Người duyệt</th>
+                                        <th>Ngày gửi</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for request in leave_requests %}
+                                    <tr>
+                                        <td>{{ forloop.counter }}</td>
+                                        <td>
+                                            <span class="badge badge-info">{{ request.leave_type.name }}</span>
+                                        </td>
+                                        <td>{{ request.start_date|date:"d/m/Y" }}</td>
+                                        <td>{{ request.end_date|date:"d/m/Y" }}</td>
+                                        <td class="text-center">{{ request.total_days }}</td>
+                                        <td>{{ request.reason|truncatewords:10 }}</td>
+                                        <td>
+                                            {% if request.status == 'pending' %}
+                                                <span class="badge badge-warning">
+                                                    <i class="fas fa-clock"></i> Chờ duyệt
+                                                </span>
+                                            {% elif request.status == 'approved' %}
+                                                <span class="badge badge-success">
+                                                    <i class="fas fa-check-circle"></i> Đã duyệt
+                                                </span>
+                                            {% elif request.status == 'rejected' %}
+                                                <span class="badge badge-danger">
+                                                    <i class="fas fa-times-circle"></i> Từ chối
+                                                </span>
+                                            {% elif request.status == 'cancelled' %}
+                                                <span class="badge badge-secondary">
+                                                    <i class="fas fa-ban"></i> Đã hủy
+                                                </span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if request.approved_by %}
+                                                {{ request.approved_by.name }}
+                                                <br><small class="text-muted">{{ request.approved_at|date:"d/m/Y H:i" }}</small>
+                                            {% else %}
+                                                <span class="text-muted">-</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ request.created_at|date:"d/m/Y H:i" }}</td>
+                                        <td>
+                                            <a href="{% url 'view_leave_request' request.id %}" 
+                                               class="btn btn-sm btn-info" title="Xem chi tiết">
+                                                <i class="fas fa-eye"></i>
+                                            </a>
+                                            {% if request.status == 'pending' %}
+                                            <form method="post" action="{% url 'cancel_leave_request' request.id %}" 
+                                                  style="display: inline;">
+                                                {% csrf_token %}
+                                                <button type="submit" class="btn btn-sm btn-danger" 
+                                                        onclick="return confirm('Bạn có chắc muốn hủy đơn này?')"
+                                                        title="Hủy đơn">
+                                                    <i class="fas fa-ban"></i>
+                                                </button>
+                                            </form>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% empty %}
+                                    <tr>
+                                        <td colspan="10" class="text-center">
+                                            <p class="text-muted">Bạn chưa có đơn xin nghỉ phép nào</p>
+                                            <a href="{% url 'request_leave' %}" class="btn btn-primary">
+                                                <i class="fas fa-plus"></i> Tạo đơn đầu tiên
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}

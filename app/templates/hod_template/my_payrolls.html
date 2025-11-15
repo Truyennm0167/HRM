@@ -1,0 +1,200 @@
+{% extends 'hod_template/base_template.html' %}
+
+{% block page_title %}
+Bảng Lương Của Tôi
+{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1><i class="fas fa-money-bill-wave"></i> Bảng Lương Của Tôi</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'employee_dashboard' %}">Dashboard</a></li>
+                    <li class="breadcrumb-item active">Bảng lương</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Statistics -->
+        <div class="row">
+            <div class="col-lg-6 col-12">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{ total_salary|floatformat:0 }}</h3>
+                        <p>Tổng Thu Nhập (VND)</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6 col-12">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>{{ avg_salary|floatformat:0 }}</h3>
+                        <p>Lương Trung Bình/Tháng (VND)</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filter and List -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-list"></i> Lịch Sử Bảng Lương</h3>
+                <div class="card-tools">
+                    <form method="get" class="form-inline">
+                        <div class="form-group mr-2">
+                            <select name="year" class="form-control form-control-sm">
+                                <option value="">Tất cả năm</option>
+                                {% for year in years %}
+                                    <option value="{{ year }}" {% if year_filter == year|stringformat:"s" %}selected{% endif %}>
+                                        {{ year }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            <i class="fas fa-filter"></i> Lọc
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>Tháng/Năm</th>
+                            <th>Lương cơ bản</th>
+                            <th>Hệ số</th>
+                            <th>Giờ làm việc</th>
+                            <th>Thưởng</th>
+                            <th>Phạt</th>
+                            <th>Tổng lương</th>
+                            <th>Trạng thái</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if payrolls %}
+                            {% for payroll in payrolls %}
+                            <tr>
+                                <td><strong>{{ payroll.month }}/{{ payroll.year }}</strong></td>
+                                <td>{{ payroll.base_salary|floatformat:0 }} VND</td>
+                                <td>{{ payroll.salary_coefficient }}</td>
+                                <td>{{ payroll.total_working_hours|floatformat:1 }}h</td>
+                                <td class="text-success">+{{ payroll.bonus|floatformat:0 }} VND</td>
+                                <td class="text-danger">-{{ payroll.penalty|floatformat:0 }} VND</td>
+                                <td class="text-bold">{{ payroll.total_salary|floatformat:0 }} VND</td>
+                                <td>
+                                    {% if payroll.status == 'pending' %}
+                                        <span class="badge badge-warning">Chưa xác nhận</span>
+                                    {% elif payroll.status == 'confirmed' %}
+                                        <span class="badge badge-success">Đã xác nhận</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-info btn-xs" onclick="viewPayroll({{ payroll.id }})">
+                                        <i class="fas fa-eye"></i> Xem
+                                    </button>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <td colspan="9" class="text-center">
+                                    <p class="text-muted my-3">Chưa có bảng lương nào</p>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            {% if payrolls.has_other_pages %}
+            <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                    {% if payrolls.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1{% if year_filter %}&year={{ year_filter }}{% endif %}">&laquo; Đầu</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ payrolls.previous_page_number }}{% if year_filter %}&year={{ year_filter }}{% endif %}">Trước</a>
+                        </li>
+                    {% endif %}
+                    
+                    <li class="page-item active">
+                        <a class="page-link">Trang {{ payrolls.number }} / {{ payrolls.paginator.num_pages }}</a>
+                    </li>
+                    
+                    {% if payrolls.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ payrolls.next_page_number }}{% if year_filter %}&year={{ year_filter }}{% endif %}">Sau</a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ payrolls.paginator.num_pages }}{% if year_filter %}&year={{ year_filter }}{% endif %}">Cuối &raquo;</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<!-- View Payroll Modal -->
+<div class="modal fade" id="viewPayrollModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="modal-title">Chi Tiết Bảng Lương</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="payrollDetails">
+                <div class="text-center">
+                    <i class="fas fa-spinner fa-spin fa-3x"></i>
+                    <p>Đang tải...</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function viewPayroll(payrollId) {
+    $('#viewPayrollModal').modal('show');
+    
+    // Load payroll details via AJAX
+    $.ajax({
+        url: `/payroll/view/${payrollId}/`,
+        method: 'GET',
+        success: function(response) {
+            $('#payrollDetails').html(response);
+        },
+        error: function() {
+            $('#payrollDetails').html('<div class="alert alert-danger">Lỗi tải dữ liệu</div>');
+        }
+    });
+}
+</script>
+{% endblock main_content %}

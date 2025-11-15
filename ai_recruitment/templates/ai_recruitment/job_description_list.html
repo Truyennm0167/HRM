@@ -1,0 +1,101 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}
+    <h1>Danh sách Job Description</h1>
+{% endblock page_title %}
+
+{% block main_content %}
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Job Descriptions</h3>
+            <div class="card-tools">
+              <a href="{% url 'create_job_description' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Tạo Job Description
+              </a>
+            </div>
+          </div>
+          <div class="card-body">
+            {% if messages %}
+              {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+
+            <table id="jd_table" class="table table-bordered table-hover">
+              <thead>
+                <tr>
+                  <th>STT</th>
+                  <th>Tên vị trí</th>
+                  <th>Yêu cầu kinh nghiệm</th>
+                  <th>Ngày tạo</th>
+                  <th>Thao tác</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for jd in job_descriptions %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ jd.title }}</td>
+                  <td>{{ jd.required_years_experience }} năm</td>
+                  <td>{{ jd.created_at|date:"d/m/Y" }}</td>
+                  <td>
+                    <a href="{% url 'view_job_description' jd.id %}" class="btn btn-info btn-sm">
+                      <i class="fas fa-eye"></i>
+                    </a>
+                    <button class="btn btn-danger btn-sm delete-jd" data-id="{{ jd.id }}">
+                      <i class="fas fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+  $(document).ready(function() {
+    $('#jd_table').DataTable({
+      "paging": true,
+      "lengthChange": true,
+      "searching": true,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+
+    $('.delete-jd').click(function() {
+      const jdId = $(this).data('id');
+      if (confirm('Bạn có chắc chắn muốn xóa Job Description này?')) {
+        $.ajax({
+          url: `/ai/job-description/${jdId}/delete/`,
+          method: 'POST',
+          headers: {
+            'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+          },
+          success: function() {
+            window.location.reload();
+          },
+          error: function() {
+            alert('Có lỗi xảy ra khi xóa Job Description!');
+          }
+        });
+      }
+    });
+  });
+</script>
+{% endblock custom_js %}

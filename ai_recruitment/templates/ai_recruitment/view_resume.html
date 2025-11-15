@@ -1,0 +1,186 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}
+    <h1>Chi tiết CV</h1>
+{% endblock page_title %}
+
+{% block main_content %}
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Thông tin CV</h3>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <h4>Thông tin cá nhân</h4>
+                <dl class="row">
+                  <dt class="col-sm-4">Họ tên:</dt>
+                  <dd class="col-sm-8">{{ resume.parsed_data.name|default:"N/A" }}</dd>
+                  
+                  <dt class="col-sm-4">Email:</dt>
+                  <dd class="col-sm-8">{{ resume.parsed_data.email|default:"N/A" }}</dd>
+                  
+                  <dt class="col-sm-4">Số điện thoại:</dt>
+                  <dd class="col-sm-8">{{ resume.parsed_data.phone|default:"N/A" }}</dd>
+                </dl>
+              </div>
+              <div class="col-md-6">
+                <h4>File CV</h4>
+                <p>
+                  <a href="{{ resume.file.url }}" class="btn btn-primary" target="_blank">
+                    <i class="fas fa-download"></i> Tải xuống CV
+                  </a>
+                </p>
+                <p class="text-muted">
+                  Uploaded: {{ resume.created_at|date:"d/m/Y H:i" }}
+                </p>
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-12">
+                <h4>Kỹ năng</h4>
+                {% if resume.parsed_data.skills %}
+                  {% for skill in resume.parsed_data.skills %}
+                    <span class="badge badge-info mr-2 mb-2">{{ skill }}</span>
+                  {% endfor %}
+                {% else %}
+                  <p class="text-muted">Không có thông tin</p>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-12">
+                <h4>Kinh nghiệm làm việc</h4>
+                {% if resume.parsed_data.experience %}
+                  {% for exp in resume.parsed_data.experience %}
+                    <div class="card mb-3">
+                      <div class="card-body">
+                        <h5 class="card-title">{{ exp.position }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ exp.company }}</h6>
+                        <p class="card-text">{{ exp.duration }}</p>
+                      </div>
+                    </div>
+                  {% endfor %}
+                {% else %}
+                  <p class="text-muted">Không có thông tin</p>
+                {% endif %}
+              </div>
+            </div>
+
+            <div class="row mt-4">
+              <div class="col-12">
+                <h4>Học vấn</h4>
+                {% if resume.parsed_data.education %}
+                  {% for edu in resume.parsed_data.education %}
+                    <div class="card mb-3">
+                      <div class="card-body">
+                        <h5 class="card-title">{{ edu.university }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ edu.degree }}</h6>
+                        <p class="card-text">{{ edu.duration }}</p>
+                      </div>
+                    </div>
+                  {% endfor %}
+                {% else %}
+                  <p class="text-muted">Không có thông tin</p>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Đánh giá CV</h3>
+          </div>
+          <div class="card-body">
+            {% if resume.scores %}
+              <div class="text-center mb-4">
+                <h2 class="display-4">{{ resume.scores.total_score }}%</h2>
+                <p class="text-muted">Điểm số tổng hợp</p>
+              </div>
+
+              <div class="progress-group mb-4">
+                <span class="progress-text">Kỹ năng</span>
+                <span class="float-right"><b>{{ resume.scores.skills_score }}%</b></span>
+                <div class="progress">
+                  <div class="progress-bar bg-primary" style="width: {{ resume.scores.skills_score }}%"></div>
+                </div>
+              </div>
+
+              <div class="progress-group mb-4">
+                <span class="progress-text">Kinh nghiệm</span>
+                <span class="float-right"><b>{{ resume.scores.experience_score }}%</b></span>
+                <div class="progress">
+                  <div class="progress-bar bg-success" style="width: {{ resume.scores.experience_score }}%"></div>
+                </div>
+              </div>
+
+              <div class="progress-group mb-4">
+                <span class="progress-text">Học vấn</span>
+                <span class="float-right"><b>{{ resume.scores.education_score }}%</b></span>
+                <div class="progress">
+                  <div class="progress-bar bg-warning" style="width: {{ resume.scores.education_score }}%"></div>
+                </div>
+              </div>
+            {% endif %}
+
+            <form id="score-form" class="mt-4">
+              <div class="form-group">
+                <label for="job_description">Chọn Job Description để đánh giá</label>
+                <select class="form-control" id="job_description" name="job_description">
+                  <option value="">-- Chọn Job Description --</option>
+                  {% for jd in job_descriptions %}
+                    <option value="{{ jd.id }}">{{ jd.title }}</option>
+                  {% endfor %}
+                </select>
+              </div>
+              <button type="submit" class="btn btn-primary btn-block">
+                <i class="fas fa-calculator"></i> Đánh giá CV
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+$(document).ready(function() {
+    $('#score-form').on('submit', function(e) {
+        e.preventDefault();
+        var jobDescriptionId = $('#job_description').val();
+        if (!jobDescriptionId) {
+            alert('Vui lòng chọn một Job Description');
+            return;
+        }
+
+        $.ajax({
+            url: '{% url "score_resume" resume.id "999999" %}'.replace('999999', jobDescriptionId),
+            method: 'GET',
+            success: function(response) {
+                if (response.status === 'success') {
+                    location.reload();
+                } else {
+                    alert('Có lỗi xảy ra khi đánh giá CV');
+                }
+            },
+            error: function() {
+                alert('Có lỗi xảy ra khi đánh giá CV');
+            }
+        });
+    });
+});
+</script>
+{% endblock custom_js %}
