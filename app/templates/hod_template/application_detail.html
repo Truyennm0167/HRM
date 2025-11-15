@@ -1,0 +1,597 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}
+Chi tiết ứng viên - {{ application.full_name }}
+{% endblock page_title %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'home' %}">Trang chủ</a></li>
+<li class="breadcrumb-item"><a href="{% url 'applications_kanban' %}">Ứng tuyển</a></li>
+<li class="breadcrumb-item active">{{ application.application_code }}</li>
+{% endblock breadcrumb %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>
+                    <i class="fas fa-user"></i> Chi tiết ứng viên
+                </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'applications_kanban' %}">Ứng tuyển</a></li>
+                    <li class="breadcrumb-item active">{{ application.application_code }}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        
+        <!-- Messages -->
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <!-- Action Buttons -->
+        <div class="row mb-3">
+            <div class="col-12">
+                <a href="{% url 'applications_kanban' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Quay lại Kanban
+                </a>
+                <a href="{% url 'update_application' application.id %}" class="btn btn-warning">
+                    <i class="fas fa-edit"></i> Cập nhật thông tin
+                </a>
+                {% if application.resume %}
+                <a href="{{ application.resume.url }}" class="btn btn-info" target="_blank">
+                    <i class="fas fa-file-download"></i> Tải CV
+                </a>
+                {% endif %}
+                {% if application.can_convert_to_employee %}
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#convertModal">
+                    <i class="fas fa-user-plus"></i> Chuyển thành nhân viên
+                </button>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Left Column - Candidate Information -->
+            <div class="col-md-8">
+                
+                <!-- Basic Info Card -->
+                <div class="card card-primary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-id-card"></i> Thông tin ứng viên
+                        </h3>
+                        <div class="card-tools">
+                            {% if application.status == 'new' %}
+                            <span class="badge badge-primary">Mới</span>
+                            {% elif application.status == 'screening' %}
+                            <span class="badge badge-secondary">Sàng lọc</span>
+                            {% elif application.status == 'phone_interview' %}
+                            <span class="badge badge-info">PV điện thoại</span>
+                            {% elif application.status == 'interview' %}
+                            <span class="badge badge-success">Phỏng vấn</span>
+                            {% elif application.status == 'test' %}
+                            <span class="badge badge-warning">Làm bài test</span>
+                            {% elif application.status == 'offer' %}
+                            <span class="badge badge-warning">Offer</span>
+                            {% elif application.status == 'accepted' %}
+                            <span class="badge badge-success">Chấp nhận</span>
+                            {% elif application.status == 'rejected' %}
+                            <span class="badge badge-danger">Từ chối</span>
+                            {% elif application.status == 'withdrawn' %}
+                            <span class="badge badge-dark">Rút lui</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <dl class="row">
+                                    <dt class="col-sm-4">Mã ứng tuyển:</dt>
+                                    <dd class="col-sm-8">
+                                        <strong class="text-primary">{{ application.application_code }}</strong>
+                                    </dd>
+                                    
+                                    <dt class="col-sm-4">Họ tên:</dt>
+                                    <dd class="col-sm-8">
+                                        <strong>{{ application.full_name }}</strong>
+                                    </dd>
+                                    
+                                    <dt class="col-sm-4">Email:</dt>
+                                    <dd class="col-sm-8">
+                                        <a href="mailto:{{ application.email }}">
+                                            <i class="fas fa-envelope"></i> {{ application.email }}
+                                        </a>
+                                    </dd>
+                                    
+                                    <dt class="col-sm-4">Điện thoại:</dt>
+                                    <dd class="col-sm-8">
+                                        <a href="tel:{{ application.phone }}">
+                                            <i class="fas fa-phone"></i> {{ application.phone }}
+                                        </a>
+                                    </dd>
+                                    
+                                    <dt class="col-sm-4">Ngày sinh:</dt>
+                                    <dd class="col-sm-8">
+                                        {% if application.date_of_birth %}
+                                        {{ application.date_of_birth|date:"d/m/Y" }}
+                                        <small class="text-muted">({{ application.get_age }} tuổi)</small>
+                                        {% else %}
+                                        --
+                                        {% endif %}
+                                    </dd>
+                                    
+                                    <dt class="col-sm-4">Giới tính:</dt>
+                                    <dd class="col-sm-8">{{ application.get_gender_display|default:"--" }}</dd>
+                                </dl>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <dl class="row">
+                                    <dt class="col-sm-5">Vị trí ứng tuyển:</dt>
+                                    <dd class="col-sm-7">
+                                        <strong class="text-info">{{ application.job.title }}</strong>
+                                        <br>
+                                        <small class="text-muted">
+                                            <i class="fas fa-building"></i> {{ application.job.department.name }}
+                                        </small>
+                                    </dd>
+                                    
+                                    <dt class="col-sm-5">Ngày ứng tuyển:</dt>
+                                    <dd class="col-sm-7">
+                                        {{ application.created_at|date:"d/m/Y H:i" }}
+                                        <br>
+                                        <small class="text-muted">({{ application.days_since_applied }} ngày trước)</small>
+                                    </dd>
+                                    
+                                    <dt class="col-sm-5">Nguồn:</dt>
+                                    <dd class="col-sm-7">{{ application.get_source_display }}</dd>
+                                    
+                                    <dt class="col-sm-5">Đánh giá:</dt>
+                                    <dd class="col-sm-7">
+                                        {% if application.rating %}
+                                        <div class="rating">
+                                            {% for i in "12345" %}
+                                                {% if forloop.counter <= application.rating %}
+                                                    <i class="fas fa-star text-warning"></i>
+                                                {% else %}
+                                                    <i class="far fa-star text-warning"></i>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        <span class="text-muted">Chưa đánh giá</span>
+                                        {% endif %}
+                                    </dd>
+                                    
+                                    <dt class="col-sm-5">Địa chỉ:</dt>
+                                    <dd class="col-sm-7">{{ application.address|default:"--" }}</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Professional Info -->
+                <div class="card card-info card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-briefcase"></i> Thông tin nghề nghiệp
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <dl class="row">
+                                    <dt class="col-sm-5">Vị trí hiện tại:</dt>
+                                    <dd class="col-sm-7">{{ application.current_position|default:"--" }}</dd>
+                                    
+                                    <dt class="col-sm-5">Công ty:</dt>
+                                    <dd class="col-sm-7">{{ application.current_company|default:"--" }}</dd>
+                                    
+                                    <dt class="col-sm-5">Kinh nghiệm:</dt>
+                                    <dd class="col-sm-7">
+                                        {% if application.years_of_experience %}
+                                        <span class="badge badge-primary">{{ application.years_of_experience }} năm</span>
+                                        {% else %}
+                                        --
+                                        {% endif %}
+                                    </dd>
+                                </dl>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <dl class="row">
+                                    <dt class="col-sm-5">Trình độ:</dt>
+                                    <dd class="col-sm-7">{{ application.get_education_level_display|default:"--" }}</dd>
+                                    
+                                    <dt class="col-sm-5">Trường:</dt>
+                                    <dd class="col-sm-7">{{ application.school|default:"--" }}</dd>
+                                    
+                                    <dt class="col-sm-5">Chuyên ngành:</dt>
+                                    <dd class="col-sm-7">{{ application.major|default:"--" }}</dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cover Letter -->
+                {% if application.cover_letter %}
+                <div class="card card-success card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-envelope-open-text"></i> Thư xin việc
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div style="white-space: pre-line;">{{ application.cover_letter }}</div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Additional Info -->
+                <div class="card card-warning card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-info-circle"></i> Thông tin bổ sung
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <dl class="row">
+                                    <dt class="col-sm-6">Lương mong muốn:</dt>
+                                    <dd class="col-sm-6">
+                                        {% if application.expected_salary %}
+                                        <strong class="text-success">{{ application.expected_salary|floatformat:0|default:"--" }} VNĐ</strong>
+                                        {% else %}
+                                        --
+                                        {% endif %}
+                                    </dd>
+                                    
+                                    <dt class="col-sm-6">Ngày có thể bắt đầu:</dt>
+                                    <dd class="col-sm-6">{{ application.available_start_date|date:"d/m/Y"|default:"--" }}</dd>
+                                    
+                                    <dt class="col-sm-6">Thời gian báo trước:</dt>
+                                    <dd class="col-sm-6">
+                                        {% if application.notice_period_days %}
+                                        {{ application.notice_period_days }} ngày
+                                        {% else %}
+                                        --
+                                        {% endif %}
+                                    </dd>
+                                </dl>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <dl class="row">
+                                    <dt class="col-sm-5">Portfolio:</dt>
+                                    <dd class="col-sm-7">
+                                        {% if application.portfolio_url %}
+                                        <a href="{{ application.portfolio_url }}" target="_blank">
+                                            <i class="fas fa-external-link-alt"></i> Xem portfolio
+                                        </a>
+                                        {% else %}
+                                        --
+                                        {% endif %}
+                                    </dd>
+                                    
+                                    <dt class="col-sm-5">LinkedIn:</dt>
+                                    <dd class="col-sm-7">
+                                        {% if application.linkedin_url %}
+                                        <a href="{{ application.linkedin_url }}" target="_blank">
+                                            <i class="fab fa-linkedin"></i> Xem profile
+                                        </a>
+                                        {% else %}
+                                        --
+                                        {% endif %}
+                                    </dd>
+                                    
+                                    <dt class="col-sm-5">CV:</dt>
+                                    <dd class="col-sm-7">
+                                        {% if application.resume %}
+                                        <a href="{{ application.resume.url }}" target="_blank" class="btn btn-sm btn-info">
+                                            <i class="fas fa-file-download"></i> Tải xuống
+                                        </a>
+                                        {% else %}
+                                        --
+                                        {% endif %}
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interview & Decision Info -->
+                {% if application.interview_date or application.offer_made_date or application.rejection_reason %}
+                <div class="card card-secondary card-outline">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-clipboard-check"></i> Thông tin phỏng vấn & Quyết định
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            {% if application.interview_date %}
+                            <dt class="col-sm-3">Lịch phỏng vấn:</dt>
+                            <dd class="col-sm-9">
+                                <strong>{{ application.interview_date|date:"d/m/Y H:i" }}</strong>
+                                {% if application.interview_location %}
+                                <br><i class="fas fa-map-marker-alt"></i> {{ application.interview_location }}
+                                {% endif %}
+                                {% if application.interviewer %}
+                                <br><i class="fas fa-user"></i> Người phỏng vấn: {{ application.interviewer.admin.get_full_name }}
+                                {% endif %}
+                            </dd>
+                            {% endif %}
+                            
+                            {% if application.offer_made_date %}
+                            <dt class="col-sm-3">Ngày gửi offer:</dt>
+                            <dd class="col-sm-9">{{ application.offer_made_date|date:"d/m/Y" }}</dd>
+                            {% endif %}
+                            
+                            {% if application.offer_accepted_date %}
+                            <dt class="col-sm-3">Ngày chấp nhận:</dt>
+                            <dd class="col-sm-9">{{ application.offer_accepted_date|date:"d/m/Y" }}</dd>
+                            {% endif %}
+                            
+                            {% if application.rejection_reason %}
+                            <dt class="col-sm-3">Lý do từ chối:</dt>
+                            <dd class="col-sm-9">
+                                <div class="alert alert-danger">
+                                    {{ application.rejection_reason }}
+                                </div>
+                            </dd>
+                            {% endif %}
+                        </dl>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Notes Section -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-sticky-note"></i> Ghi chú ({{ notes.count }})
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- Add Note Form -->
+                        <form method="POST" action="{% url 'add_application_note' application.id %}" class="mb-3">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <textarea name="note" class="form-control" rows="3" 
+                                          placeholder="Thêm ghi chú mới..." required></textarea>
+                            </div>
+                            <div class="form-check mb-2">
+                                <input type="checkbox" class="form-check-input" id="is_important" name="is_important">
+                                <label class="form-check-label" for="is_important">
+                                    Đánh dấu quan trọng
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Thêm ghi chú
+                            </button>
+                        </form>
+
+                        <!-- Notes List -->
+                        {% if notes %}
+                        <div class="timeline">
+                            {% for note in notes %}
+                            <div>
+                                <i class="fas fa-sticky-note bg-{% if note.is_important %}warning{% else %}info{% endif %}"></i>
+                                <div class="timeline-item">
+                                    <span class="time">
+                                        <i class="fas fa-clock"></i> {{ note.created_at|date:"d/m/Y H:i" }}
+                                    </span>
+                                    <h3 class="timeline-header">
+                                        <strong>{{ note.author.admin.get_full_name }}</strong>
+                                        {% if note.is_important %}
+                                        <span class="badge badge-warning ml-2">Quan trọng</span>
+                                        {% endif %}
+                                    </h3>
+                                    <div class="timeline-body">
+                                        {{ note.note }}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <div>
+                                <i class="fas fa-clock bg-gray"></i>
+                            </div>
+                        </div>
+                        {% else %}
+                        <p class="text-muted text-center py-3">
+                            <i class="fas fa-inbox fa-2x mb-2"></i><br>
+                            Chưa có ghi chú nào.
+                        </p>
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column - Status & Actions -->
+            <div class="col-md-4">
+                
+                <!-- Status & Assignment -->
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-tasks"></i> Trạng thái & Phân công
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <dl>
+                            <dt>Trạng thái hiện tại:</dt>
+                            <dd class="mb-3">
+                                <h4>
+                                    {% if application.status == 'new' %}
+                                    <span class="badge badge-primary">Mới</span>
+                                    {% elif application.status == 'screening' %}
+                                    <span class="badge badge-secondary">Sàng lọc</span>
+                                    {% elif application.status == 'phone_interview' %}
+                                    <span class="badge badge-info">PV điện thoại</span>
+                                    {% elif application.status == 'interview' %}
+                                    <span class="badge badge-success">Phỏng vấn</span>
+                                    {% elif application.status == 'test' %}
+                                    <span class="badge badge-warning">Làm bài test</span>
+                                    {% elif application.status == 'offer' %}
+                                    <span class="badge badge-warning">Offer</span>
+                                    {% elif application.status == 'accepted' %}
+                                    <span class="badge badge-success">Chấp nhận</span>
+                                    {% elif application.status == 'rejected' %}
+                                    <span class="badge badge-danger">Từ chối</span>
+                                    {% elif application.status == 'withdrawn' %}
+                                    <span class="badge badge-dark">Rút lui</span>
+                                    {% endif %}
+                                </h4>
+                            </dd>
+                            
+                            <dt>Phân công cho:</dt>
+                            <dd class="mb-3">
+                                {% if application.assigned_to %}
+                                <i class="fas fa-user"></i> {{ application.assigned_to.admin.get_full_name }}
+                                {% else %}
+                                <span class="text-muted">Chưa phân công</span>
+                                {% endif %}
+                            </dd>
+                            
+                            {% if application.converted_to_employee %}
+                            <dt>Đã chuyển đổi:</dt>
+                            <dd>
+                                <span class="badge badge-success">
+                                    <i class="fas fa-check-circle"></i> Đã là nhân viên
+                                </span>
+                                {% if application.employee %}
+                                <br>
+                                <a href="{% url 'employee_detail' application.employee.id %}" class="btn btn-sm btn-info mt-2">
+                                    <i class="fas fa-id-card"></i> Xem hồ sơ NV
+                                </a>
+                                {% endif %}
+                            </dd>
+                            {% endif %}
+                        </dl>
+                        
+                        <a href="{% url 'update_application' application.id %}" class="btn btn-warning btn-block">
+                            <i class="fas fa-edit"></i> Cập nhật
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-bolt"></i> Hành động nhanh
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <a href="mailto:{{ application.email }}" class="btn btn-secondary btn-block mb-2">
+                            <i class="fas fa-envelope"></i> Gửi email
+                        </a>
+                        <a href="tel:{{ application.phone }}" class="btn btn-secondary btn-block mb-2">
+                            <i class="fas fa-phone"></i> Gọi điện
+                        </a>
+                        {% if application.resume %}
+                        <a href="{{ application.resume.url }}" class="btn btn-info btn-block mb-2" target="_blank">
+                            <i class="fas fa-file-download"></i> Tải CV
+                        </a>
+                        {% endif %}
+                        <a href="{% url 'job_detail_admin' application.job.id %}" class="btn btn-primary btn-block mb-2">
+                            <i class="fas fa-briefcase"></i> Xem tin tuyển dụng
+                        </a>
+                        {% if application.can_convert_to_employee %}
+                        <button type="button" class="btn btn-success btn-block" data-toggle="modal" data-target="#convertModal">
+                            <i class="fas fa-user-plus"></i> Chuyển thành NV
+                        </button>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Application Info -->
+                <div class="card">
+                    <div class="card-body">
+                        <small class="text-muted">
+                            <i class="fas fa-code"></i> Mã: <strong>{{ application.application_code }}</strong><br>
+                            <i class="far fa-calendar-plus"></i> Nộp: {{ application.created_at|date:"d/m/Y H:i" }}<br>
+                            <i class="far fa-calendar-check"></i> Cập nhật: {{ application.updated_at|date:"d/m/Y H:i" }}
+                        </small>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Convert to Employee Modal -->
+<div class="modal fade" id="convertModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-success">
+                <h5 class="modal-title">
+                    <i class="fas fa-user-plus"></i> Chuyển đổi thành nhân viên
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn chuyển <strong>{{ application.full_name }}</strong> thành nhân viên?</p>
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> Hệ thống sẽ tự động tạo hồ sơ nhân viên với thông tin từ đơn ứng tuyển.
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fas fa-times"></i> Hủy
+                </button>
+                <form action="{% url 'convert_to_employee' application.id %}" method="POST" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-success">
+                        <i class="fas fa-user-plus"></i> Xác nhận chuyển đổi
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+$(document).ready(function() {
+    // Auto-hide messages after 5 seconds
+    setTimeout(function() {
+        $('.alert').fadeOut('slow');
+    }, 5000);
+    
+    // Add tooltips
+    $('[title]').tooltip();
+});
+</script>
+{% endblock custom_js %}

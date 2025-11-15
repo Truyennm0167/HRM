@@ -2,8 +2,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from hrm import settings
-from app import views as home
-from app import HodViews
+from app import views, HodViews
 from ai_recruitment import views as ai_views
 
 urlpatterns = [
@@ -78,6 +77,33 @@ urlpatterns = [
     path('portal/profile/edit/', HodViews.edit_employee_profile, name='edit_employee_profile'),
     path('portal/payrolls/', HodViews.my_payrolls, name='my_payrolls'),
     path('portal/attendance/', HodViews.my_attendance, name='my_attendance'),
+
+    # Contract Management URLs
+    path('contracts/', HodViews.list_contracts, name='list_contracts'),
+    path('contracts/create/', HodViews.create_contract, name='create_contract'),
+    path('contracts/<int:contract_id>/', HodViews.contract_detail, name='contract_detail'),
+    path('contracts/<int:contract_id>/edit/', HodViews.edit_contract, name='edit_contract'),
+    path('contracts/<int:contract_id>/renew/', HodViews.renew_contract, name='renew_contract'),
+    path('contracts/<int:contract_id>/terminate/', HodViews.terminate_contract, name='terminate_contract'),
+    path('contracts/<int:contract_id>/delete/', HodViews.delete_contract, name='delete_contract'),
+
+    # Public Career Pages (No login required)
+    path('careers/', views.careers_list, name='careers_list'),
+    path('careers/<int:job_id>/', views.careers_detail, name='careers_detail'),
+    path('careers/<int:job_id>/apply/', views.careers_apply, name='careers_apply'),
+    
+    # Recruitment Admin URLs (Login required)
+    path('recruitment/jobs/', HodViews.list_jobs_admin, name='list_jobs_admin'),
+    path('recruitment/jobs/create/', HodViews.create_job, name='create_job'),
+    path('recruitment/jobs/<int:job_id>/', HodViews.job_detail_admin, name='job_detail_admin'),
+    path('recruitment/jobs/<int:job_id>/edit/', HodViews.edit_job, name='edit_job'),
+    path('recruitment/jobs/<int:job_id>/delete/', HodViews.delete_job, name='delete_job'),
+    path('recruitment/applications/', HodViews.applications_kanban, name='applications_kanban'),
+    path('recruitment/applications/<int:application_id>/', HodViews.application_detail, name='application_detail'),
+    path('recruitment/applications/<int:application_id>/update/', HodViews.update_application, name='update_application'),
+    path('recruitment/applications/<int:application_id>/status/', HodViews.update_application_status, name='update_application_status'),
+    path('recruitment/applications/<int:application_id>/note/', HodViews.add_application_note, name='add_application_note'),
+    path('recruitment/applications/<int:application_id>/convert/', HodViews.convert_to_employee, name='convert_to_employee'),
 
     # AI Recruitment URLs
     path('ai/upload-resume/', ai_views.upload_resume, name='upload_resume'),

@@ -1,0 +1,429 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}
+Quản lý Tin tuyển dụng
+{% endblock page_title %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'home' %}">Trang chủ</a></li>
+<li class="breadcrumb-item active">Quản lý tin tuyển dụng</li>
+{% endblock breadcrumb %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1><i class="fas fa-briefcase"></i> Quản lý Tin tuyển dụng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Tin tuyển dụng</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        
+        <!-- Statistics Row -->
+        <div class="row">
+            <div class="col-lg-4 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>{{ total_jobs }}</h3>
+                        <p>Tổng số tin tuyển dụng</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{ open_jobs }}</h3>
+                        <p>Tin đang mở</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-door-open"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{ closing_soon }}</h3>
+                        <p>Sắp hết hạn (7 ngày)</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <a href="?closing_soon=true" class="small-box-footer">
+                        Xem chi tiết <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters and Search -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-filter"></i> Bộ lọc & Tìm kiếm</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <form method="get" action="">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Tìm kiếm</label>
+                                <input type="text" name="search" class="form-control" 
+                                       placeholder="Mã tin, tên vị trí, mô tả..." 
+                                       value="{{ search_query|default:'' }}">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Trạng thái</label>
+                                <select name="status" class="form-control">
+                                    <option value="">-- Tất cả --</option>
+                                    <option value="draft" {% if status_filter == 'draft' %}selected{% endif %}>Nháp</option>
+                                    <option value="open" {% if status_filter == 'open' %}selected{% endif %}>Đang mở</option>
+                                    <option value="closed" {% if status_filter == 'closed' %}selected{% endif %}>Đã đóng</option>
+                                    <option value="cancelled" {% if status_filter == 'cancelled' %}selected{% endif %}>Đã hủy</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Phòng ban</label>
+                                <select name="department" class="form-control">
+                                    <option value="">-- Tất cả --</option>
+                                    {% for dept in departments %}
+                                    <option value="{{ dept.id }}" 
+                                            {% if department_filter == dept.id|stringformat:"s" %}selected{% endif %}>
+                                        {{ dept.name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                                <div>
+                                    <button type="submit" class="btn btn-primary btn-block">
+                                        <i class="fas fa-search"></i> Tìm
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="{% url 'list_jobs_admin' %}" class="btn btn-secondary btn-sm">
+                                <i class="fas fa-redo"></i> Đặt lại
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="row mb-3">
+            <div class="col-12">
+                <a href="{% url 'create_job' %}" class="btn btn-success">
+                    <i class="fas fa-plus"></i> Tạo tin tuyển dụng mới
+                </a>
+                <a href="{% url 'applications_kanban' %}" class="btn btn-info">
+                    <i class="fas fa-columns"></i> Xem Kanban ứng tuyển
+                </a>
+                <a href="{% url 'careers_list' %}" class="btn btn-secondary" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Xem trang công khai
+                </a>
+            </div>
+        </div>
+
+        <!-- Jobs List -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-list"></i> Danh sách tin tuyển dụng</h3>
+                <div class="card-tools">
+                    <span class="badge badge-primary">{{ jobs.paginator.count }} tin</span>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th style="width: 80px">Mã tin</th>
+                                <th>Vị trí</th>
+                                <th>Phòng ban</th>
+                                <th style="width: 100px">Trạng thái</th>
+                                <th style="width: 110px">Hạn nộp</th>
+                                <th style="width: 90px; text-align: center;">Số vị trí</th>
+                                <th style="width: 90px; text-align: center;">Ứng tuyển</th>
+                                <th style="width: 90px; text-align: center;">Lượt xem</th>
+                                <th style="width: 200px; text-align: center;">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if jobs %}
+                            {% for job in jobs %}
+                            <tr>
+                                <td>
+                                    <strong>{{ job.code }}</strong>
+                                </td>
+                                <td>
+                                    <div>
+                                        <strong>{{ job.title }}</strong>
+                                    </div>
+                                    <small class="text-muted">
+                                        <i class="fas fa-map-marker-alt"></i> {{ job.location }}
+                                    </small>
+                                    {% if job.employment_type %}
+                                    <br>
+                                    <small>
+                                        {% if job.employment_type == 'fulltime' %}
+                                        <span class="badge badge-success">Full-time</span>
+                                        {% elif job.employment_type == 'parttime' %}
+                                        <span class="badge badge-info">Part-time</span>
+                                        {% elif job.employment_type == 'contract' %}
+                                        <span class="badge badge-warning">Hợp đồng</span>
+                                        {% elif job.employment_type == 'internship' %}
+                                        <span class="badge badge-secondary">Thực tập</span>
+                                        {% endif %}
+                                    </small>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <i class="fas fa-building text-primary"></i> {{ job.department.name }}
+                                </td>
+                                <td>
+                                    {% if job.status == 'draft' %}
+                                    <span class="badge badge-secondary">Nháp</span>
+                                    {% elif job.status == 'open' %}
+                                    <span class="badge badge-success">Đang mở</span>
+                                    {% elif job.status == 'closed' %}
+                                    <span class="badge badge-danger">Đã đóng</span>
+                                    {% elif job.status == 'cancelled' %}
+                                    <span class="badge badge-dark">Đã hủy</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if job.deadline %}
+                                    <div>{{ job.deadline|date:"d/m/Y" }}</div>
+                                    {% with days=job.days_until_deadline %}
+                                    {% if days <= 3 and days >= 0 and job.status == 'open' %}
+                                    <small class="text-danger">
+                                        <i class="fas fa-exclamation-circle"></i> {{ days }} ngày
+                                    </small>
+                                    {% elif days <= 7 and days >= 0 and job.status == 'open' %}
+                                    <small class="text-warning">
+                                        <i class="fas fa-clock"></i> {{ days }} ngày
+                                    </small>
+                                    {% elif days < 0 %}
+                                    <small class="text-muted">
+                                        <i class="fas fa-times-circle"></i> Đã hết hạn
+                                    </small>
+                                    {% endif %}
+                                    {% endwith %}
+                                    {% else %}
+                                    <span class="text-muted">--</span>
+                                    {% endif %}
+                                </td>
+                                <td style="text-align: center;">
+                                    <span class="badge badge-primary">{{ job.number_of_positions }}</span>
+                                </td>
+                                <td style="text-align: center;">
+                                    {% if job.applications_total > 0 %}
+                                    <a href="{% url 'applications_kanban' %}?job={{ job.id }}" 
+                                       class="badge badge-info" 
+                                       title="Xem ứng viên">
+                                        {{ job.applications_total }}
+                                    </a>
+                                    {% else %}
+                                    <span class="text-muted">0</span>
+                                    {% endif %}
+                                </td>
+                                <td style="text-align: center;">
+                                    <span class="text-muted">
+                                        <i class="fas fa-eye"></i> {{ job.views_count }}
+                                    </span>
+                                </td>
+                                <td style="text-align: center;">
+                                    <div class="btn-group">
+                                        <a href="{% url 'job_detail_admin' job.id %}" 
+                                           class="btn btn-sm btn-info" 
+                                           title="Xem chi tiết">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{% url 'edit_job' job.id %}" 
+                                           class="btn btn-sm btn-warning" 
+                                           title="Chỉnh sửa">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        {% if job.applications_total == 0 %}
+                                        <button type="button" 
+                                                class="btn btn-sm btn-danger" 
+                                                onclick="confirmDelete({{ job.id }}, '{{ job.title }}')"
+                                                title="Xóa">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                        {% else %}
+                                        <button type="button" 
+                                                class="btn btn-sm btn-secondary disabled" 
+                                                title="Không thể xóa (có ứng tuyển)">
+                                            <i class="fas fa-ban"></i>
+                                        </button>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% else %}
+                            <tr>
+                                <td colspan="9" class="text-center py-4">
+                                    <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                                    <p class="text-muted">Không có tin tuyển dụng nào.</p>
+                                    <a href="{% url 'create_job' %}" class="btn btn-primary">
+                                        <i class="fas fa-plus"></i> Tạo tin mới
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Pagination -->
+            {% if jobs.has_other_pages %}
+            <div class="card-footer">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination pagination-sm m-0 float-right">
+                        {% if jobs.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if department_filter %}&department={{ department_filter }}{% endif %}">
+                                <i class="fas fa-angle-double-left"></i>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ jobs.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if department_filter %}&department={{ department_filter }}{% endif %}">
+                                <i class="fas fa-angle-left"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+                        
+                        {% for num in jobs.paginator.page_range %}
+                        {% if jobs.number == num %}
+                        <li class="page-item active">
+                            <span class="page-link">{{ num }}</span>
+                        </li>
+                        {% elif num > jobs.number|add:'-3' and num < jobs.number|add:'3' %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if department_filter %}&department={{ department_filter }}{% endif %}">
+                                {{ num }}
+                            </a>
+                        </li>
+                        {% endif %}
+                        {% endfor %}
+                        
+                        {% if jobs.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ jobs.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if department_filter %}&department={{ department_filter }}{% endif %}">
+                                <i class="fas fa-angle-right"></i>
+                            </a>
+                        </li>
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ jobs.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if department_filter %}&department={{ department_filter }}{% endif %}">
+                                <i class="fas fa-angle-double-right"></i>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                
+                <div class="text-muted">
+                    Hiển thị {{ jobs.start_index }} - {{ jobs.end_index }} trong tổng số {{ jobs.paginator.count }} tin
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        
+    </div>
+</section>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title">
+                    <i class="fas fa-exclamation-triangle"></i> Xác nhận xóa
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn xóa tin tuyển dụng <strong id="jobTitle"></strong>?</p>
+                <p class="text-danger">
+                    <i class="fas fa-info-circle"></i> Hành động này không thể hoàn tác!
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fas fa-times"></i> Hủy
+                </button>
+                <form id="deleteForm" method="POST" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Xóa
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+function confirmDelete(jobId, jobTitle) {
+    $('#jobTitle').text(jobTitle);
+    $('#deleteForm').attr('action', '/recruitment/jobs/' + jobId + '/delete/');
+    $('#deleteModal').modal('show');
+}
+
+$(document).ready(function() {
+    // Auto-hide messages after 5 seconds
+    setTimeout(function() {
+        $('.alert').fadeOut('slow');
+    }, 5000);
+    
+    // Add tooltips
+    $('[title]').tooltip();
+});
+</script>
+{% endblock custom_js %}

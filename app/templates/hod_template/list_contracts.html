@@ -1,0 +1,285 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}
+Quản lý Hợp đồng
+{% endblock page_title %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'home' %}">Trang chủ</a></li>
+<li class="breadcrumb-item active">Quản lý hợp đồng</li>
+{% endblock breadcrumb %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1><i class="fas fa-file-contract"></i> Quản lý Hợp đồng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Hợp đồng</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        
+        <!-- Statistics Row -->
+        <div class="row">
+            <div class="col-lg-4 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>{{ total_contracts }}</h3>
+                        <p>Tổng số hợp đồng</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-file-contract"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{ active_contracts }}</h3>
+                        <p>Hợp đồng đang hiệu lực</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-4 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{ expiring_contracts }}</h3>
+                        <p>Sắp hết hạn (30 ngày)</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <a href="?expiring=true" class="small-box-footer">
+                        Xem chi tiết <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters and Search -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-filter"></i> Bộ lọc & Tìm kiếm</h3>
+                <div class="card-tools">
+                    <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body">
+                <form method="get" action="">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Tìm kiếm</label>
+                                <input type="text" name="search" class="form-control" 
+                                       placeholder="Mã NV, tên, số HĐ..." 
+                                       value="{{ search_query|default:'' }}">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Trạng thái</label>
+                                <select name="status" class="form-control">
+                                    <option value="">Tất cả</option>
+                                    {% for value, label in STATUS_CHOICES %}
+                                    <option value="{{ value }}" {% if status_filter == value %}selected{% endif %}>
+                                        {{ label }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Loại hợp đồng</label>
+                                <select name="contract_type" class="form-control">
+                                    <option value="">Tất cả</option>
+                                    {% for value, label in CONTRACT_TYPE_CHOICES %}
+                                    <option value="{{ value }}" {% if type_filter == value %}selected{% endif %}>
+                                        {{ label }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Phòng ban</label>
+                                <select name="department" class="form-control">
+                                    <option value="">Tất cả</option>
+                                    {% for dept in departments %}
+                                    <option value="{{ dept.id }}" {% if department_filter == dept.id|stringformat:"s" %}selected{% endif %}>
+                                        {{ dept.name }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>&nbsp;</label>
+                                <div>
+                                    <button type="submit" class="btn btn-primary btn-block">
+                                        <i class="fas fa-search"></i> Lọc
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-12">
+                            <a href="{% url 'list_contracts' %}" class="btn btn-secondary btn-sm">
+                                <i class="fas fa-redo"></i> Xóa bộ lọc
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Contracts List -->
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-list"></i> Danh sách hợp đồng</h3>
+                <div class="card-tools">
+                    <a href="{% url 'create_contract' %}" class="btn btn-success btn-sm">
+                        <i class="fas fa-plus"></i> Tạo hợp đồng mới
+                    </a>
+                </div>
+            </div>
+            <div class="card-body table-responsive p-0">
+                <table class="table table-hover text-nowrap">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Số HĐ</th>
+                            <th>Nhân viên</th>
+                            <th>Phòng ban</th>
+                            <th>Loại HĐ</th>
+                            <th>Ngày bắt đầu</th>
+                            <th>Ngày kết thúc</th>
+                            <th>Trạng thái</th>
+                            <th>Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for contract in contracts %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td><strong>{{ contract.contract_number }}</strong></td>
+                            <td>
+                                <strong>{{ contract.employee.name }}</strong><br>
+                                <small class="text-muted">{{ contract.employee.employee_code }}</small>
+                            </td>
+                            <td>{{ contract.employee.department.name|default:"N/A" }}</td>
+                            <td>{{ contract.get_contract_type_display }}</td>
+                            <td>{{ contract.start_date|date:"d/m/Y" }}</td>
+                            <td>
+                                {% if contract.end_date %}
+                                    {{ contract.end_date|date:"d/m/Y" }}
+                                    {% if contract.is_expiring_soon %}
+                                        <span class="badge badge-warning">
+                                            <i class="fas fa-exclamation-triangle"></i> Sắp hết hạn
+                                        </span>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="badge badge-info">Vô thời hạn</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if contract.status == 'draft' %}
+                                    <span class="badge badge-secondary">Nháp</span>
+                                {% elif contract.status == 'active' %}
+                                    <span class="badge badge-success">Đang hiệu lực</span>
+                                {% elif contract.status == 'expired' %}
+                                    <span class="badge badge-warning">Hết hạn</span>
+                                {% elif contract.status == 'terminated' %}
+                                    <span class="badge badge-danger">Đã chấm dứt</span>
+                                {% elif contract.status == 'renewed' %}
+                                    <span class="badge badge-info">Đã gia hạn</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="btn-group">
+                                    <a href="{% url 'contract_detail' contract.id %}" 
+                                       class="btn btn-info btn-sm" title="Xem chi tiết">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    {% if contract.status == 'draft' or contract.status == 'active' %}
+                                    <a href="{% url 'edit_contract' contract.id %}" 
+                                       class="btn btn-warning btn-sm" title="Sửa">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="9" class="text-center text-muted">
+                                <i class="fas fa-inbox fa-3x mb-3 d-block"></i>
+                                Không tìm thấy hợp đồng nào
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% if contracts.has_other_pages %}
+            <div class="card-footer clearfix">
+                <ul class="pagination pagination-sm m-0 float-right">
+                    {% if contracts.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if type_filter %}&contract_type={{ type_filter }}{% endif %}{% if department_filter %}&department={{ department_filter }}{% endif %}">«« Đầu</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ contracts.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if type_filter %}&contract_type={{ type_filter }}{% endif %}{% if department_filter %}&department={{ department_filter }}{% endif %}">« Trước</a>
+                    </li>
+                    {% endif %}
+                    
+                    <li class="page-item active">
+                        <span class="page-link">
+                            Trang {{ contracts.number }} / {{ contracts.paginator.num_pages }}
+                        </span>
+                    </li>
+                    
+                    {% if contracts.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ contracts.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if type_filter %}&contract_type={{ type_filter }}{% endif %}{% if department_filter %}&department={{ department_filter }}{% endif %}">Sau »</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ contracts.paginator.num_pages }}{% if search_query %}&search={{ search_query }}{% endif %}{% if status_filter %}&status={{ status_filter }}{% endif %}{% if type_filter %}&contract_type={{ type_filter }}{% endif %}{% if department_filter %}&department={{ department_filter }}{% endif %}">Cuối »»</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+            {% endif %}
+        </div>
+
+    </div>
+</section>
+{% endblock main_content %}

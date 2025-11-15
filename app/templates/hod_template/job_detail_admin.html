@@ -1,0 +1,493 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}
+Chi tiết Tin tuyển dụng - {{ job.title }}
+{% endblock page_title %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'home' %}">Trang chủ</a></li>
+<li class="breadcrumb-item"><a href="{% url 'list_jobs_admin' %}">Tin tuyển dụng</a></li>
+<li class="breadcrumb-item active">{{ job.code }}</li>
+{% endblock breadcrumb %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>
+                    <i class="fas fa-briefcase"></i> Chi tiết Tin tuyển dụng
+                </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'list_jobs_admin' %}">Tin tuyển dụng</a></li>
+                    <li class="breadcrumb-item active">{{ job.code }}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        
+        <!-- Action Buttons -->
+        <div class="row mb-3">
+            <div class="col-12">
+                <a href="{% url 'list_jobs_admin' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Quay lại danh sách
+                </a>
+                <a href="{% url 'edit_job' job.id %}" class="btn btn-warning">
+                    <i class="fas fa-edit"></i> Chỉnh sửa
+                </a>
+                <a href="{% url 'applications_kanban' %}?job={{ job.id }}" class="btn btn-info">
+                    <i class="fas fa-columns"></i> Xem ứng viên
+                </a>
+                <a href="{% url 'careers_detail' job.id %}" class="btn btn-success" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Xem trang công khai
+                </a>
+                {% if applications_stats.total == 0 %}
+                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+                    <i class="fas fa-trash"></i> Xóa tin
+                </button>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Left Column - Job Information -->
+            <div class="col-md-8">
+                
+                <!-- Basic Info Card -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-info-circle"></i> Thông tin cơ bản
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <dl class="row">
+                                    <dt class="col-sm-4">Mã tin:</dt>
+                                    <dd class="col-sm-8">
+                                        <span class="badge badge-primary">{{ job.code }}</span>
+                                    </dd>
+                                    
+                                    <dt class="col-sm-4">Vị trí:</dt>
+                                    <dd class="col-sm-8"><strong>{{ job.title }}</strong></dd>
+                                    
+                                    <dt class="col-sm-4">Phòng ban:</dt>
+                                    <dd class="col-sm-8">
+                                        <i class="fas fa-building text-primary"></i> {{ job.department.name }}
+                                    </dd>
+                                    
+                                    <dt class="col-sm-4">Chức danh:</dt>
+                                    <dd class="col-sm-8">{{ job.job_title.name|default:"--" }}</dd>
+                                    
+                                    <dt class="col-sm-4">Trạng thái:</dt>
+                                    <dd class="col-sm-8">
+                                        {% if job.status == 'draft' %}
+                                        <span class="badge badge-secondary">Nháp</span>
+                                        {% elif job.status == 'open' %}
+                                        <span class="badge badge-success">Đang mở</span>
+                                        {% elif job.status == 'closed' %}
+                                        <span class="badge badge-danger">Đã đóng</span>
+                                        {% elif job.status == 'cancelled' %}
+                                        <span class="badge badge-dark">Đã hủy</span>
+                                        {% endif %}
+                                    </dd>
+                                </dl>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <dl class="row">
+                                    <dt class="col-sm-5">Loại hợp đồng:</dt>
+                                    <dd class="col-sm-7">
+                                        {% if job.employment_type == 'fulltime' %}
+                                        <span class="badge badge-success">Full-time</span>
+                                        {% elif job.employment_type == 'parttime' %}
+                                        <span class="badge badge-info">Part-time</span>
+                                        {% elif job.employment_type == 'contract' %}
+                                        <span class="badge badge-warning">Hợp đồng</span>
+                                        {% elif job.employment_type == 'internship' %}
+                                        <span class="badge badge-secondary">Thực tập</span>
+                                        {% endif %}
+                                    </dd>
+                                    
+                                    <dt class="col-sm-5">Cấp độ:</dt>
+                                    <dd class="col-sm-7">{{ job.get_experience_level_display }}</dd>
+                                    
+                                    <dt class="col-sm-5">Số vị trí:</dt>
+                                    <dd class="col-sm-7">
+                                        <span class="badge badge-primary">{{ job.number_of_positions }}</span>
+                                    </dd>
+                                    
+                                    <dt class="col-sm-5">Địa điểm:</dt>
+                                    <dd class="col-sm-7">
+                                        <i class="fas fa-map-marker-alt text-danger"></i> {{ job.location }}
+                                    </dd>
+                                    
+                                    <dt class="col-sm-5">Mức lương:</dt>
+                                    <dd class="col-sm-7">
+                                        <strong class="text-success">{{ job.get_salary_display }}</strong>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <dl class="row">
+                                    <dt class="col-sm-4">Hạn nộp:</dt>
+                                    <dd class="col-sm-8">
+                                        {% if job.deadline %}
+                                        <strong>{{ job.deadline|date:"d/m/Y" }}</strong>
+                                        {% with days=job.days_until_deadline %}
+                                        {% if days < 0 %}
+                                        <span class="badge badge-danger ml-2">
+                                            <i class="fas fa-times-circle"></i> Đã hết hạn
+                                        </span>
+                                        {% elif days <= 3 %}
+                                        <span class="badge badge-danger ml-2">
+                                            <i class="fas fa-exclamation-circle"></i> Còn {{ days }} ngày
+                                        </span>
+                                        {% elif days <= 7 %}
+                                        <span class="badge badge-warning ml-2">
+                                            <i class="fas fa-clock"></i> Còn {{ days }} ngày
+                                        </span>
+                                        {% else %}
+                                        <span class="text-muted ml-2">(Còn {{ days }} ngày)</span>
+                                        {% endif %}
+                                        {% endwith %}
+                                        {% else %}
+                                        <span class="text-muted">--</span>
+                                        {% endif %}
+                                    </dd>
+                                    
+                                    <dt class="col-sm-4">Ngày bắt đầu:</dt>
+                                    <dd class="col-sm-8">
+                                        {{ job.start_date|date:"d/m/Y"|default:"--" }}
+                                    </dd>
+                                </dl>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <dl class="row">
+                                    <dt class="col-sm-5">Lượt xem:</dt>
+                                    <dd class="col-sm-7">
+                                        <i class="fas fa-eye text-info"></i> {{ job.views_count }}
+                                    </dd>
+                                    
+                                    <dt class="col-sm-5">Số ứng tuyển:</dt>
+                                    <dd class="col-sm-7">
+                                        <i class="fas fa-users text-success"></i> {{ applications_stats.total }}
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Job Description -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-file-alt"></i> Mô tả công việc
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div style="white-space: pre-line;">{{ job.description }}</div>
+                    </div>
+                </div>
+
+                <!-- Requirements -->
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-check-circle"></i> Yêu cầu
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div style="white-space: pre-line;">{{ job.requirements }}</div>
+                    </div>
+                </div>
+
+                <!-- Responsibilities -->
+                {% if job.responsibilities %}
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-tasks"></i> Trách nhiệm
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div style="white-space: pre-line;">{{ job.responsibilities }}</div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Benefits -->
+                {% if job.benefits %}
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-gift"></i> Quyền lợi
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <div style="white-space: pre-line;">{{ job.benefits }}</div>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Contact Info -->
+                <div class="card card-secondary">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-address-book"></i> Thông tin liên hệ
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-3">Người liên hệ:</dt>
+                            <dd class="col-sm-9">{{ job.contact_person|default:"--" }}</dd>
+                            
+                            <dt class="col-sm-3">Email:</dt>
+                            <dd class="col-sm-9">
+                                {% if job.contact_email %}
+                                <a href="mailto:{{ job.contact_email }}">
+                                    <i class="fas fa-envelope"></i> {{ job.contact_email }}
+                                </a>
+                                {% else %}
+                                --
+                                {% endif %}
+                            </dd>
+                            
+                            <dt class="col-sm-3">Số điện thoại:</dt>
+                            <dd class="col-sm-9">
+                                {% if job.contact_phone %}
+                                <a href="tel:{{ job.contact_phone }}">
+                                    <i class="fas fa-phone"></i> {{ job.contact_phone }}
+                                </a>
+                                {% else %}
+                                --
+                                {% endif %}
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <!-- Metadata -->
+                <div class="card">
+                    <div class="card-body">
+                        <small class="text-muted">
+                            <i class="fas fa-user"></i> Tạo bởi: <strong>{{ job.created_by.admin.get_full_name }}</strong> |
+                            <i class="far fa-calendar-plus"></i> Ngày tạo: {{ job.created_at|date:"d/m/Y H:i" }} |
+                            <i class="far fa-calendar-check"></i> Cập nhật: {{ job.updated_at|date:"d/m/Y H:i" }}
+                        </small>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column - Statistics & Applications -->
+            <div class="col-md-4">
+                
+                <!-- Applications Statistics -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-chart-bar"></i> Thống kê ứng tuyển
+                        </h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-users text-info"></i> Tổng số</span>
+                                <span class="badge badge-info badge-pill">{{ applications_stats.total }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-file-alt text-primary"></i> Mới</span>
+                                <span class="badge badge-primary badge-pill">{{ applications_stats.new }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-filter text-secondary"></i> Sàng lọc</span>
+                                <span class="badge badge-secondary badge-pill">{{ applications_stats.screening }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-comments text-success"></i> Phỏng vấn</span>
+                                <span class="badge badge-success badge-pill">{{ applications_stats.interview }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-handshake text-warning"></i> Offer</span>
+                                <span class="badge badge-warning badge-pill">{{ applications_stats.offer }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-check-circle text-success"></i> Chấp nhận</span>
+                                <span class="badge badge-success badge-pill">{{ applications_stats.accepted }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span><i class="fas fa-times-circle text-danger"></i> Từ chối</span>
+                                <span class="badge badge-danger badge-pill">{{ applications_stats.rejected }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-footer">
+                        <a href="{% url 'applications_kanban' %}?job={{ job.id }}" class="btn btn-info btn-block">
+                            <i class="fas fa-columns"></i> Xem tất cả trên Kanban
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Recent Applications -->
+                {% if recent_applications %}
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-history"></i> Ứng tuyển gần đây
+                        </h3>
+                    </div>
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush">
+                            {% for app in recent_applications %}
+                            <li class="list-group-item">
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div class="flex-grow-1">
+                                        <strong>{{ app.full_name }}</strong>
+                                        <br>
+                                        <small class="text-muted">
+                                            <i class="fas fa-envelope"></i> {{ app.email|truncatechars:25 }}
+                                        </small>
+                                        <br>
+                                        <small class="text-muted">
+                                            <i class="far fa-clock"></i> {{ app.created_at|date:"d/m/Y H:i" }}
+                                        </small>
+                                    </div>
+                                    <div>
+                                        {% if app.status == 'new' %}
+                                        <span class="badge badge-primary">Mới</span>
+                                        {% elif app.status == 'screening' %}
+                                        <span class="badge badge-secondary">Sàng lọc</span>
+                                        {% elif app.status == 'interview' %}
+                                        <span class="badge badge-success">PV</span>
+                                        {% elif app.status == 'offer' %}
+                                        <span class="badge badge-warning">Offer</span>
+                                        {% elif app.status == 'accepted' %}
+                                        <span class="badge badge-success">OK</span>
+                                        {% elif app.status == 'rejected' %}
+                                        <span class="badge badge-danger">Từ chối</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="mt-2">
+                                    <a href="{% url 'application_detail' app.id %}" class="btn btn-sm btn-outline-primary btn-block">
+                                        <i class="fas fa-eye"></i> Xem chi tiết
+                                    </a>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Quick Links -->
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h3 class="card-title">
+                            <i class="fas fa-link"></i> Liên kết nhanh
+                        </h3>
+                    </div>
+                    <div class="card-body">
+                        <a href="{% url 'careers_detail' job.id %}" class="btn btn-success btn-block mb-2" target="_blank">
+                            <i class="fas fa-external-link-alt"></i> Trang công khai
+                        </a>
+                        <a href="{% url 'edit_job' job.id %}" class="btn btn-warning btn-block mb-2">
+                            <i class="fas fa-edit"></i> Chỉnh sửa tin
+                        </a>
+                        <button type="button" class="btn btn-secondary btn-block mb-2" onclick="copyJobLink()">
+                            <i class="fas fa-copy"></i> Sao chép link
+                        </button>
+                        <a href="{% url 'applications_kanban' %}?job={{ job.id }}" class="btn btn-info btn-block">
+                            <i class="fas fa-columns"></i> Kanban ứng viên
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-danger">
+                <h5 class="modal-title">
+                    <i class="fas fa-exclamation-triangle"></i> Xác nhận xóa
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Bạn có chắc chắn muốn xóa tin tuyển dụng <strong>{{ job.title }}</strong>?</p>
+                <p class="text-danger">
+                    <i class="fas fa-info-circle"></i> Hành động này không thể hoàn tác!
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                    <i class="fas fa-times"></i> Hủy
+                </button>
+                <form action="{% url 'delete_job' job.id %}" method="POST" style="display: inline;">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Xóa
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+function copyJobLink() {
+    const jobUrl = window.location.origin + "{% url 'careers_detail' job.id %}";
+    
+    // Create temporary input
+    const tempInput = document.createElement('input');
+    tempInput.value = jobUrl;
+    document.body.appendChild(tempInput);
+    tempInput.select();
+    document.execCommand('copy');
+    document.body.removeChild(tempInput);
+    
+    // Show notification
+    toastr.success('Đã sao chép link vào clipboard!');
+}
+
+$(document).ready(function() {
+    // Auto-hide messages after 5 seconds
+    setTimeout(function() {
+        $('.alert').fadeOut('slow');
+    }, 5000);
+    
+    // Add tooltips
+    $('[title]').tooltip();
+});
+</script>
+{% endblock custom_js %}

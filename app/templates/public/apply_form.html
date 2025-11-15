@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ứng tuyển - {{ job.title }}</title>
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding-top: 80px;
+            padding-bottom: 50px;
+        }
+        
+        .navbar {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            color: #667eea !important;
+            font-size: 1.5rem;
+        }
+        
+        .form-wrapper {
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .form-header h1 {
+            color: #333;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .job-info {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .job-info h4 {
+            color: #667eea;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .job-info-item {
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .job-info-item i {
+            color: #667eea;
+            width: 20px;
+            margin-right: 8px;
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            margin-top: 30px;
+            padding-left: 15px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .form-group label .required {
+            color: #dc3545;
+            margin-left: 3px;
+        }
+        
+        .form-control, .form-control-file {
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+            padding: 12px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        
+        .form-text {
+            color: #6c757d;
+            font-size: 0.875rem;
+        }
+        
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 15px 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 30px;
+        }
+        
+        .btn-submit:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+        
+        .btn-cancel {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            border-radius: 30px;
+            padding: 15px 40px;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 30px;
+        }
+        
+        .btn-cancel:hover {
+            background: #667eea;
+            color: white;
+        }
+        
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+        
+        .help-box {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .help-box i {
+            color: #2196f3;
+            margin-right: 10px;
+        }
+        
+        .errorlist {
+            list-style: none;
+            padding: 0;
+            margin-top: 5px;
+        }
+        
+        .errorlist li {
+            color: #dc3545;
+            font-size: 0.875rem;
+            padding: 5px 10px;
+            background: #f8d7da;
+            border-radius: 5px;
+            margin-bottom: 5px;
+        }
+        
+        .form-row {
+            margin-left: -10px;
+            margin-right: -10px;
+        }
+        
+        .form-row .col,
+        .form-row [class*="col-"] {
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+        
+        .custom-file-label {
+            border-radius: 8px;
+            border: 2px solid #e9ecef;
+        }
+        
+        .custom-file-input:focus ~ .custom-file-label {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'careers_list' %}">
+                <i class="fas fa-briefcase"></i> HRM Careers
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'admin_home' %}">
+                            <i class="fas fa-home"></i> Trang chủ
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'careers_list' %}">
+                            <i class="fas fa-list"></i> Tất cả công việc
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="form-wrapper">
+                    <!-- Form Header -->
+                    <div class="form-header">
+                        <h1><i class="fas fa-paper-plane"></i> Ứng tuyển vị trí</h1>
+                        <p class="text-muted">Vui lòng điền đầy đủ thông tin để hoàn tất đơn ứng tuyển</p>
+                    </div>
+
+                    <!-- Job Info -->
+                    <div class="job-info">
+                        <h4>{{ job.title }}</h4>
+                        <div class="job-info-item">
+                            <i class="fas fa-building"></i>
+                            {{ job.department.name }}
+                        </div>
+                        <div class="job-info-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            {{ job.location }}
+                        </div>
+                        <div class="job-info-item">
+                            <i class="fas fa-dollar-sign"></i>
+                            {{ job.get_salary_display }}
+                        </div>
+                    </div>
+
+                    <!-- Help Box -->
+                    <div class="help-box">
+                        <i class="fas fa-info-circle"></i>
+                        <strong>Lưu ý:</strong> Các trường có dấu <span class="text-danger">*</span> là bắt buộc. 
+                        Vui lòng chuẩn bị CV (PDF/DOC) trước khi điền form.
+                    </div>
+
+                    <!-- Messages -->
+                    {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {% if message.tags == 'success' %}
+                        <i class="fas fa-check-circle"></i>
+                        {% else %}
+                        <i class="fas fa-exclamation-triangle"></i>
+                        {% endif %}
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <!-- Application Form -->
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- Personal Information -->
+                        <h3 class="section-title">
+                            <i class="fas fa-user"></i> Thông tin cá nhân
+                        </h3>
+                        
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.full_name.id_for_label }}">
+                                        Họ và tên <span class="required">*</span>
+                                    </label>
+                                    {{ form.full_name }}
+                                    {% if form.full_name.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in form.full_name.errors %}
+                                            <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.email.id_for_label }}">
+                                        Email <span class="required">*</span>
+                                    </label>
+                                    {{ form.email }}
+                                    {% if form.email.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in form.email.errors %}
+                                            <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.phone.id_for_label }}">
+                                        Số điện thoại <span class="required">*</span>
+                                    </label>
+                                    {{ form.phone }}
+                                    {% if form.phone.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in form.phone.errors %}
+                                            <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="{{ form.date_of_birth.id_for_label }}">Ngày sinh</label>
+                                    {{ form.date_of_birth }}
+                                    {% if form.date_of_birth.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in form.date_of_birth.errors %}
+                                            <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="{{ form.gender.id_for_label }}">Giới tính</label>
+                                    {{ form.gender }}
+                                    {% if form.gender.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in form.gender.errors %}
+                                            <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.address.id_for_label }}">Địa chỉ hiện tại</label>
+                            {{ form.address }}
+                            {% if form.address.errors %}
+                                <ul class="errorlist">
+                                    {% for error in form.address.errors %}
+                                    <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+
+                        <!-- Professional Information -->
+                        <h3 class="section-title">
+                            <i class="fas fa-briefcase"></i> Thông tin nghề nghiệp
+                        </h3>
+
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.current_position.id_for_label }}">Vị trí hiện tại</label>
+                                    {{ form.current_position }}
+                                    {% if form.current_position.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in form.current_position.errors %}
+                                            <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.current_company.id_for_label }}">Công ty hiện tại</label>
+                                    {{ form.current_company }}
+                                    {% if form.current_company.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in form.current_company.errors %}
+                                            <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.years_of_experience.id_for_label }}">Số năm kinh nghiệm</label>
+                            {{ form.years_of_experience }}
+                            <small class="form-text">Nhập 0 nếu chưa có kinh nghiệm</small>
+                            {% if form.years_of_experience.errors %}
+                                <ul class="errorlist">
+                                    {% for error in form.years_of_experience.errors %}
+                                    <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+
+                        <!-- Education -->
+                        <h3 class="section-title">
+                            <i class="fas fa-graduation-cap"></i> Học vấn
+                        </h3>
+
+                        <div class="form-row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="{{ form.education_level.id_for_label }}">Trình độ học vấn</label>
+                                    {{ form.education_level }}
+                                    {% if form.education_level.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in form.education_level.errors %}
+                                            <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="{{ form.school.id_for_label }}">Trường học</label>
+                                    {{ form.school }}
+                                    {% if form.school.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in form.school.errors %}
+                                            <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="{{ form.major.id_for_label }}">Chuyên ngành</label>
+                                    {{ form.major }}
+                                    {% if form.major.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in form.major.errors %}
+                                            <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Application Documents -->
+                        <h3 class="section-title">
+                            <i class="fas fa-file-upload"></i> Hồ sơ ứng tuyển
+                        </h3>
+
+                        <div class="form-group">
+                            <label for="{{ form.resume.id_for_label }}">
+                                CV/Resume <span class="required">*</span>
+                            </label>
+                            {{ form.resume }}
+                            <small class="form-text">Chấp nhận file PDF, DOC, DOCX (Tối đa 5MB)</small>
+                            {% if form.resume.errors %}
+                                <ul class="errorlist">
+                                    {% for error in form.resume.errors %}
+                                    <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.cover_letter.id_for_label }}">Thư xin việc</label>
+                            {{ form.cover_letter }}
+                            <small class="form-text">Giới thiệu ngắn gọn về bản thân và lý do ứng tuyển</small>
+                            {% if form.cover_letter.errors %}
+                                <ul class="errorlist">
+                                    {% for error in form.cover_letter.errors %}
+                                    <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.portfolio_url.id_for_label }}">Link Portfolio</label>
+                                    {{ form.portfolio_url }}
+                                    <small class="form-text">Nếu có (ví dụ: website, GitHub, Behance)</small>
+                                    {% if form.portfolio_url.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in form.portfolio_url.errors %}
+                                            <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.linkedin_url.id_for_label }}">Link LinkedIn</label>
+                                    {{ form.linkedin_url }}
+                                    <small class="form-text">Nếu có</small>
+                                    {% if form.linkedin_url.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in form.linkedin_url.errors %}
+                                            <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Availability -->
+                        <h3 class="section-title">
+                            <i class="fas fa-calendar-check"></i> Thời gian có thể làm việc
+                        </h3>
+
+                        <div class="form-row">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="{{ form.expected_salary.id_for_label }}">Mức lương mong muốn (VNĐ)</label>
+                                    {{ form.expected_salary }}
+                                    {% if form.expected_salary.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in form.expected_salary.errors %}
+                                            <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="{{ form.available_start_date.id_for_label }}">Ngày có thể bắt đầu</label>
+                                    {{ form.available_start_date }}
+                                    {% if form.available_start_date.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in form.available_start_date.errors %}
+                                            <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="{{ form.notice_period_days.id_for_label }}">Thời gian báo trước (ngày)</label>
+                                    {{ form.notice_period_days }}
+                                    <small class="form-text">Nếu đang làm việc</small>
+                                    {% if form.notice_period_days.errors %}
+                                        <ul class="errorlist">
+                                            {% for error in form.notice_period_days.errors %}
+                                            <li>{{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="{{ form.source.id_for_label }}">Bạn biết đến tin tuyển dụng này từ đâu?</label>
+                            {{ form.source }}
+                            {% if form.source.errors %}
+                                <ul class="errorlist">
+                                    {% for error in form.source.errors %}
+                                    <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        </div>
+
+                        <!-- Non-field errors -->
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                        {% endif %}
+
+                        <!-- Submit Buttons -->
+                        <div class="text-center mt-5">
+                            <button type="submit" class="btn btn-submit">
+                                <i class="fas fa-paper-plane"></i> Gửi đơn ứng tuyển
+                            </button>
+                            <a href="{% url 'careers_detail' job.id %}" class="btn btn-cancel ml-3">
+                                <i class="fas fa-times"></i> Hủy
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Custom file input label
+        $(document).ready(function() {
+            $('input[type="file"]').on('change', function() {
+                var fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label').html(fileName);
+            });
+        });
+    </script>
+</body>
+</html>

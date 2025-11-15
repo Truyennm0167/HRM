@@ -233,6 +233,68 @@
           </ul>
         </li>
 
+        <!-- Quản lý hợp đồng -->
+        <li class="nav-item has-treeview {% if '/contracts' in request.path %}menu-open{% endif %}">
+          <a href="#" class="nav-link {% if '/contracts' in request.path %}active{% endif %}">
+            <i class="nav-icon fas fa-file-contract"></i>
+            <p>
+              Quản lý hợp đồng
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'list_contracts' %}" class="nav-link {% if '/contracts' in request.path and 'create' not in request.path %}active{% endif %}">
+                <i class="nav-icon fas fa-list"></i>
+                <p>Danh sách hợp đồng</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'create_contract' %}" class="nav-link {% if '/contracts/create' in request.path %}active{% endif %}">
+                <i class="nav-icon fas fa-plus-circle"></i>
+                <p>Tạo hợp đồng mới</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
+        <!-- Tuyển dụng -->
+        <li class="nav-item has-treeview {% if '/recruitment' in request.path or '/careers' in request.path %}menu-open{% endif %}">
+          <a href="#" class="nav-link {% if '/recruitment' in request.path or '/careers' in request.path %}active{% endif %}">
+            <i class="nav-icon fas fa-user-tie"></i>
+            <p>
+              Tuyển dụng
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'list_jobs_admin' %}" class="nav-link {% if '/recruitment/jobs' in request.path and 'create' not in request.path %}active{% endif %}">
+                <i class="nav-icon fas fa-list"></i>
+                <p>Danh sách tin tuyển dụng</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'create_job' %}" class="nav-link {% if '/recruitment/jobs/create' in request.path %}active{% endif %}">
+                <i class="nav-icon fas fa-plus-circle"></i>
+                <p>Tạo tin mới</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'applications_kanban' %}" class="nav-link {% if '/recruitment/applications' in request.path %}active{% endif %}">
+                <i class="nav-icon fas fa-columns"></i>
+                <p>Kanban ứng tuyển</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'careers_list' %}" class="nav-link" target="_blank">
+                <i class="nav-icon fas fa-external-link-alt"></i>
+                <p>Trang công khai</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
         <!-- Khen thưởng - Kỷ luật -->
         <li class="nav-item has-treeview {% if '/reward' in request.path or '/discipline' in request.path %}menu-open{% endif %}">
           <a href="#" class="nav-link {% if '/reward' in request.path or '/discipline' in request.path %}active{% endif %}">

@@ -1873,3 +1873,726 @@ def my_attendance(request):
     logger.info(f"Attendance viewed by {employee.name}")
     return render(request, 'hod_template/my_attendance.html', context)
 
+
+# ================================
+# CONTRACT MANAGEMENT VIEWS
+# ================================
+
+@login_required
+def list_contracts(request):
+    """Danh sách tất cả hợp đồng với filter và search"""
+    from app.models import Contract, Department
+    from django.db.models import Q
+    from datetime import timedelta
+    
+    contracts = Contract.objects.select_related('employee', 'job_title', 'employee__department').all()
+    
+    # Filter by status
+    status_filter = request.GET.get('status')
+    if status_filter:
+        contracts = contracts.filter(status=status_filter)
+    
+    # Filter by contract type
+    type_filter = request.GET.get('contract_type')
+    if type_filter:
+        contracts = contracts.filter(contract_type=type_filter)
+    
+    # Filter by department
+    department_filter = request.GET.get('department')
+    if department_filter:
+        contracts = contracts.filter(employee__department_id=department_filter)
+    
+    # Search by employee name or contract number
+    search_query = request.GET.get('search')
+    if search_query:
+        contracts = contracts.filter(
+            Q(employee__name__icontains=search_query) |
+            Q(contract_number__icontains=search_query) |
+            Q(employee__employee_code__icontains=search_query)
+        )
+    
+    # Filter expiring soon (within 30 days)
+    expiring_filter = request.GET.get('expiring')
+    if expiring_filter == 'true':
+        today = timezone.now().date()
+        thirty_days = today + timedelta(days=30)
+        contracts = contracts.filter(
+            status='active',
+            end_date__isnull=False,
+            end_date__lte=thirty_days,
+            end_date__gte=today
+        )
+    
+    # Pagination
+    from django.core.paginator import Paginator
+    paginator = Paginator(contracts, 15)
+    page_number = request.GET.get('page')
+    contracts = paginator.get_page(page_number)
+    
+    # Statistics
+    total_contracts = Contract.objects.count()
+    active_contracts = Contract.objects.filter(status='active').count()
+    expiring_contracts = Contract.objects.filter(
+        status='active',
+        end_date__isnull=False,
+        end_date__lte=timezone.now().date() + timedelta(days=30),
+        end_date__gte=timezone.now().date()
+    ).count()
+    
+    departments = Department.objects.all()
+    
+    context = {
+        'contracts': contracts,
+        'departments': departments,
+        'total_contracts': total_contracts,
+        'active_contracts': active_contracts,
+        'expiring_contracts': expiring_contracts,
+        'status_filter': status_filter,
+        'type_filter': type_filter,
+        'department_filter': department_filter,
+        'search_query': search_query,
+        'expiring_filter': expiring_filter,
+        'CONTRACT_TYPE_CHOICES': Contract.CONTRACT_TYPE_CHOICES,
+        'STATUS_CHOICES': Contract.STATUS_CHOICES,
+    }
+    return render(request, 'hod_template/list_contracts.html', context)
+
+
+@login_required
+def contract_detail(request, contract_id):
+    """Xem chi tiết hợp đồng"""
+    from app.models import Contract
+    
+    contract = get_object_or_404(Contract, pk=contract_id)
+    
+    # Get renewal history
+    renewals = Contract.objects.filter(renewed_from=contract).order_by('-created_at')
+    
+    # Check if this contract was renewed from another
+    original_contract = contract.renewed_from
+    
+    context = {
+        'contract': contract,
+        'renewals': renewals,
+        'original_contract': original_contract,
+        'can_renew': contract.can_be_renewed(),
+        'can_terminate': contract.can_be_terminated(),
+        'is_expiring_soon': contract.is_expiring_soon(),
+        'days_until_expiration': contract.days_until_expiration(),
+    }
+    return render(request, 'hod_template/contract_detail.html', context)
+
+
+@login_required
+def create_contract(request):
+    """Tạo hợp đồng mới"""
+    from app.forms import ContractForm
+    from app.models import Employee
+    
+    if request.method == 'POST':
+        form = ContractForm(request.POST, request.FILES)
+        if form.is_valid():
+            contract = form.save(commit=False)
+            # Set created_by to current user's employee (if exists)
+            try:
+                current_employee = Employee.objects.get(email=request.user.email)
+                contract.created_by = current_employee
+            except Employee.DoesNotExist:
+                pass
+            
+            contract.save()
+            messages.success(request, f'Hợp đồng {contract.contract_number} đã được tạo thành công!')
+            logger.info(f"Contract {contract.contract_number} created for {contract.employee.name}")
+            return redirect('contract_detail', contract_id=contract.pk)
+        else:
+            messages.error(request, 'Có lỗi trong form. Vui lòng kiểm tra lại!')
+    else:
+        form = ContractForm()
+    
+    context = {
+        'form': form,
+        'title': 'Tạo hợp đồng mới',
+        'action': 'create',
+    }
+    return render(request, 'hod_template/create_edit_contract.html', context)
+
+
+@login_required
+def edit_contract(request, contract_id):
+    """Chỉnh sửa hợp đồng"""
+    from app.forms import ContractForm
+    from app.models import Contract
+    
+    contract = get_object_or_404(Contract, pk=contract_id)
+    
+    # Chỉ cho phép sửa hợp đồng draft hoặc active
+    if contract.status not in ['draft', 'active']:
+        messages.error(request, 'Không thể sửa hợp đồng đã hết hạn hoặc chấm dứt!')
+        return redirect('contract_detail', contract_id=contract.pk)
+    
+    if request.method == 'POST':
+        form = ContractForm(request.POST, request.FILES, instance=contract)
+        if form.is_valid():
+            contract = form.save()
+            messages.success(request, f'Hợp đồng {contract.contract_number} đã được cập nhật!')
+            logger.info(f"Contract {contract.contract_number} updated")
+            return redirect('contract_detail', contract_id=contract.pk)
+        else:
+            messages.error(request, 'Có lỗi trong form. Vui lòng kiểm tra lại!')
+    else:
+        form = ContractForm(instance=contract)
+    
+    context = {
+        'form': form,
+        'contract': contract,
+        'title': f'Chỉnh sửa hợp đồng {contract.contract_number}',
+        'action': 'edit',
+    }
+    return render(request, 'hod_template/create_edit_contract.html', context)
+
+
+@login_required
+def renew_contract(request, contract_id):
+    """Gia hạn hợp đồng - tạo hợp đồng mới kế tiếp"""
+    from app.forms import ContractForm
+    from app.models import Contract
+    from datetime import timedelta
+    
+    old_contract = get_object_or_404(Contract, pk=contract_id)
+    
+    if not old_contract.can_be_renewed():
+        messages.error(request, 'Hợp đồng này không thể gia hạn!')
+        return redirect('contract_detail', contract_id=contract_id)
+    
+    if request.method == 'POST':
+        form = ContractForm(request.POST, request.FILES)
+        if form.is_valid():
+            new_contract = form.save(commit=False)
+            new_contract.renewed_from = old_contract
+            
+            # Set created_by
+            try:
+                current_employee = Employee.objects.get(email=request.user.email)
+                new_contract.created_by = current_employee
+            except Employee.DoesNotExist:
+                pass
+            
+            new_contract.save()
+            
+            # Update old contract status
+            old_contract.status = 'renewed'
+            old_contract.save()
+            
+            messages.success(request, f'Hợp đồng mới {new_contract.contract_number} đã được tạo từ hợp đồng {old_contract.contract_number}!')
+            logger.info(f"Contract {old_contract.contract_number} renewed to {new_contract.contract_number}")
+            return redirect('contract_detail', contract_id=new_contract.pk)
+        else:
+            messages.error(request, 'Có lỗi trong form. Vui lòng kiểm tra lại!')
+    else:
+        # Pre-fill form with data from old contract
+        initial_data = {
+            'employee': old_contract.employee,
+            'contract_type': old_contract.contract_type,
+            'start_date': old_contract.end_date + timedelta(days=1) if old_contract.end_date else None,
+            'salary': old_contract.salary,
+            'salary_coefficient': old_contract.salary_coefficient,
+            'allowances': old_contract.allowances,
+            'job_title': old_contract.job_title,
+            'job_description': old_contract.job_description,
+            'workplace': old_contract.workplace,
+            'working_hours': old_contract.working_hours,
+            'terms': old_contract.terms,
+            'benefits': old_contract.benefits,
+            'insurance_info': old_contract.insurance_info,
+            'status': 'active',
+        }
+        form = ContractForm(initial=initial_data)
+    
+    context = {
+        'form': form,
+        'old_contract': old_contract,
+        'title': f'Gia hạn hợp đồng {old_contract.contract_number}',
+        'action': 'renew',
+    }
+    return render(request, 'hod_template/create_edit_contract.html', context)
+
+
+@login_required
+def terminate_contract(request, contract_id):
+    """Chấm dứt hợp đồng"""
+    from app.models import Contract
+    from django.utils import timezone
+    
+    contract = get_object_or_404(Contract, pk=contract_id)
+    
+    if not contract.can_be_terminated():
+        messages.error(request, 'Hợp đồng này không thể chấm dứt!')
+        return redirect('contract_detail', contract_id=contract_id)
+    
+    if request.method == 'POST':
+        termination_reason = request.POST.get('termination_reason')
+        termination_date = request.POST.get('termination_date')
+        
+        if not termination_reason:
+            messages.error(request, 'Vui lòng nhập lý do chấm dứt!')
+            return redirect('contract_detail', contract_id=contract_id)
+        
+        contract.status = 'terminated'
+        contract.termination_reason = termination_reason
+        contract.termination_date = termination_date if termination_date else timezone.now().date()
+        contract.save()
+        
+        messages.success(request, f'Hợp đồng {contract.contract_number} đã được chấm dứt!')
+        logger.info(f"Contract {contract.contract_number} terminated. Reason: {termination_reason}")
+        return redirect('contract_detail', contract_id=contract_id)
+    
+    return redirect('contract_detail', contract_id=contract_id)
+
+
+@login_required
+def delete_contract(request, contract_id):
+    """Xóa hợp đồng (chỉ với draft)"""
+    from app.models import Contract
+    
+    contract = get_object_or_404(Contract, pk=contract_id)
+    
+    if contract.status != 'draft':
+        messages.error(request, 'Chỉ có thể xóa hợp đồng ở trạng thái nháp!')
+        return redirect('contract_detail', contract_id=contract_id)
+    
+    if request.method == 'POST':
+        contract_number = contract.contract_number
+        contract.delete()
+        messages.success(request, f'Hợp đồng {contract_number} đã được xóa!')
+        logger.info(f"Contract {contract_number} deleted")
+        return redirect('list_contracts')
+    
+    return redirect('contract_detail', contract_id=contract_id)
+
+
+# ============= Recruitment Admin Views =============
+
+@login_required
+def list_jobs_admin(request):
+    """Admin - Danh sách tất cả tin tuyển dụng"""
+    from app.models import JobPosting, Department
+    from django.db.models import Q, Count
+    
+    jobs = JobPosting.objects.select_related('department', 'job_title', 'created_by').annotate(
+        applications_total=Count('applications')
+    ).all()
+    
+    # Filter by status
+    status_filter = request.GET.get('status')
+    if status_filter:
+        jobs = jobs.filter(status=status_filter)
+    
+    # Filter by department
+    department_filter = request.GET.get('department')
+    if department_filter:
+        jobs = jobs.filter(department_id=department_filter)
+    
+    # Search
+    search_query = request.GET.get('search')
+    if search_query:
+        jobs = jobs.filter(
+            Q(title__icontains=search_query) |
+            Q(code__icontains=search_query) |
+            Q(description__icontains=search_query)
+        )
+    
+    # Pagination
+    from django.core.paginator import Paginator
+    paginator = Paginator(jobs, 15)
+    page_number = request.GET.get('page')
+    jobs = paginator.get_page(page_number)
+    
+    # Statistics
+    total_jobs = JobPosting.objects.count()
+    open_jobs = JobPosting.objects.filter(status='open').count()
+    from django.utils import timezone
+    closing_soon = JobPosting.objects.filter(
+        status='open',
+        deadline__gte=timezone.now().date(),
+        deadline__lte=timezone.now().date() + timedelta(days=7)
+    ).count()
+    
+    departments = Department.objects.all()
+    
+    context = {
+        'jobs': jobs,
+        'departments': departments,
+        'total_jobs': total_jobs,
+        'open_jobs': open_jobs,
+        'closing_soon': closing_soon,
+        'status_filter': status_filter,
+        'department_filter': department_filter,
+        'search_query': search_query,
+        'STATUS_CHOICES': JobPosting.STATUS_CHOICES,
+    }
+    return render(request, 'hod_template/list_jobs_admin.html', context)
+
+
+@login_required
+def create_job(request):
+    """Admin - Tạo tin tuyển dụng mới"""
+    from app.models import JobPosting, Department, JobTitle, Employee
+    from app.forms import JobPostingForm
+    
+    if request.method == 'POST':
+        form = JobPostingForm(request.POST)
+        if form.is_valid():
+            job = form.save(commit=False)
+            # Set created_by to current employee
+            try:
+                employee = Employee.objects.get(email=request.user.username)
+                job.created_by = employee
+            except Employee.DoesNotExist:
+                pass
+            job.save()
+            messages.success(request, f'Tin tuyển dụng {job.code} đã được tạo thành công!')
+            logger.info(f"Job posting {job.code} created by {request.user.username}")
+            return redirect('job_detail_admin', job_id=job.id)
+    else:
+        form = JobPostingForm()
+    
+    departments = Department.objects.all()
+    job_titles = JobTitle.objects.all()
+    
+    context = {
+        'form': form,
+        'departments': departments,
+        'job_titles': job_titles,
+        'action': 'create',
+    }
+    return render(request, 'hod_template/create_edit_job.html', context)
+
+
+@login_required
+def job_detail_admin(request, job_id):
+    """Admin - Chi tiết tin tuyển dụng"""
+    from app.models import JobPosting
+    from django.db.models import Count, Q
+    
+    job = get_object_or_404(JobPosting.objects.select_related('department', 'job_title', 'created_by'), pk=job_id)
+    
+    # Get applications statistics
+    applications_stats = job.applications.aggregate(
+        total=Count('id'),
+        new=Count('id', filter=Q(status='new')),
+        screening=Count('id', filter=Q(status='screening')),
+        interview=Count('id', filter=Q(status='interview')),
+        offer=Count('id', filter=Q(status='offer')),
+        accepted=Count('id', filter=Q(status='accepted')),
+        rejected=Count('id', filter=Q(status='rejected')),
+    )
+    
+    # Recent applications
+    recent_applications = job.applications.select_related('assigned_to').order_by('-created_at')[:5]
+    
+    context = {
+        'job': job,
+        'applications_stats': applications_stats,
+        'recent_applications': recent_applications,
+    }
+    return render(request, 'hod_template/job_detail_admin.html', context)
+
+
+@login_required
+def edit_job(request, job_id):
+    """Admin - Sửa tin tuyển dụng"""
+    from app.models import JobPosting, Department, JobTitle
+    from app.forms import JobPostingForm
+    
+    job = get_object_or_404(JobPosting, pk=job_id)
+    
+    if request.method == 'POST':
+        form = JobPostingForm(request.POST, instance=job)
+        if form.is_valid():
+            job = form.save()
+            messages.success(request, f'Tin tuyển dụng {job.code} đã được cập nhật!')
+            logger.info(f"Job posting {job.code} updated by {request.user.username}")
+            return redirect('job_detail_admin', job_id=job.id)
+    else:
+        form = JobPostingForm(instance=job)
+    
+    departments = Department.objects.all()
+    job_titles = JobTitle.objects.all()
+    
+    context = {
+        'form': form,
+        'job': job,
+        'departments': departments,
+        'job_titles': job_titles,
+        'action': 'edit',
+    }
+    return render(request, 'hod_template/create_edit_job.html', context)
+
+
+@login_required
+def delete_job(request, job_id):
+    """Admin - Xóa tin tuyển dụng"""
+    from app.models import JobPosting
+    
+    job = get_object_or_404(JobPosting, pk=job_id)
+    
+    if job.applications.exists():
+        messages.error(request, 'Không thể xóa tin tuyển dụng đã có người ứng tuyển!')
+        return redirect('job_detail_admin', job_id=job_id)
+    
+    if request.method == 'POST':
+        job_code = job.code
+        job.delete()
+        messages.success(request, f'Tin tuyển dụng {job_code} đã được xóa!')
+        logger.info(f"Job posting {job_code} deleted")
+        return redirect('list_jobs_admin')
+    
+    return redirect('job_detail_admin', job_id=job_id)
+
+
+@login_required
+def applications_kanban(request):
+    """Admin - Kanban board để quản lý applications"""
+    from app.models import Application, JobPosting
+    from django.db.models import Q
+    
+    # Filter by job
+    job_filter = request.GET.get('job')
+    if job_filter:
+        applications = Application.objects.filter(job_id=job_filter)
+    else:
+        applications = Application.objects.all()
+    
+    # Search
+    search_query = request.GET.get('search')
+    if search_query:
+        applications = applications.filter(
+            Q(full_name__icontains=search_query) |
+            Q(email__icontains=search_query) |
+            Q(application_code__icontains=search_query)
+        )
+    
+    applications = applications.select_related('job', 'assigned_to', 'interviewer').order_by('-created_at')
+    
+    # Group applications by status for kanban columns
+    from collections import defaultdict
+    kanban_columns = defaultdict(list)
+    
+    for app in applications:
+        kanban_columns[app.status].append(app)
+    
+    # Get all jobs for filter
+    jobs = JobPosting.objects.filter(status='open').order_by('-created_at')
+    
+    # Statistics
+    total_applications = Application.objects.count()
+    new_applications = Application.objects.filter(status='new').count()
+    interview_scheduled = Application.objects.filter(status__in=['phone_interview', 'interview']).count()
+    
+    context = {
+        'kanban_columns': dict(kanban_columns),
+        'STATUS_CHOICES': Application.STATUS_CHOICES,
+        'jobs': jobs,
+        'job_filter': job_filter,
+        'search_query': search_query,
+        'total_applications': total_applications,
+        'new_applications': new_applications,
+        'interview_scheduled': interview_scheduled,
+    }
+    return render(request, 'hod_template/applications_kanban.html', context)
+
+
+@login_required
+@require_POST
+def update_application_status(request, application_id):
+    """Admin - AJAX endpoint để update trạng thái application"""
+    from app.models import Application
+    import json
+    
+    application = get_object_or_404(Application, pk=application_id)
+    
+    try:
+        data = json.loads(request.body)
+        new_status = data.get('status')
+        
+        if new_status not in dict(Application.STATUS_CHOICES):
+            return JsonResponse({'success': False, 'error': 'Invalid status'}, status=400)
+        
+        old_status = application.status
+        application.status = new_status
+        application.save()
+        
+        # TODO: Send email notification to candidate
+        
+        logger.info(f"Application {application.application_code} status changed from {old_status} to {new_status}")
+        
+        return JsonResponse({
+            'success': True,
+            'message': f'Trạng thái đã được cập nhật thành {application.get_status_display()}'
+        })
+    except Exception as e:
+        logger.error(f"Error updating application status: {str(e)}")
+        return JsonResponse({'success': False, 'error': str(e)}, status=500)
+
+
+@login_required
+def application_detail(request, application_id):
+    """Admin - Chi tiết đơn ứng tuyển"""
+    from app.models import Application, Employee
+    
+    application = get_object_or_404(
+        Application.objects.select_related('job', 'assigned_to', 'interviewer', 'employee'),
+        pk=application_id
+    )
+    
+    # Get application notes
+    notes = application.application_notes.select_related('author').order_by('-created_at')
+    
+    # Get all employees for assignment
+    employees = Employee.objects.filter(is_manager=True).order_by('name')
+    
+    context = {
+        'application': application,
+        'notes': notes,
+        'employees': employees,
+    }
+    return render(request, 'hod_template/application_detail.html', context)
+
+
+@login_required
+def update_application(request, application_id):
+    """Admin - Cập nhật thông tin application"""
+    from app.models import Application, Employee
+    from app.forms import ApplicationReviewForm
+    
+    application = get_object_or_404(Application, pk=application_id)
+    
+    if request.method == 'POST':
+        form = ApplicationReviewForm(request.POST, instance=application)
+        if form.is_valid():
+            application = form.save()
+            messages.success(request, f'Đơn ứng tuyển {application.application_code} đã được cập nhật!')
+            logger.info(f"Application {application.application_code} updated by {request.user.username}")
+            
+            # TODO: Send email if status changed or interview scheduled
+            
+            return redirect('application_detail', application_id=application.id)
+    else:
+        form = ApplicationReviewForm(instance=application)
+    
+    employees = Employee.objects.filter(is_manager=True).order_by('name')
+    
+    context = {
+        'form': form,
+        'application': application,
+        'employees': employees,
+    }
+    return render(request, 'hod_template/update_application.html', context)
+
+
+@login_required
+@require_POST
+def add_application_note(request, application_id):
+    """Admin - Thêm ghi chú cho application"""
+    from app.models import Application, ApplicationNote, Employee
+    
+    application = get_object_or_404(Application, pk=application_id)
+    note_text = request.POST.get('note')
+    is_important = request.POST.get('is_important') == 'on'
+    
+    if note_text:
+        try:
+            employee = Employee.objects.get(email=request.user.username)
+            ApplicationNote.objects.create(
+                application=application,
+                author=employee,
+                note=note_text,
+                is_important=is_important
+            )
+            messages.success(request, 'Ghi chú đã được thêm!')
+        except Employee.DoesNotExist:
+            messages.error(request, 'Không tìm thấy thông tin nhân viên!')
+    
+    return redirect('application_detail', application_id=application_id)
+
+
+@login_required
+@require_POST
+def convert_to_employee(request, application_id):
+    """Admin - Chuyển đổi ứng viên thành nhân viên"""
+    from app.models import Application, Employee
+    from django.db import transaction
+    
+    application = get_object_or_404(Application, pk=application_id)
+    
+    if not application.can_convert_to_employee():
+        messages.error(request, 'Chỉ có thể chuyển đổi ứng viên đã chấp nhận offer!')
+        return redirect('application_detail', application_id=application_id)
+    
+    try:
+        with transaction.atomic():
+            # Create new employee from application data
+            employee = Employee()
+            employee.name = application.full_name
+            employee.email = application.email
+            employee.phone = application.phone
+            employee.birthday = application.date_of_birth if application.date_of_birth else timezone.now().date()
+            employee.gender = application.gender if application.gender is not None else 0
+            employee.address = application.address or ''
+            employee.education_level = application.education_level if application.education_level is not None else 3
+            employee.major = application.major or ''
+            employee.school = application.school or ''
+            
+            # Required fields with defaults
+            employee.place_of_birth = ''
+            employee.place_of_origin = ''
+            employee.place_of_residence = application.address or ''
+            
+            # Generate temporary identification (needs manual update)
+            import uuid
+            employee.identification = f'TEMP{uuid.uuid4().hex[:10].upper()}'  # Temporary, need to update manually
+            
+            employee.date_of_issue = timezone.now().date()
+            employee.place_of_issue = ''
+            employee.nationality = 'Việt Nam'
+            employee.nation = 'Kinh'
+            employee.religion = ''
+            employee.marital_status = 0
+            
+            # Job related - from job posting
+            employee.job_title = application.job.job_title  # Can be null
+            employee.job_position = application.job.title
+            employee.department = application.job.department
+            employee.salary = application.expected_salary or application.job.salary_min or 10000000
+            
+            # Contract information
+            employee.contract_start_date = application.available_start_date or application.job.start_date or timezone.now().date()
+            employee.contract_duration = 12  # Default 12 months, can update later
+            
+            # Status
+            employee.status = 0  # Onboarding
+            
+            # Generate employee code
+            employee.employee_code = generate_employee_code()
+            
+            employee.save()
+            
+            # Link application to employee
+            application.employee = employee
+            application.converted_to_employee = True
+            application.save()
+            
+            messages.success(
+                request,
+                f'Ứng viên {application.full_name} đã được chuyển thành nhân viên với mã {employee.employee_code}! '
+                f'Vui lòng cập nhật thông tin CMND/CCCD và các thông tin còn thiếu.'
+            )
+            logger.info(f"Application {application.application_code} converted to employee {employee.employee_code}")
+            
+            return redirect('employee_detail', employee_id=employee.id)
+            
+    except Exception as e:
+        logger.error(f"Error converting application to employee: {str(e)}")
+        messages.error(request, f'Có lỗi xảy ra: {str(e)}')
+        return redirect('application_detail', application_id=application_id)
+

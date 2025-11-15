@@ -1,0 +1,334 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}
+{{ title }}
+{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1><i class="fas fa-file-contract"></i> {{ title }}</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'list_contracts' %}">Hợp đồng</a></li>
+                    <li class="breadcrumb-item active">{{ title }}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            {% if action == 'renew' and old_contract %}
+            <!-- Renewal Info -->
+            <div class="alert alert-info">
+                <h5><i class="fas fa-info-circle"></i> Gia hạn từ hợp đồng</h5>
+                <p>
+                    <strong>Số HĐ cũ:</strong> {{ old_contract.contract_number }}<br>
+                    <strong>Thời hạn:</strong> {{ old_contract.start_date|date:"d/m/Y" }} - {{ old_contract.end_date|date:"d/m/Y" }}<br>
+                    <strong>Nhân viên:</strong> {{ old_contract.employee.name }}
+                </p>
+            </div>
+            {% endif %}
+            
+            <div class="row">
+                <!-- Left Column -->
+                <div class="col-md-6">
+                    
+                    <!-- Basic Information -->
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-info-circle"></i> Thông tin cơ bản</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Số hợp đồng <span class="text-danger">*</span></label>
+                                {{ form.contract_number }}
+                                {% if form.contract_number.errors %}
+                                    <span class="text-danger">{{ form.contract_number.errors }}</span>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Nhân viên <span class="text-danger">*</span></label>
+                                {{ form.employee }}
+                                {% if form.employee.errors %}
+                                    <span class="text-danger">{{ form.employee.errors }}</span>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Loại hợp đồng <span class="text-danger">*</span></label>
+                                {{ form.contract_type }}
+                                {% if form.contract_type.errors %}
+                                    <span class="text-danger">{{ form.contract_type.errors }}</span>
+                                {% endif %}
+                                <small class="form-text text-muted">
+                                    Chọn "Không xác định thời hạn" nếu không có ngày kết thúc
+                                </small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Trạng thái <span class="text-danger">*</span></label>
+                                {{ form.status }}
+                                {% if form.status.errors %}
+                                    <span class="text-danger">{{ form.status.errors }}</span>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>File hợp đồng (PDF/DOC)</label>
+                                {{ form.contract_file }}
+                                {% if form.contract_file.errors %}
+                                    <span class="text-danger">{{ form.contract_file.errors }}</span>
+                                {% endif %}
+                                {% if contract and contract.contract_file %}
+                                <div class="mt-2">
+                                    <a href="{{ contract.contract_file.url }}" target="_blank" class="btn btn-sm btn-info">
+                                        <i class="fas fa-download"></i> File hiện tại
+                                    </a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Dates -->
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-calendar"></i> Thời hạn hợp đồng</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Ngày ký <span class="text-danger">*</span></label>
+                                {{ form.signed_date }}
+                                {% if form.signed_date.errors %}
+                                    <span class="text-danger">{{ form.signed_date.errors }}</span>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Ngày bắt đầu <span class="text-danger">*</span></label>
+                                {{ form.start_date }}
+                                {% if form.start_date.errors %}
+                                    <span class="text-danger">{{ form.start_date.errors }}</span>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Ngày kết thúc</label>
+                                {{ form.end_date }}
+                                {% if form.end_date.errors %}
+                                    <span class="text-danger">{{ form.end_date.errors }}</span>
+                                {% endif %}
+                                <small class="form-text text-muted">
+                                    Để trống nếu hợp đồng không xác định thời hạn
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Financial -->
+                    <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-dollar-sign"></i> Thông tin lương</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Mức lương (VNĐ) <span class="text-danger">*</span></label>
+                                {{ form.salary }}
+                                {% if form.salary.errors %}
+                                    <span class="text-danger">{{ form.salary.errors }}</span>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Hệ số lương <span class="text-danger">*</span></label>
+                                {{ form.salary_coefficient }}
+                                {% if form.salary_coefficient.errors %}
+                                    <span class="text-danger">{{ form.salary_coefficient.errors }}</span>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Phụ cấp (VNĐ)</label>
+                                {{ form.allowances }}
+                                {% if form.allowances.errors %}
+                                    <span class="text-danger">{{ form.allowances.errors }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+                <!-- Right Column -->
+                <div class="col-md-6">
+                    
+                    <!-- Job Information -->
+                    <div class="card card-warning">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-briefcase"></i> Thông tin công việc</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Chức danh</label>
+                                {{ form.job_title }}
+                                {% if form.job_title.errors %}
+                                    <span class="text-danger">{{ form.job_title.errors }}</span>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Mô tả công việc</label>
+                                {{ form.job_description }}
+                                {% if form.job_description.errors %}
+                                    <span class="text-danger">{{ form.job_description.errors }}</span>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Nơi làm việc <span class="text-danger">*</span></label>
+                                {{ form.workplace }}
+                                {% if form.workplace.errors %}
+                                    <span class="text-danger">{{ form.workplace.errors }}</span>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Thời gian làm việc <span class="text-danger">*</span></label>
+                                {{ form.working_hours }}
+                                {% if form.working_hours.errors %}
+                                    <span class="text-danger">{{ form.working_hours.errors }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Terms and Conditions -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title"><i class="fas fa-file-alt"></i> Điều khoản & Quyền lợi</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label>Các điều khoản hợp đồng <span class="text-danger">*</span></label>
+                                {{ form.terms }}
+                                {% if form.terms.errors %}
+                                    <span class="text-danger">{{ form.terms.errors }}</span>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Quyền lợi</label>
+                                {{ form.benefits }}
+                                {% if form.benefits.errors %}
+                                    <span class="text-danger">{{ form.benefits.errors }}</span>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Thông tin bảo hiểm</label>
+                                {{ form.insurance_info }}
+                                {% if form.insurance_info.errors %}
+                                    <span class="text-danger">{{ form.insurance_info.errors }}</span>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Ghi chú</label>
+                                {{ form.notes }}
+                                {% if form.notes.errors %}
+                                    <span class="text-danger">{{ form.notes.errors }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <!-- Form Errors -->
+            {% if form.non_field_errors %}
+            <div class="alert alert-danger">
+                <h5><i class="fas fa-exclamation-triangle"></i> Lỗi!</h5>
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+            
+            <!-- Action Buttons -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-save"></i> 
+                                {% if action == 'create' %}Tạo hợp đồng{% elif action == 'renew' %}Gia hạn{% else %}Cập nhật{% endif %}
+                            </button>
+                            <a href="{% if contract %}{% url 'contract_detail' contract.id %}{% else %}{% url 'list_contracts' %}{% endif %}" 
+                               class="btn btn-secondary btn-lg">
+                                <i class="fas fa-times"></i> Hủy
+                            </a>
+                            {% if action == 'renew' %}
+                            <a href="{% url 'contract_detail' old_contract.id %}" class="btn btn-info btn-lg">
+                                <i class="fas fa-eye"></i> Xem HĐ cũ
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </form>
+        
+    </div>
+</section>
+
+<script>
+// Auto-calculate total income
+document.addEventListener('DOMContentLoaded', function() {
+    const salaryInput = document.querySelector('input[name="salary"]');
+    const coefficientInput = document.querySelector('input[name="salary_coefficient"]');
+    const allowancesInput = document.querySelector('input[name="allowances"]');
+    
+    function formatNumber(num) {
+        return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+    
+    // Show contract type help text
+    const contractTypeSelect = document.querySelector('select[name="contract_type"]');
+    const endDateInput = document.querySelector('input[name="end_date"]');
+    
+    if (contractTypeSelect && endDateInput) {
+        contractTypeSelect.addEventListener('change', function() {
+            if (this.value === 'indefinite') {
+                endDateInput.disabled = true;
+                endDateInput.value = '';
+                endDateInput.parentElement.querySelector('small').textContent = 'Hợp đồng vô thời hạn không cần ngày kết thúc';
+            } else {
+                endDateInput.disabled = false;
+                endDateInput.parentElement.querySelector('small').textContent = 'Để trống nếu hợp đồng không xác định thời hạn';
+            }
+        });
+        
+        // Trigger on load
+        if (contractTypeSelect.value === 'indefinite') {
+            contractTypeSelect.dispatchEvent(new Event('change'));
+        }
+    }
+});
+</script>
+
+{% endblock main_content %}

@@ -1,0 +1,556 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+{% load dict_filters %}
+
+{% block page_title %}
+Kanban - Quản lý ứng tuyển
+{% endblock page_title %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'home' %}">Trang chủ</a></li>
+<li class="breadcrumb-item active">Kanban ứng tuyển</li>
+{% endblock breadcrumb %}
+
+{% block extra_css %}
+<style>
+    .kanban-board {
+        display: flex;
+        overflow-x: auto;
+        gap: 15px;
+        padding: 20px 0;
+        min-height: 600px;
+    }
+    
+    .kanban-column {
+        flex: 0 0 280px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 15px;
+        min-height: 500px;
+    }
+    
+    .kanban-column-header {
+        font-weight: bold;
+        font-size: 1rem;
+        margin-bottom: 15px;
+        padding: 10px;
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .kanban-column-header .badge {
+        font-size: 0.85rem;
+    }
+    
+    /* Status colors */
+    .status-new { background: #17a2b8; color: white; }
+    .status-screening { background: #6610f2; color: white; }
+    .status-phone_interview { background: #6f42c1; color: white; }
+    .status-interview { background: #007bff; color: white; }
+    .status-test { background: #0056b3; color: white; }
+    .status-offer { background: #28a745; color: white; }
+    .status-accepted { background: #20c997; color: white; }
+    .status-rejected { background: #dc3545; color: white; }
+    .status-withdrawn { background: #6c757d; color: white; }
+    
+    .kanban-cards {
+        min-height: 400px;
+    }
+    
+    .kanban-card {
+        background: white;
+        border-radius: 8px;
+        padding: 12px;
+        margin-bottom: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        cursor: move;
+        transition: all 0.3s;
+        border-left: 4px solid #007bff;
+    }
+    
+    .kanban-card:hover {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        transform: translateY(-2px);
+    }
+    
+    .kanban-card.sortable-ghost {
+        opacity: 0.4;
+        background: #e9ecef;
+    }
+    
+    .kanban-card.sortable-chosen {
+        cursor: grabbing;
+    }
+    
+    .kanban-card-header {
+        font-weight: bold;
+        margin-bottom: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+    }
+    
+    .kanban-card-title {
+        font-size: 0.95rem;
+        color: #333;
+        flex: 1;
+    }
+    
+    .kanban-card-code {
+        font-size: 0.75rem;
+        color: #6c757d;
+        background: #e9ecef;
+        padding: 2px 6px;
+        border-radius: 4px;
+        margin-left: 5px;
+    }
+    
+    .kanban-card-job {
+        font-size: 0.85rem;
+        color: #6c757d;
+        margin-bottom: 8px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .kanban-card-info {
+        font-size: 0.8rem;
+        color: #555;
+        margin-bottom: 5px;
+    }
+    
+    .kanban-card-info i {
+        color: #007bff;
+        width: 18px;
+    }
+    
+    .kanban-card-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        padding-top: 10px;
+        border-top: 1px solid #e9ecef;
+        font-size: 0.75rem;
+        color: #6c757d;
+    }
+    
+    .kanban-card-rating {
+        display: flex;
+        gap: 2px;
+    }
+    
+    .kanban-card-rating i {
+        color: #ffc107;
+    }
+    
+    .kanban-empty {
+        text-align: center;
+        padding: 30px;
+        color: #adb5bd;
+    }
+    
+    .kanban-empty i {
+        font-size: 2rem;
+        margin-bottom: 10px;
+    }
+    
+    .filter-section {
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    
+    .stats-row {
+        display: flex;
+        gap: 15px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+    
+    .stat-card {
+        flex: 1;
+        min-width: 200px;
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .stat-card-content h3 {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+    
+    .stat-card-content p {
+        margin: 5px 0 0 0;
+        color: #6c757d;
+    }
+    
+    .stat-card-icon {
+        font-size: 3rem;
+        opacity: 0.3;
+    }
+    
+    .stat-card.info { border-left: 4px solid #17a2b8; }
+    .stat-card.info .stat-card-icon { color: #17a2b8; }
+    
+    .stat-card.success { border-left: 4px solid #28a745; }
+    .stat-card.success .stat-card-icon { color: #28a745; }
+    
+    .stat-card.warning { border-left: 4px solid #ffc107; }
+    .stat-card.warning .stat-card-icon { color: #ffc107; }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .kanban-column {
+            flex: 0 0 250px;
+        }
+        
+        .stats-row {
+            flex-direction: column;
+        }
+    }
+</style>
+{% endblock extra_css %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1><i class="fas fa-columns"></i> Kanban - Quản lý ứng tuyển</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'list_jobs_admin' %}">Tin tuyển dụng</a></li>
+                    <li class="breadcrumb-item active">Kanban</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        
+        <!-- Statistics -->
+        <div class="stats-row">
+            <div class="stat-card info">
+                <div class="stat-card-content">
+                    <h3>{{ total_applications }}</h3>
+                    <p>Tổng ứng tuyển</p>
+                </div>
+                <div class="stat-card-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+            </div>
+            
+            <div class="stat-card success">
+                <div class="stat-card-content">
+                    <h3>{{ new_applications }}</h3>
+                    <p>Hồ sơ mới</p>
+                </div>
+                <div class="stat-card-icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+            </div>
+            
+            <div class="stat-card warning">
+                <div class="stat-card-content">
+                    <h3>{{ interview_scheduled }}</h3>
+                    <p>Đang phỏng vấn</p>
+                </div>
+                <div class="stat-card-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Filters -->
+        <div class="filter-section">
+            <form method="get" action="">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group mb-0">
+                            <label>Tìm kiếm</label>
+                            <input type="text" name="search" class="form-control" 
+                                   placeholder="Tên ứng viên, email, mã ứng tuyển..." 
+                                   value="{{ search_query|default:'' }}">
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="form-group mb-0">
+                            <label>Lọc theo tin tuyển dụng</label>
+                            <select name="job" class="form-control">
+                                <option value="">-- Tất cả tin tuyển dụng --</option>
+                                {% for job in jobs %}
+                                <option value="{{ job.id }}" 
+                                        {% if job_filter == job.id|stringformat:"s" %}selected{% endif %}>
+                                    {{ job.code }} - {{ job.title }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="form-group mb-0">
+                            <label>&nbsp;</label>
+                            <div class="btn-group btn-block">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search"></i> Lọc
+                                </button>
+                                <a href="{% url 'applications_kanban' %}" class="btn btn-secondary">
+                                    <i class="fas fa-redo"></i> Reset
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Kanban Board -->
+        <div class="kanban-board">
+            {% for status_code, status_name in STATUS_CHOICES %}
+            <div class="kanban-column">
+                <div class="kanban-column-header status-{{ status_code }}">
+                    <span>{{ status_name }}</span>
+                    <span class="badge badge-light">
+                        {% with apps=kanban_columns|get_item:status_code %}
+                            {{ apps|length }}
+                        {% endwith %}
+                    </span>
+                </div>
+                
+                <div class="kanban-cards" data-status="{{ status_code }}">
+                    {% with apps=kanban_columns|get_item:status_code %}
+                    {% if apps %}
+                        {% for application in apps %}
+                        <div class="kanban-card" data-id="{{ application.id }}">
+                            <div class="kanban-card-header">
+                                <div class="kanban-card-title">{{ application.full_name }}</div>
+                                <span class="kanban-card-code">{{ application.application_code }}</span>
+                            </div>
+                            
+                            <div class="kanban-card-job">
+                                <i class="fas fa-briefcase"></i>
+                                <span>{{ application.job.title|truncatewords:4 }}</span>
+                            </div>
+                            
+                            <div class="kanban-card-info">
+                                <i class="fas fa-envelope"></i> {{ application.email|truncatechars:25 }}
+                            </div>
+                            
+                            <div class="kanban-card-info">
+                                <i class="fas fa-phone"></i> {{ application.phone }}
+                            </div>
+                            
+                            {% if application.years_of_experience %}
+                            <div class="kanban-card-info">
+                                <i class="fas fa-briefcase"></i> {{ application.years_of_experience }} năm KN
+                            </div>
+                            {% endif %}
+                            
+                            <div class="kanban-card-meta">
+                                <div>
+                                    {% if application.rating %}
+                                    <div class="kanban-card-rating">
+                                        {% for i in "12345" %}
+                                            {% if forloop.counter <= application.rating %}
+                                                <i class="fas fa-star"></i>
+                                            {% else %}
+                                                <i class="far fa-star"></i>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                    {% else %}
+                                    <span class="text-muted">Chưa đánh giá</span>
+                                    {% endif %}
+                                </div>
+                                <div>
+                                    <i class="far fa-clock"></i> {{ application.created_at|date:"d/m/Y" }}
+                                </div>
+                            </div>
+                            
+                            <div class="mt-2">
+                                <a href="{% url 'application_detail' application.id %}" 
+                                   class="btn btn-sm btn-block btn-outline-primary">
+                                    <i class="fas fa-eye"></i> Chi tiết
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    {% else %}
+                        <div class="kanban-empty">
+                            <i class="fas fa-inbox"></i>
+                            <p>Chưa có ứng viên</p>
+                        </div>
+                    {% endif %}
+                    {% endwith %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+    </div>
+</section>
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+    <div class="spinner-border text-light" role="status" style="width: 3rem; height: 3rem;">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+{% endblock main_content %}
+
+{% block custom_js %}
+<!-- SortableJS -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    // Initialize Sortable for each kanban column
+    const kanbanColumns = document.querySelectorAll('.kanban-cards');
+    
+    kanbanColumns.forEach(column => {
+        new Sortable(column, {
+            group: 'kanban',
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            chosenClass: 'sortable-chosen',
+            dragClass: 'sortable-drag',
+            
+            onEnd: function(evt) {
+                const applicationId = evt.item.dataset.id;
+                const newStatus = evt.to.dataset.status;
+                const oldStatus = evt.from.dataset.status;
+                
+                // Don't update if dropped in same column
+                if (newStatus === oldStatus) {
+                    return;
+                }
+                
+                // Show loading
+                $('#loadingOverlay').css('display', 'flex');
+                
+                // Update status via AJAX
+                updateApplicationStatus(applicationId, newStatus, evt);
+            }
+        });
+    });
+    
+    function updateApplicationStatus(applicationId, newStatus, evt) {
+        $.ajax({
+            url: '/recruitment/applications/' + applicationId + '/status/',
+            method: 'POST',
+            data: JSON.stringify({
+                status: newStatus
+            }),
+            contentType: 'application/json',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            success: function(response) {
+                $('#loadingOverlay').hide();
+                
+                if (response.success) {
+                    // Update badge counts
+                    updateColumnCounts(evt.from, evt.to);
+                    
+                    // Show success message
+                    toastr.success('Cập nhật trạng thái thành công!');
+                } else {
+                    // Revert move on error
+                    evt.from.appendChild(evt.item);
+                    toastr.error('Có lỗi xảy ra: ' + (response.error || 'Unknown error'));
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#loadingOverlay').hide();
+                
+                // Revert move on error
+                evt.from.appendChild(evt.item);
+                
+                let errorMsg = 'Không thể cập nhật trạng thái!';
+                if (xhr.responseJSON && xhr.responseJSON.error) {
+                    errorMsg = xhr.responseJSON.error;
+                }
+                
+                toastr.error(errorMsg);
+                console.error('Error:', error);
+            }
+        });
+    }
+    
+    function updateColumnCounts(fromColumn, toColumn) {
+        // Update "from" column count
+        const fromCards = fromColumn.querySelectorAll('.kanban-card');
+        const fromBadge = fromColumn.parentElement.querySelector('.badge');
+        if (fromBadge) {
+            fromBadge.textContent = fromCards.length;
+        }
+        
+        // Update "to" column count
+        const toCards = toColumn.querySelectorAll('.kanban-card');
+        const toBadge = toColumn.parentElement.querySelector('.badge');
+        if (toBadge) {
+            toBadge.textContent = toCards.length;
+        }
+        
+        // Show/hide empty state
+        updateEmptyState(fromColumn);
+        updateEmptyState(toColumn);
+    }
+    
+    function updateEmptyState(column) {
+        const cards = column.querySelectorAll('.kanban-card');
+        const emptyState = column.querySelector('.kanban-empty');
+        
+        if (cards.length === 0 && !emptyState) {
+            column.innerHTML = '<div class="kanban-empty"><i class="fas fa-inbox"></i><p>Chưa có ứng viên</p></div>';
+        } else if (cards.length > 0 && emptyState) {
+            emptyState.remove();
+        }
+    }
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    // Configure toastr
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "timeOut": "3000"
+    };
+});
+</script>
+{% endblock custom_js %}

@@ -1,0 +1,393 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}
+Chi tiết Hợp đồng {{ contract.contract_number }}
+{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1><i class="fas fa-file-contract"></i> Chi tiết Hợp đồng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'list_contracts' %}">Hợp đồng</a></li>
+                    <li class="breadcrumb-item active">{{ contract.contract_number }}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        
+        <!-- Action Buttons -->
+        <div class="row mb-3">
+            <div class="col-12">
+                <div class="btn-group">
+                    <a href="{% url 'list_contracts' %}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Quay lại
+                    </a>
+                    {% if contract.status == 'draft' or contract.status == 'active' %}
+                    <a href="{% url 'edit_contract' contract.id %}" class="btn btn-warning">
+                        <i class="fas fa-edit"></i> Sửa hợp đồng
+                    </a>
+                    {% endif %}
+                    {% if can_renew %}
+                    <a href="{% url 'renew_contract' contract.id %}" class="btn btn-info">
+                        <i class="fas fa-redo"></i> Gia hạn hợp đồng
+                    </a>
+                    {% endif %}
+                    {% if can_terminate %}
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#terminateModal">
+                        <i class="fas fa-ban"></i> Chấm dứt hợp đồng
+                    </button>
+                    {% endif %}
+                    {% if contract.status == 'draft' %}
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal">
+                        <i class="fas fa-trash"></i> Xóa hợp đồng
+                    </button>
+                    {% endif %}
+                    {% if contract.contract_file %}
+                    <a href="{{ contract.contract_file.url }}" class="btn btn-success" target="_blank">
+                        <i class="fas fa-download"></i> Tải file HĐ
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Alert if expiring soon -->
+        {% if is_expiring_soon %}
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <h5><i class="icon fas fa-exclamation-triangle"></i> Cảnh báo!</h5>
+            Hợp đồng này sẽ hết hạn sau <strong>{{ days_until_expiration }} ngày</strong> ({{ contract.end_date|date:"d/m/Y" }}).
+            Vui lòng xem xét gia hạn hoặc chấm dứt hợp đồng.
+        </div>
+        {% endif %}
+
+        <div class="row">
+            <!-- Left Column -->
+            <div class="col-md-6">
+                
+                <!-- Basic Information -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-info-circle"></i> Thông tin cơ bản</h3>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-4">Số hợp đồng:</dt>
+                            <dd class="col-sm-8"><strong>{{ contract.contract_number }}</strong></dd>
+                            
+                            <dt class="col-sm-4">Loại hợp đồng:</dt>
+                            <dd class="col-sm-8">{{ contract.get_contract_type_display }}</dd>
+                            
+                            <dt class="col-sm-4">Trạng thái:</dt>
+                            <dd class="col-sm-8">
+                                {% if contract.status == 'draft' %}
+                                    <span class="badge badge-secondary">Nháp</span>
+                                {% elif contract.status == 'active' %}
+                                    <span class="badge badge-success">Đang hiệu lực</span>
+                                {% elif contract.status == 'expired' %}
+                                    <span class="badge badge-warning">Hết hạn</span>
+                                {% elif contract.status == 'terminated' %}
+                                    <span class="badge badge-danger">Đã chấm dứt</span>
+                                {% elif contract.status == 'renewed' %}
+                                    <span class="badge badge-info">Đã gia hạn</span>
+                                {% endif %}
+                            </dd>
+                            
+                            <dt class="col-sm-4">Ngày ký:</dt>
+                            <dd class="col-sm-8">{{ contract.signed_date|date:"d/m/Y" }}</dd>
+                            
+                            <dt class="col-sm-4">Ngày bắt đầu:</dt>
+                            <dd class="col-sm-8">{{ contract.start_date|date:"d/m/Y" }}</dd>
+                            
+                            <dt class="col-sm-4">Ngày kết thúc:</dt>
+                            <dd class="col-sm-8">
+                                {% if contract.end_date %}
+                                    {{ contract.end_date|date:"d/m/Y" }}
+                                    {% if days_until_expiration %}
+                                        <br><small class="text-muted">(Còn {{ days_until_expiration }} ngày)</small>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="badge badge-info">Không xác định</span>
+                                {% endif %}
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <!-- Employee Information -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-user"></i> Thông tin nhân viên</h3>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-4">Mã NV:</dt>
+                            <dd class="col-sm-8">{{ contract.employee.employee_code }}</dd>
+                            
+                            <dt class="col-sm-4">Tên NV:</dt>
+                            <dd class="col-sm-8"><strong>{{ contract.employee.name }}</strong></dd>
+                            
+                            <dt class="col-sm-4">Email:</dt>
+                            <dd class="col-sm-8">{{ contract.employee.email }}</dd>
+                            
+                            <dt class="col-sm-4">Điện thoại:</dt>
+                            <dd class="col-sm-8">{{ contract.employee.phone }}</dd>
+                            
+                            <dt class="col-sm-4">Phòng ban:</dt>
+                            <dd class="col-sm-8">{{ contract.employee.department.name|default:"N/A" }}</dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <!-- Financial Information -->
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-dollar-sign"></i> Thông tin lương</h3>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-4">Mức lương:</dt>
+                            <dd class="col-sm-8"><strong>{{ contract.salary|floatformat:0|intcomma }} VNĐ</strong></dd>
+                            
+                            <dt class="col-sm-4">Hệ số lương:</dt>
+                            <dd class="col-sm-8">{{ contract.salary_coefficient }}</dd>
+                            
+                            <dt class="col-sm-4">Phụ cấp:</dt>
+                            <dd class="col-sm-8">{{ contract.allowances|floatformat:0|intcomma }} VNĐ</dd>
+                            
+                            <dt class="col-sm-4">Tổng thu nhập:</dt>
+                            <dd class="col-sm-8">
+                                <strong class="text-success">
+                                    {% widthratio contract.salary 1 contract.salary_coefficient|add:contract.allowances|floatformat:0|intcomma %} VNĐ
+                                </strong>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-md-6">
+                
+                <!-- Job Information -->
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-briefcase"></i> Thông tin công việc</h3>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-4">Chức danh:</dt>
+                            <dd class="col-sm-8">{{ contract.job_title.name|default:"N/A" }}</dd>
+                            
+                            <dt class="col-sm-4">Nơi làm việc:</dt>
+                            <dd class="col-sm-8">{{ contract.workplace }}</dd>
+                            
+                            <dt class="col-sm-4">Giờ làm việc:</dt>
+                            <dd class="col-sm-8">{{ contract.working_hours }}</dd>
+                            
+                            <dt class="col-sm-12">Mô tả công việc:</dt>
+                            <dd class="col-sm-12">
+                                <div class="border p-2 bg-light">
+                                    {{ contract.job_description|linebreaks|default:"Không có" }}
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <!-- Terms and Conditions -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-file-alt"></i> Điều khoản & Quyền lợi</h3>
+                    </div>
+                    <div class="card-body">
+                        <h6><strong>Các điều khoản:</strong></h6>
+                        <div class="border p-2 bg-light mb-3">
+                            {{ contract.terms|linebreaks }}
+                        </div>
+                        
+                        {% if contract.benefits %}
+                        <h6><strong>Quyền lợi:</strong></h6>
+                        <div class="border p-2 bg-light mb-3">
+                            {{ contract.benefits|linebreaks }}
+                        </div>
+                        {% endif %}
+                        
+                        {% if contract.insurance_info %}
+                        <h6><strong>Bảo hiểm:</strong></h6>
+                        <div class="border p-2 bg-light mb-3">
+                            {{ contract.insurance_info|linebreaks }}
+                        </div>
+                        {% endif %}
+                        
+                        {% if contract.notes %}
+                        <h6><strong>Ghi chú:</strong></h6>
+                        <div class="border p-2 bg-light">
+                            {{ contract.notes|linebreaks }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Termination Information (if terminated) -->
+                {% if contract.status == 'terminated' %}
+                <div class="card card-danger">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-ban"></i> Thông tin chấm dứt</h3>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-4">Ngày chấm dứt:</dt>
+                            <dd class="col-sm-8">{{ contract.termination_date|date:"d/m/Y" }}</dd>
+                            
+                            <dt class="col-sm-12">Lý do:</dt>
+                            <dd class="col-sm-12">
+                                <div class="border p-2 bg-light">
+                                    {{ contract.termination_reason|linebreaks }}
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Metadata -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-info"></i> Metadata</h3>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-4">Người tạo:</dt>
+                            <dd class="col-sm-8">{{ contract.created_by.name|default:"N/A" }}</dd>
+                            
+                            <dt class="col-sm-4">Ngày tạo:</dt>
+                            <dd class="col-sm-8">{{ contract.created_at|date:"d/m/Y H:i" }}</dd>
+                            
+                            <dt class="col-sm-4">Cập nhật:</dt>
+                            <dd class="col-sm-8">{{ contract.updated_at|date:"d/m/Y H:i" }}</dd>
+                        </dl>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Renewal History -->
+        {% if original_contract or renewals %}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title"><i class="fas fa-history"></i> Lịch sử gia hạn</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if original_contract %}
+                        <div class="alert alert-info">
+                            <strong>Hợp đồng này được gia hạn từ:</strong>
+                            <a href="{% url 'contract_detail' original_contract.id %}" class="alert-link">
+                                {{ original_contract.contract_number }}
+                            </a>
+                            ({{ original_contract.start_date|date:"d/m/Y" }} - {{ original_contract.end_date|date:"d/m/Y" }})
+                        </div>
+                        {% endif %}
+                        
+                        {% if renewals %}
+                        <h6><strong>Các hợp đồng gia hạn từ hợp đồng này:</strong></h6>
+                        <ul class="list-group">
+                            {% for renewal in renewals %}
+                            <li class="list-group-item">
+                                <a href="{% url 'contract_detail' renewal.id %}">{{ renewal.contract_number }}</a>
+                                - {{ renewal.get_contract_type_display }}
+                                ({{ renewal.start_date|date:"d/m/Y" }} - {{ renewal.end_date|date:"d/m/Y"|default:"Vô thời hạn" }})
+                                <span class="badge badge-{{ renewal.status == 'active' }}success{% if renewal.status != 'active' %}secondary{% endif %} float-right">
+                                    {{ renewal.get_status_display }}
+                                </span>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
+</section>
+
+<!-- Terminate Contract Modal -->
+<div class="modal fade" id="terminateModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" action="{% url 'terminate_contract' contract.id %}">
+                {% csrf_token %}
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title">Chấm dứt hợp đồng</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn chấm dứt hợp đồng <strong>{{ contract.contract_number }}</strong>?</p>
+                    
+                    <div class="form-group">
+                        <label>Ngày chấm dứt: <span class="text-danger">*</span></label>
+                        <input type="date" name="termination_date" class="form-control" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Lý do chấm dứt: <span class="text-danger">*</span></label>
+                        <textarea name="termination_reason" class="form-control" rows="4" 
+                                  placeholder="Nhập lý do chấm dứt hợp đồng..." required></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger">Xác nhận chấm dứt</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Contract Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="post" action="{% url 'delete_contract' contract.id %}">
+                {% csrf_token %}
+                <div class="modal-header bg-danger">
+                    <h5 class="modal-title">Xóa hợp đồng</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Bạn có chắc chắn muốn xóa hợp đồng <strong>{{ contract.contract_number }}</strong>?</p>
+                    <p class="text-danger"><strong>Lưu ý:</strong> Hành động này không thể hoàn tác!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger">Xác nhận xóa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock main_content %}

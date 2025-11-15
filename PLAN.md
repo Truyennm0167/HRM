@@ -18,20 +18,23 @@ Tạo models: ExpenseCategory, Expense
 Upload receipts
 Approval workflow
 Ước lượng: 2 ngày
-🟠 HIGH: Recruitment Workflow (40% → 80%)
+🟠 HIGH: Recruitment Workflow (100% ✅ COMPLETED)
 
-Public job posting page
-Online application form
-Email notifications
-Kanban board
-Convert to Employee button
-Ước lượng: 3 ngày
+✅ Public job posting page
+✅ Online application form  
+✅ Kanban board with drag-drop
+✅ Convert to Employee button
+✅ Admin CRUD operations
+✅ Application review & notes
+⚠️ Email notifications (TODO)
+Ước lượng: 3 ngày → DONE
 🟡 MEDIUM: Contract Management (0% → 100%)
 
 Tạo Contract model
 Link với Employee
 Alert hợp đồng hết hạn
 Ước lượng: 1-2 ngày
+
 📝 ROADMAP ĐỀ XUẤT
 Phase 1: Foundation (Tuần 1-2)
 Module Nghỉ phép

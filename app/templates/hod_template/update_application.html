@@ -1,0 +1,470 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}
+Cập nhật ứng viên - {{ application.full_name }}
+{% endblock page_title %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'home' %}">Trang chủ</a></li>
+<li class="breadcrumb-item"><a href="{% url 'applications_kanban' %}">Ứng tuyển</a></li>
+<li class="breadcrumb-item"><a href="{% url 'application_detail' application.id %}">{{ application.application_code }}</a></li>
+<li class="breadcrumb-item active">Cập nhật</li>
+{% endblock breadcrumb %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>
+                    <i class="fas fa-edit"></i> Cập nhật thông tin ứng viên
+                </h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'applications_kanban' %}">Ứng tuyển</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'application_detail' application.id %}">{{ application.application_code }}</a></li>
+                    <li class="breadcrumb-item active">Cập nhật</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        
+        <!-- Messages -->
+        {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+        <form method="POST" action="">
+            {% csrf_token %}
+            
+            <div class="row">
+                <!-- Left Column - Candidate Info (Read-only) -->
+                <div class="col-md-4">
+                    
+                    <!-- Candidate Summary -->
+                    <div class="card card-primary card-outline">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-user"></i> Thông tin ứng viên
+                            </h3>
+                        </div>
+                        <div class="card-body box-profile">
+                            <div class="text-center mb-3">
+                                <i class="fas fa-user-circle fa-5x text-primary"></i>
+                            </div>
+                            
+                            <h3 class="profile-username text-center">{{ application.full_name }}</h3>
+                            
+                            <p class="text-muted text-center">
+                                <strong>{{ application.job.title }}</strong><br>
+                                <small>{{ application.job.department.name }}</small>
+                            </p>
+                            
+                            <ul class="list-group list-group-unbordered mb-3">
+                                <li class="list-group-item">
+                                    <b>Mã ứng tuyển</b>
+                                    <span class="float-right">{{ application.application_code }}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Email</b>
+                                    <span class="float-right">
+                                        <a href="mailto:{{ application.email }}">
+                                            {{ application.email|truncatechars:20 }}
+                                        </a>
+                                    </span>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Điện thoại</b>
+                                    <span class="float-right">
+                                        <a href="tel:{{ application.phone }}">{{ application.phone }}</a>
+                                    </span>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Kinh nghiệm</b>
+                                    <span class="float-right">
+                                        {% if application.years_of_experience %}
+                                        {{ application.years_of_experience }} năm
+                                        {% else %}
+                                        --
+                                        {% endif %}
+                                    </span>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Ngày ứng tuyển</b>
+                                    <span class="float-right">{{ application.created_at|date:"d/m/Y" }}</span>
+                                </li>
+                            </ul>
+                            
+                            <a href="{% url 'application_detail' application.id %}" class="btn btn-primary btn-block">
+                                <i class="fas fa-eye"></i> Xem chi tiết đầy đủ
+                            </a>
+                            
+                            {% if application.resume %}
+                            <a href="{{ application.resume.url }}" class="btn btn-info btn-block" target="_blank">
+                                <i class="fas fa-file-download"></i> Tải CV
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- Quick Notes -->
+                    <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-lightbulb"></i> Gợi ý
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="text-sm">
+                                <li>Đánh giá ứng viên từ 1-5 sao</li>
+                                <li>Cập nhật trạng thái theo quy trình</li>
+                                <li>Phân công người phụ trách</li>
+                                <li>Lên lịch phỏng vấn nếu cần</li>
+                                <li>Ghi chú lý do từ chối (nếu có)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right Column - Update Form -->
+                <div class="col-md-8">
+                    
+                    <!-- Status & Rating -->
+                    <div class="card card-warning">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-star"></i> Đánh giá & Trạng thái
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.status.id_for_label }}">
+                                            Trạng thái <span class="text-danger">*</span>
+                                        </label>
+                                        {{ form.status }}
+                                        <small class="form-text text-muted">
+                                            Cập nhật trạng thái hiện tại của ứng viên
+                                        </small>
+                                        {% if form.status.errors %}
+                                        <div class="text-danger">
+                                            {% for error in form.status.errors %}
+                                            <small>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.rating.id_for_label }}">
+                                            Đánh giá (1-5 sao)
+                                        </label>
+                                        {{ form.rating }}
+                                        <small class="form-text text-muted">
+                                            Đánh giá chất lượng hồ sơ
+                                        </small>
+                                        {% if form.rating.errors %}
+                                        <div class="text-danger">
+                                            {% for error in form.rating.errors %}
+                                            <small>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.notes.id_for_label }}">Ghi chú đánh giá</label>
+                                {{ form.notes }}
+                                <small class="form-text text-muted">
+                                    Ghi chú về kỹ năng, điểm mạnh/yếu, phù hợp với vị trí
+                                </small>
+                                {% if form.notes.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.notes.errors %}
+                                    <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Assignment -->
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-user-tie"></i> Phân công
+                            </h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="{{ form.assigned_to.id_for_label }}">
+                                    Phân công cho
+                                </label>
+                                {{ form.assigned_to }}
+                                <small class="form-text text-muted">
+                                    Chọn người phụ trách theo dõi ứng viên này
+                                </small>
+                                {% if form.assigned_to.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.assigned_to.errors %}
+                                    <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interview Information -->
+                    <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-comments"></i> Thông tin phỏng vấn
+                            </h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.interviewer.id_for_label }}">
+                                            Người phỏng vấn
+                                        </label>
+                                        {{ form.interviewer }}
+                                        {% if form.interviewer.errors %}
+                                        <div class="text-danger">
+                                            {% for error in form.interviewer.errors %}
+                                            <small>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.interview_date.id_for_label }}">
+                                            Ngày & Giờ phỏng vấn
+                                        </label>
+                                        {{ form.interview_date }}
+                                        {% if form.interview_date.errors %}
+                                        <div class="text-danger">
+                                            {% for error in form.interview_date.errors %}
+                                            <small>{{ error }}</small>
+                                            {% endfor %}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="{{ form.interview_location.id_for_label }}">
+                                    Địa điểm phỏng vấn
+                                </label>
+                                {{ form.interview_location }}
+                                <small class="form-text text-muted">
+                                    Ví dụ: Phòng họp A2, Tầng 3, Văn phòng HN
+                                </small>
+                                {% if form.interview_location.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.interview_location.errors %}
+                                    <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                            
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i>
+                                Khi cập nhật lịch phỏng vấn, hệ thống sẽ gửi email thông báo cho ứng viên.
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rejection Reason -->
+                    <div class="card card-danger">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-times-circle"></i> Lý do từ chối
+                            </h3>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                                    <i class="fas fa-minus"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="{{ form.rejection_reason.id_for_label }}">
+                                    Lý do (nếu từ chối)
+                                </label>
+                                {{ form.rejection_reason }}
+                                <small class="form-text text-muted">
+                                    Chỉ điền khi trạng thái là "Từ chối". Lý do sẽ được lưu trữ nội bộ.
+                                </small>
+                                {% if form.rejection_reason.errors %}
+                                <div class="text-danger">
+                                    {% for error in form.rejection_reason.errors %}
+                                    <small>{{ error }}</small>
+                                    {% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <button type="submit" class="btn btn-primary btn-block btn-lg">
+                                        <i class="fas fa-save"></i> Lưu thay đổi
+                                    </button>
+                                </div>
+                                <div class="col-md-6">
+                                    <a href="{% url 'application_detail' application.id %}" class="btn btn-secondary btn-block btn-lg">
+                                        <i class="fas fa-times"></i> Hủy
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Non-field errors -->
+                    {% if form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        {{ form.non_field_errors }}
+                    </div>
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </form>
+
+    </div>
+</section>
+
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+$(document).ready(function() {
+    // Auto-hide messages after 5 seconds
+    setTimeout(function() {
+        $('.alert').fadeOut('slow');
+    }, 5000);
+    
+    // Show/hide rejection reason based on status
+    const statusSelect = $('#{{ form.status.id_for_label }}');
+    const rejectionCard = $('.card-danger');
+    
+    function toggleRejectionReason() {
+        const status = statusSelect.val();
+        if (status === 'rejected') {
+            rejectionCard.removeClass('collapsed-card');
+            rejectionCard.find('.card-body').show();
+            $('#{{ form.rejection_reason.id_for_label }}').prop('required', true);
+        } else {
+            $('#{{ form.rejection_reason.id_for_label }}').prop('required', false);
+        }
+    }
+    
+    // Initial check
+    toggleRejectionReason();
+    
+    // On status change
+    statusSelect.change(function() {
+        toggleRejectionReason();
+    });
+    
+    // Show/hide interview section based on status
+    const interviewCard = $('.card-success');
+    
+    function toggleInterviewSection() {
+        const status = statusSelect.val();
+        if (['phone_interview', 'interview'].includes(status)) {
+            interviewCard.removeClass('collapsed-card');
+            interviewCard.find('.card-body').show();
+        }
+    }
+    
+    // Initial check
+    toggleInterviewSection();
+    
+    // On status change
+    statusSelect.change(function() {
+        toggleInterviewSection();
+    });
+    
+    // DateTime picker configuration (if using a datetime picker plugin)
+    if ($.fn.datetimepicker) {
+        $('#{{ form.interview_date.id_for_label }}').datetimepicker({
+            format: 'Y-m-d H:i',
+            step: 30
+        });
+    }
+    
+    // Form validation before submit
+    $('form').submit(function(e) {
+        const status = statusSelect.val();
+        const rejectionReason = $('#{{ form.rejection_reason.id_for_label }}').val();
+        
+        // Check rejection reason when status is rejected
+        if (status === 'rejected' && !rejectionReason) {
+            e.preventDefault();
+            toastr.error('Vui lòng nhập lý do từ chối!');
+            rejectionCard.removeClass('collapsed-card');
+            rejectionCard.find('.card-body').show();
+            $('#{{ form.rejection_reason.id_for_label }}').focus();
+            return false;
+        }
+        
+        // Confirmation for status changes
+        if (status === 'rejected') {
+            if (!confirm('Bạn có chắc chắn muốn từ chối ứng viên này?')) {
+                e.preventDefault();
+                return false;
+            }
+        } else if (status === 'accepted') {
+            if (!confirm('Bạn có chắc chắn muốn chấp nhận ứng viên này?')) {
+                e.preventDefault();
+                return false;
+            }
+        }
+    });
+    
+    // Add tooltips
+    $('[title]').tooltip();
+});
+</script>
+{% endblock custom_js %}
