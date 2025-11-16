@@ -1,0 +1,144 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}Chi tiết bảng lương{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2><i class="fas fa-file-invoice-dollar mr-2"></i>Chi tiết bảng lương</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'portal_dashboard' %}">Portal</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'portal_payroll' %}">Bảng lương</a></li>
+                    <li class="breadcrumb-item active">Tháng {{ payroll.month }}/{{ payroll.year }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <!-- Payroll Summary Card -->
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-calendar mr-2"></i>
+                        Bảng lương tháng {{ payroll.month }}/{{ payroll.year }}
+                    </h3>
+                    <div class="card-tools">
+                        {% if payroll.status == 'pending' %}
+                            <span class="badge badge-warning">Đang xử lý</span>
+                        {% elif payroll.status == 'approved' %}
+                            <span class="badge badge-success">Đã duyệt</span>
+                        {% elif payroll.status == 'paid' %}
+                            <span class="badge badge-info">Đã thanh toán</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead class="thead-light">
+                            <tr>
+                                <th colspan="2" class="text-center bg-primary text-white">
+                                    PHIẾU LƯƠNG
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th width="40%">Nhân viên:</th>
+                                <td><strong>{{ payroll.employee.full_name }}</strong></td>
+                            </tr>
+                            <tr>
+                                <th>Mã NV:</th>
+                                <td>{{ payroll.employee.employee_code }}</td>
+                            </tr>
+                            <tr>
+                                <th>Phòng ban:</th>
+                                <td>{{ payroll.employee.department.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Chức vụ:</th>
+                                <td>{{ payroll.employee.position }}</td>
+                            </tr>
+                            <tr>
+                                <th colspan="2" class="bg-light"><strong>THU NHẬP</strong></th>
+                            </tr>
+                            <tr>
+                                <th>Lương cơ bản:</th>
+                                <td class="text-right"><strong>{{ payroll.base_salary|floatformat:0 }}đ</strong></td>
+                            </tr>
+                            {% if payroll.bonus %}
+                            <tr>
+                                <th>Thưởng:</th>
+                                <td class="text-right text-success">+{{ payroll.bonus|floatformat:0 }}đ</td>
+                            </tr>
+                            {% endif %}
+                            {% if payroll.overtime_pay %}
+                            <tr>
+                                <th>Lương làm thêm:</th>
+                                <td class="text-right text-success">+{{ payroll.overtime_pay|floatformat:0 }}đ</td>
+                            </tr>
+                            {% endif %}
+                            <tr>
+                                <th colspan="2" class="bg-light"><strong>KHẤU TRỪ</strong></th>
+                            </tr>
+                            {% if payroll.insurance %}
+                            <tr>
+                                <th>Bảo hiểm:</th>
+                                <td class="text-right text-danger">-{{ payroll.insurance|floatformat:0 }}đ</td>
+                            </tr>
+                            {% endif %}
+                            {% if payroll.tax %}
+                            <tr>
+                                <th>Thuế TNCN:</th>
+                                <td class="text-right text-danger">-{{ payroll.tax|floatformat:0 }}đ</td>
+                            </tr>
+                            {% endif %}
+                            <tr class="table-primary">
+                                <th><h5>TỔNG LƯƠNG THỰC NHẬN:</h5></th>
+                                <td class="text-right">
+                                    <h4 class="text-primary mb-0">
+                                        <strong>{{ payroll.total_salary|floatformat:0 }}đ</strong>
+                                    </h4>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    {% if payroll.notes %}
+                    <div class="alert alert-info mt-3">
+                        <strong><i class="fas fa-info-circle mr-1"></i>Ghi chú:</strong><br>
+                        {{ payroll.notes }}
+                    </div>
+                    {% endif %}
+
+                    <div class="mt-3">
+                        <a href="{% url 'portal_payroll' %}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left mr-1"></i> Quay lại
+                        </a>
+                        <button onclick="window.print()" class="btn btn-primary">
+                            <i class="fas fa-print mr-1"></i> In phiếu lương
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+@media print {
+    .card-header, .btn, nav, .main-sidebar, .main-header, .main-footer {
+        display: none !important;
+    }
+    .content-wrapper {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
+</style>
+{% endblock %}

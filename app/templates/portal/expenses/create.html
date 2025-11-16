@@ -1,0 +1,125 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}Tạo đơn hoàn tiền{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2><i class="fas fa-plus-circle mr-2"></i>Tạo đơn hoàn tiền</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'portal_dashboard' %}">Portal</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'portal_expenses' %}">Chi phí</a></li>
+                    <li class="breadcrumb-item active">Tạo mới</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title"><i class="fas fa-receipt mr-2"></i>Thông tin đơn hoàn tiền</h3>
+                </div>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="card-body">
+                        {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <!-- Expense Type -->
+                        <div class="form-group">
+                            <label for="{{ form.expense_type.id_for_label }}">
+                                <i class="fas fa-tag mr-1"></i>Loại chi phí <span class="text-danger">*</span>
+                            </label>
+                            {{ form.expense_type }}
+                            {% if form.expense_type.errors %}
+                                <div class="text-danger">{{ form.expense_type.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Expense Date -->
+                        <div class="form-group">
+                            <label for="{{ form.expense_date.id_for_label }}">
+                                <i class="fas fa-calendar-day mr-1"></i>Ngày phát sinh chi phí <span class="text-danger">*</span>
+                            </label>
+                            {{ form.expense_date }}
+                            {% if form.expense_date.errors %}
+                                <div class="text-danger">{{ form.expense_date.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Amount -->
+                        <div class="form-group">
+                            <label for="{{ form.amount.id_for_label }}">
+                                <i class="fas fa-money-bill-wave mr-1"></i>Số tiền (VNĐ) <span class="text-danger">*</span>
+                            </label>
+                            {{ form.amount }}
+                            {% if form.amount.errors %}
+                                <div class="text-danger">{{ form.amount.errors }}</div>
+                            {% endif %}
+                            <small class="form-text text-muted">Nhập số tiền cần hoàn</small>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="form-group">
+                            <label for="{{ form.description.id_for_label }}">
+                                <i class="fas fa-comment-alt mr-1"></i>Mô tả chi tiết <span class="text-danger">*</span>
+                            </label>
+                            {{ form.description }}
+                            {% if form.description.errors %}
+                                <div class="text-danger">{{ form.description.errors }}</div>
+                            {% endif %}
+                            <small class="form-text text-muted">Mô tả chi tiết về khoản chi phí này</small>
+                        </div>
+
+                        <!-- Receipt Upload -->
+                        <div class="form-group">
+                            <label for="{{ form.receipt.id_for_label }}">
+                                <i class="fas fa-file-upload mr-1"></i>Hóa đơn/Chứng từ
+                            </label>
+                            {{ form.receipt }}
+                            {% if form.receipt.errors %}
+                                <div class="text-danger">{{ form.receipt.errors }}</div>
+                            {% endif %}
+                            <small class="form-text text-muted">
+                                Upload hóa đơn, biên lai hoặc chứng từ liên quan (PDF, JPG, PNG)
+                            </small>
+                        </div>
+
+                        <!-- Info Alert -->
+                        <div class="alert alert-info">
+                            <h5><i class="fas fa-info-circle mr-1"></i>Lưu ý</h5>
+                            <ul class="mb-0">
+                                <li>Vui lòng nhập đầy đủ thông tin chính xác</li>
+                                <li>Upload hóa đơn/chứng từ rõ ràng để dễ dàng xét duyệt</li>
+                                <li>Đơn sẽ được chuyển đến quản lý trực tiếp để phê duyệt</li>
+                                <li>Bạn có thể theo dõi trạng thái đơn trong mục "Chi phí"</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane mr-1"></i> Gửi đơn
+                        </button>
+                        <a href="{% url 'portal_expenses' %}" class="btn btn-secondary">
+                            <i class="fas fa-times mr-1"></i> Hủy
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

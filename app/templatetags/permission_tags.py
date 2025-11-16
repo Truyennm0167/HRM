@@ -299,3 +299,87 @@ def can_approve_expense(context, expense):
         return check_permission(user, expense)
     except Exception:
         return False
+
+
+# Portal system filters
+@register.filter(name='can_access_management')
+def can_access_management(user):
+    """
+    Check if user can access the management portal.
+    
+    Args:
+        user: Django User object
+    
+    Returns:
+        bool: True if user is staff or superuser
+    
+    Usage:
+        {% if user|can_access_management %}
+            <a href="/management/">Management Portal</a>
+        {% endif %}
+    """
+    from app.permissions import user_can_access_management
+    
+    if not user or not user.is_authenticated:
+        return False
+    
+    try:
+        return user_can_access_management(user)
+    except Exception:
+        return False
+
+
+@register.filter(name='is_manager')
+def is_manager(user):
+    """
+    Check if user is a manager.
+    
+    Args:
+        user: Django User object
+    
+    Returns:
+        bool: True if user has is_manager=True in their Employee record
+    
+    Usage:
+        {% if user|is_manager %}
+            <span class="badge badge-warning">Manager</span>
+        {% endif %}
+    """
+    from app.permissions import user_is_manager
+    
+    if not user or not user.is_authenticated:
+        return False
+    
+    try:
+        return user_is_manager(user)
+    except Exception:
+        return False
+
+
+@register.filter(name='get_employee')
+def get_employee(user):
+    """
+    Get the Employee object for a user.
+    
+    Args:
+        user: Django User object
+    
+    Returns:
+        Employee object or None
+    
+    Usage:
+        {% with employee=user|get_employee %}
+            {% if employee %}
+                <p>Employee Code: {{ employee.employee_code }}</p>
+            {% endif %}
+        {% endwith %}
+    """
+    from app.permissions import get_user_employee
+    
+    if not user or not user.is_authenticated:
+        return None
+    
+    try:
+        return get_user_employee(user)
+    except Exception:
+        return None

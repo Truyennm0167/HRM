@@ -1,0 +1,295 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}Duyệt chi phí - Nhóm của tôi{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2><i class="fas fa-file-invoice-dollar mr-2"></i>Duyệt chi phí - Nhóm của tôi</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'portal_dashboard' %}">Portal</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'portal_approvals_dashboard' %}">Duyệt đơn</a></li>
+                    <li class="breadcrumb-item active">Chi phí</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-6">
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3>{{ pending_count }}</h3>
+                    <p>Đơn chờ duyệt</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{ approved_count }}</h3>
+                    <p>Đã duyệt (tháng này)</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>{{ rejected_count }}</h3>
+                    <p>Đã từ chối (tháng này)</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>{{ total_amount|floatformat:0 }}đ</h3>
+                    <p>Tổng chờ duyệt</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-outline-primary active" onclick="filterExpenses('all')">
+                    <i class="fas fa-list mr-1"></i>Tất cả
+                </button>
+                <button type="button" class="btn btn-outline-warning" onclick="filterExpenses('pending')">
+                    <i class="fas fa-clock mr-1"></i>Chờ duyệt
+                </button>
+                <button type="button" class="btn btn-outline-success" onclick="filterExpenses('approved')">
+                    <i class="fas fa-check mr-1"></i>Đã duyệt
+                </button>
+                <button type="button" class="btn btn-outline-danger" onclick="filterExpenses('rejected')">
+                    <i class="fas fa-times mr-1"></i>Đã từ chối
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expense Requests Table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Danh sách đơn hoàn tiền</h3>
+                </div>
+                <div class="card-body">
+                    <table id="expenseRequestsTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nhân viên</th>
+                                <th>Loại chi phí</th>
+                                <th>Số tiền</th>
+                                <th>Ngày phát sinh</th>
+                                <th>Mô tả</th>
+                                <th>Trạng thái</th>
+                                <th>Ngày tạo</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for expense in expense_requests %}
+                            <tr data-status="{{ expense.status }}">
+                                <td>
+                                    <strong>{{ expense.employee.admin.first_name }} {{ expense.employee.admin.last_name }}</strong><br>
+                                    <small class="text-muted">{{ expense.employee.employee_code }}</small>
+                                </td>
+                                <td>
+                                    <span class="badge badge-secondary">{{ expense.expense_type }}</span>
+                                </td>
+                                <td class="text-right">
+                                    <strong class="text-primary">{{ expense.amount|floatformat:0 }}đ</strong>
+                                </td>
+                                <td>{{ expense.expense_date|date:"d/m/Y" }}</td>
+                                <td>
+                                    <small>{{ expense.description|truncatewords:10 }}</small>
+                                    {% if expense.receipt %}
+                                    <br><small class="text-info"><i class="fas fa-paperclip"></i> Có hóa đơn</small>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if expense.status == 'Pending' %}
+                                        <span class="badge badge-warning"><i class="fas fa-clock"></i> Chờ duyệt</span>
+                                    {% elif expense.status == 'Approved' %}
+                                        <span class="badge badge-success"><i class="fas fa-check"></i> Đã duyệt</span>
+                                    {% elif expense.status == 'Rejected' %}
+                                        <span class="badge badge-danger"><i class="fas fa-times"></i> Đã từ chối</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ expense.created_at|date:"d/m/Y H:i" }}</td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-sm btn-info" onclick="viewExpenseDetail({{ expense.id }})">
+                                        <i class="fas fa-eye"></i> Xem
+                                    </button>
+                                    {% if expense.status == 'Pending' %}
+                                    <div class="btn-group mt-1">
+                                        <button type="button" class="btn btn-sm btn-success" onclick="approveExpense({{ expense.id }})">
+                                            <i class="fas fa-check"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger" onclick="rejectExpense({{ expense.id }})">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="8" class="text-center text-muted">
+                                    <i class="fas fa-inbox fa-3x mb-3"></i><br>
+                                    Không có đơn hoàn tiền nào
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    // Initialize DataTable
+    var table = $('#expenseRequestsTable').DataTable({
+        "responsive": true,
+        "lengthChange": true,
+        "autoWidth": false,
+        "pageLength": 25,
+        "order": [[6, 'desc']], // Sort by created_at desc
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Vietnamese.json"
+        }
+    });
+});
+
+// Filter expenses by status
+function filterExpenses(status) {
+    var table = $('#expenseRequestsTable').DataTable();
+    
+    // Update active button
+    $('.btn-group button').removeClass('active');
+    event.target.closest('button').classList.add('active');
+    
+    if (status === 'all') {
+        table.column(5).search('').draw();
+    } else {
+        var statusMap = {
+            'pending': 'Chờ duyệt',
+            'approved': 'Đã duyệt',
+            'rejected': 'Đã từ chối'
+        };
+        table.column(5).search(statusMap[status]).draw();
+    }
+}
+
+// View expense detail
+function viewExpenseDetail(expenseId) {
+    window.location.href = `/portal/expenses/${expenseId}/`;
+}
+
+// Approve expense request
+function approveExpense(expenseId) {
+    Swal.fire({
+        title: 'Duyệt đơn hoàn tiền?',
+        text: "Bạn có chắc chắn muốn duyệt đơn này không?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Duyệt',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `/portal/team/expenses/${expenseId}/approve/`,
+                type: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                success: function(data) {
+                    if (data.status === 'success') {
+                        Swal.fire('Thành công!', data.message, 'success').then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Lỗi!', data.message, 'error');
+                    }
+                },
+                error: function() {
+                    Swal.fire('Lỗi!', 'Không thể duyệt đơn', 'error');
+                }
+            });
+        }
+    });
+}
+
+// Reject expense request
+function rejectExpense(expenseId) {
+    Swal.fire({
+        title: 'Từ chối đơn hoàn tiền?',
+        text: "Vui lòng nhập lý do từ chối:",
+        input: 'textarea',
+        inputPlaceholder: 'Nhập lý do từ chối...',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Từ chối',
+        cancelButtonText: 'Hủy',
+        inputValidator: (value) => {
+            if (!value) {
+                return 'Bạn cần nhập lý do từ chối!'
+            }
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `/portal/team/expenses/${expenseId}/reject/`,
+                type: 'POST',
+                data: {
+                    'reason': result.value
+                },
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                success: function(data) {
+                    if (data.status === 'success') {
+                        Swal.fire('Thành công!', data.message, 'success').then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Lỗi!', data.message, 'error');
+                    }
+                },
+                error: function() {
+                    Swal.fire('Lỗi!', 'Không thể từ chối đơn', 'error');
+                }
+            });
+        }
+    });
+}
+</script>
+{% endblock %}

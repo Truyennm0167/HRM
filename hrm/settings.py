@@ -52,10 +52,14 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # Custom security middleware
-    'app.middleware.SecurityHeadersMiddleware',
-    'app.middleware.UserGroupMiddleware',
-    'app.middleware.LoginAttemptMiddleware',
+    # Custom security middleware (from app.middleware module) - TEMPORARILY DISABLED
+    # 'app.middleware.SecurityHeadersMiddleware',
+    # 'app.middleware.UserGroupMiddleware',
+    # 'app.middleware.LoginAttemptMiddleware',
+    # Portal system middleware (from app.middleware.portal_redirect module)
+    'app.middleware.portal_redirect.PortalRedirectMiddleware',
+    'app.middleware.portal_redirect.ManagementAccessMiddleware',
+    'app.middleware.portal_redirect.PortalSwitchMiddleware',
 ]
 
 ROOT_URLCONF = 'hrm.urls'
@@ -260,7 +264,7 @@ LOGGING = {
 
 # Login URL
 LOGIN_URL = '/login/'
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/portal/'  # Redirect to Employee Portal after login
 LOGOUT_REDIRECT_URL = '/login/'
 
 # ============================================================

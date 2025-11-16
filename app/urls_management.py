@@ -124,4 +124,57 @@ urlpatterns = [
     path('appraisal/hr/', management_views.hr_appraisals, name='management_hr_appraisals'),
     path('appraisal/<int:appraisal_id>/hr-review/', management_views.hr_final_review, name='management_hr_final_review'),
     path('appraisal/<int:appraisal_id>/detail/', management_views.appraisal_detail, name='management_appraisal_detail'),
+    
+    # ========================================
+    # BACKWARD COMPATIBILITY ALIASES
+    # Old URL names for existing templates
+    # ========================================
+    
+    # Old names without 'management_' prefix
+    path('', management_views.admin_home, name='admin_home'),
+    path('contracts/', management_views.manage_contracts, name='manage_contracts'),
+    path('contracts/create/', management_views.create_contract, name='create_contract'),
+    path('contracts/<int:contract_id>/', management_views.contract_detail, name='contract_detail'),
+    path('contracts/<int:contract_id>/edit/', management_views.edit_contract, name='edit_contract'),
+    path('contracts/<int:contract_id>/renew/', management_views.renew_contract, name='renew_contract'),
+    path('contracts/<int:contract_id>/delete/', management_views.delete_contract, name='delete_contract'),
+    path('contracts/expiring/', management_views.expiring_contracts, name='expiring_contracts'),
+    path('contracts/employee/<int:employee_id>/', management_views.employee_contracts, name='employee_contracts'),
+    
+    path('employees/', management_views.employee_list, name='employee_list'),
+    path('employees/add/', management_views.add_employee, name='add_employee'),
+    path('employees/<int:employee_id>/', management_views.employee_detail_view, name='employee_detail'),
+    path('employees/<int:employee_id>/edit/', management_views.update_employee, name='update_employee'),
+    
+    path('departments/', management_views.department_page, name='department_page'),
+    path('job-titles/', management_views.job_title, name='job_title'),
+    path('org-chart/', management_views.org_chart, name='org_chart'),
+    
+    path('attendance/add/', management_views.add_attendance, name='add_attendance'),
+    path('attendance/manage/', management_views.manage_attendance, name='manage_attendance'),
+    path('attendance/<int:attendance_id>/edit/', management_views.edit_attendance, name='edit_attendance'),
+    
+    path('payroll/calculate/', management_views.calculate_payroll, name='calculate_payroll'),
+    path('payroll/manage/', management_views.manage_payroll, name='manage_payroll'),
+    path('payroll/<int:payroll_id>/edit/', management_views.edit_payroll, name='edit_payroll'),
+    path('payroll/<int:payroll_id>/', management_views.view_payroll, name='view_payroll'),
+    
+    path('leave/types/', management_views.manage_leave_types, name='manage_leave_types'),
+    path('leave/requests/', management_views.manage_leave_requests, name='manage_leave_requests'),
+    path('leave/requests/', management_views.manage_leave_requests, name='request_leave'),  # Backward compatibility
+    path('leave/requests/<int:request_id>/approve/', management_views.approve_leave_request, name='approve_leave_request'),
+    
+    path('expense/categories/', management_views.manage_expense_categories, name='manage_expense_categories'),
+    path('expense/requests/', management_views.manage_expenses, name='manage_expenses'),
+    path('expense/requests/<int:expense_id>/approve/', management_views.approve_expense, name='approve_expense'),
+    
+    path('recruitment/jobs/', management_views.list_jobs_admin, name='list_jobs_admin'),
+    path('recruitment/applications/', management_views.applications_kanban, name='applications_kanban'),
+    
+    path('salary-rules/components/', management_views.salary_components, name='salary_components'),
+    path('salary-rules/employee/<int:employee_id>/', management_views.employee_salary_rules, name='employee_salary_rules'),
+    
+    path('appraisal/periods/', management_views.appraisal_periods, name='appraisal_periods'),
+    path('appraisal/manager/', management_views.manager_appraisals, name='manager_appraisals'),
+    path('appraisal/hr/', management_views.hr_appraisals, name='hr_appraisals'),
 ]

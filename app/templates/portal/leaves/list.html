@@ -1,0 +1,232 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}Đơn nghỉ phép của tôi{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2><i class="fas fa-calendar-alt mr-2"></i>Quản lý nghỉ phép</h2>
+            <p class="text-muted">Xem và quản lý các đơn xin nghỉ phép của bạn</p>
+        </div>
+    </div>
+
+    <!-- Leave Balance Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3 col-sm-6">
+            <div class="info-box bg-info">
+                <span class="info-box-icon"><i class="fas fa-calendar-check"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Tổng phép năm</span>
+                    <span class="info-box-number">{{ employee.annual_leave_balance }} ngày</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="info-box bg-success">
+                <span class="info-box-icon"><i class="fas fa-check-circle"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Đã dùng</span>
+                    <span class="info-box-number">{{ used_leaves }} ngày</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="info-box bg-warning">
+                <span class="info-box-icon"><i class="fas fa-hourglass-half"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Chờ duyệt</span>
+                    <span class="info-box-number">{{ pending_leaves }} ngày</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="info-box bg-primary">
+                <span class="info-box-icon"><i class="fas fa-gift"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Còn lại</span>
+                    <span class="info-box-number">{{ remaining_leaves }} ngày</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons and Filters -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <a href="{% url 'portal_leave_create' %}" class="btn btn-primary">
+                <i class="fas fa-plus mr-1"></i> Tạo đơn xin nghỉ phép
+            </a>
+        </div>
+        <div class="col-md-6 text-right">
+            <div class="btn-group" role="group">
+                <a href="?status=" class="btn btn-outline-secondary {% if not request.GET.status %}active{% endif %}">
+                    Tất cả
+                </a>
+                <a href="?status=pending" class="btn btn-outline-warning {% if request.GET.status == 'pending' %}active{% endif %}">
+                    Chờ duyệt
+                </a>
+                <a href="?status=approved" class="btn btn-outline-success {% if request.GET.status == 'approved' %}active{% endif %}">
+                    Đã duyệt
+                </a>
+                <a href="?status=rejected" class="btn btn-outline-danger {% if request.GET.status == 'rejected' %}active{% endif %}">
+                    Bị từ chối
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leaves List -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-list mr-2"></i>Danh sách đơn nghỉ phép</h3>
+                </div>
+                <div class="card-body">
+                    {% if leaves %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Loại phép</th>
+                                        <th>Từ ngày</th>
+                                        <th>Đến ngày</th>
+                                        <th>Số ngày</th>
+                                        <th>Lý do</th>
+                                        <th>Trạng thái</th>
+                                        <th>Ngày tạo</th>
+                                        <th>Hành động</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for leave in leaves %}
+                                    <tr>
+                                        <td>
+                                            <span class="badge badge-info">{{ leave.get_leave_type_display }}</span>
+                                        </td>
+                                        <td>{{ leave.start_date|date:"d/m/Y" }}</td>
+                                        <td>{{ leave.end_date|date:"d/m/Y" }}</td>
+                                        <td>
+                                            <strong>{{ leave.total_days }}</strong> ngày
+                                        </td>
+                                        <td>
+                                            <span class="text-truncate d-inline-block" style="max-width: 200px;" title="{{ leave.reason }}">
+                                                {{ leave.reason }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            {% if leave.status == 'pending' %}
+                                                <span class="badge badge-warning">
+                                                    <i class="fas fa-clock"></i> Chờ duyệt
+                                                </span>
+                                            {% elif leave.status == 'approved' %}
+                                                <span class="badge badge-success">
+                                                    <i class="fas fa-check"></i> Đã duyệt
+                                                </span>
+                                            {% elif leave.status == 'rejected' %}
+                                                <span class="badge badge-danger">
+                                                    <i class="fas fa-times"></i> Bị từ chối
+                                                </span>
+                                            {% elif leave.status == 'cancelled' %}
+                                                <span class="badge badge-secondary">
+                                                    <i class="fas fa-ban"></i> Đã hủy
+                                                </span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ leave.created_at|date:"d/m/Y H:i" }}</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <a href="{% url 'portal_leave_detail' leave.id %}" 
+                                                   class="btn btn-sm btn-info" 
+                                                   title="Xem chi tiết">
+                                                    <i class="fas fa-eye"></i>
+                                                </a>
+                                                {% if leave.status == 'pending' %}
+                                                <button type="button" 
+                                                        class="btn btn-sm btn-danger" 
+                                                        onclick="cancelLeave({{ leave.id }})"
+                                                        title="Hủy đơn">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Pagination -->
+                        {% if is_paginated %}
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination justify-content-center">
+                                {% if page_obj.has_previous %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}">Đầu</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}">Trước</a>
+                                </li>
+                                {% endif %}
+
+                                <li class="page-item active">
+                                    <span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+                                </li>
+
+                                {% if page_obj.has_next %}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}">Sau</a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}">Cuối</a>
+                                </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                        {% endif %}
+                    {% else %}
+                        <div class="alert alert-info text-center">
+                            <i class="fas fa-info-circle fa-3x mb-3"></i>
+                            <h5>Chưa có đơn nghỉ phép nào</h5>
+                            <p>Bạn chưa tạo đơn xin nghỉ phép nào. Nhấn nút "Tạo đơn xin nghỉ phép" để bắt đầu.</p>
+                            <a href="{% url 'portal_leave_create' %}" class="btn btn-primary mt-2">
+                                <i class="fas fa-plus mr-1"></i> Tạo đơn ngay
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function cancelLeave(leaveId) {
+    if (confirm('Bạn có chắc muốn hủy đơn nghỉ phép này?')) {
+        fetch(`/portal/leaves/${leaveId}/cancel/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert('Lỗi: ' + (data.message || 'Không thể hủy đơn'));
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Có lỗi xảy ra khi hủy đơn');
+        });
+    }
+}
+</script>
+{% endblock %}

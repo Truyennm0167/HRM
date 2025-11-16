@@ -2,6 +2,7 @@
 Employee Portal Views
 Self-service portal for all employees to manage their own data
 """
+from functools import wraps
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
@@ -15,7 +16,19 @@ from .models import (
     Appraisal, AppraisalScore
 )
 from .forms import LeaveRequestForm, ExpenseForm
-from .permissions import require_manager_permission, get_user_employee
+from .permissions import get_user_employee
+
+# Decorator for manager-only views
+def require_manager_permission(view_func):
+    """Decorator to require manager permission"""
+    @wraps(view_func)
+    def wrapper(request, *args, **kwargs):
+        employee = get_user_employee(request.user)
+        if not employee or not employee.is_manager:
+            messages.error(request, 'Tính năng này chỉ dành cho Manager.')
+            return redirect('portal_dashboard')
+        return view_func(request, *args, **kwargs)
+    return wrapper
 
 
 # ======================== DASHBOARD ========================

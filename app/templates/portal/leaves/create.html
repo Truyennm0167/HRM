@@ -1,0 +1,159 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}Tạo đơn xin nghỉ phép{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2><i class="fas fa-plus-circle mr-2"></i>Tạo đơn xin nghỉ phép</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'portal_dashboard' %}">Portal</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'portal_leaves_list' %}">Nghỉ phép</a></li>
+                    <li class="breadcrumb-item active">Tạo mới</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="card-title"><i class="fas fa-file-alt mr-2"></i>Thông tin đơn nghỉ phép</h3>
+                </div>
+                <form method="post" id="leaveForm">
+                    {% csrf_token %}
+                    <div class="card-body">
+                        {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <!-- Leave Type -->
+                        <div class="form-group">
+                            <label for="{{ form.leave_type.id_for_label }}">
+                                <i class="fas fa-tag mr-1"></i>Loại phép <span class="text-danger">*</span>
+                            </label>
+                            {{ form.leave_type }}
+                            {% if form.leave_type.errors %}
+                                <div class="text-danger">{{ form.leave_type.errors }}</div>
+                            {% endif %}
+                            <small class="form-text text-muted">Chọn loại nghỉ phép phù hợp</small>
+                        </div>
+
+                        <!-- Date Range -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.start_date.id_for_label }}">
+                                        <i class="fas fa-calendar-day mr-1"></i>Từ ngày <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.start_date }}
+                                    {% if form.start_date.errors %}
+                                        <div class="text-danger">{{ form.start_date.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.end_date.id_for_label }}">
+                                        <i class="fas fa-calendar-day mr-1"></i>Đến ngày <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.end_date }}
+                                    {% if form.end_date.errors %}
+                                        <div class="text-danger">{{ form.end_date.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Total Days Display -->
+                        <div class="form-group">
+                            <div class="alert alert-info" id="totalDaysAlert" style="display:none;">
+                                <i class="fas fa-calculator mr-1"></i>
+                                Tổng số ngày nghỉ: <strong id="totalDays">0</strong> ngày
+                            </div>
+                        </div>
+
+                        <!-- Reason -->
+                        <div class="form-group">
+                            <label for="{{ form.reason.id_for_label }}">
+                                <i class="fas fa-comment-alt mr-1"></i>Lý do nghỉ phép <span class="text-danger">*</span>
+                            </label>
+                            {{ form.reason }}
+                            {% if form.reason.errors %}
+                                <div class="text-danger">{{ form.reason.errors }}</div>
+                            {% endif %}
+                            <small class="form-text text-muted">Vui lòng nêu rõ lý do xin nghỉ phép</small>
+                        </div>
+
+                        <!-- Leave Balance Info -->
+                        <div class="alert alert-secondary">
+                            <h5><i class="fas fa-info-circle mr-1"></i>Thông tin số dư phép</h5>
+                            <div class="row text-center">
+                                <div class="col-md-4">
+                                    <strong class="text-primary">{{ employee.annual_leave_balance }}</strong>
+                                    <br><small>Tổng phép năm</small>
+                                </div>
+                                <div class="col-md-4">
+                                    <strong class="text-warning">{{ pending_leaves }}</strong>
+                                    <br><small>Đang chờ duyệt</small>
+                                </div>
+                                <div class="col-md-4">
+                                    <strong class="text-success">{{ remaining_leaves }}</strong>
+                                    <br><small>Còn lại</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane mr-1"></i> Gửi đơn
+                        </button>
+                        <a href="{% url 'portal_leaves_list' %}" class="btn btn-secondary">
+                            <i class="fas fa-times mr-1"></i> Hủy
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Calculate total days when dates change
+document.addEventListener('DOMContentLoaded', function() {
+    const startDateInput = document.getElementById('{{ form.start_date.id_for_label }}');
+    const endDateInput = document.getElementById('{{ form.end_date.id_for_label }}');
+    const totalDaysAlert = document.getElementById('totalDaysAlert');
+    const totalDaysSpan = document.getElementById('totalDays');
+
+    function calculateDays() {
+        const startDate = new Date(startDateInput.value);
+        const endDate = new Date(endDateInput.value);
+
+        if (startDate && endDate && endDate >= startDate) {
+            const diffTime = Math.abs(endDate - startDate);
+            const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+            
+            totalDaysSpan.textContent = diffDays;
+            totalDaysAlert.style.display = 'block';
+        } else {
+            totalDaysAlert.style.display = 'none';
+        }
+    }
+
+    startDateInput.addEventListener('change', calculateDays);
+    endDateInput.addEventListener('change', calculateDays);
+});
+</script>
+{% endblock %}

@@ -1,0 +1,263 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}Phê duyệt - Manager{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2>
+                <i class="fas fa-tasks mr-2"></i>Phê duyệt
+                <span class="badge badge-warning">Manager</span>
+            </h2>
+            <p class="text-muted">Quản lý và phê duyệt các yêu cầu từ nhân viên trong team</p>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="info-box bg-warning">
+                <span class="info-box-icon"><i class="fas fa-calendar-alt"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Đơn nghỉ phép chờ</span>
+                    <span class="info-box-number">{{ stats.pending_leaves }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info-box bg-info">
+                <span class="info-box-icon"><i class="fas fa-receipt"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Chi phí chờ duyệt</span>
+                    <span class="info-box-number">{{ stats.pending_expenses }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info-box bg-success">
+                <span class="info-box-icon"><i class="fas fa-users"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Nhân viên trong team</span>
+                    <span class="info-box-number">{{ stats.team_members }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info-box bg-danger">
+                <span class="info-box-icon"><i class="fas fa-exclamation-triangle"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Cần xử lý</span>
+                    <span class="info-box-number">{{ stats.total_pending }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-rocket mr-2"></i>Quick Actions</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <a href="{% url 'portal_team_leaves' %}" class="btn btn-lg btn-outline-primary btn-block">
+                                <i class="fas fa-calendar-check fa-2x d-block mb-2"></i>
+                                <strong>Phê duyệt nghỉ phép</strong>
+                                <br><small>{{ stats.pending_leaves }} đơn chờ xử lý</small>
+                            </a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{% url 'portal_team_expenses' %}" class="btn btn-lg btn-outline-info btn-block">
+                                <i class="fas fa-file-invoice-dollar fa-2x d-block mb-2"></i>
+                                <strong>Phê duyệt chi phí</strong>
+                                <br><small>{{ stats.pending_expenses }} đơn chờ xử lý</small>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Pending Leaves -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-warning">
+                    <h3 class="card-title"><i class="fas fa-calendar-alt mr-2"></i>Đơn nghỉ phép chờ duyệt</h3>
+                    <div class="card-tools">
+                        <a href="{% url 'portal_team_leaves' %}" class="btn btn-sm btn-light">Xem tất cả</a>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    {% if pending_leaves %}
+                        <table class="table table-sm">
+                            <tbody>
+                                {% for leave in pending_leaves %}
+                                <tr>
+                                    <td style="width: 40px;">
+                                        {% if leave.employee.avatar %}
+                                            <img src="{{ leave.employee.avatar.url }}" 
+                                                 class="img-circle" 
+                                                 style="width: 35px; height: 35px; object-fit: cover;">
+                                        {% else %}
+                                            <div class="img-circle bg-info d-flex align-items-center justify-content-center" 
+                                                 style="width: 35px; height: 35px;">
+                                                <strong>{{ leave.employee.full_name|slice:":1" }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <strong>{{ leave.employee.full_name }}</strong>
+                                        <br>
+                                        <small class="text-muted">
+                                            {{ leave.start_date|date:"d/m" }} - {{ leave.end_date|date:"d/m" }}
+                                            ({{ leave.total_days }} ngày)
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-{{ leave.get_leave_type_display }}">
+                                            {{ leave.get_leave_type_display }}
+                                        </span>
+                                    </td>
+                                    <td class="text-right">
+                                        <a href="{% url 'portal_team_leave_approve' leave.id %}" 
+                                           class="btn btn-xs btn-success"
+                                           title="Duyệt">
+                                            <i class="fas fa-check"></i>
+                                        </a>
+                                        <a href="{% url 'portal_team_leave_reject' leave.id %}" 
+                                           class="btn btn-xs btn-danger"
+                                           title="Từ chối">
+                                            <i class="fas fa-times"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="p-3 text-center text-muted">
+                            <i class="fas fa-check-circle fa-2x mb-2"></i>
+                            <p>Không có đơn nghỉ phép chờ duyệt</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Expenses -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-info">
+                    <h3 class="card-title"><i class="fas fa-receipt mr-2"></i>Chi phí chờ duyệt</h3>
+                    <div class="card-tools">
+                        <a href="{% url 'portal_team_expenses' %}" class="btn btn-sm btn-light">Xem tất cả</a>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    {% if pending_expenses %}
+                        <table class="table table-sm">
+                            <tbody>
+                                {% for expense in pending_expenses %}
+                                <tr>
+                                    <td style="width: 40px;">
+                                        {% if expense.employee.avatar %}
+                                            <img src="{{ expense.employee.avatar.url }}" 
+                                                 class="img-circle" 
+                                                 style="width: 35px; height: 35px; object-fit: cover;">
+                                        {% else %}
+                                            <div class="img-circle bg-primary d-flex align-items-center justify-content-center" 
+                                                 style="width: 35px; height: 35px;">
+                                                <strong>{{ expense.employee.full_name|slice:":1" }}</strong>
+                                            </div>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <strong>{{ expense.employee.full_name }}</strong>
+                                        <br>
+                                        <small class="text-muted">
+                                            {{ expense.expense_date|date:"d/m/Y" }} - 
+                                            <strong class="text-primary">{{ expense.amount|floatformat:0 }}đ</strong>
+                                        </small>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-secondary">
+                                            {{ expense.get_expense_type_display }}
+                                        </span>
+                                    </td>
+                                    <td class="text-right">
+                                        <a href="{% url 'portal_team_expense_approve' expense.id %}" 
+                                           class="btn btn-xs btn-success"
+                                           title="Duyệt">
+                                            <i class="fas fa-check"></i>
+                                        </a>
+                                        <a href="{% url 'portal_team_expense_reject' expense.id %}" 
+                                           class="btn btn-xs btn-danger"
+                                           title="Từ chối">
+                                            <i class="fas fa-times"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    {% else %}
+                        <div class="p-3 text-center text-muted">
+                            <i class="fas fa-check-circle fa-2x mb-2"></i>
+                            <p>Không có chi phí chờ duyệt</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team Members Summary -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-users mr-2"></i>Nhân viên trong team</h3>
+                </div>
+                <div class="card-body">
+                    {% if team_members %}
+                        <div class="row">
+                            {% for member in team_members %}
+                            <div class="col-md-3 col-sm-6">
+                                <div class="info-box">
+                                    <span class="info-box-icon bg-info">
+                                        {% if member.avatar %}
+                                            <img src="{{ member.avatar.url }}" 
+                                                 class="img-circle" 
+                                                 style="width: 50px; height: 50px; object-fit: cover;">
+                                        {% else %}
+                                            <i class="fas fa-user"></i>
+                                        {% endif %}
+                                    </span>
+                                    <div class="info-box-content">
+                                        <span class="info-box-text"><strong>{{ member.full_name }}</strong></span>
+                                        <span class="info-box-number text-sm">{{ member.position }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info text-center">
+                            <i class="fas fa-info-circle"></i>
+                            Chưa có nhân viên trong team
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

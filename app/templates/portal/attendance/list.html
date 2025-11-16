@@ -1,0 +1,177 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}Lịch sử chấm công{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2><i class="fas fa-clock mr-2"></i>Lịch sử chấm công</h2>
+            <p class="text-muted">Xem lịch sử chấm công và thống kê giờ làm việc của bạn</p>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="info-box bg-success">
+                <span class="info-box-icon"><i class="fas fa-calendar-check"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Tổng ngày làm</span>
+                    <span class="info-box-number">{{ stats.total_days }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info-box bg-info">
+                <span class="info-box-icon"><i class="fas fa-clock"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Tổng giờ làm</span>
+                    <span class="info-box-number">{{ stats.total_hours }}h</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info-box bg-warning">
+                <span class="info-box-icon"><i class="fas fa-user-clock"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Số lần đi muộn</span>
+                    <span class="info-box-number">{{ stats.late_count }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="info-box bg-danger">
+                <span class="info-box-icon"><i class="fas fa-running"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Số lần về sớm</span>
+                    <span class="info-box-number">{{ stats.early_leave_count }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter -->
+    <div class="row mb-3">
+        <div class="col-md-12">
+            <form method="get" class="form-inline">
+                <label class="mr-2">Tháng:</label>
+                <select name="month" class="form-control mr-2">
+                    {% for m in months %}
+                    <option value="{{ m.value }}" {% if m.value == selected_month %}selected{% endif %}>
+                        {{ m.label }}
+                    </option>
+                    {% endfor %}
+                </select>
+                <label class="mr-2">Năm:</label>
+                <select name="year" class="form-control mr-2">
+                    {% for y in years %}
+                    <option value="{{ y }}" {% if y == selected_year %}selected{% endif %}>{{ y }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-filter mr-1"></i> Lọc
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Attendance Table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-list mr-2"></i>Chi tiết chấm công</h3>
+                </div>
+                <div class="card-body">
+                    {% if attendances %}
+                        <div class="table-responsive">
+                            <table class="table table-hover table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Ngày</th>
+                                        <th>Check In</th>
+                                        <th>Check Out</th>
+                                        <th>Giờ làm việc</th>
+                                        <th>Ghi chú</th>
+                                        <th>Trạng thái</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for att in attendances %}
+                                    <tr>
+                                        <td>
+                                            <strong>{{ att.date|date:"d/m/Y" }}</strong><br>
+                                            <small class="text-muted">{{ att.date|date:"l" }}</small>
+                                        </td>
+                                        <td>
+                                            {% if att.check_in %}
+                                                <span class="badge badge-success">
+                                                    <i class="fas fa-sign-in-alt mr-1"></i>
+                                                    {{ att.check_in|time:"H:i" }}
+                                                </span>
+                                                {% if att.is_late %}
+                                                    <br><small class="text-danger"><i class="fas fa-exclamation-triangle"></i> Đi muộn</small>
+                                                {% endif %}
+                                            {% else %}
+                                                <span class="text-muted">--:--</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if att.check_out %}
+                                                <span class="badge badge-info">
+                                                    <i class="fas fa-sign-out-alt mr-1"></i>
+                                                    {{ att.check_out|time:"H:i" }}
+                                                </span>
+                                                {% if att.is_early_leave %}
+                                                    <br><small class="text-warning"><i class="fas fa-exclamation-triangle"></i> Về sớm</small>
+                                                {% endif %}
+                                            {% else %}
+                                                <span class="text-muted">--:--</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if att.total_hours %}
+                                                <strong class="text-primary">{{ att.total_hours }} giờ</strong>
+                                            {% else %}
+                                                <span class="text-muted">--</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if att.notes %}
+                                                <small>{{ att.notes }}</small>
+                                            {% else %}
+                                                <span class="text-muted">--</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if att.status == 'present' %}
+                                                <span class="badge badge-success"><i class="fas fa-check"></i> Có mặt</span>
+                                            {% elif att.status == 'absent' %}
+                                                <span class="badge badge-danger"><i class="fas fa-times"></i> Vắng</span>
+                                            {% elif att.status == 'leave' %}
+                                                <span class="badge badge-warning"><i class="fas fa-calendar-alt"></i> Nghỉ phép</span>
+                                            {% elif att.status == 'late' %}
+                                                <span class="badge badge-warning"><i class="fas fa-clock"></i> Đi muộn</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info text-center">
+                            <i class="fas fa-info-circle fa-3x mb-3"></i>
+                            <h5>Chưa có dữ liệu chấm công</h5>
+                            <p>Không có dữ liệu chấm công cho tháng {{ selected_month }}/{{ selected_year }}</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

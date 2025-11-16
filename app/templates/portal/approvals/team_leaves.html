@@ -1,0 +1,295 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}Duyệt nghỉ phép - Nhóm của tôi{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2><i class="fas fa-clipboard-check mr-2"></i>Duyệt nghỉ phép - Nhóm của tôi</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'portal_dashboard' %}">Portal</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'portal_approvals_dashboard' %}">Duyệt đơn</a></li>
+                    <li class="breadcrumb-item active">Nghỉ phép</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-6">
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3>{{ pending_count }}</h3>
+                    <p>Đơn chờ duyệt</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{ approved_count }}</h3>
+                    <p>Đã duyệt (tháng này)</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="small-box bg-danger">
+                <div class="inner">
+                    <h3>{{ rejected_count }}</h3>
+                    <p>Đã từ chối (tháng này)</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-times-circle"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-6">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>{{ team_size }}</h3>
+                    <p>Thành viên nhóm</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-users"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Filter Buttons -->
+    <div class="row mb-3">
+        <div class="col-12">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-outline-primary active" onclick="filterLeaves('all')">
+                    <i class="fas fa-list mr-1"></i>Tất cả
+                </button>
+                <button type="button" class="btn btn-outline-warning" onclick="filterLeaves('pending')">
+                    <i class="fas fa-clock mr-1"></i>Chờ duyệt
+                </button>
+                <button type="button" class="btn btn-outline-success" onclick="filterLeaves('approved')">
+                    <i class="fas fa-check mr-1"></i>Đã duyệt
+                </button>
+                <button type="button" class="btn btn-outline-danger" onclick="filterLeaves('rejected')">
+                    <i class="fas fa-times mr-1"></i>Đã từ chối
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Leave Requests Table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Danh sách đơn nghỉ phép</h3>
+                </div>
+                <div class="card-body">
+                    <table id="leaveRequestsTable" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>Nhân viên</th>
+                                <th>Loại nghỉ</th>
+                                <th>Từ ngày</th>
+                                <th>Đến ngày</th>
+                                <th>Số ngày</th>
+                                <th>Lý do</th>
+                                <th>Trạng thái</th>
+                                <th>Ngày tạo</th>
+                                <th>Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for leave in leave_requests %}
+                            <tr data-status="{{ leave.status }}">
+                                <td>
+                                    <strong>{{ leave.employee.admin.first_name }} {{ leave.employee.admin.last_name }}</strong><br>
+                                    <small class="text-muted">{{ leave.employee.employee_code }}</small>
+                                </td>
+                                <td>
+                                    <span class="badge badge-secondary">{{ leave.leave_type }}</span>
+                                </td>
+                                <td>{{ leave.start_date|date:"d/m/Y" }}</td>
+                                <td>{{ leave.end_date|date:"d/m/Y" }}</td>
+                                <td class="text-center">
+                                    <strong>{{ leave.total_days }}</strong>
+                                </td>
+                                <td>
+                                    <small>{{ leave.reason|truncatewords:10 }}</small>
+                                </td>
+                                <td>
+                                    {% if leave.status == 'Pending' %}
+                                        <span class="badge badge-warning"><i class="fas fa-clock"></i> Chờ duyệt</span>
+                                    {% elif leave.status == 'Approved' %}
+                                        <span class="badge badge-success"><i class="fas fa-check"></i> Đã duyệt</span>
+                                    {% elif leave.status == 'Rejected' %}
+                                        <span class="badge badge-danger"><i class="fas fa-times"></i> Đã từ chối</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ leave.created_at|date:"d/m/Y H:i" }}</td>
+                                <td class="text-center">
+                                    {% if leave.status == 'Pending' %}
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-success" onclick="approveLeave({{ leave.id }})">
+                                            <i class="fas fa-check"></i> Duyệt
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger" onclick="rejectLeave({{ leave.id }})">
+                                            <i class="fas fa-times"></i> Từ chối
+                                        </button>
+                                    </div>
+                                    {% else %}
+                                    <button type="button" class="btn btn-sm btn-info" onclick="viewLeaveDetail({{ leave.id }})">
+                                        <i class="fas fa-eye"></i> Xem
+                                    </button>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="9" class="text-center text-muted">
+                                    <i class="fas fa-inbox fa-3x mb-3"></i><br>
+                                    Không có đơn nghỉ phép nào
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(document).ready(function() {
+    // Initialize DataTable
+    var table = $('#leaveRequestsTable').DataTable({
+        "responsive": true,
+        "lengthChange": true,
+        "autoWidth": false,
+        "pageLength": 25,
+        "order": [[7, 'desc']], // Sort by created_at desc
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Vietnamese.json"
+        }
+    });
+});
+
+// Filter leaves by status
+function filterLeaves(status) {
+    var table = $('#leaveRequestsTable').DataTable();
+    
+    // Update active button
+    $('.btn-group button').removeClass('active');
+    event.target.closest('button').classList.add('active');
+    
+    if (status === 'all') {
+        table.column(6).search('').draw();
+    } else {
+        var statusMap = {
+            'pending': 'Chờ duyệt',
+            'approved': 'Đã duyệt',
+            'rejected': 'Đã từ chối'
+        };
+        table.column(6).search(statusMap[status]).draw();
+    }
+}
+
+// Approve leave request
+function approveLeave(leaveId) {
+    Swal.fire({
+        title: 'Duyệt đơn nghỉ phép?',
+        text: "Bạn có chắc chắn muốn duyệt đơn này không?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Duyệt',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `/portal/team/leaves/${leaveId}/approve/`,
+                type: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                success: function(data) {
+                    if (data.status === 'success') {
+                        Swal.fire('Thành công!', data.message, 'success').then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Lỗi!', data.message, 'error');
+                    }
+                },
+                error: function() {
+                    Swal.fire('Lỗi!', 'Không thể duyệt đơn', 'error');
+                }
+            });
+        }
+    });
+}
+
+// Reject leave request
+function rejectLeave(leaveId) {
+    Swal.fire({
+        title: 'Từ chối đơn nghỉ phép?',
+        text: "Vui lòng nhập lý do từ chối:",
+        input: 'textarea',
+        inputPlaceholder: 'Nhập lý do từ chối...',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Từ chối',
+        cancelButtonText: 'Hủy',
+        inputValidator: (value) => {
+            if (!value) {
+                return 'Bạn cần nhập lý do từ chối!'
+            }
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `/portal/team/leaves/${leaveId}/reject/`,
+                type: 'POST',
+                data: {
+                    'reason': result.value
+                },
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                success: function(data) {
+                    if (data.status === 'success') {
+                        Swal.fire('Thành công!', data.message, 'success').then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Lỗi!', data.message, 'error');
+                    }
+                },
+                error: function() {
+                    Swal.fire('Lỗi!', 'Không thể từ chối đơn', 'error');
+                }
+            });
+        }
+    });
+}
+
+// View leave detail
+function viewLeaveDetail(leaveId) {
+    window.location.href = `/portal/leaves/${leaveId}/`;
+}
+</script>
+{% endblock %}
