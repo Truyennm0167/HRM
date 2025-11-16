@@ -6928,3 +6928,9 @@ INFO 2025-11-16 20:30:16,271 autoreload D:\Study\CT201\Project\hrm\app\HodViews.
 INFO 2025-11-16 20:30:17,856 autoreload Watching for file changes with StatReloader
 INFO 2025-11-16 20:30:39,944 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
 INFO 2025-11-16 20:30:41,577 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 20:58:46,638 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 20:59:02,345 middleware Login attempt for username: hr_user from IP: 127.0.0.1
+INFO 2025-11-16 20:59:02,714 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-16 20:59:02,731 HodViews Admin home accessed by hr_user
+INFO 2025-11-16 20:59:02,791 basehttp "GET / HTTP/1.1" 200 34995
+INFO 2025-11-16 20:59:11,855 basehttp "GET /employee_list HTTP/1.1" 200 34982
