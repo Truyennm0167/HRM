@@ -1,6 +1,8 @@
 # employee_app/forms.py
 from django import forms
-from .models import Employee, LeaveType, LeaveRequest, ExpenseCategory, Expense, Contract, JobPosting, Application
+from .models import (Employee, LeaveType, LeaveRequest, ExpenseCategory, Expense, 
+                     Contract, JobPosting, Application, AppraisalPeriod, 
+                     AppraisalCriteria, Appraisal, AppraisalScore)
 
 class EmployeeForm(forms.ModelForm):
     class Meta:
@@ -323,4 +325,141 @@ class ApplicationReviewForm(forms.ModelForm):
             'interview_date': forms.DateTimeInput(attrs={'class': 'form-control', 'type': 'datetime-local'}),
             'interview_location': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Địa điểm phỏng vấn'}),
             'rejection_reason': forms.Textarea(attrs={'class': 'form-control', 'rows': 3, 'placeholder': 'Lý do từ chối...'}),
+        }
+
+
+# ============================================================================
+# APPRAISAL FORMS
+# ============================================================================
+
+class AppraisalPeriodForm(forms.ModelForm):
+    """Form cho HR tạo/sửa kỳ đánh giá"""
+    class Meta:
+        model = AppraisalPeriod
+        fields = ['name', 'description', 'start_date', 'end_date', 
+                  'self_assessment_deadline', 'manager_review_deadline',
+                  'status', 'applicable_departments', 'applicable_job_titles']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'VD: Đánh giá năm 2025'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'start_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'self_assessment_deadline': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'manager_review_deadline': forms.DateInput(attrs={'class': 'form-control', 'type': 'date'}),
+            'status': forms.Select(attrs={'class': 'form-control'}),
+            'applicable_departments': forms.SelectMultiple(attrs={'class': 'form-control', 'size': '5'}),
+            'applicable_job_titles': forms.SelectMultiple(attrs={'class': 'form-control', 'size': '5'}),
+        }
+
+
+class AppraisalCriteriaForm(forms.ModelForm):
+    """Form để thêm tiêu chí đánh giá vào kỳ"""
+    class Meta:
+        model = AppraisalCriteria
+        fields = ['name', 'description', 'category', 'weight', 'max_score', 'order']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'VD: Chất lượng công việc'}),
+            'description': forms.Textarea(attrs={'class': 'form-control', 'rows': 3}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'weight': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01', 'min': '0', 'max': '100'}),
+            'max_score': forms.NumberInput(attrs={'class': 'form-control', 'value': '5', 'min': '1'}),
+            'order': forms.NumberInput(attrs={'class': 'form-control', 'value': '0'}),
+        }
+
+
+class SelfAssessmentForm(forms.ModelForm):
+    """Form cho nhân viên tự đánh giá"""
+    class Meta:
+        model = Appraisal
+        fields = ['self_comments', 'self_achievements', 'self_challenges', 'self_development_plan']
+        widgets = {
+            'self_comments': forms.Textarea(attrs={
+                'class': 'form-control', 
+                'rows': 4, 
+                'placeholder': 'Nhận xét chung về công việc của bạn trong kỳ...'
+            }),
+            'self_achievements': forms.Textarea(attrs={
+                'class': 'form-control', 
+                'rows': 4, 
+                'placeholder': 'Liệt kê các thành tích nổi bật...'
+            }),
+            'self_challenges': forms.Textarea(attrs={
+                'class': 'form-control', 
+                'rows': 4, 
+                'placeholder': 'Những khó khăn bạn gặp phải...'
+            }),
+            'self_development_plan': forms.Textarea(attrs={
+                'class': 'form-control', 
+                'rows': 4, 
+                'placeholder': 'Kế hoạch phát triển bản thân trong năm tới...'
+            }),
+        }
+
+
+class ManagerReviewForm(forms.ModelForm):
+    """Form cho quản lý đánh giá nhân viên"""
+    class Meta:
+        model = Appraisal
+        fields = ['manager_comments', 'manager_strengths', 'manager_weaknesses', 
+                  'manager_recommendations', 'promotion_recommended', 'training_recommended']
+        widgets = {
+            'manager_comments': forms.Textarea(attrs={
+                'class': 'form-control', 
+                'rows': 4, 
+                'placeholder': 'Nhận xét chung về nhân viên...'
+            }),
+            'manager_strengths': forms.Textarea(attrs={
+                'class': 'form-control', 
+                'rows': 3, 
+                'placeholder': 'Điểm mạnh của nhân viên...'
+            }),
+            'manager_weaknesses': forms.Textarea(attrs={
+                'class': 'form-control', 
+                'rows': 3, 
+                'placeholder': 'Điểm cần cải thiện...'
+            }),
+            'manager_recommendations': forms.Textarea(attrs={
+                'class': 'form-control', 
+                'rows': 3, 
+                'placeholder': 'Đề xuất về thăng chức, tăng lương, đào tạo...'
+            }),
+            'promotion_recommended': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+            'training_recommended': forms.Textarea(attrs={
+                'class': 'form-control', 
+                'rows': 2, 
+                'placeholder': 'Các khóa đào tạo đề xuất...'
+            }),
+        }
+
+
+class AppraisalScoreForm(forms.ModelForm):
+    """Form để nhập điểm cho từng tiêu chí"""
+    class Meta:
+        model = AppraisalScore
+        fields = ['self_score', 'self_comment', 'manager_score', 'manager_comment']
+        widgets = {
+            'self_score': forms.NumberInput(attrs={'class': 'form-control', 'min': '1'}),
+            'self_comment': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
+            'manager_score': forms.NumberInput(attrs={'class': 'form-control', 'min': '1'}),
+            'manager_comment': forms.Textarea(attrs={'class': 'form-control', 'rows': 2}),
+        }
+
+
+class HRFinalReviewForm(forms.ModelForm):
+    """Form cho HR hoàn tất đánh giá"""
+    class Meta:
+        model = Appraisal
+        fields = ['overall_rating', 'hr_comments', 'salary_adjustment']
+        widgets = {
+            'overall_rating': forms.Select(attrs={'class': 'form-control'}),
+            'hr_comments': forms.Textarea(attrs={
+                'class': 'form-control', 
+                'rows': 4, 
+                'placeholder': 'Nhận xét cuối cùng của HR...'
+            }),
+            'salary_adjustment': forms.NumberInput(attrs={
+                'class': 'form-control', 
+                'step': '100000', 
+                'placeholder': 'Điều chỉnh lương (VD: 1000000 = tăng 1 triệu)'
+            }),
         }

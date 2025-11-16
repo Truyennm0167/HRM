@@ -124,3 +124,143 @@ def validate_email(email):
     if not re.match(pattern, email):
         raise ValidationError(_('Địa chỉ email không hợp lệ'))
     return True
+
+
+# ============= PASSWORD VALIDATORS =============
+
+class PasswordComplexityValidator:
+    """
+    Validates that password meets complexity requirements:
+    - At least 1 uppercase letter
+    - At least 1 lowercase letter
+    - At least 1 digit
+    - At least 1 special character
+    """
+    
+    def validate(self, password, user=None):
+        import re
+        
+        if not re.search(r'[A-Z]', password):
+            raise ValidationError(
+                _("Mật khẩu phải chứa ít nhất 1 chữ cái viết hoa."),
+                code='password_no_upper',
+            )
+        
+        if not re.search(r'[a-z]', password):
+            raise ValidationError(
+                _("Mật khẩu phải chứa ít nhất 1 chữ cái viết thường."),
+                code='password_no_lower',
+            )
+        
+        if not re.search(r'\d', password):
+            raise ValidationError(
+                _("Mật khẩu phải chứa ít nhất 1 chữ số."),
+                code='password_no_digit',
+            )
+        
+        if not re.search(r'[!@#$%^&*(),.?":{}|<>]', password):
+            raise ValidationError(
+                _("Mật khẩu phải chứa ít nhất 1 ký tự đặc biệt (!@#$%^&*(),.?\":{}|<>)."),
+                code='password_no_special',
+            )
+    
+    def get_help_text(self):
+        return _(
+            "Mật khẩu phải chứa ít nhất 1 chữ hoa, 1 chữ thường, 1 số và 1 ký tự đặc biệt."
+        )
+
+
+class MaximumLengthValidator:
+    """
+    Validates that password is not too long (prevent DoS attacks)
+    """
+    
+    def __init__(self, max_length=128):
+        self.max_length = max_length
+    
+    def validate(self, password, user=None):
+        if len(password) > self.max_length:
+            raise ValidationError(
+                _("Mật khẩu không được dài quá %(max_length)d ký tự."),
+                code='password_too_long',
+                params={'max_length': self.max_length},
+            )
+    
+    def get_help_text(self):
+        return _(
+            "Mật khẩu không được dài quá %(max_length)d ký tự."
+            % {'max_length': self.max_length}
+        )
+
+
+class NoSpaceValidator:
+    """
+    Validates that password contains no spaces
+    """
+    
+    def validate(self, password, user=None):
+        if ' ' in password:
+            raise ValidationError(
+                _("Mật khẩu không được chứa khoảng trắng."),
+                code='password_contains_space',
+            )
+    
+    def get_help_text(self):
+        return _("Mật khẩu không được chứa khoảng trắng.")
+
+
+class NoEmailInPasswordValidator:
+    """
+    Validates that password doesn't contain user's email
+    """
+    
+    def validate(self, password, user=None):
+        if not user:
+            return
+        
+        email = getattr(user, 'email', None)
+        if not email:
+            return
+        
+        # Check if any part of email is in password (case insensitive)
+        email_parts = email.lower().split('@')[0].split('.')
+        password_lower = password.lower()
+        
+        for part in email_parts:
+            if len(part) >= 4 and part in password_lower:
+                raise ValidationError(
+                    _("Mật khẩu không được chứa phần nào của email."),
+                    code='password_contains_email',
+                )
+    
+    def get_help_text(self):
+        return _("Mật khẩu không được chứa phần nào của địa chỉ email.")
+
+
+class CommonPatternValidator:
+    """
+    Validates against common patterns like '123456', 'password', 'qwerty', etc.
+    """
+    
+    COMMON_PATTERNS = [
+        '123456', '1234567', '12345678', '123456789',
+        'password', 'password123', 'pass123',
+        'qwerty', 'qwerty123',
+        'abc123', 'abcd1234',
+        '111111', '000000',
+        '123123', '456456',
+    ]
+    
+    def validate(self, password, user=None):
+        password_lower = password.lower()
+        
+        for pattern in self.COMMON_PATTERNS:
+            if pattern in password_lower:
+                raise ValidationError(
+                    _("Mật khẩu chứa mẫu phổ biến không an toàn ('%(pattern)s')."),
+                    code='password_common_pattern',
+                    params={'pattern': pattern},
+                )
+    
+    def get_help_text(self):
+        return _("Mật khẩu không được chứa các mẫu phổ biến như '123456', 'password', 'qwerty'.")

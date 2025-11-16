@@ -1,0 +1,193 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}Quản lý Kỳ Đánh Giá{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản lý Kỳ Đánh Giá</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Kỳ đánh giá</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Statistics Cards -->
+        <div class="row">
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>{{ periods.count }}</h3>
+                        <p>Tổng số kỳ</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{ active_periods }}</h3>
+                        <p>Đang diễn ra</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{ draft_periods }}</h3>
+                        <p>Bản nháp</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-6">
+                <div class="small-box bg-primary">
+                    <div class="inner">
+                        <h3>&nbsp;</h3>
+                        <p>Tạo kỳ mới</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-plus"></i>
+                    </div>
+                    <a href="{% url 'create_appraisal_period' %}" class="small-box-footer">
+                        Thêm mới <i class="fas fa-arrow-circle-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Periods List -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách kỳ đánh giá</h3>
+                        <div class="card-tools">
+                            <a href="{% url 'create_appraisal_period' %}" class="btn btn-primary btn-sm">
+                                <i class="fas fa-plus"></i> Tạo kỳ mới
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        {% if periods %}
+                        <table class="table table-bordered table-striped" id="appraisalPeriodsTable">
+                            <thead>
+                                <tr>
+                                    <th>Tên kỳ</th>
+                                    <th>Thời gian</th>
+                                    <th>Deadline</th>
+                                    <th>Phạm vi</th>
+                                    <th>Trạng thái</th>
+                                    <th>Người tạo</th>
+                                    <th>Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for period in periods %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ period.name }}</strong><br>
+                                        <small class="text-muted">{{ period.description|truncatewords:10 }}</small>
+                                    </td>
+                                    <td>
+                                        {{ period.start_date|date:"d/m/Y" }} - {{ period.end_date|date:"d/m/Y" }}<br>
+                                        <small class="text-muted">{{ period.duration }} ngày</small>
+                                    </td>
+                                    <td>
+                                        <small>
+                                            Tự đánh giá: {{ period.self_assessment_deadline|date:"d/m/Y" }}<br>
+                                            Quản lý: {{ period.manager_review_deadline|date:"d/m/Y" }}
+                                        </small>
+                                    </td>
+                                    <td>
+                                        {% if period.applicable_departments.exists %}
+                                            <small>{{ period.applicable_departments.count }} phòng ban</small><br>
+                                        {% endif %}
+                                        {% if period.applicable_job_titles.exists %}
+                                            <small>{{ period.applicable_job_titles.count }} chức vụ</small>
+                                        {% else %}
+                                            <small class="text-muted">Tất cả</small>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if period.status == 'draft' %}
+                                            <span class="badge badge-secondary">Bản nháp</span>
+                                        {% elif period.status == 'active' %}
+                                            <span class="badge badge-success">Đang diễn ra</span>
+                                        {% elif period.status == 'closed' %}
+                                            <span class="badge badge-danger">Đã đóng</span>
+                                        {% elif period.status == 'completed' %}
+                                            <span class="badge badge-info">Hoàn thành</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ period.created_by.name|default:"N/A" }}</td>
+                                    <td>
+                                        <a href="{% url 'appraisal_period_detail' period.id %}" 
+                                           class="btn btn-info btn-sm" title="Xem chi tiết">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        <div class="alert alert-info">
+                            <h5><i class="icon fas fa-info"></i> Chưa có kỳ đánh giá nào!</h5>
+                            Hãy tạo kỳ đánh giá đầu tiên để bắt đầu.
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+$(document).ready(function() {
+    // Initialize DataTable
+    $('#appraisalPeriodsTable').DataTable({
+        "responsive": true,
+        "lengthChange": false,
+        "autoWidth": false,
+        "ordering": true,
+        "order": [[1, 'desc']], // Sort by date descending
+        "language": {
+            "search": "Tìm kiếm:",
+            "paginate": {
+                "previous": "Trước",
+                "next": "Sau"
+            },
+            "info": "Hiển thị _START_ đến _END_ của _TOTAL_ kỳ",
+            "infoEmpty": "Không có dữ liệu",
+            "zeroRecords": "Không tìm thấy kết quả"
+        }
+    });
+});
+</script>
+{% endblock custom_js %}

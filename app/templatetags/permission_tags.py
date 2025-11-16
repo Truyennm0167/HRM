@@ -47,6 +47,13 @@ def has_group(user, group_name):
         return False
 
 
+# Alias for backward compatibility
+@register.filter(name='user_in_group')
+def user_in_group(user, group_name):
+    """Alias for has_group for backward compatibility"""
+    return has_group(user, group_name)
+
+
 @register.filter(name='has_permission')
 def has_permission(user, permission_codename):
     """
@@ -107,6 +114,13 @@ def has_any_group(user, group_names):
         return user.groups.filter(name__in=group_list).exists()
     except Exception:
         return False
+
+
+# Alias for backward compatibility
+@register.filter(name='user_in_groups')
+def user_in_groups(user, group_names):
+    """Alias for has_any_group for backward compatibility"""
+    return has_any_group(user, group_names)
 
 
 @register.filter(name='has_all_groups')

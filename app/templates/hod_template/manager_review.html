@@ -1,0 +1,326 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}Đánh Giá Nhân Viên{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Đánh Giá Nhân Viên</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'manager_appraisals' %}">Đánh giá team</a></li>
+                    <li class="breadcrumb-item active">Đánh giá</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST" action="{% url 'manager_review' appraisal.id %}">
+            {% csrf_token %}
+            
+            <div class="row">
+                <!-- Employee Info -->
+                <div class="col-md-4">
+                    <div class="card card-primary card-outline">
+                        <div class="card-body box-profile">
+                            <div class="text-center">
+                                {% if appraisal.employee.avatar %}
+                                    <img class="profile-user-img img-fluid img-circle" 
+                                         src="{{ appraisal.employee.avatar.url }}" 
+                                         alt="Avatar">
+                                {% else %}
+                                    <img class="profile-user-img img-fluid img-circle" 
+                                         src="{% static 'dist/img/user2-160x160.jpg' %}" 
+                                         alt="Avatar">
+                                {% endif %}
+                            </div>
+
+                            <h3 class="profile-username text-center">{{ appraisal.employee.name }}</h3>
+                            <p class="text-muted text-center">{{ appraisal.employee.job_title.name }}</p>
+
+                            <ul class="list-group list-group-unbordered mb-3">
+                                <li class="list-group-item">
+                                    <b>Phòng ban</b>
+                                    <span class="float-right">{{ appraisal.employee.department.name }}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Mã NV</b>
+                                    <span class="float-right">{{ appraisal.employee.employee_code }}</span>
+                                </li>
+                                <li class="list-group-item">
+                                    <b>Email</b>
+                                    <span class="float-right">{{ appraisal.employee.email }}</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <!-- Period Info -->
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">Thông tin kỳ</h3>
+                        </div>
+                        <div class="card-body">
+                            <dl>
+                                <dt>Kỳ đánh giá:</dt>
+                                <dd>{{ appraisal.period.name }}</dd>
+
+                                <dt>Thời gian:</dt>
+                                <dd>{{ appraisal.period.start_date|date:"d/m/Y" }} - {{ appraisal.period.end_date|date:"d/m/Y" }}</dd>
+
+                                <dt>Deadline:</dt>
+                                <dd>
+                                    <span class="badge badge-warning">
+                                        {{ appraisal.period.manager_review_deadline|date:"d/m/Y" }}
+                                    </span>
+                                </dd>
+
+                                <dt>Điểm tự đánh giá:</dt>
+                                <dd>
+                                    <strong class="text-primary">
+                                        {{ appraisal.self_overall_score|default:"—" }}
+                                    </strong>
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <!-- Self Assessment Review -->
+                    <div class="card card-secondary">
+                        <div class="card-header">
+                            <h3 class="card-title">Tự đánh giá của nhân viên</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <h5>Tự đánh giá chung</h5>
+                                <p class="text-muted">{{ appraisal.self_assessment|default:"Chưa có" }}</p>
+                            </div>
+                            <div class="mb-3">
+                                <h5>Thành tích đạt được</h5>
+                                <p class="text-muted">{{ appraisal.self_achievements|default:"Chưa có" }}</p>
+                            </div>
+                            <div class="mb-3">
+                                <h5>Khó khăn gặp phải</h5>
+                                <p class="text-muted">{{ appraisal.self_challenges|default:"Chưa có" }}</p>
+                            </div>
+                            <div class="mb-3">
+                                <h5>Mục tiêu kỳ tiếp theo</h5>
+                                <p class="text-muted">{{ appraisal.self_goals|default:"Chưa có" }}</p>
+                            </div>
+
+                            <!-- Self Scores -->
+                            <h5 class="mt-4">Điểm tự chấm theo tiêu chí</h5>
+                            <table class="table table-sm table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Tiêu chí</th>
+                                        <th width="100">Điểm</th>
+                                        <th>Nhận xét</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for score in scores %}
+                                    <tr>
+                                        <td>{{ score.criteria.name }}</td>
+                                        <td class="text-center">
+                                            <strong>{{ score.self_score|default:"—" }}</strong> / {{ score.criteria.max_score }}
+                                        </td>
+                                        <td><small>{{ score.self_comment|default:"—" }}</small></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Manager Review -->
+                    <div class="card card-warning">
+                        <div class="card-header">
+                            <h3 class="card-title">Đánh giá của bạn (Quản lý)</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- Manager Scores -->
+                            <h5>Chấm điểm theo tiêu chí</h5>
+                            {% for score in scores %}
+                            <div class="card mb-2">
+                                <div class="card-header bg-light">
+                                    <strong>{{ forloop.counter }}. {{ score.criteria.name }}</strong>
+                                    <span class="badge badge-primary float-right">{{ score.criteria.weight }}%</span>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <label>Điểm NV chấm:</label>
+                                            <p class="text-primary"><strong>{{ score.self_score|default:"—" }}</strong></p>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group">
+                                                <label for="manager_score_{{ score.id }}">
+                                                    Điểm của bạn <span class="text-danger">*</span>
+                                                </label>
+                                                <input type="number" 
+                                                       class="form-control" 
+                                                       id="manager_score_{{ score.id }}" 
+                                                       name="manager_score_{{ score.id }}"
+                                                       min="0" 
+                                                       max="{{ score.criteria.max_score }}"
+                                                       value="{{ score.manager_score|default:'' }}"
+                                                       required>
+                                                <small class="text-muted">Max: {{ score.criteria.max_score }}</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label for="manager_comment_{{ score.id }}">Nhận xét</label>
+                                                <textarea class="form-control" 
+                                                          id="manager_comment_{{ score.id }}" 
+                                                          name="manager_comment_{{ score.id }}"
+                                                          rows="2">{{ score.manager_comment|default:'' }}</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+
+                            <!-- Manager Review Form -->
+                            <div class="mt-4">
+                                <h5>Đánh giá tổng quan</h5>
+                                
+                                <div class="form-group">
+                                    <label for="{{ form.manager_review.id_for_label }}">
+                                        Nhận xét chung <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.manager_review }}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ form.manager_strengths.id_for_label }}">
+                                        Điểm mạnh <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.manager_strengths }}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ form.manager_weaknesses.id_for_label }}">
+                                        Điểm cần cải thiện
+                                    </label>
+                                    {{ form.manager_weaknesses }}
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="{{ form.manager_recommendations.id_for_label }}">
+                                        Đề xuất phát triển
+                                    </label>
+                                    {{ form.manager_recommendations }}
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                {{ form.recommend_promotion }}
+                                                <label class="custom-control-label" for="{{ form.recommend_promotion.id_for_label }}">
+                                                    Đề xuất thăng chức
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                {{ form.recommend_training }}
+                                                <label class="custom-control-label" for="{{ form.recommend_training.id_for_label }}">
+                                                    Đề xuất đào tạo
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit -->
+                    <div class="card">
+                        <div class="card-body">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-check"></i> Hoàn thành đánh giá
+                            </button>
+                            <a href="{% url 'manager_appraisals' %}" class="btn btn-secondary btn-lg">
+                                <i class="fas fa-times"></i> Hủy
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+$(document).ready(function() {
+    // Form validation
+    $('form').on('submit', function(e) {
+        var allScoresFilled = true;
+        $('input[name^="manager_score_"]').each(function() {
+            if ($(this).val() === '') {
+                allScoresFilled = false;
+                $(this).addClass('is-invalid');
+            } else {
+                $(this).removeClass('is-invalid');
+            }
+        });
+
+        if (!allScoresFilled) {
+            e.preventDefault();
+            alert('Vui lòng chấm điểm cho tất cả các tiêu chí!');
+            return false;
+        }
+
+        if (!confirm('Bạn có chắc chắn muốn gửi đánh giá? Sau khi gửi sẽ chuyển cho HR phê duyệt!')) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    // Score validation
+    $('input[name^="manager_score_"]').on('input', function() {
+        var max = parseInt($(this).attr('max'));
+        var val = parseInt($(this).val());
+        
+        if (val > max) {
+            $(this).val(max);
+        }
+        if (val < 0) {
+            $(this).val(0);
+        }
+    });
+});
+</script>
+{% endblock custom_js %}

@@ -1,0 +1,223 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}Thêm Tiêu Chí Đánh Giá{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Thêm Tiêu Chí Đánh Giá</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'appraisal_periods' %}">Kỳ đánh giá</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'appraisal_period_detail' period.id %}">{{ period.name }}</a></li>
+                    <li class="breadcrumb-item active">Thêm tiêu chí</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">Thông tin tiêu chí (KPI)</h3>
+                    </div>
+                    
+                    <form method="POST" action="{% url 'add_appraisal_criteria' period.id %}">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            {% if messages %}
+                                {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+
+                            <!-- Period Info -->
+                            <div class="alert alert-info">
+                                <h5><i class="icon fas fa-info"></i> Kỳ đánh giá: {{ period.name }}</h5>
+                                <p class="mb-0">{{ period.description }}</p>
+                            </div>
+
+                            <!-- Criteria Name -->
+                            <div class="form-group">
+                                <label for="{{ form.name.id_for_label }}">
+                                    Tên tiêu chí <span class="text-danger">*</span>
+                                </label>
+                                {{ form.name }}
+                                {% if form.name.errors %}
+                                    <span class="text-danger">{{ form.name.errors.0 }}</span>
+                                {% endif %}
+                                <small class="form-text text-muted">
+                                    VD: Hoàn thành đúng hạn dự án, Chất lượng công việc, Tinh thần teamwork
+                                </small>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="form-group">
+                                <label for="{{ form.description.id_for_label }}">Mô tả chi tiết</label>
+                                {{ form.description }}
+                                {% if form.description.errors %}
+                                    <span class="text-danger">{{ form.description.errors.0 }}</span>
+                                {% endif %}
+                                <small class="form-text text-muted">
+                                    Mô tả rõ ràng tiêu chí này đánh giá điều gì
+                                </small>
+                            </div>
+
+                            <!-- Category -->
+                            <div class="form-group">
+                                <label for="{{ form.category.id_for_label }}">
+                                    Danh mục <span class="text-danger">*</span>
+                                </label>
+                                {{ form.category }}
+                                {% if form.category.errors %}
+                                    <span class="text-danger">{{ form.category.errors.0 }}</span>
+                                {% endif %}
+                                <small class="form-text text-muted">
+                                    <strong>Hiệu suất:</strong> KPI, đạt mục tiêu<br>
+                                    <strong>Hành vi:</strong> Tác phong, thái độ, kỷ luật<br>
+                                    <strong>Năng lực:</strong> Kỹ năng chuyên môn, soft skills<br>
+                                    <strong>Mục tiêu:</strong> OKR, chỉ tiêu cụ thể
+                                </small>
+                            </div>
+
+                            <!-- Weight and Max Score -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.weight.id_for_label }}">
+                                            Trọng số (%) <span class="text-danger">*</span>
+                                        </label>
+                                        {{ form.weight }}
+                                        {% if form.weight.errors %}
+                                            <span class="text-danger">{{ form.weight.errors.0 }}</span>
+                                        {% endif %}
+                                        <small class="form-text text-muted">
+                                            Tổng trọng số tất cả tiêu chí phải = 100%
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.max_score.id_for_label }}">
+                                            Điểm tối đa <span class="text-danger">*</span>
+                                        </label>
+                                        {{ form.max_score }}
+                                        {% if form.max_score.errors %}
+                                            <span class="text-danger">{{ form.max_score.errors.0 }}</span>
+                                        {% endif %}
+                                        <small class="form-text text-muted">
+                                            Thường là 5, 10, hoặc 100 điểm
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-plus"></i> Thêm tiêu chí
+                            </button>
+                            <a href="{% url 'appraisal_period_detail' period.id %}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Quay lại
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Example Criteria -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Ví dụ tiêu chí thường dùng</h3>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Tiêu chí</th>
+                                    <th>Danh mục</th>
+                                    <th>Trọng số</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Hoàn thành công việc đúng hạn</td>
+                                    <td><span class="badge badge-primary">Hiệu suất</span></td>
+                                    <td>25%</td>
+                                </tr>
+                                <tr>
+                                    <td>Chất lượng công việc</td>
+                                    <td><span class="badge badge-primary">Hiệu suất</span></td>
+                                    <td>25%</td>
+                                </tr>
+                                <tr>
+                                    <td>Kỹ năng chuyên môn</td>
+                                    <td><span class="badge badge-success">Năng lực</span></td>
+                                    <td>20%</td>
+                                </tr>
+                                <tr>
+                                    <td>Tinh thần làm việc nhóm</td>
+                                    <td><span class="badge badge-info">Hành vi</span></td>
+                                    <td>15%</td>
+                                </tr>
+                                <tr>
+                                    <td>Chủ động và sáng tạo</td>
+                                    <td><span class="badge badge-info">Hành vi</span></td>
+                                    <td>15%</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr class="font-weight-bold">
+                                    <td colspan="2">Tổng</td>
+                                    <td>100%</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+$(document).ready(function() {
+    // Auto-calculate remaining weight
+    $('#id_weight').on('input', function() {
+        var val = parseFloat($(this).val()) || 0;
+        if (val > 100) {
+            $(this).val(100);
+            alert('Trọng số không được vượt quá 100%');
+        }
+        if (val < 0) {
+            $(this).val(0);
+        }
+    });
+
+    // Validate max score
+    $('#id_max_score').on('input', function() {
+        var val = parseInt($(this).val()) || 0;
+        if (val < 1) {
+            $(this).val(1);
+        }
+    });
+});
+</script>
+{% endblock custom_js %}

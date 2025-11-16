@@ -1,0 +1,215 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}Tạo Kỳ Đánh Giá{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Tạo Kỳ Đánh Giá Mới</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'appraisal_periods' %}">Kỳ đánh giá</a></li>
+                    <li class="breadcrumb-item active">Tạo mới</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Thông tin kỳ đánh giá</h3>
+                    </div>
+                    
+                    <form method="POST" action="{% url 'create_appraisal_period' %}">
+                        {% csrf_token %}
+                        <div class="card-body">
+                            {% if messages %}
+                                {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                {% endfor %}
+                            {% endif %}
+
+                            <!-- Name -->
+                            <div class="form-group">
+                                <label for="{{ form.name.id_for_label }}">
+                                    Tên kỳ đánh giá <span class="text-danger">*</span>
+                                </label>
+                                {{ form.name }}
+                                {% if form.name.errors %}
+                                    <span class="text-danger">{{ form.name.errors.0 }}</span>
+                                {% endif %}
+                                <small class="form-text text-muted">VD: Đánh giá Q1 2024, Đánh giá cuối năm 2024</small>
+                            </div>
+
+                            <!-- Description -->
+                            <div class="form-group">
+                                <label for="{{ form.description.id_for_label }}">Mô tả</label>
+                                {{ form.description }}
+                                {% if form.description.errors %}
+                                    <span class="text-danger">{{ form.description.errors.0 }}</span>
+                                {% endif %}
+                            </div>
+
+                            <!-- Date Range -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.start_date.id_for_label }}">
+                                            Ngày bắt đầu <span class="text-danger">*</span>
+                                        </label>
+                                        {{ form.start_date }}
+                                        {% if form.start_date.errors %}
+                                            <span class="text-danger">{{ form.start_date.errors.0 }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.end_date.id_for_label }}">
+                                            Ngày kết thúc <span class="text-danger">*</span>
+                                        </label>
+                                        {{ form.end_date }}
+                                        {% if form.end_date.errors %}
+                                            <span class="text-danger">{{ form.end_date.errors.0 }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Deadlines -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.self_assessment_deadline.id_for_label }}">
+                                            Deadline tự đánh giá <span class="text-danger">*</span>
+                                        </label>
+                                        {{ form.self_assessment_deadline }}
+                                        {% if form.self_assessment_deadline.errors %}
+                                            <span class="text-danger">{{ form.self_assessment_deadline.errors.0 }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.manager_review_deadline.id_for_label }}">
+                                            Deadline đánh giá quản lý <span class="text-danger">*</span>
+                                        </label>
+                                        {{ form.manager_review_deadline }}
+                                        {% if form.manager_review_deadline.errors %}
+                                            <span class="text-danger">{{ form.manager_review_deadline.errors.0 }}</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Scope -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.applicable_departments.id_for_label }}">
+                                            Phòng ban áp dụng
+                                        </label>
+                                        {{ form.applicable_departments }}
+                                        {% if form.applicable_departments.errors %}
+                                            <span class="text-danger">{{ form.applicable_departments.errors.0 }}</span>
+                                        {% endif %}
+                                        <small class="form-text text-muted">Để trống = áp dụng cho tất cả</small>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.applicable_job_titles.id_for_label }}">
+                                            Chức vụ áp dụng
+                                        </label>
+                                        {{ form.applicable_job_titles }}
+                                        {% if form.applicable_job_titles.errors %}
+                                            <span class="text-danger">{{ form.applicable_job_titles.errors.0 }}</span>
+                                        {% endif %}
+                                        <small class="form-text text-muted">Để trống = áp dụng cho tất cả</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Status -->
+                            <div class="form-group">
+                                <label for="{{ form.status.id_for_label }}">
+                                    Trạng thái <span class="text-danger">*</span>
+                                </label>
+                                {{ form.status }}
+                                {% if form.status.errors %}
+                                    <span class="text-danger">{{ form.status.errors.0 }}</span>
+                                {% endif %}
+                                <small class="form-text text-muted">
+                                    Bản nháp: Chưa hiển thị cho nhân viên. Đang diễn ra: Bắt đầu đánh giá.
+                                </small>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> Tạo kỳ đánh giá
+                            </button>
+                            <a href="{% url 'appraisal_periods' %}" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Hủy
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Instructions Card -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Hướng dẫn</h3>
+                    </div>
+                    <div class="card-body">
+                        <ol>
+                            <li>Tạo kỳ đánh giá với trạng thái "Bản nháp"</li>
+                            <li>Thêm các tiêu chí đánh giá (KPIs) vào kỳ</li>
+                            <li>Kiểm tra và đổi trạng thái sang "Đang diễn ra"</li>
+                            <li>Nhấn "Tạo đánh giá cho nhân viên" để tạo bản đánh giá</li>
+                            <li>Nhân viên sẽ nhận thông báo để tự đánh giá</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+$(document).ready(function() {
+    // Initialize Select2 for multi-select
+    $('.select2').select2({
+        theme: 'bootstrap4',
+        placeholder: 'Chọn...',
+        allowClear: true
+    });
+
+    // Date picker
+    $('#id_start_date, #id_end_date, #id_self_assessment_deadline, #id_manager_review_deadline').datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true,
+        todayHighlight: true
+    });
+});
+</script>
+{% endblock custom_js %}

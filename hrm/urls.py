@@ -136,4 +136,18 @@ urlpatterns = [
     path('ai/resumes/', ai_views.resume_list, name='resume_list'),
     path('ai/resume/<int:resume_id>/', ai_views.view_resume, name='view_resume'),
     path('ai/resume/<int:resume_id>/delete/', ai_views.delete_resume, name='delete_resume'),
+
+    # Appraisal Management URLs
+    path('appraisal/periods/', HodViews.appraisal_periods, name='appraisal_periods'),
+    path('appraisal/periods/create/', HodViews.create_appraisal_period, name='create_appraisal_period'),
+    path('appraisal/periods/<int:period_id>/', HodViews.appraisal_period_detail, name='appraisal_period_detail'),
+    path('appraisal/periods/<int:period_id>/add-criteria/', HodViews.add_appraisal_criteria, name='add_appraisal_criteria'),
+    path('appraisal/periods/<int:period_id>/generate/', HodViews.generate_appraisals, name='generate_appraisals'),
+    path('appraisal/my-appraisals/', HodViews.my_appraisals, name='my_appraisals'),
+    path('appraisal/<int:appraisal_id>/self-assess/', HodViews.self_assessment, name='self_assessment'),
+    path('appraisal/manager/', HodViews.manager_appraisals, name='manager_appraisals'),
+    path('appraisal/<int:appraisal_id>/manager-review/', HodViews.manager_review, name='manager_review'),
+    path('appraisal/hr/', HodViews.hr_appraisals, name='hr_appraisals'),
+    path('appraisal/<int:appraisal_id>/hr-review/', HodViews.hr_final_review, name='hr_final_review'),
+    path('appraisal/<int:appraisal_id>/detail/', HodViews.appraisal_detail, name='appraisal_detail'),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)+static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

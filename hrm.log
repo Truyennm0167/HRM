@@ -5614,3 +5614,1317 @@ INFO 2025-11-15 20:32:00,365 basehttp "GET / HTTP/1.1" 200 32867
 INFO 2025-11-15 20:32:07,010 basehttp "GET /org-chart/ HTTP/1.1" 200 44027
 INFO 2025-11-15 20:32:09,741 HodViews Admin home accessed by employee_user
 INFO 2025-11-15 20:32:09,767 basehttp "GET / HTTP/1.1" 200 32867
+INFO 2025-11-15 20:33:38,067 basehttp "GET /org-chart/ HTTP/1.1" 200 44027
+INFO 2025-11-15 20:33:43,991 basehttp "GET /department/ HTTP/1.1" 200 33036
+INFO 2025-11-15 20:33:51,810 basehttp "GET /job_title HTTP/1.1" 200 33212
+WARNING 2025-11-15 20:33:55,714 permissions Permission denied: employee_user tried to access View (ID: None) - Required: One of: HR, Manager - Reason: User not in any of required groups: HR, Manager
+WARNING 2025-11-15 20:33:55,715 log Forbidden (Permission denied): /contracts/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 181, in _wrapped_view
+    raise PermissionDenied(f"User must be in one of: {group_names}")
+django.core.exceptions.PermissionDenied: User must be in one of: ('HR', 'Manager')
+WARNING 2025-11-15 20:33:55,718 basehttp "GET /contracts/ HTTP/1.1" 403 135
+INFO 2025-11-15 20:33:59,836 basehttp "GET /add_employee HTTP/1.1" 200 36239
+INFO 2025-11-15 20:33:59,913 basehttp "GET /add_employee HTTP/1.1" 200 36081
+INFO 2025-11-15 20:34:02,025 basehttp "GET /employee_list HTTP/1.1" 200 33638
+INFO 2025-11-15 20:34:05,445 basehttp "GET /payroll/calculate/ HTTP/1.1" 200 37690
+WARNING 2025-11-15 20:34:13,367 permissions Permission denied: employee_user tried to access View (ID: None) - Required: One of: HR, Manager - Reason: User not in any of required groups: HR, Manager
+WARNING 2025-11-15 20:34:13,367 log Forbidden (Permission denied): /payroll/manage/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 181, in _wrapped_view
+    raise PermissionDenied(f"User must be in one of: {group_names}")
+django.core.exceptions.PermissionDenied: User must be in one of: ('HR', 'Manager')
+WARNING 2025-11-15 20:34:13,369 basehttp "GET /payroll/manage/ HTTP/1.1" 403 135
+INFO 2025-11-15 20:34:16,080 basehttp "GET /leave/request/ HTTP/1.1" 200 29341
+INFO 2025-11-15 20:34:20,287 basehttp "GET /leave/history/ HTTP/1.1" 200 26933
+WARNING 2025-11-15 20:34:21,140 permissions Permission denied: employee_user tried to access View (ID: None) - Required: One of: HR, Manager - Reason: User not in any of required groups: HR, Manager
+WARNING 2025-11-15 20:34:21,141 log Forbidden (Permission denied): /leave/manage/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 181, in _wrapped_view
+    raise PermissionDenied(f"User must be in one of: {group_names}")
+django.core.exceptions.PermissionDenied: User must be in one of: ('HR', 'Manager')
+WARNING 2025-11-15 20:34:21,145 basehttp "GET /leave/manage/ HTTP/1.1" 403 135
+INFO 2025-11-15 20:34:23,026 basehttp "GET /leave/types/ HTTP/1.1" 200 47218
+WARNING 2025-11-15 20:34:25,540 permissions Permission denied: employee_user tried to access View (ID: None) - Required: One of: HR, Manager - Reason: User not in any of required groups: HR, Manager
+WARNING 2025-11-15 20:34:25,541 log Forbidden (Permission denied): /expense/manage/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 181, in _wrapped_view
+    raise PermissionDenied(f"User must be in one of: {group_names}")
+django.core.exceptions.PermissionDenied: User must be in one of: ('HR', 'Manager')
+WARNING 2025-11-15 20:34:25,545 basehttp "GET /expense/manage/ HTTP/1.1" 403 135
+INFO 2025-11-15 20:34:27,120 HodViews Expense categories viewed by employee_user
+INFO 2025-11-15 20:34:27,141 basehttp "GET /expense/categories/ HTTP/1.1" 200 45800
+INFO 2025-11-15 20:34:28,097 basehttp "GET /expense/create/ HTTP/1.1" 200 32128
+INFO 2025-11-15 20:34:34,681 HodViews Employee dashboard accessed by IT Staff Member
+INFO 2025-11-15 20:34:34,692 basehttp "GET /portal/dashboard/ HTTP/1.1" 200 31418
+INFO 2025-11-15 20:35:17,275 basehttp "GET /salary-rules/components/ HTTP/1.1" 200 23851
+INFO 2025-11-15 20:37:48,353 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-15 20:37:49,584 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 20:37:55,939 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-15 20:37:56,987 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 20:38:03,203 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-15 20:38:04,426 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 20:38:11,539 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-15 20:38:12,705 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 20:38:18,985 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-15 20:38:20,027 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 20:38:27,105 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-15 20:38:28,150 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 20:38:40,486 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-15 20:38:41,668 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 20:39:13,303 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-15 20:39:14,827 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 20:39:22,204 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-15 20:39:23,301 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 20:39:32,509 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-15 20:39:33,544 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 20:39:48,953 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-15 20:39:50,081 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 20:40:10,468 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-15 20:40:11,564 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 20:40:19,693 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-15 20:40:20,772 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 20:40:34,938 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-15 20:40:36,118 autoreload Watching for file changes with StatReloader
+WARNING 2025-11-15 20:40:53,014 permissions Permission denied: employee_user tried to access View (ID: None) - Required: HR - Reason: User not in required group: HR
+WARNING 2025-11-15 20:40:53,016 log Forbidden (Permission denied): /salary-rules/components/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 144, in _wrapped_view
+    raise PermissionDenied(f"User must be in '{group_name}' group")
+django.core.exceptions.PermissionDenied: User must be in 'HR' group
+WARNING 2025-11-15 20:40:53,025 basehttp "GET /salary-rules/components/ HTTP/1.1" 403 135
+INFO 2025-11-15 20:40:54,210 HodViews Employee dashboard accessed by IT Staff Member
+INFO 2025-11-15 20:40:54,261 basehttp "GET /portal/dashboard/ HTTP/1.1" 200 31418
+INFO 2025-11-15 20:41:01,897 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-15 20:41:01,908 basehttp "GET /login/ HTTP/1.1" 200 3532
+INFO 2025-11-15 20:41:11,132 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-15 20:41:11,148 HodViews Admin home accessed by hr_user
+INFO 2025-11-15 20:41:11,179 basehttp "GET / HTTP/1.1" 200 32861
+INFO 2025-11-15 20:41:13,007 basehttp "GET /salary-rules/components/ HTTP/1.1" 200 23845
+INFO 2025-11-15 20:41:14,656 basehttp "GET /salary-rules/bulk-assign/ HTTP/1.1" 200 23859
+INFO 2025-11-15 20:41:15,732 basehttp "GET /salary-rules/templates/ HTTP/1.1" 200 23847
+INFO 2025-11-15 20:41:16,401 basehttp "GET /salary-rules/history/ HTTP/1.1" 200 23847
+INFO 2025-11-15 20:41:17,222 basehttp "GET /salary-rules/templates/ HTTP/1.1" 200 23847
+INFO 2025-11-15 20:41:17,711 basehttp "GET /salary-rules/components/ HTTP/1.1" 200 23845
+INFO 2025-11-15 20:41:40,979 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-15 20:41:42,616 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 20:41:43,876 basehttp "GET /salary-rules/components/ HTTP/1.1" 200 23845
+INFO 2025-11-15 20:41:46,993 basehttp "GET /salary-rules/bulk-assign/ HTTP/1.1" 200 23859
+INFO 2025-11-15 20:41:47,736 basehttp "GET /salary-rules/templates/ HTTP/1.1" 200 23847
+INFO 2025-11-15 20:41:48,260 basehttp "GET /salary-rules/bulk-assign/ HTTP/1.1" 200 23859
+INFO 2025-11-15 20:41:48,739 basehttp "GET /salary-rules/components/ HTTP/1.1" 200 23845
+INFO 2025-11-15 20:41:51,896 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-15 20:41:51,907 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-15 20:41:58,653 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-15 20:41:58,669 HodViews Admin home accessed by admin
+INFO 2025-11-15 20:41:58,711 basehttp "GET / HTTP/1.1" 200 32859
+INFO 2025-11-15 20:42:00,455 basehttp "GET /salary-rules/components/ HTTP/1.1" 200 23843
+INFO 2025-11-15 20:42:02,577 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-15 20:42:02,589 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-15 20:42:10,010 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-15 20:42:10,025 HodViews Admin home accessed by hr_user
+INFO 2025-11-15 20:42:10,057 basehttp "GET / HTTP/1.1" 200 32861
+INFO 2025-11-15 20:42:11,795 basehttp "GET /salary-rules/components/ HTTP/1.1" 200 23845
+INFO 2025-11-15 20:43:03,670 basehttp "GET /salary-rules/bulk-assign/ HTTP/1.1" 200 23859
+INFO 2025-11-15 20:43:04,281 basehttp "GET /salary-rules/templates/ HTTP/1.1" 200 23847
+INFO 2025-11-15 20:43:10,736 basehttp "GET /salary-rules/components/ HTTP/1.1" 200 23845
+WARNING 2025-11-15 20:43:13,859 log Not Found: /salary-rules/
+WARNING 2025-11-15 20:43:13,860 basehttp "GET /salary-rules/ HTTP/1.1" 404 19354
+INFO 2025-11-15 20:43:16,105 basehttp "GET /salary-rules/bulk-assign/ HTTP/1.1" 200 23859
+INFO 2025-11-15 20:43:17,017 basehttp "GET /salary-rules/templates/ HTTP/1.1" 200 23847
+INFO 2025-11-15 20:44:17,872 HodViews Admin home accessed by hr_user
+INFO 2025-11-15 20:44:17,888 basehttp "GET / HTTP/1.1" 200 32861
+INFO 2025-11-15 20:46:59,044 HodViews Admin home accessed by hr_user
+INFO 2025-11-15 20:46:59,078 basehttp "GET / HTTP/1.1" 200 32861
+INFO 2025-11-15 20:47:03,833 basehttp "GET /salary-rules/components/ HTTP/1.1" 200 44940
+INFO 2025-11-15 20:47:43,968 basehttp "GET /salary-rules/components/11/edit/ HTTP/1.1" 200 23859
+INFO 2025-11-15 20:47:47,120 basehttp "GET /salary-rules/components/2/edit/ HTTP/1.1" 200 23859
+INFO 2025-11-15 20:47:51,922 basehttp "GET /salary-rules/bulk-assign/ HTTP/1.1" 200 23859
+INFO 2025-11-15 20:48:15,195 basehttp "GET /salary-rules/bulk-assign/ HTTP/1.1" 200 23859
+INFO 2025-11-15 20:48:16,388 basehttp "GET /salary-rules/templates/ HTTP/1.1" 200 23847
+INFO 2025-11-15 20:48:17,255 basehttp "GET /salary-rules/history/ HTTP/1.1" 200 23847
+INFO 2025-11-15 20:48:18,905 basehttp "GET /salary-rules/bulk-assign/ HTTP/1.1" 200 23859
+INFO 2025-11-15 20:48:29,469 basehttp "GET /salary-rules/templates/ HTTP/1.1" 200 23847
+INFO 2025-11-15 20:48:35,329 basehttp "GET /salary-rules/history/ HTTP/1.1" 200 23847
+INFO 2025-11-15 20:53:05,118 basehttp "GET /salary-rules/history/ HTTP/1.1" 200 28204
+INFO 2025-11-15 20:53:07,068 basehttp "GET /salary-rules/templates/ HTTP/1.1" 200 24993
+INFO 2025-11-15 20:53:08,575 basehttp "GET /salary-rules/bulk-assign/ HTTP/1.1" 200 42652
+INFO 2025-11-15 20:53:40,441 basehttp "GET /salary-rules/components/ HTTP/1.1" 200 44940
+INFO 2025-11-15 20:53:43,120 basehttp "GET /salary-rules/bulk-assign/ HTTP/1.1" 200 42652
+INFO 2025-11-15 20:53:44,966 basehttp "GET /salary-rules/templates/ HTTP/1.1" 200 24993
+INFO 2025-11-15 20:53:46,041 basehttp "GET /salary-rules/templates/create/ HTTP/1.1" 200 26966
+INFO 2025-11-15 20:53:51,824 basehttp "GET /salary-rules/templates/ HTTP/1.1" 200 24993
+INFO 2025-11-15 20:53:52,917 basehttp "GET /salary-rules/history/ HTTP/1.1" 200 28204
+INFO 2025-11-15 20:53:54,569 basehttp "GET /salary-rules/components/ HTTP/1.1" 200 44940
+INFO 2025-11-15 20:54:06,530 basehttp "GET /org-chart/ HTTP/1.1" 200 44021
+INFO 2025-11-15 20:54:16,212 basehttp "GET /salary-rules/components/ HTTP/1.1" 200 44940
+INFO 2025-11-15 20:54:16,856 basehttp "GET /salary-rules/bulk-assign/ HTTP/1.1" 200 42652
+INFO 2025-11-15 20:54:17,996 basehttp "GET /salary-rules/templates/ HTTP/1.1" 200 24993
+INFO 2025-11-15 20:54:18,954 basehttp "GET /salary-rules/history/ HTTP/1.1" 200 28204
+INFO 2025-11-15 20:54:19,479 basehttp "GET /salary-rules/components/ HTTP/1.1" 200 44940
+INFO 2025-11-15 20:54:21,370 basehttp "GET /salary-rules/bulk-assign/ HTTP/1.1" 200 42652
+INFO 2025-11-15 20:54:30,594 basehttp "GET /org-chart/ HTTP/1.1" 200 44021
+INFO 2025-11-15 20:54:37,204 basehttp "GET /recruitment/applications/ HTTP/1.1" 200 61108
+INFO 2025-11-15 20:54:53,036 basehttp "GET /recruitment/jobs/create/ HTTP/1.1" 200 43743
+INFO 2025-11-15 20:54:54,056 basehttp "GET /recruitment/applications/ HTTP/1.1" 200 61108
+INFO 2025-11-15 20:54:55,984 basehttp "GET /careers/ HTTP/1.1" 200 19212
+INFO 2025-11-15 20:54:58,182 HodViews Admin home accessed by hr_user
+INFO 2025-11-15 20:54:58,204 basehttp "GET / HTTP/1.1" 200 32861
+INFO 2025-11-15 20:55:02,495 basehttp "GET /org-chart/ HTTP/1.1" 200 44021
+INFO 2025-11-15 20:55:47,797 basehttp "GET /recruitment/jobs/ HTTP/1.1" 200 46669
+INFO 2025-11-15 20:57:06,979 basehttp "GET /department/ HTTP/1.1" 200 32872
+INFO 2025-11-15 21:00:35,446 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-15 21:00:37,142 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 21:02:38,815 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-15 21:02:40,144 autoreload Watching for file changes with StatReloader
+INFO 2025-11-15 21:03:04,460 basehttp "GET /recruitment/jobs/ HTTP/1.1" 200 46667
+INFO 2025-11-15 21:03:09,947 basehttp "GET /recruitment/jobs/create/ HTTP/1.1" 200 43743
+INFO 2025-11-15 21:03:10,977 basehttp "GET /recruitment/applications/ HTTP/1.1" 200 86783
+INFO 2025-11-15 21:03:22,922 basehttp "GET /department/ HTTP/1.1" 200 32872
+INFO 2025-11-15 21:03:25,535 basehttp "GET /org-chart/ HTTP/1.1" 200 44021
+INFO 2025-11-15 21:03:30,643 basehttp "GET /org-chart/ HTTP/1.1" 200 44021
+INFO 2025-11-15 21:03:39,259 basehttp "GET /recruitment/jobs/ HTTP/1.1" 200 46667
+INFO 2025-11-15 21:03:52,159 basehttp "GET /careers/ HTTP/1.1" 200 19212
+INFO 2025-11-15 21:03:57,024 HodViews Admin home accessed by hr_user
+INFO 2025-11-15 21:03:57,044 basehttp "GET / HTTP/1.1" 200 32861
+INFO 2025-11-15 21:04:17,031 basehttp "GET /recruitment/jobs/ HTTP/1.1" 200 46667
+INFO 2025-11-15 21:04:30,133 basehttp "GET /recruitment/jobs/1/ HTTP/1.1" 200 46220
+INFO 2025-11-15 21:04:33,260 basehttp "GET /recruitment/applications/?job=1 HTTP/1.1" 200 49593
+INFO 2025-11-15 21:05:23,259 basehttp "GET /recruitment/jobs/ HTTP/1.1" 200 46667
+INFO 2025-11-15 21:05:45,636 basehttp "GET /recruitment/jobs/create/ HTTP/1.1" 200 43743
+INFO 2025-11-15 21:05:49,486 basehttp "GET /recruitment/applications/ HTTP/1.1" 200 86783
+INFO 2025-11-15 21:05:50,140 basehttp "GET /careers/ HTTP/1.1" 200 19212
+INFO 2025-11-15 21:07:51,680 basehttp "GET /recruitment/applications/?view=list HTTP/1.1" 200 86585
+INFO 2025-11-15 21:07:54,532 basehttp "GET /recruitment/applications/?view=list HTTP/1.1" 200 86585
+INFO 2025-11-15 21:08:12,374 basehttp "GET /recruitment/jobs/create/ HTTP/1.1" 200 43743
+INFO 2025-11-15 21:08:12,984 basehttp "GET /recruitment/jobs/ HTTP/1.1" 200 46667
+INFO 2025-11-15 21:08:13,871 basehttp "GET /recruitment/applications/ HTTP/1.1" 200 86585
+INFO 2025-11-15 21:08:14,421 basehttp "GET /careers/ HTTP/1.1" 200 19212
+INFO 2025-11-15 21:09:31,200 basehttp "GET /org-chart/ HTTP/1.1" 200 43813
+INFO 2025-11-15 21:11:04,808 basehttp "GET /recruitment/jobs/ HTTP/1.1" 200 46667
+INFO 2025-11-15 21:11:09,623 basehttp "GET /recruitment/applications/ HTTP/1.1" 200 86585
+INFO 2025-11-15 21:11:14,636 basehttp "GET /recruitment/jobs/ HTTP/1.1" 200 46667
+INFO 2025-11-15 21:14:49,429 basehttp "GET /recruitment/applications/ HTTP/1.1" 200 86585
+INFO 2025-11-15 21:14:51,327 basehttp "GET /recruitment/applications/?view=list HTTP/1.1" 200 86585
+INFO 2025-11-15 21:14:58,117 basehttp "GET /recruitment/applications/?view=list HTTP/1.1" 200 86585
+INFO 2025-11-15 21:15:00,004 basehttp "GET /recruitment/applications/?view=list HTTP/1.1" 200 86585
+INFO 2025-11-15 21:15:00,565 basehttp "GET /recruitment/applications/?view=list HTTP/1.1" 200 86585
+INFO 2025-11-15 21:15:01,024 basehttp "GET /recruitment/applications/?view=list HTTP/1.1" 200 86585
+INFO 2025-11-15 21:16:44,362 HodViews Employee dashboard accessed by HR Manager
+INFO 2025-11-15 21:16:44,373 basehttp "GET /portal/dashboard/ HTTP/1.1" 200 31411
+INFO 2025-11-15 21:16:46,185 HodViews Profile viewed by HR Manager
+INFO 2025-11-15 21:16:46,198 basehttp "GET /portal/profile/ HTTP/1.1" 200 36354
+INFO 2025-11-15 21:16:48,031 HodViews Employee dashboard accessed by HR Manager
+INFO 2025-11-15 21:16:48,041 basehttp "GET /portal/dashboard/ HTTP/1.1" 200 31411
+INFO 2025-11-15 21:16:48,690 HodViews Profile viewed by HR Manager
+INFO 2025-11-15 21:16:48,699 basehttp "GET /portal/profile/ HTTP/1.1" 200 36354
+INFO 2025-11-15 21:16:49,525 HodViews Payrolls viewed by HR Manager
+INFO 2025-11-15 21:16:49,543 basehttp "GET /portal/payrolls/ HTTP/1.1" 200 28847
+INFO 2025-11-15 21:16:51,643 HodViews Profile viewed by HR Manager
+INFO 2025-11-15 21:16:51,655 basehttp "GET /portal/profile/ HTTP/1.1" 200 36354
+INFO 2025-11-15 21:17:01,523 HodViews Payrolls viewed by HR Manager
+INFO 2025-11-15 21:17:01,528 basehttp "GET /portal/payrolls/ HTTP/1.1" 200 28847
+INFO 2025-11-15 21:17:02,817 HodViews Attendance viewed by HR Manager
+INFO 2025-11-15 21:17:02,830 basehttp "GET /portal/attendance/ HTTP/1.1" 200 33249
+INFO 2025-11-15 21:17:19,793 basehttp "GET /org-chart/ HTTP/1.1" 200 43813
+INFO 2025-11-15 21:17:39,958 basehttp "GET /org-chart/ HTTP/1.1" 200 43813
+INFO 2025-11-15 21:17:40,198 basehttp "GET /static/plugins/icheck-bootstrap/icheck-bootstrap.min.css HTTP/1.1" 200 12505
+INFO 2025-11-15 21:17:40,201 basehttp "GET /static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css HTTP/1.1" 200 9071
+INFO 2025-11-15 21:17:40,207 basehttp "GET /static/plugins/daterangepicker/daterangepicker.css HTTP/1.1" 200 8069
+INFO 2025-11-15 21:17:40,207 basehttp "GET /static/plugins/summernote/summernote-bs4.css HTTP/1.1" 200 18647
+INFO 2025-11-15 21:17:40,211 basehttp "GET /static/dist/img/user1-128x128.jpg HTTP/1.1" 200 2879
+INFO 2025-11-15 21:17:40,213 basehttp "GET /static/dist/img/user8-128x128.jpg HTTP/1.1" 200 5060
+INFO 2025-11-15 21:17:40,216 basehttp "GET /static/plugins/jqvmap/jqvmap.min.css HTTP/1.1" 200 613
+INFO 2025-11-15 21:17:40,218 basehttp "GET /static/dist/img/AdminLTELogo.png HTTP/1.1" 200 10380
+INFO 2025-11-15 21:17:40,219 basehttp "GET /static/dist/img/user3-128x128.jpg HTTP/1.1" 200 3511
+INFO 2025-11-15 21:17:40,223 basehttp "GET /static/dist/img/Logo-TITOPS.png HTTP/1.1" 200 17797
+INFO 2025-11-15 21:17:40,224 basehttp "GET /static/plugins/fontawesome-free/css/all.min.css HTTP/1.1" 200 56842
+INFO 2025-11-15 21:17:40,226 basehttp "GET /static/plugins/jquery/jquery.min.js HTTP/1.1" 200 88145
+INFO 2025-11-15 21:17:40,242 basehttp "GET /static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css HTTP/1.1" 200 19470
+INFO 2025-11-15 21:17:40,247 basehttp "GET /static/plugins/sparklines/sparkline.js HTTP/1.1" 200 7219
+INFO 2025-11-15 21:17:40,250 basehttp "GET /static/plugins/jqvmap/jquery.vmap.min.js HTTP/1.1" 200 21150
+INFO 2025-11-15 21:17:40,257 basehttp "GET /static/plugins/jquery-knob/jquery.knob.min.js HTTP/1.1" 200 10804
+INFO 2025-11-15 21:17:40,259 basehttp "GET /static/plugins/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 78635
+INFO 2025-11-15 21:17:40,259 basehttp "GET /static/plugins/jqvmap/maps/jquery.vmap.usa.js HTTP/1.1" 200 47712
+INFO 2025-11-15 21:17:40,261 basehttp "GET /static/plugins/chart.js/Chart.min.js HTTP/1.1" 200 172812
+INFO 2025-11-15 21:17:40,271 basehttp "GET /static/plugins/jquery-ui/jquery-ui.min.js HTTP/1.1" 200 253669
+INFO 2025-11-15 21:17:40,274 basehttp "GET /static/plugins/moment/moment.min.js HTTP/1.1" 200 53324
+INFO 2025-11-15 21:17:40,274 basehttp "GET /static/plugins/daterangepicker/daterangepicker.js HTTP/1.1" 200 67268
+INFO 2025-11-15 21:17:40,275 basehttp "GET /static/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js HTTP/1.1" 200 56879
+INFO 2025-11-15 21:17:40,288 basehttp "GET /static/dist/js/demo.js HTTP/1.1" 200 12351
+INFO 2025-11-15 21:17:40,289 basehttp "GET /static/dist/js/pages/dashboard.js HTTP/1.1" 200 7577
+INFO 2025-11-15 21:17:40,289 basehttp "GET /static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js HTTP/1.1" 200 42076
+INFO 2025-11-15 21:17:40,290 basehttp "GET /static/dist/js/adminlte.js HTTP/1.1" 200 55314
+INFO 2025-11-15 21:17:40,291 basehttp "GET /static/dist/css/adminlte.min.css HTTP/1.1" 200 656504
+INFO 2025-11-15 21:17:40,293 basehttp "GET /static/plugins/summernote/summernote-bs4.min.js HTTP/1.1" 200 127927
+INFO 2025-11-15 21:17:40,315 basehttp "GET /static/plugins/fontawesome-free/webfonts/fa-regular-400.woff2 HTTP/1.1" 200 13584
+INFO 2025-11-15 21:17:40,317 basehttp "GET /static/plugins/fontawesome-free/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 75728
+INFO 2025-11-15 21:19:05,442 basehttp "GET /org-chart/ HTTP/1.1" 200 43813
+INFO 2025-11-15 21:19:06,160 basehttp "GET /org-chart/ HTTP/1.1" 200 43813
+ERROR 2025-11-15 21:19:08,865 log Internal Server Error: /recruitment/applications/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 2277, in applications_kanban
+    return render(request, 'hod_template/manage_applications.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 238, in do_block
+    parser.invalid_block_tag(endblock, "endblock", acceptable_endblocks)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 558, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 360: 'endblock', expected 'endblock' or 'endblock custom_css'. Did you forget to register or load this tag?
+ERROR 2025-11-15 21:19:08,889 basehttp "GET /recruitment/applications/ HTTP/1.1" 500 240156
+INFO 2025-11-15 21:19:14,480 basehttp "GET /org-chart/ HTTP/1.1" 200 43813
+ERROR 2025-11-15 21:19:17,178 log Internal Server Error: /recruitment/applications/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 2277, in applications_kanban
+    return render(request, 'hod_template/manage_applications.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 238, in do_block
+    parser.invalid_block_tag(endblock, "endblock", acceptable_endblocks)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 558, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 360: 'endblock', expected 'endblock' or 'endblock custom_css'. Did you forget to register or load this tag?
+ERROR 2025-11-15 21:19:17,185 basehttp "GET /recruitment/applications/ HTTP/1.1" 500 240156
+ERROR 2025-11-15 21:19:44,335 log Internal Server Error: /org-chart/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 2584, in org_chart
+    return render(request, 'hod_template/org_chart.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 238, in do_block
+    parser.invalid_block_tag(endblock, "endblock", acceptable_endblocks)
+    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 558, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Invalid block tag on line 223: 'endblock', expected 'endblock' or 'endblock custom_css'. Did you forget to register or load this tag?
+ERROR 2025-11-15 21:19:44,340 basehttp "GET /org-chart/ HTTP/1.1" 500 230684
+INFO 2025-11-15 21:21:28,822 basehttp "GET /org-chart/ HTTP/1.1" 200 49132
+INFO 2025-11-15 21:21:40,881 basehttp "GET /recruitment/applications/ HTTP/1.1" 200 95545
+INFO 2025-11-15 21:21:46,928 HodViews Application APP202511154C2758 status changed from screening to phone_interview
+INFO 2025-11-15 21:21:46,931 basehttp "POST /recruitment/applications/2/status/ HTTP/1.1" 200 161
+INFO 2025-11-15 21:21:47,873 HodViews Application APP202511154C2758 status changed from phone_interview to screening
+INFO 2025-11-15 21:21:47,874 basehttp "POST /recruitment/applications/2/status/ HTTP/1.1" 200 134
+INFO 2025-11-15 21:22:01,071 HodViews Admin home accessed by hr_user
+INFO 2025-11-15 21:22:01,101 basehttp "GET / HTTP/1.1" 200 32861
+INFO 2025-11-15 21:22:06,204 basehttp "GET /department/ HTTP/1.1" 200 32872
+INFO 2025-11-15 21:22:07,193 basehttp "GET /job_title HTTP/1.1" 200 33206
+INFO 2025-11-15 21:22:07,926 basehttp "GET /contracts/ HTTP/1.1" 200 44638
+INFO 2025-11-15 21:22:16,823 HodViews Admin home accessed by hr_user
+INFO 2025-11-15 21:22:16,851 basehttp "GET / HTTP/1.1" 200 32861
+INFO 2025-11-15 21:22:21,952 basehttp "GET /employee/1/ HTTP/1.1" 200 31347
+INFO 2025-11-15 21:22:22,007 basehttp "GET /media/avatars/426ee7ce-73d7-4c88-a3ba-ec9c3b268a52.jpg HTTP/1.1" 304 0
+ERROR 2025-11-15 21:22:26,197 log Internal Server Error: /salary-rules/employee/1/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 146, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 2726, in employee_salary_rules
+    return render(request, 'hod_template/employee_salary_rules.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'manage_employee' not found. 'manage_employee' is not a valid view function or pattern name.
+ERROR 2025-11-15 21:22:26,207 basehttp "GET /salary-rules/employee/1/ HTTP/1.1" 500 195831
+INFO 2025-11-15 21:22:31,377 basehttp "GET /department/ HTTP/1.1" 200 32872
+INFO 2025-11-15 21:22:33,913 basehttp "GET /job_title HTTP/1.1" 200 33206
+INFO 2025-11-15 21:22:35,231 basehttp "GET /contracts/ HTTP/1.1" 200 44638
+INFO 2025-11-15 21:22:38,086 basehttp "GET /add_employee HTTP/1.1" 200 36075
+INFO 2025-11-15 21:22:38,175 basehttp "GET /add_employee HTTP/1.1" 200 36075
+INFO 2025-11-15 21:22:39,882 basehttp "GET /employee_list HTTP/1.1" 200 33632
+INFO 2025-11-15 21:22:43,794 basehttp "GET /payroll/calculate/ HTTP/1.1" 200 37684
+ERROR 2025-11-15 21:22:46,409 log Internal Server Error: /payroll/manage/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\smartif.py", line 179, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: "request.user|user_in_group:'HR'"
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 183, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 875, in manage_payroll
+    return render(request, "hod_template/manage_payroll.html", {
+        "payrolls": payrolls,
+    ...<2 lines>...
+        "is_hr": is_hr
+    })
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 853, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 952, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 885, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\smartif.py", line 170, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\smartif.py", line 181, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 888, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 698, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 606, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'user_in_group'
+ERROR 2025-11-15 21:22:46,421 basehttp "GET /payroll/manage/ HTTP/1.1" 500 293372
+INFO 2025-11-15 21:22:49,956 basehttp "GET /attendance/add/ HTTP/1.1" 200 41175
+INFO 2025-11-15 21:22:51,811 basehttp "GET /attendance/manage/ HTTP/1.1" 200 42849
+INFO 2025-11-15 21:22:54,579 basehttp "GET /leave/request/ HTTP/1.1" 200 29335
+INFO 2025-11-15 21:22:56,633 basehttp "GET /leave/history/ HTTP/1.1" 200 26927
+ERROR 2025-11-15 21:22:57,603 log Internal Server Error: /leave/manage/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\smartif.py", line 179, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: "request.user|user_in_groups:'HR,Manager'"
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 183, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 1199, in manage_leave_requests
+    return render(request, "hod_template/manage_leave_requests.html", {
+        "leave_requests": leave_requests_page,
+        "employees": employees
+    })
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 853, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 953, in do_if
+    nodelist = parser.parse(("elif", "else", "endif"))
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 952, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 885, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\smartif.py", line 170, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\smartif.py", line 181, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 888, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 698, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 606, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'user_in_groups'
+ERROR 2025-11-15 21:22:57,623 basehttp "GET /leave/manage/ HTTP/1.1" 500 341384
+ERROR 2025-11-15 21:23:03,552 log Internal Server Error: /leave/manage/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\smartif.py", line 179, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: "request.user|user_in_groups:'HR,Manager'"
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 183, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 1199, in manage_leave_requests
+    return render(request, "hod_template/manage_leave_requests.html", {
+        "leave_requests": leave_requests_page,
+        "employees": employees
+    })
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 853, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 953, in do_if
+    nodelist = parser.parse(("elif", "else", "endif"))
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 952, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 885, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\smartif.py", line 170, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\smartif.py", line 181, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 888, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 698, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 606, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'user_in_groups'
+ERROR 2025-11-15 21:23:03,563 basehttp "GET /leave/manage/ HTTP/1.1" 500 341384
+INFO 2025-11-15 21:23:04,855 basehttp "GET /leave/types/ HTTP/1.1" 200 47212
+INFO 2025-11-15 21:23:10,752 basehttp "GET /recruitment/jobs/ HTTP/1.1" 200 46667
+INFO 2025-11-15 21:23:28,092 basehttp "GET /recruitment/jobs/create/ HTTP/1.1" 200 43743
+INFO 2025-11-15 21:23:34,885 basehttp "GET /recruitment/applications/ HTTP/1.1" 200 95545
+INFO 2025-11-15 21:23:42,410 HodViews Application APP20251115DDE294 status changed from new to phone_interview
+INFO 2025-11-15 21:23:42,412 basehttp "POST /recruitment/applications/1/status/ HTTP/1.1" 200 161
+INFO 2025-11-15 21:23:43,475 HodViews Application APP20251115DDE294 status changed from phone_interview to new
+INFO 2025-11-15 21:23:43,477 basehttp "POST /recruitment/applications/1/status/ HTTP/1.1" 200 124
+INFO 2025-11-15 21:23:49,399 basehttp "GET /careers/ HTTP/1.1" 200 19212
+INFO 2025-11-15 21:24:31,794 basehttp "GET /careers/ HTTP/1.1" 200 19212
+INFO 2025-11-15 21:24:34,049 basehttp "GET /org-chart/ HTTP/1.1" 200 49132
+INFO 2025-11-15 21:24:41,364 basehttp "GET /careers/ HTTP/1.1" 200 19212
+INFO 2025-11-15 21:24:57,931 basehttp "GET /salary-rules/components/ HTTP/1.1" 200 44940
+INFO 2025-11-15 21:25:07,717 basehttp "GET /salary-rules/bulk-assign/ HTTP/1.1" 200 42652
+INFO 2025-11-15 21:25:09,335 basehttp "GET /salary-rules/templates/ HTTP/1.1" 200 24993
+INFO 2025-11-15 21:25:10,774 basehttp "GET /salary-rules/history/ HTTP/1.1" 200 28204
+INFO 2025-11-15 21:25:15,013 basehttp "GET /org-chart/ HTTP/1.1" 200 49132
+INFO 2025-11-15 21:25:45,354 basehttp "GET /recruitment/jobs/ HTTP/1.1" 200 46667
+INFO 2025-11-15 21:25:47,373 basehttp "GET /recruitment/jobs/1/ HTTP/1.1" 200 46220
+INFO 2025-11-15 21:25:51,265 basehttp "GET /careers/1/ HTTP/1.1" 200 18763
+INFO 2025-11-15 21:25:53,644 basehttp "GET /careers/ HTTP/1.1" 200 19212
+INFO 2025-11-15 21:25:55,293 basehttp "GET /careers/3/ HTTP/1.1" 200 16915
+INFO 2025-11-15 21:25:56,629 basehttp "GET /careers/3/apply/ HTTP/1.1" 200 21796
+INFO 2025-11-15 21:26:04,197 basehttp "GET /careers/3/ HTTP/1.1" 200 16915
+INFO 2025-11-15 21:26:13,411 basehttp "GET /recruitment/applications/?job=1 HTTP/1.1" 200 58355
+INFO 2025-11-15 21:26:16,154 basehttp "GET /recruitment/applications/7/ HTTP/1.1" 200 45322
+INFO 2025-11-15 21:26:39,655 HodViews Admin home accessed by hr_user
+INFO 2025-11-15 21:26:39,677 basehttp "GET / HTTP/1.1" 200 32861
+INFO 2025-11-15 21:26:43,518 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-15 21:26:43,533 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-15 21:26:47,280 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-15 21:26:47,290 HodViews Admin home accessed by admin
+INFO 2025-11-15 21:26:47,313 basehttp "GET / HTTP/1.1" 200 32859
+INFO 2025-11-15 21:26:51,818 basehttp "GET /admin/ HTTP/1.1" 200 12945
+INFO 2025-11-15 21:26:56,146 basehttp "GET /admin/auth/group/ HTTP/1.1" 200 14067
+INFO 2025-11-15 21:26:56,229 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-15 21:27:06,889 basehttp "GET /admin/app/attendance/ HTTP/1.1" 200 19852
+INFO 2025-11-15 21:27:06,950 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-15 21:27:08,184 basehttp "GET /admin/app/attendance/10/change/ HTTP/1.1" 200 17649
+INFO 2025-11-15 21:27:08,253 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-15 21:27:11,556 basehttp "GET /admin/auth/group/ HTTP/1.1" 200 14067
+INFO 2025-11-15 21:27:11,658 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-15 21:27:35,885 basehttp "GET /admin/auth/user/ HTTP/1.1" 200 18216
+INFO 2025-11-15 21:27:35,956 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-15 21:27:43,683 basehttp "GET /careers/3/apply/ HTTP/1.1" 200 21796
+INFO 2025-11-15 21:27:46,507 basehttp "GET /careers/ HTTP/1.1" 200 19212
+INFO 2025-11-15 21:28:00,474 basehttp "GET /careers/3/ HTTP/1.1" 200 16915
+INFO 2025-11-15 21:28:12,156 basehttp "GET /careers/1/ HTTP/1.1" 200 18763
+INFO 2025-11-15 21:28:14,389 basehttp "GET /careers/1/ HTTP/1.1" 200 18763
+INFO 2025-11-15 21:28:17,211 basehttp "GET /careers/1/ HTTP/1.1" 200 18763
+INFO 2025-11-15 21:28:21,594 basehttp "GET /careers/ HTTP/1.1" 200 19212
+INFO 2025-11-15 21:28:31,941 basehttp "GET /careers/ HTTP/1.1" 200 19212
+INFO 2025-11-15 21:28:50,616 basehttp "GET /portal/dashboard/ HTTP/1.1" 302 0
+INFO 2025-11-15 21:28:50,639 HodViews Admin home accessed by admin
+INFO 2025-11-15 21:28:50,655 basehttp "GET / HTTP/1.1" 200 32859
+INFO 2025-11-15 21:28:53,071 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-15 21:28:53,081 basehttp "GET /login/ HTTP/1.1" 200 3046
+INFO 2025-11-15 21:29:11,775 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-15 21:29:11,790 HodViews Admin home accessed by employee_user
+INFO 2025-11-15 21:29:11,815 basehttp "GET / HTTP/1.1" 200 32867
+INFO 2025-11-15 21:29:17,584 HodViews Employee dashboard accessed by IT Staff Member
+INFO 2025-11-15 21:29:17,597 basehttp "GET /portal/dashboard/ HTTP/1.1" 200 31418
+INFO 2025-11-15 21:29:24,027 HodViews Profile viewed by IT Staff Member
+INFO 2025-11-15 21:29:24,042 basehttp "GET /portal/profile/ HTTP/1.1" 200 36376
+INFO 2025-11-15 21:29:26,738 HodViews Payrolls viewed by IT Staff Member
+INFO 2025-11-15 21:29:26,750 basehttp "GET /portal/payrolls/ HTTP/1.1" 200 28853
+INFO 2025-11-15 21:29:35,462 basehttp "GET /org-chart/ HTTP/1.1" 200 49138
+INFO 2025-11-15 21:31:39,024 basehttp "GET /employee_list HTTP/1.1" 200 33638
+INFO 2025-11-15 21:31:40,888 basehttp "GET /employee/2/ HTTP/1.1" 200 31343
+INFO 2025-11-15 21:31:40,946 basehttp "GET /media/avatars/tuongsan_X5uOjoP.jpg HTTP/1.1" 200 128583
+INFO 2025-11-15 21:31:45,428 basehttp "GET /employee/3/ HTTP/1.1" 200 31301
+INFO 2025-11-15 21:31:45,500 basehttp "GET /media/avatars/d1ce923ba8234cec9ffae94871ba99a1_sontung.jpg HTTP/1.1" 200 576065
+INFO 2025-11-15 21:31:50,062 basehttp "GET /employee/update/3/ HTTP/1.1" 200 34512
+INFO 2025-11-15 21:31:50,138 basehttp "GET /employee/update/3/ HTTP/1.1" 200 34512
+INFO 2025-11-15 21:31:56,673 basehttp "POST /update_employee_save/ HTTP/1.1" 302 0
+INFO 2025-11-15 21:31:56,700 basehttp "GET /employee/3/ HTTP/1.1" 200 31304
+INFO 2025-11-15 21:31:58,525 basehttp "GET /org-chart/ HTTP/1.1" 200 49123
+WARNING 2025-11-16 16:19:11,635 permissions Permission denied: employee_user tried to access View (ID: None) - Required: HR - Reason: User not in required group: HR
+WARNING 2025-11-16 16:19:11,653 log Forbidden (Permission denied): /salary-rules/components/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 144, in _wrapped_view
+    raise PermissionDenied(f"User must be in '{group_name}' group")
+django.core.exceptions.PermissionDenied: User must be in 'HR' group
+WARNING 2025-11-16 16:19:11,675 basehttp "GET /salary-rules/components/ HTTP/1.1" 403 135
+INFO 2025-11-16 16:19:19,775 HodViews Admin home accessed by employee_user
+INFO 2025-11-16 16:19:19,883 basehttp "GET / HTTP/1.1" 200 32870
+INFO 2025-11-16 16:19:21,629 basehttp "GET /department/ HTTP/1.1" 200 33129
+INFO 2025-11-16 16:19:22,374 basehttp "GET /job_title HTTP/1.1" 200 33212
+INFO 2025-11-16 16:19:22,963 basehttp "GET /add_employee HTTP/1.1" 200 36081
+INFO 2025-11-16 16:19:23,039 basehttp "GET /add_employee HTTP/1.1" 200 36081
+INFO 2025-11-16 16:19:23,822 basehttp "GET /employee_list HTTP/1.1" 200 33641
+WARNING 2025-11-16 16:19:24,997 permissions Permission denied: employee_user tried to access View (ID: None) - Required: One of: HR, Manager - Reason: User not in any of required groups: HR, Manager
+WARNING 2025-11-16 16:19:25,003 log Forbidden (Permission denied): /contracts/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 181, in _wrapped_view
+    raise PermissionDenied(f"User must be in one of: {group_names}")
+django.core.exceptions.PermissionDenied: User must be in one of: ('HR', 'Manager')
+WARNING 2025-11-16 16:19:25,013 basehttp "GET /contracts/ HTTP/1.1" 403 135
+INFO 2025-11-16 16:19:29,938 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-16 16:19:29,965 basehttp "GET /login/ HTTP/1.1" 200 3076
+INFO 2025-11-16 16:19:37,671 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-16 16:19:37,686 HodViews Admin home accessed by hr_user
+INFO 2025-11-16 16:19:37,699 basehttp "GET / HTTP/1.1" 200 32864
+INFO 2025-11-16 16:19:40,221 basehttp "GET /department/ HTTP/1.1" 200 32872
+INFO 2025-11-16 16:19:41,678 basehttp "GET /job_title HTTP/1.1" 200 33206
+INFO 2025-11-16 16:19:43,317 basehttp "GET /contracts/ HTTP/1.1" 200 44638
+INFO 2025-11-16 16:19:45,323 basehttp "GET /add_employee HTTP/1.1" 200 36075
+INFO 2025-11-16 16:19:45,398 basehttp "GET /add_employee HTTP/1.1" 200 36075
+INFO 2025-11-16 16:19:46,504 basehttp "GET /employee_list HTTP/1.1" 200 33635
+INFO 2025-11-16 16:19:49,187 basehttp "GET /employee/1/ HTTP/1.1" 200 31347
+INFO 2025-11-16 16:19:49,263 basehttp "GET /media/avatars/426ee7ce-73d7-4c88-a3ba-ec9c3b268a52.jpg HTTP/1.1" 304 0
+INFO 2025-11-16 16:19:51,468 basehttp "GET /employee_list HTTP/1.1" 200 33635
+INFO 2025-11-16 16:19:53,298 basehttp "GET /payroll/calculate/ HTTP/1.1" 200 37684
+ERROR 2025-11-16 16:19:55,329 log Internal Server Error: /payroll/manage/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\smartif.py", line 179, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: "request.user|user_in_group:'HR'"
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 183, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 875, in manage_payroll
+    return render(request, "hod_template/manage_payroll.html", {
+        "payrolls": payrolls,
+    ...<2 lines>...
+        "is_hr": is_hr
+    })
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 853, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 952, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 885, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\smartif.py", line 170, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\smartif.py", line 181, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 888, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 698, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 606, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'user_in_group'
+ERROR 2025-11-16 16:19:55,344 basehttp "GET /payroll/manage/ HTTP/1.1" 500 293372
+ERROR 2025-11-16 16:20:03,563 log Internal Server Error: /payroll/manage/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\smartif.py", line 179, in translate_token
+    op = OPERATORS[token]
+         ~~~~~~~~~^^^^^^^
+KeyError: "request.user|user_in_group:'HR'"
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 183, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\HodViews.py", line 875, in manage_payroll
+    return render(request, "hod_template/manage_payroll.html", {
+        "payrolls": payrolls,
+    ...<2 lines>...
+        "is_hr": is_hr
+    })
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 853, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 952, in do_if
+    condition = TemplateIfParser(parser, bits).parse()
+                ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 885, in __init__
+    super().__init__(*args, **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\smartif.py", line 170, in __init__
+    mapped_tokens.append(self.translate_token(token))
+                         ~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\smartif.py", line 181, in translate_token
+    return self.create_var(token)
+           ~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 888, in create_var
+    return TemplateLiteral(self.template_parser.compile_filter(value), value)
+                           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 698, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 606, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'user_in_group'
+ERROR 2025-11-16 16:20:03,570 basehttp "GET /payroll/manage/ HTTP/1.1" 500 293372
+INFO 2025-11-16 16:21:08,322 autoreload D:\Study\CT201\Project\hrm\app\templatetags\permission_tags.py changed, reloading.
+INFO 2025-11-16 16:21:14,313 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 16:21:21,621 autoreload D:\Study\CT201\Project\hrm\app\templatetags\permission_tags.py changed, reloading.
+INFO 2025-11-16 16:21:22,631 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 16:41:30,521 autoreload D:\Study\CT201\Project\hrm\app\templatetags\permission_tags.py changed, reloading.
+INFO 2025-11-16 16:41:32,642 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 16:41:34,085 basehttp "GET /payroll/manage/ HTTP/1.1" 200 43071
+INFO 2025-11-16 16:42:54,394 basehttp "GET /attendance/add/ HTTP/1.1" 200 41175
+INFO 2025-11-16 16:42:56,177 basehttp "GET /attendance/manage/ HTTP/1.1" 200 42849
+INFO 2025-11-16 16:42:59,105 basehttp "GET /leave/request/ HTTP/1.1" 200 29335
+INFO 2025-11-16 16:43:00,253 basehttp "GET /leave/history/ HTTP/1.1" 200 26927
+INFO 2025-11-16 16:43:01,028 basehttp "GET /leave/manage/ HTTP/1.1" 200 31324
+INFO 2025-11-16 16:43:01,966 basehttp "GET /leave/types/ HTTP/1.1" 200 47212
+INFO 2025-11-16 16:43:03,628 basehttp "GET /expense/create/ HTTP/1.1" 200 32116
+INFO 2025-11-16 16:43:05,273 HodViews Expense history viewed by HR Manager
+INFO 2025-11-16 16:43:05,350 basehttp "GET /expense/history/ HTTP/1.1" 200 29505
+INFO 2025-11-16 16:43:06,314 HodViews All expenses viewed by hr_user
+INFO 2025-11-16 16:43:06,403 basehttp "GET /expense/manage/ HTTP/1.1" 200 40413
+INFO 2025-11-16 16:43:07,168 HodViews Expense categories viewed by hr_user
+INFO 2025-11-16 16:43:07,243 basehttp "GET /expense/categories/ HTTP/1.1" 200 45794
+INFO 2025-11-16 16:43:10,740 HodViews Employee dashboard accessed by HR Manager
+INFO 2025-11-16 16:43:10,769 basehttp "GET /portal/dashboard/ HTTP/1.1" 200 31411
+INFO 2025-11-16 16:43:13,323 HodViews Profile viewed by HR Manager
+INFO 2025-11-16 16:43:13,369 basehttp "GET /portal/profile/ HTTP/1.1" 200 36354
+INFO 2025-11-16 16:43:14,446 HodViews Payrolls viewed by HR Manager
+INFO 2025-11-16 16:43:14,522 basehttp "GET /portal/payrolls/ HTTP/1.1" 200 28847
+INFO 2025-11-16 16:43:15,972 HodViews Attendance viewed by HR Manager
+INFO 2025-11-16 16:43:16,016 basehttp "GET /portal/attendance/ HTTP/1.1" 200 33249
+INFO 2025-11-16 16:43:19,117 basehttp "GET /contracts/ HTTP/1.1" 200 44638
+INFO 2025-11-16 16:43:20,422 basehttp "GET /contracts/create/ HTTP/1.1" 200 37264
+INFO 2025-11-16 16:43:21,869 basehttp "GET /recruitment/jobs/ HTTP/1.1" 200 46667
+INFO 2025-11-16 16:43:23,370 basehttp "GET /recruitment/jobs/create/ HTTP/1.1" 200 43743
+INFO 2025-11-16 16:43:24,362 basehttp "GET /recruitment/applications/ HTTP/1.1" 200 95545
+INFO 2025-11-16 16:43:26,673 basehttp "GET /org-chart/ HTTP/1.1" 200 49117
+INFO 2025-11-16 16:43:29,565 basehttp "GET /salary-rules/components/ HTTP/1.1" 200 44940
+INFO 2025-11-16 16:43:34,202 basehttp "GET /salary-rules/templates/ HTTP/1.1" 200 24993
+INFO 2025-11-16 16:43:34,974 basehttp "GET /salary-rules/bulk-assign/ HTTP/1.1" 200 42655
+INFO 2025-11-16 16:43:36,346 basehttp "GET /salary-rules/history/ HTTP/1.1" 200 28204
+INFO 2025-11-16 16:43:41,662 basehttp "GET /ai/create-job-description/ HTTP/1.1" 200 27513
+INFO 2025-11-16 16:43:42,519 basehttp "GET /ai/job-descriptions/ HTTP/1.1" 200 26909
+INFO 2025-11-16 16:43:47,793 basehttp "GET /salary-rules/bulk-assign/ HTTP/1.1" 200 42655
+INFO 2025-11-16 19:06:55,649 autoreload D:\Study\CT201\Project\hrm\app\models.py changed, reloading.
+INFO 2025-11-16 19:06:58,981 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 20:05:25,477 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 20:05:29,917 HodViews Admin home accessed by hr_user
+INFO 2025-11-16 20:05:30,036 basehttp "GET / HTTP/1.1" 200 34995
+INFO 2025-11-16 20:05:33,246 basehttp "GET /appraisal/my-appraisals/ HTTP/1.1" 200 31565
+INFO 2025-11-16 20:05:38,719 basehttp "GET /appraisal/manager/ HTTP/1.1" 302 0
+INFO 2025-11-16 20:05:38,751 HodViews Admin home accessed by hr_user
+INFO 2025-11-16 20:05:38,772 basehttp "GET / HTTP/1.1" 200 34995
+INFO 2025-11-16 20:05:44,828 basehttp "GET /appraisal/hr/ HTTP/1.1" 200 45590
+INFO 2025-11-16 20:05:54,663 basehttp "GET /appraisal/periods/ HTTP/1.1" 200 31889
+INFO 2025-11-16 20:05:59,451 basehttp "GET /appraisal/periods/create/ HTTP/1.1" 200 34934
+INFO 2025-11-16 20:06:10,804 basehttp "GET /appraisal/my-appraisals/ HTTP/1.1" 200 31565
+INFO 2025-11-16 20:06:12,210 HodViews Admin home accessed by hr_user
+INFO 2025-11-16 20:06:12,227 basehttp "GET / HTTP/1.1" 200 34995
+INFO 2025-11-16 20:20:12,323 basehttp "GET /org-chart/ HTTP/1.1" 200 50464
+INFO 2025-11-16 20:20:15,589 HodViews Admin home accessed by hr_user
+INFO 2025-11-16 20:20:15,624 basehttp "GET / HTTP/1.1" 200 34995
+INFO 2025-11-16 20:20:23,147 basehttp "GET /department/ HTTP/1.1" 200 34219
+INFO 2025-11-16 20:20:24,609 basehttp "GET /job_title HTTP/1.1" 200 34553
+INFO 2025-11-16 20:20:25,478 basehttp "GET /department/ HTTP/1.1" 200 34219
+INFO 2025-11-16 20:20:27,103 HodViews Profile viewed by HR Manager
+INFO 2025-11-16 20:20:27,119 basehttp "GET /portal/profile/ HTTP/1.1" 200 37701
+INFO 2025-11-16 20:20:28,713 HodViews Employee dashboard accessed by HR Manager
+INFO 2025-11-16 20:20:28,728 basehttp "GET /portal/dashboard/ HTTP/1.1" 200 32758
+INFO 2025-11-16 20:21:34,648 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-16 20:21:34,663 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-16 20:26:23,444 autoreload D:\Study\CT201\Project\hrm\app\validators.py changed, reloading.
+INFO 2025-11-16 20:26:25,558 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 20:26:39,920 autoreload D:\Study\CT201\Project\hrm\hrm\settings.py changed, reloading.
+INFO 2025-11-16 20:26:41,422 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 20:27:24,890 autoreload D:\Study\CT201\Project\hrm\hrm\settings.py changed, reloading.
+INFO 2025-11-16 20:27:26,851 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 20:28:56,026 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-16 20:28:57,486 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 20:29:08,416 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-16 20:29:09,884 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 20:29:13,625 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-16 20:29:15,070 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 20:29:28,808 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-16 20:29:30,255 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 20:29:50,432 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-16 20:29:51,906 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 20:30:00,696 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-16 20:30:02,139 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 20:30:16,271 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-16 20:30:17,856 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 20:30:39,944 autoreload D:\Study\CT201\Project\hrm\app\HodViews.py changed, reloading.
+INFO 2025-11-16 20:30:41,577 autoreload Watching for file changes with StatReloader

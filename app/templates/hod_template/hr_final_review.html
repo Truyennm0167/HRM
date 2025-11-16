@@ -1,0 +1,309 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}Phê Duyệt Đánh Giá{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Phê Duyệt Đánh Giá Cuối Cùng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'hr_appraisals' %}">Quản lý đánh giá</a></li>
+                    <li class="breadcrumb-item active">Phê duyệt</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="row">
+            <!-- Employee Info -->
+            <div class="col-md-4">
+                <div class="card card-primary card-outline">
+                    <div class="card-body box-profile">
+                        <div class="text-center">
+                            {% if appraisal.employee.avatar %}
+                                <img class="profile-user-img img-fluid img-circle" 
+                                     src="{{ appraisal.employee.avatar.url }}" 
+                                     alt="Avatar">
+                            {% else %}
+                                <img class="profile-user-img img-fluid img-circle" 
+                                     src="{% static 'dist/img/user2-160x160.jpg' %}" 
+                                     alt="Avatar">
+                            {% endif %}
+                        </div>
+
+                        <h3 class="profile-username text-center">{{ appraisal.employee.name }}</h3>
+                        <p class="text-muted text-center">{{ appraisal.employee.job_title.name }}</p>
+
+                        <ul class="list-group list-group-unbordered mb-3">
+                            <li class="list-group-item">
+                                <b>Mã NV</b>
+                                <span class="float-right">{{ appraisal.employee.employee_code }}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Phòng ban</b>
+                                <span class="float-right">{{ appraisal.employee.department.name }}</span>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Lương hiện tại</b>
+                                <span class="float-right">{{ appraisal.employee.salary|floatformat:0 }} VNĐ</span>
+                            </li>
+                            <li class="list-group-item">
+                                <b>Quản lý</b>
+                                <span class="float-right">{{ appraisal.manager.name }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Scores Summary -->
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Tổng kết điểm</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-box bg-light">
+                            <span class="info-box-icon bg-primary"><i class="fas fa-user"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Điểm tự đánh giá</span>
+                                <span class="info-box-number">{{ appraisal.self_overall_score|default:"—" }}</span>
+                            </div>
+                        </div>
+                        <div class="info-box bg-light">
+                            <span class="info-box-icon bg-success"><i class="fas fa-user-tie"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Điểm quản lý</span>
+                                <span class="info-box-number">{{ appraisal.manager_overall_score|default:"—" }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <!-- Review Summary -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Tóm tắt đánh giá</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <h5>Kỳ đánh giá: {{ appraisal.period.name }}</h5>
+                                <p class="text-muted">
+                                    {{ appraisal.period.start_date|date:"d/m/Y" }} - 
+                                    {{ appraisal.period.end_date|date:"d/m/Y" }}
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Scores Table -->
+                        <table class="table table-sm table-bordered">
+                            <thead class="bg-light">
+                                <tr>
+                                    <th>Tiêu chí</th>
+                                    <th width="80">Trọng số</th>
+                                    <th width="80">Điểm NV</th>
+                                    <th width="80">Điểm QL</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for score in scores %}
+                                <tr>
+                                    <td>{{ score.criteria.name }}</td>
+                                    <td class="text-center">{{ score.criteria.weight }}%</td>
+                                    <td class="text-center">{{ score.self_score|default:"—" }}</td>
+                                    <td class="text-center">{{ score.manager_score|default:"—" }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <!-- Manager Review -->
+                        <div class="mt-3">
+                            <h5>Đánh giá của quản lý</h5>
+                            <dl>
+                                <dt>Nhận xét chung:</dt>
+                                <dd>{{ appraisal.manager_review }}</dd>
+
+                                <dt>Điểm mạnh:</dt>
+                                <dd>{{ appraisal.manager_strengths|default:"—" }}</dd>
+
+                                <dt>Điểm cần cải thiện:</dt>
+                                <dd>{{ appraisal.manager_weaknesses|default:"—" }}</dd>
+
+                                <dt>Đề xuất:</dt>
+                                <dd>
+                                    {{ appraisal.manager_recommendations|default:"—" }}
+                                    <br>
+                                    {% if appraisal.recommend_promotion %}
+                                        <span class="badge badge-success">Đề xuất thăng chức</span>
+                                    {% endif %}
+                                    {% if appraisal.recommend_training %}
+                                        <span class="badge badge-info">Đề xuất đào tạo</span>
+                                    {% endif %}
+                                </dd>
+                            </dl>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- HR Final Review Form -->
+                <form method="POST" action="{% url 'hr_final_review' appraisal.id %}">
+                    {% csrf_token %}
+                    <div class="card card-success">
+                        <div class="card-header">
+                            <h3 class="card-title">Phê duyệt cuối cùng (HR)</h3>
+                        </div>
+                        <div class="card-body">
+                            <!-- Overall Rating -->
+                            <div class="form-group">
+                                <label for="{{ form.overall_rating.id_for_label }}">
+                                    Xếp loại tổng thể <span class="text-danger">*</span>
+                                </label>
+                                {{ form.overall_rating }}
+                                {% if form.overall_rating.errors %}
+                                    <span class="text-danger">{{ form.overall_rating.errors.0 }}</span>
+                                {% endif %}
+                                <small class="form-text text-muted">
+                                    <strong>Xuất sắc:</strong> Vượt xa kỳ vọng<br>
+                                    <strong>Vượt mức:</strong> Vượt kỳ vọng<br>
+                                    <strong>Đạt yêu cầu:</strong> Đáp ứng đầy đủ<br>
+                                    <strong>Cần cải thiện:</strong> Cần nỗ lực hơn<br>
+                                    <strong>Không đạt:</strong> Không đáp ứng yêu cầu
+                                </small>
+                            </div>
+
+                            <!-- HR Comments -->
+                            <div class="form-group">
+                                <label for="{{ form.hr_comments.id_for_label }}">
+                                    Nhận xét của HR
+                                </label>
+                                {{ form.hr_comments }}
+                                {% if form.hr_comments.errors %}
+                                    <span class="text-danger">{{ form.hr_comments.errors.0 }}</span>
+                                {% endif %}
+                            </div>
+
+                            <!-- Salary Adjustment -->
+                            <div class="form-group">
+                                <label for="{{ form.salary_adjustment.id_for_label }}">
+                                    Điều chỉnh lương (VNĐ)
+                                </label>
+                                {{ form.salary_adjustment }}
+                                {% if form.salary_adjustment.errors %}
+                                    <span class="text-danger">{{ form.salary_adjustment.errors.0 }}</span>
+                                {% endif %}
+                                <small class="form-text text-muted">
+                                    Nhập số tiền tăng lương (VD: 1000000 = tăng 1 triệu). Để trống nếu không tăng.
+                                </small>
+                            </div>
+
+                            <!-- Preview -->
+                            <div class="alert alert-info" id="salaryPreview" style="display:none;">
+                                <h5><i class="fas fa-info-circle"></i> Xem trước</h5>
+                                <p>
+                                    Lương hiện tại: <strong>{{ appraisal.employee.salary|floatformat:0 }} VNĐ</strong><br>
+                                    Lương mới: <strong id="newSalary"></strong>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-success btn-lg">
+                                <i class="fas fa-check-circle"></i> Hoàn tất đánh giá
+                            </button>
+                            <a href="{% url 'hr_appraisals' %}" class="btn btn-secondary btn-lg">
+                                <i class="fas fa-times"></i> Hủy
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+$(document).ready(function() {
+    var currentSalary = parseFloat('{{ appraisal.employee.salary }}');
+
+    // Preview salary adjustment
+    $('#id_salary_adjustment').on('input', function() {
+        var adjustment = parseFloat($(this).val()) || 0;
+        if (adjustment > 0) {
+            var newSalary = currentSalary + adjustment;
+            $('#newSalary').text(newSalary.toLocaleString('vi-VN') + ' VNĐ');
+            $('#salaryPreview').show();
+        } else {
+            $('#salaryPreview').hide();
+        }
+    });
+
+    // Form validation
+    $('form').on('submit', function(e) {
+        var rating = $('#id_overall_rating').val();
+        if (!rating) {
+            e.preventDefault();
+            alert('Vui lòng chọn xếp loại tổng thể!');
+            return false;
+        }
+
+        var confirmation = 'Bạn có chắc chắn muốn hoàn tất đánh giá?\n\n';
+        confirmation += 'Xếp loại: ' + $('#id_overall_rating option:selected').text() + '\n';
+        
+        var adjustment = parseFloat($('#id_salary_adjustment').val()) || 0;
+        if (adjustment > 0) {
+            confirmation += 'Điều chỉnh lương: +' + adjustment.toLocaleString('vi-VN') + ' VNĐ\n';
+        }
+        
+        confirmation += '\nSau khi hoàn tất, đánh giá sẽ được lưu vào hồ sơ nhân viên.';
+
+        if (!confirm(confirmation)) {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    // Rating color indicator
+    $('#id_overall_rating').on('change', function() {
+        var value = $(this).val();
+        $(this).removeClass('border-danger border-success border-primary border-warning border-secondary');
+        
+        if (value === 'outstanding') {
+            $(this).addClass('border-danger');
+        } else if (value === 'exceeds') {
+            $(this).addClass('border-success');
+        } else if (value === 'meets') {
+            $(this).addClass('border-primary');
+        } else if (value === 'needs_improvement') {
+            $(this).addClass('border-warning');
+        } else if (value === 'unsatisfactory') {
+            $(this).addClass('border-secondary');
+        }
+    });
+});
+</script>
+{% endblock custom_js %}

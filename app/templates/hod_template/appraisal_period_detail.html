@@ -1,0 +1,320 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}{{ period.name }}{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>{{ period.name }}</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'appraisal_periods' %}">Kỳ đánh giá</a></li>
+                    <li class="breadcrumb-item active">{{ period.name }}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Period Info -->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Thông tin kỳ đánh giá</h3>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-3">Tên kỳ:</dt>
+                            <dd class="col-sm-9">{{ period.name }}</dd>
+
+                            <dt class="col-sm-3">Mô tả:</dt>
+                            <dd class="col-sm-9">{{ period.description|default:"—" }}</dd>
+
+                            <dt class="col-sm-3">Thời gian:</dt>
+                            <dd class="col-sm-9">
+                                {{ period.start_date|date:"d/m/Y" }} - {{ period.end_date|date:"d/m/Y" }}
+                                <span class="badge badge-info">{{ period.get_duration_days }} ngày</span>
+                            </dd>
+
+                            <dt class="col-sm-3">Deadline tự đánh giá:</dt>
+                            <dd class="col-sm-9">{{ period.self_assessment_deadline|date:"d/m/Y" }}</dd>
+
+                            <dt class="col-sm-3">Deadline quản lý:</dt>
+                            <dd class="col-sm-9">{{ period.manager_review_deadline|date:"d/m/Y" }}</dd>
+
+                            <dt class="col-sm-3">Trạng thái:</dt>
+                            <dd class="col-sm-9">
+                                {% if period.status == 'draft' %}
+                                    <span class="badge badge-warning">Bản nháp</span>
+                                {% elif period.status == 'active' %}
+                                    <span class="badge badge-success">Đang diễn ra</span>
+                                {% elif period.status == 'closed' %}
+                                    <span class="badge badge-secondary">Đã đóng</span>
+                                {% endif %}
+                            </dd>
+
+                            <dt class="col-sm-3">Phạm vi:</dt>
+                            <dd class="col-sm-9">
+                                {% if period.applicable_departments.exists %}
+                                    <strong>Phòng ban:</strong>
+                                    {% for dept in period.applicable_departments.all %}
+                                        <span class="badge badge-info">{{ dept.name }}</span>
+                                    {% endfor %}
+                                    <br>
+                                {% endif %}
+                                {% if period.applicable_job_titles.exists %}
+                                    <strong>Chức vụ:</strong>
+                                    {% for job in period.applicable_job_titles.all %}
+                                        <span class="badge badge-secondary">{{ job.name }}</span>
+                                    {% endfor %}
+                                {% endif %}
+                                {% if not period.applicable_departments.exists and not period.applicable_job_titles.exists %}
+                                    <span class="text-muted">Áp dụng cho tất cả nhân viên</span>
+                                {% endif %}
+                            </dd>
+
+                            <dt class="col-sm-3">Người tạo:</dt>
+                            <dd class="col-sm-9">{{ period.created_by.name }} - {{ period.created_at|date:"d/m/Y H:i" }}</dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="col-md-4">
+                <div class="card card-info">
+                    <div class="card-header">
+                        <h3 class="card-title">Thống kê</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="info-box bg-light">
+                            <span class="info-box-icon bg-info"><i class="fas fa-list"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Tổng số đánh giá</span>
+                                <span class="info-box-number">{{ total_appraisals }}</span>
+                            </div>
+                        </div>
+
+                        <div class="info-box bg-light">
+                            <span class="info-box-icon bg-warning"><i class="fas fa-user-edit"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Chờ tự đánh giá</span>
+                                <span class="info-box-number">{{ pending_self }}</span>
+                            </div>
+                        </div>
+
+                        <div class="info-box bg-light">
+                            <span class="info-box-icon bg-primary"><i class="fas fa-user-tie"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Chờ quản lý</span>
+                                <span class="info-box-number">{{ pending_manager }}</span>
+                            </div>
+                        </div>
+
+                        <div class="info-box bg-light">
+                            <span class="info-box-icon bg-success"><i class="fas fa-check-circle"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">Đã hoàn thành</span>
+                                <span class="info-box-number">{{ completed }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="card card-warning">
+                    <div class="card-header">
+                        <h3 class="card-title">Thao tác</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="POST" action="{% url 'generate_appraisals' period.id %}" class="mb-2">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary btn-block" {% if period.status != 'active' %}disabled{% endif %}>
+                                <i class="fas fa-magic"></i> Tạo đánh giá cho nhân viên
+                            </button>
+                        </form>
+                        <a href="{% url 'add_appraisal_criteria' period.id %}" class="btn btn-info btn-block">
+                            <i class="fas fa-plus"></i> Thêm tiêu chí
+                        </a>
+                        <a href="{% url 'appraisal_periods' %}" class="btn btn-secondary btn-block">
+                            <i class="fas fa-arrow-left"></i> Quay lại
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Criteria -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">Tiêu chí đánh giá (KPIs)</h3>
+                        <div class="card-tools">
+                            <a href="{% url 'add_appraisal_criteria' period.id %}" class="btn btn-sm btn-light">
+                                <i class="fas fa-plus"></i> Thêm tiêu chí
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        {% if criteria %}
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i> 
+                                Tổng trọng số: <strong>{{ total_weight }}%</strong>
+                                {% if total_weight != 100 %}
+                                    <span class="text-danger">(Cần = 100%)</span>
+                                {% else %}
+                                    <span class="text-success">✓</span>
+                                {% endif %}
+                            </div>
+                            
+                            <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Tiêu chí</th>
+                                        <th>Danh mục</th>
+                                        <th>Trọng số</th>
+                                        <th>Điểm tối đa</th>
+                                        <th>Mô tả</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for c in criteria %}
+                                    <tr>
+                                        <td><strong>{{ c.name }}</strong></td>
+                                        <td>
+                                            {% if c.category == 'performance' %}
+                                                <span class="badge badge-primary">Hiệu suất</span>
+                                            {% elif c.category == 'behavior' %}
+                                                <span class="badge badge-info">Hành vi</span>
+                                            {% elif c.category == 'competency' %}
+                                                <span class="badge badge-success">Năng lực</span>
+                                            {% elif c.category == 'goal' %}
+                                                <span class="badge badge-warning">Mục tiêu</span>
+                                            {% endif %}
+                                        </td>
+                                        <td><strong>{{ c.weight }}%</strong></td>
+                                        <td>{{ c.max_score }}</td>
+                                        <td><small>{{ c.description|truncatewords:15 }}</small></td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <div class="text-center text-muted py-4">
+                                <i class="fas fa-clipboard-list fa-3x mb-3"></i>
+                                <p>Chưa có tiêu chí nào. <a href="{% url 'add_appraisal_criteria' period.id %}">Thêm tiêu chí đầu tiên</a></p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appraisals List -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách đánh giá nhân viên</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if appraisals %}
+                            <table id="appraisalsTable" class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nhân viên</th>
+                                        <th>Quản lý</th>
+                                        <th>Trạng thái</th>
+                                        <th>Điểm tự đánh giá</th>
+                                        <th>Điểm quản lý</th>
+                                        <th>Điểm cuối</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for appraisal in appraisals %}
+                                    <tr>
+                                        <td>
+                                            <strong>{{ appraisal.employee.name }}</strong><br>
+                                            <small class="text-muted">{{ appraisal.employee.job_title.name }}</small>
+                                        </td>
+                                        <td>{{ appraisal.manager.name|default:"—" }}</td>
+                                        <td>
+                                            {% if appraisal.status == 'pending_self' %}
+                                                <span class="badge badge-warning">Chờ tự đánh giá</span>
+                                            {% elif appraisal.status == 'pending_manager' %}
+                                                <span class="badge badge-primary">Chờ quản lý</span>
+                                            {% elif appraisal.status == 'pending_hr' %}
+                                                <span class="badge badge-info">Chờ HR</span>
+                                            {% elif appraisal.status == 'completed' %}
+                                                <span class="badge badge-success">Hoàn thành</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>{{ appraisal.self_overall_score|default:"—" }}</td>
+                                        <td>{{ appraisal.manager_overall_score|default:"—" }}</td>
+                                        <td>
+                                            {% if appraisal.final_score %}
+                                                <strong class="text-primary">{{ appraisal.final_score }}</strong>
+                                            {% else %}
+                                                —
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <a href="{% url 'appraisal_detail' appraisal.id %}" class="btn btn-sm btn-info">
+                                                <i class="fas fa-eye"></i> Xem
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <div class="text-center text-muted py-4">
+                                <i class="fas fa-user-check fa-3x mb-3"></i>
+                                <p>Chưa có đánh giá nào. Nhấn "Tạo đánh giá cho nhân viên" để bắt đầu.</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+$(document).ready(function() {
+    $('#appraisalsTable').DataTable({
+        "responsive": true,
+        "lengthChange": true,
+        "autoWidth": false,
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Vietnamese.json"
+        }
+    });
+});
+</script>
+{% endblock custom_js %}

@@ -1,0 +1,259 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}Đánh Giá Team{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Đánh Giá Team</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Đánh giá team</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <!-- Statistics -->
+        <div class="row">
+            <div class="col-lg-4 col-6">
+                <div class="small-box bg-warning">
+                    <div class="inner">
+                        <h3>{{ pending }}</h3>
+                        <p>Chờ đánh giá</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-6">
+                <div class="small-box bg-success">
+                    <div class="inner">
+                        <h3>{{ completed }}</h3>
+                        <p>Đã hoàn thành</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-12">
+                <div class="small-box bg-info">
+                    <div class="inner">
+                        <h3>{{ appraisals.count }}</h3>
+                        <p>Tổng số đánh giá</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Pending Actions Alert -->
+        {% if pending > 0 %}
+        <div class="alert alert-warning alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <h5><i class="icon fas fa-exclamation-triangle"></i> Cần hành động!</h5>
+            Bạn có <strong>{{ pending }}</strong> đánh giá đang chờ xem xét và đánh giá.
+        </div>
+        {% endif %}
+
+        <!-- Appraisals List -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh sách đánh giá nhân viên</h3>
+                    </div>
+                    <div class="card-body">
+                        {% if appraisals %}
+                            <table id="appraisalsTable" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nhân viên</th>
+                                        <th>Kỳ đánh giá</th>
+                                        <th>Phòng ban</th>
+                                        <th>Chức vụ</th>
+                                        <th>Trạng thái</th>
+                                        <th>Điểm NV</th>
+                                        <th>Điểm của tôi</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for appraisal in appraisals %}
+                                    <tr class="{% if appraisal.status == 'pending_manager' %}table-warning{% endif %}">
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                {% if appraisal.employee.avatar %}
+                                                    <img src="{{ appraisal.employee.avatar.url }}" 
+                                                         class="img-circle mr-2" 
+                                                         style="width: 35px; height: 35px;"
+                                                         alt="Avatar">
+                                                {% endif %}
+                                                <div>
+                                                    <strong>{{ appraisal.employee.name }}</strong><br>
+                                                    <small class="text-muted">{{ appraisal.employee.employee_code }}</small>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <strong>{{ appraisal.period.name }}</strong><br>
+                                            <small class="text-muted">
+                                                {{ appraisal.period.start_date|date:"d/m/Y" }} - 
+                                                {{ appraisal.period.end_date|date:"d/m/Y" }}
+                                            </small>
+                                        </td>
+                                        <td>{{ appraisal.employee.department.name }}</td>
+                                        <td>{{ appraisal.employee.job_title.name }}</td>
+                                        <td>
+                                            {% if appraisal.status == 'pending_self' %}
+                                                <span class="badge badge-secondary">
+                                                    <i class="fas fa-hourglass-half"></i> Chờ NV
+                                                </span>
+                                            {% elif appraisal.status == 'pending_manager' %}
+                                                <span class="badge badge-warning">
+                                                    <i class="fas fa-exclamation-circle"></i> Chờ bạn đánh giá
+                                                </span>
+                                            {% elif appraisal.status == 'pending_hr' %}
+                                                <span class="badge badge-info">
+                                                    <i class="fas fa-paper-plane"></i> Đã gửi HR
+                                                </span>
+                                            {% elif appraisal.status == 'completed' %}
+                                                <span class="badge badge-success">
+                                                    <i class="fas fa-check"></i> Hoàn thành
+                                                </span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-center">
+                                            {% if appraisal.self_overall_score %}
+                                                <strong class="text-primary">{{ appraisal.self_overall_score }}</strong>
+                                            {% else %}
+                                                <span class="text-muted">—</span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="text-center">
+                                            {% if appraisal.manager_overall_score %}
+                                                <strong class="text-success">{{ appraisal.manager_overall_score }}</strong>
+                                            {% else %}
+                                                <span class="text-muted">—</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            {% if appraisal.status == 'pending_manager' %}
+                                                <a href="{% url 'manager_review' appraisal.id %}" 
+                                                   class="btn btn-warning btn-sm">
+                                                    <i class="fas fa-edit"></i> Đánh giá ngay
+                                                </a>
+                                            {% else %}
+                                                <a href="{% url 'appraisal_detail' appraisal.id %}" 
+                                                   class="btn btn-info btn-sm">
+                                                    <i class="fas fa-eye"></i> Xem
+                                                </a>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            <div class="text-center text-muted py-5">
+                                <i class="fas fa-users-slash fa-4x mb-3"></i>
+                                <h4>Chưa có đánh giá nào</h4>
+                                <p>Bạn sẽ nhận được thông báo khi có nhân viên cần đánh giá</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Performance Summary -->
+        {% if appraisals %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-gradient-primary">
+                        <h3 class="card-title">Tiến độ đánh giá</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="progress-group">
+                            Đã hoàn thành
+                            <span class="float-right"><b>{{ completed }}</b>/{{ appraisals.count }}</span>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-success" 
+                                     style="width: {% widthratio completed appraisals.count 100 %}%"></div>
+                            </div>
+                        </div>
+                        <div class="progress-group">
+                            Đang chờ đánh giá
+                            <span class="float-right"><b>{{ pending }}</b>/{{ appraisals.count }}</span>
+                            <div class="progress progress-sm">
+                                <div class="progress-bar bg-warning" 
+                                     style="width: {% widthratio pending appraisals.count 100 %}%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header bg-gradient-info">
+                        <h3 class="card-title">Hướng dẫn đánh giá</h3>
+                    </div>
+                    <div class="card-body">
+                        <ol class="pl-3">
+                            <li>Xem xét tự đánh giá của nhân viên</li>
+                            <li>Chấm điểm khách quan theo từng tiêu chí</li>
+                            <li>Viết nhận xét cụ thể, rõ ràng</li>
+                            <li>Đề xuất phát triển hoặc đào tạo nếu cần</li>
+                            <li>Gửi đánh giá cho HR phê duyệt</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+$(document).ready(function() {
+    $('#appraisalsTable').DataTable({
+        "responsive": true,
+        "lengthChange": true,
+        "autoWidth": false,
+        "order": [[4, "asc"]], // Sort by status
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Vietnamese.json"
+        }
+    });
+});
+</script>
+{% endblock custom_js %}

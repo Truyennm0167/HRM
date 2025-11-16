@@ -79,6 +79,117 @@ Trang chủ
         </div>
         <!-- /.row -->
          
+        <!-- Appraisal Notifications -->
+        <div class="row">
+          {% if my_pending_appraisals > 0 %}
+          <div class="col-md-4">
+            <div class="card card-warning">
+              <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-exclamation-triangle"></i> Đánh giá của bạn</h3>
+              </div>
+              <div class="card-body">
+                <p>Bạn có <strong>{{ my_pending_appraisals }}</strong> đánh giá đang chờ tự đánh giá.</p>
+                <a href="{% url 'my_appraisals' %}" class="btn btn-warning">
+                  <i class="fas fa-edit"></i> Đánh giá ngay
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+
+          {% if team_pending_appraisals > 0 %}
+          <div class="col-md-4">
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-users"></i> Đánh giá team</h3>
+              </div>
+              <div class="card-body">
+                <p>Bạn có <strong>{{ team_pending_appraisals }}</strong> nhân viên chờ đánh giá.</p>
+                <a href="{% url 'manager_appraisals' %}" class="btn btn-primary">
+                  <i class="fas fa-user-tie"></i> Xem danh sách
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+
+          {% if hr_pending_appraisals > 0 %}
+          <div class="col-md-4">
+            <div class="card card-info">
+              <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-clipboard-check"></i> HR Appraisals</h3>
+              </div>
+              <div class="card-body">
+                <p>Có <strong>{{ hr_pending_appraisals }}</strong> đánh giá chờ phê duyệt HR.</p>
+                <a href="{% url 'hr_appraisals' %}" class="btn btn-info">
+                  <i class="fas fa-check"></i> Phê duyệt
+                </a>
+              </div>
+            </div>
+          </div>
+          {% endif %}
+        </div>
+
+        <!-- Recent Completed Appraisals -->
+        {% if recent_appraisals %}
+        <div class="row">
+          <div class="col-12">
+            <div class="card card-success">
+              <div class="card-header">
+                <h3 class="card-title"><i class="fas fa-check-circle"></i> Đánh giá hoàn thành gần đây</h3>
+                <div class="card-tools">
+                  <a href="{% url 'hr_appraisals' %}" class="btn btn-sm btn-success">
+                    <i class="fas fa-list"></i> Xem tất cả
+                  </a>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <table class="table table-sm">
+                  <thead>
+                    <tr>
+                      <th>Nhân viên</th>
+                      <th>Kỳ</th>
+                      <th>Điểm</th>
+                      <th>Xếp loại</th>
+                      <th>Ngày hoàn thành</th>
+                      <th>Thao tác</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for appraisal in recent_appraisals %}
+                    <tr>
+                      <td>{{ appraisal.employee.name }}</td>
+                      <td>{{ appraisal.period.name }}</td>
+                      <td><strong class="text-success">{{ appraisal.final_score }}</strong></td>
+                      <td>
+                        {% if appraisal.overall_rating == 'outstanding' %}
+                          <span class="badge badge-danger">Xuất sắc</span>
+                        {% elif appraisal.overall_rating == 'exceeds' %}
+                          <span class="badge badge-success">Vượt mức</span>
+                        {% elif appraisal.overall_rating == 'meets' %}
+                          <span class="badge badge-primary">Đạt yêu cầu</span>
+                        {% elif appraisal.overall_rating == 'needs_improvement' %}
+                          <span class="badge badge-warning">Cần cải thiện</span>
+                        {% elif appraisal.overall_rating == 'unsatisfactory' %}
+                          <span class="badge badge-secondary">Không đạt</span>
+                        {% endif %}
+                      </td>
+                      <td>{{ appraisal.final_review_date|date:"d/m/Y" }}</td>
+                      <td>
+                        <a href="{% url 'appraisal_detail' appraisal.id %}" class="btn btn-xs btn-info">
+                          <i class="fas fa-eye"></i> Xem
+                        </a>
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+
         <div class="row">
           <div class="col-12">
             <div class="card card-primary">

@@ -52,6 +52,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Custom security middleware
+    'app.middleware.SecurityHeadersMiddleware',
+    'app.middleware.UserGroupMiddleware',
+    'app.middleware.LoginAttemptMiddleware',
 ]
 
 ROOT_URLCONF = 'hrm.urls'
@@ -109,6 +113,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 10,  # Increased from default 8
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -116,7 +123,33 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
+    # Custom validators
+    {
+        'NAME': 'app.validators.PasswordComplexityValidator',
+    },
+    {
+        'NAME': 'app.validators.MaximumLengthValidator',
+        'OPTIONS': {
+            'max_length': 128,
+        }
+    },
+    {
+        'NAME': 'app.validators.NoSpaceValidator',
+    },
+    {
+        'NAME': 'app.validators.NoEmailInPasswordValidator',
+    },
+    {
+        'NAME': 'app.validators.CommonPatternValidator',
+    },
 ]
+
+# Session Security
+SESSION_COOKIE_AGE = 3600  # 1 hour
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
+SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_SAMESITE = 'Strict'
 
 
 # Internationalization

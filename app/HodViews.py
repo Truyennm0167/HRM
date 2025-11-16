@@ -1,5 +1,5 @@
 from django.http import HttpResponse, HttpResponseRedirect
-
+from django.db import transaction
 from django.core.files.storage import FileSystemStorage, default_storage
 from django.utils.text import get_valid_filename
 import uuid
@@ -12,8 +12,17 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_POST
 from django.core.exceptions import ValidationError
 
-from .models import JobTitle, Department, Employee, Attendance, Reward, Discipline, Payroll, LeaveType, LeaveRequest, LeaveBalance, ExpenseCategory, Expense, SalaryComponent, EmployeeSalaryRule, PayrollCalculationLog, SalaryRuleTemplate, SalaryRuleTemplateItem, Contract, ContractHistory
-from .forms import EmployeeForm, LeaveTypeForm, LeaveRequestForm, ExpenseCategoryForm, ExpenseForm, ContractForm
+from .models import (
+    JobTitle, Department, Employee, Attendance, Reward, Discipline, Payroll, 
+    LeaveType, LeaveRequest, LeaveBalance, ExpenseCategory, Expense, 
+    SalaryComponent, EmployeeSalaryRule, PayrollCalculationLog, SalaryRuleTemplate, 
+    SalaryRuleTemplateItem, Contract, ContractHistory,
+    AppraisalPeriod, AppraisalCriteria, Appraisal, AppraisalScore, AppraisalComment
+)
+from .forms import (
+    EmployeeForm, LeaveTypeForm, LeaveRequestForm, ExpenseCategoryForm, ExpenseForm, ContractForm,
+    AppraisalPeriodForm, AppraisalCriteriaForm, SelfAssessmentForm, ManagerReviewForm, HRFinalReviewForm
+)
 from .permissions import require_hr, require_hr_or_manager, can_manage_contract
 from .validators import (
     validate_image_file, 
@@ -21,6 +30,11 @@ from .validators import (
     validate_salary,
     validate_phone_number,
     validate_email
+)
+# Import security decorators
+from .decorators import (
+    hr_required, manager_or_hr_required, check_employee_access, 
+    check_salary_access, check_appraisal_access, group_required
 )
 
 from django.http import JsonResponse
@@ -42,10 +56,49 @@ def admin_home(request):
     employees = Employee.objects.all()
     departments = Department.objects.all()
     payrolls = Payroll.objects.all()
+    
+    # Appraisal statistics
+    try:
+        user_employee = Employee.objects.get(email=request.user.email)
+        
+        # Get pending appraisals for current user
+        my_pending_appraisals = Appraisal.objects.filter(
+            employee=user_employee,
+            status='pending_self'
+        ).count()
+        
+        # Get team appraisals if user is manager
+        team_pending_appraisals = 0
+        if user_employee.is_manager:
+            team_pending_appraisals = Appraisal.objects.filter(
+                manager=user_employee,
+                status='pending_manager'
+            ).count()
+        
+        # Get HR appraisals
+        hr_pending_appraisals = Appraisal.objects.filter(
+            status='pending_hr'
+        ).count()
+        
+        # Get recent completed appraisals
+        recent_appraisals = Appraisal.objects.filter(
+            status='completed'
+        ).order_by('-final_review_date')[:5]
+        
+    except Employee.DoesNotExist:
+        my_pending_appraisals = 0
+        team_pending_appraisals = 0
+        hr_pending_appraisals = 0
+        recent_appraisals = []
+    
     context = {
         "employees": employees,
         "departments": departments,
-        "payrolls": payrolls
+        "payrolls": payrolls,
+        "my_pending_appraisals": my_pending_appraisals,
+        "team_pending_appraisals": team_pending_appraisals,
+        "hr_pending_appraisals": hr_pending_appraisals,
+        "recent_appraisals": recent_appraisals,
     }
     logger.info(f"Admin home accessed by {request.user.username}")
     return render(request, "hod_template/home_content.html", context)
@@ -74,6 +127,7 @@ def generate_employee_code():
     return f"NV{new_number:04d}"  # định dạng NV0001, NV0002,...
 
 @login_required
+@hr_required
 @require_http_methods(["GET", "POST"])
 def add_employee(request):
     employee_code = generate_employee_code()
@@ -88,6 +142,7 @@ def add_employee(request):
     return render(request, "hod_template/add_employee_template.html", context)
 
 @login_required
+@hr_required
 @require_POST
 def add_employee_save(request):
     if request.method != "POST":
@@ -507,6 +562,7 @@ def update_employee_save(request):
         return redirect('employee_list')
 
 @login_required
+@hr_required
 @require_POST
 def delete_employee(request, employee_id):
     employee = get_object_or_404(Employee, id=employee_id)
@@ -2223,9 +2279,13 @@ def delete_job(request, job_id):
 
 @login_required
 def applications_kanban(request):
-    """Admin - Kanban board để quản lý applications"""
+    """Admin - Quản lý applications với chế độ xem List và Kanban"""
     from app.models import Application, JobPosting
     from django.db.models import Q
+    from collections import defaultdict
+    
+    # Get view mode (list or kanban)
+    view_mode = request.GET.get('view', 'list')
     
     # Filter by job
     job_filter = request.GET.get('job')
@@ -2245,10 +2305,8 @@ def applications_kanban(request):
     
     applications = applications.select_related('job', 'assigned_to', 'interviewer').order_by('-created_at')
     
-    # Group applications by status for kanban columns
-    from collections import defaultdict
+    # Group applications by status for kanban view
     kanban_columns = defaultdict(list)
-    
     for app in applications:
         kanban_columns[app.status].append(app)
     
@@ -2261,6 +2319,7 @@ def applications_kanban(request):
     interview_scheduled = Application.objects.filter(status__in=['phone_interview', 'interview']).count()
     
     context = {
+        'applications': applications,
         'kanban_columns': dict(kanban_columns),
         'STATUS_CHOICES': Application.STATUS_CHOICES,
         'jobs': jobs,
@@ -2269,8 +2328,9 @@ def applications_kanban(request):
         'total_applications': total_applications,
         'new_applications': new_applications,
         'interview_scheduled': interview_scheduled,
+        'view_mode': view_mode,
     }
-    return render(request, 'hod_template/applications_kanban.html', context)
+    return render(request, 'hod_template/manage_applications.html', context)
 
 
 @login_required
@@ -2585,8 +2645,9 @@ def org_chart(request):
 # ============================================================================
 
 @login_required
+@require_hr
 def salary_components(request):
-    """List all salary components with CRUD operations"""
+    """List all salary components with CRUD operations (HR only)"""
     components = SalaryComponent.objects.all().order_by('component_type', 'name')
     
     context = {
@@ -2599,8 +2660,9 @@ def salary_components(request):
 
 
 @login_required
+@require_hr
 def create_salary_component(request):
-    """Create new salary component"""
+    """Create new salary component (HR only)"""
     if request.method == 'POST':
         try:
             component = SalaryComponent(
@@ -2631,8 +2693,9 @@ def create_salary_component(request):
 
 
 @login_required
+@require_hr
 def edit_salary_component(request, component_id):
-    """Edit existing salary component"""
+    """Edit existing salary component (HR only)"""
     component = get_object_or_404(SalaryComponent, id=component_id)
     
     if request.method == 'POST':
@@ -2665,8 +2728,9 @@ def edit_salary_component(request, component_id):
 
 
 @login_required
+@require_hr
 def delete_salary_component(request, component_id):
-    """Delete salary component (soft delete by setting is_active=False)"""
+    """Delete salary component - soft delete by setting is_active=False (HR only)"""
     component = get_object_or_404(SalaryComponent, id=component_id)
     
     if request.method == 'POST':
@@ -2687,8 +2751,9 @@ def delete_salary_component(request, component_id):
 
 
 @login_required
+@require_hr
 def employee_salary_rules(request, employee_id):
-    """View and manage salary rules for specific employee"""
+    """View and manage salary rules for specific employee (HR only)"""
     employee = get_object_or_404(Employee, id=employee_id)
     
     # Get active rules
@@ -2718,8 +2783,9 @@ def employee_salary_rules(request, employee_id):
 
 
 @login_required
+@require_hr
 def assign_salary_rule(request, employee_id):
-    """Assign new salary rule to employee"""
+    """Assign new salary rule to employee (HR only)"""
     employee = get_object_or_404(Employee, id=employee_id)
     
     if request.method == 'POST':
@@ -2757,8 +2823,9 @@ def assign_salary_rule(request, employee_id):
 
 
 @login_required
+@require_hr
 def delete_salary_rule(request, rule_id):
-    """Delete (deactivate) salary rule"""
+    """Delete (deactivate) salary rule (HR only)"""
     rule = get_object_or_404(EmployeeSalaryRule, id=rule_id)
     employee_id = rule.employee.id
     
@@ -2861,8 +2928,9 @@ def calculate_salary_preview(request, employee_id):
 
 
 @login_required
+@require_hr
 def bulk_assign_salary_rules(request):
-    """Bulk assign salary rules to multiple employees"""
+    """Bulk assign salary rules to multiple employees (HR only)"""
     departments = Department.objects.all()
     components = SalaryComponent.objects.filter(is_active=True)
     
@@ -2930,8 +2998,9 @@ def bulk_assign_salary_rules(request):
 
 
 @login_required
+@require_hr
 def salary_rule_templates(request):
-    """List all salary rule templates"""
+    """List all salary rule templates (HR only)"""
     templates = SalaryRuleTemplate.objects.all().select_related('job_title', 'department')
     
     context = {
@@ -2942,8 +3011,9 @@ def salary_rule_templates(request):
 
 
 @login_required
+@require_hr
 def create_salary_rule_template(request):
-    """Create new salary rule template"""
+    """Create new salary rule template (HR only)"""
     if request.method == 'POST':
         try:
             template = SalaryRuleTemplate(
@@ -2971,8 +3041,9 @@ def create_salary_rule_template(request):
 
 
 @login_required
+@require_hr
 def edit_salary_rule_template(request, template_id):
-    """Edit salary rule template and manage its items"""
+    """Edit salary rule template and manage its items (HR only)"""
     template = get_object_or_404(SalaryRuleTemplate, id=template_id)
     
     if request.method == 'POST':
@@ -3036,8 +3107,9 @@ def edit_salary_rule_template(request, template_id):
 
 
 @login_required
+@require_hr
 def delete_template_item(request, item_id):
-    """Delete component from template"""
+    """Delete component from template (HR only)"""
     item = get_object_or_404(SalaryRuleTemplateItem, id=item_id)
     template_id = item.template.id
     
@@ -3052,8 +3124,9 @@ def delete_template_item(request, item_id):
 
 
 @login_required
+@require_hr
 def apply_template_to_employee(request, template_id, employee_id):
-    """Apply a template to specific employee"""
+    """Apply a template to specific employee (HR only)"""
     template = get_object_or_404(SalaryRuleTemplate, id=template_id)
     employee = get_object_or_404(Employee, id=employee_id)
     
@@ -3075,8 +3148,9 @@ def apply_template_to_employee(request, template_id, employee_id):
 
 
 @login_required
+@require_hr
 def salary_calculation_history(request):
-    """View calculation history/audit log"""
+    """View calculation history/audit log (HR only)"""
     logs = PayrollCalculationLog.objects.all().select_related(
         'payroll__employee',
         'calculated_by'
@@ -3505,5 +3579,458 @@ def employee_contracts(request, employee_id):
     }
     
     return render(request, 'hod_template/employee_contracts.html', context)
+
+
+# ============================================================================
+# PERFORMANCE APPRAISAL VIEWS
+# ============================================================================
+
+@login_required
+def appraisal_periods(request):
+    """HR quản lý các kỳ đánh giá"""
+    periods = AppraisalPeriod.objects.all().prefetch_related('applicable_departments', 'applicable_job_titles')
+    
+    # Statistics
+    active_periods = periods.filter(status='active').count()
+    draft_periods = periods.filter(status='draft').count()
+    
+    context = {
+        'periods': periods,
+        'active_periods': active_periods,
+        'draft_periods': draft_periods,
+    }
+    
+    return render(request, 'hod_template/appraisal_periods.html', context)
+
+
+@login_required
+@hr_required
+def create_appraisal_period(request):
+    """Tạo kỳ đánh giá mới"""
+    if request.method == 'POST':
+        form = AppraisalPeriodForm(request.POST)
+        if form.is_valid():
+            try:
+                period = form.save(commit=False)
+                period.created_by = Employee.objects.get(email=request.user.email)
+                period.save()
+                form.save_m2m()  # Save ManyToMany relationships
+                
+                messages.success(request, f'Đã tạo kỳ đánh giá: {period.name}')
+                logger.info(f"Created appraisal period: {period.name} by {request.user.username}")
+                return redirect('appraisal_periods')
+            except Exception as e:
+                logger.error(f"Error creating appraisal period: {e}")
+                messages.error(request, f'Lỗi: {str(e)}')
+        else:
+            messages.error(request, 'Vui lòng kiểm tra lại thông tin')
+    else:
+        form = AppraisalPeriodForm()
+    
+    context = {'form': form}
+    return render(request, 'hod_template/create_appraisal_period.html', context)
+
+
+@login_required
+def appraisal_period_detail(request, period_id):
+    """Chi tiết kỳ đánh giá và quản lý tiêu chí"""
+    period = get_object_or_404(AppraisalPeriod, id=period_id)
+    criteria = period.criteria.all()
+    appraisals = period.appraisals.select_related('employee', 'manager').all()
+    
+    # Statistics
+    total_appraisals = appraisals.count()
+    pending_self = appraisals.filter(status='pending_self').count()
+    pending_manager = appraisals.filter(status='pending_manager').count()
+    completed = appraisals.filter(status='completed').count()
+    
+    # Calculate total weight
+    total_weight = sum(float(c.weight) for c in criteria)
+    
+    context = {
+        'period': period,
+        'criteria': criteria,
+        'appraisals': appraisals,
+        'total_appraisals': total_appraisals,
+        'pending_self': pending_self,
+        'pending_manager': pending_manager,
+        'completed': completed,
+        'total_weight': total_weight,
+    }
+    
+    return render(request, 'hod_template/appraisal_period_detail.html', context)
+
+
+@login_required
+def add_appraisal_criteria(request, period_id):
+    """Thêm tiêu chí đánh giá vào kỳ"""
+    period = get_object_or_404(AppraisalPeriod, id=period_id)
+    
+    if request.method == 'POST':
+        form = AppraisalCriteriaForm(request.POST)
+        if form.is_valid():
+            try:
+                criteria = form.save(commit=False)
+                criteria.period = period
+                criteria.save()
+                
+                messages.success(request, f'Đã thêm tiêu chí: {criteria.name}')
+                logger.info(f"Added criteria {criteria.name} to period {period.name}")
+                return redirect('appraisal_period_detail', period_id=period.id)
+            except Exception as e:
+                logger.error(f"Error adding criteria: {e}")
+                messages.error(request, f'Lỗi: {str(e)}')
+        else:
+            messages.error(request, 'Vui lòng kiểm tra lại thông tin')
+    else:
+        form = AppraisalCriteriaForm()
+    
+    context = {
+        'form': form,
+        'period': period,
+    }
+    return render(request, 'hod_template/add_appraisal_criteria.html', context)
+
+
+@login_required
+@hr_required
+@transaction.atomic
+def generate_appraisals(request, period_id):
+    """Tạo appraisal records cho tất cả nhân viên phù hợp"""
+    period = get_object_or_404(AppraisalPeriod, id=period_id)
+    
+    if request.method == 'POST':
+        try:
+            # Get applicable employees
+            employees = Employee.objects.filter(status__in=[1, 2])  # Thử việc và chính thức
+            
+            # Filter by department if specified
+            if period.applicable_departments.exists():
+                employees = employees.filter(department__in=period.applicable_departments.all())
+            
+            # Filter by job title if specified
+            if period.applicable_job_titles.exists():
+                employees = employees.filter(job_title__in=period.applicable_job_titles.all())
+            
+            created_count = 0
+            for employee in employees:
+                # Check if appraisal already exists
+                if not Appraisal.objects.filter(period=period, employee=employee).exists():
+                    # Find manager (employee with is_manager=True in same department)
+                    manager = Employee.objects.filter(
+                        department=employee.department,
+                        is_manager=True
+                    ).exclude(id=employee.id).first()
+                    
+                    appraisal = Appraisal.objects.create(
+                        period=period,
+                        employee=employee,
+                        manager=manager,
+                        status='pending_self'
+                    )
+                    
+                    # Create AppraisalScore for each criteria
+                    for criteria in period.criteria.all():
+                        AppraisalScore.objects.create(
+                            appraisal=appraisal,
+                            criteria=criteria
+                        )
+                    
+                    created_count += 1
+            
+            messages.success(request, f'Đã tạo {created_count} đánh giá cho nhân viên')
+            logger.info(f"Generated {created_count} appraisals for period {period.name}")
+            
+        except Exception as e:
+            logger.error(f"Error generating appraisals: {e}")
+            messages.error(request, f'Lỗi: {str(e)}')
+    
+    return redirect('appraisal_period_detail', period_id=period.id)
+
+
+@login_required
+def my_appraisals(request):
+    """Nhân viên xem các đánh giá của mình"""
+    try:
+        employee = Employee.objects.get(email=request.user.email)
+    except Employee.DoesNotExist:
+        messages.error(request, 'Không tìm thấy hồ sơ nhân viên')
+        return redirect('employee_dashboard')
+    
+    appraisals = Appraisal.objects.filter(employee=employee).select_related(
+        'period', 'manager'
+    ).order_by('-period__start_date')
+    
+    # Current appraisals (pending action)
+    pending_appraisals = appraisals.filter(status='pending_self')
+    
+    context = {
+        'appraisals': appraisals,
+        'pending_appraisals': pending_appraisals,
+    }
+    
+    return render(request, 'hod_template/my_appraisals.html', context)
+
+
+@login_required
+@transaction.atomic
+def self_assessment(request, appraisal_id):
+    """Nhân viên tự đánh giá"""
+    try:
+        employee = Employee.objects.get(email=request.user.email)
+    except Employee.DoesNotExist:
+        messages.error(request, 'Không tìm thấy hồ sơ nhân viên')
+        return redirect('employee_dashboard')
+    
+    appraisal = get_object_or_404(Appraisal, id=appraisal_id, employee=employee)
+    
+    # Check if can self assess
+    if not appraisal.can_self_assess(employee):
+        messages.error(request, 'Bạn không thể tự đánh giá lúc này')
+        return redirect('my_appraisals')
+    
+    scores = appraisal.scores.select_related('criteria').all()
+    
+    if request.method == 'POST':
+        try:
+            # Save self assessment form
+            form = SelfAssessmentForm(request.POST, instance=appraisal)
+            if form.is_valid():
+                form.save()
+            
+            # Save scores
+            total_score = 0
+            total_weight = 0
+            for score in scores:
+                self_score = request.POST.get(f'self_score_{score.id}')
+                self_comment = request.POST.get(f'self_comment_{score.id}', '')
+                
+                if self_score:
+                    score.self_score = int(self_score)
+                    score.self_comment = self_comment
+                    score.save()
+                    
+                    # Calculate weighted score
+                    total_score += int(self_score) * float(score.criteria.weight)
+                    total_weight += float(score.criteria.weight)
+            
+            # Update appraisal
+            if total_weight > 0:
+                appraisal.self_overall_score = round(total_score / total_weight, 2)
+            appraisal.self_assessment_date = timezone.now()
+            appraisal.status = 'pending_manager'
+            appraisal.save()
+            
+            messages.success(request, 'Đã gửi tự đánh giá thành công!')
+            logger.info(f"Self assessment completed by {employee.name} for period {appraisal.period.name}")
+            return redirect('my_appraisals')
+            
+        except Exception as e:
+            logger.error(f"Error in self assessment: {e}")
+            messages.error(request, f'Lỗi: {str(e)}')
+    else:
+        form = SelfAssessmentForm(instance=appraisal)
+    
+    context = {
+        'appraisal': appraisal,
+        'scores': scores,
+        'form': form,
+    }
+    
+    return render(request, 'hod_template/self_assessment.html', context)
+
+
+@login_required
+def manager_appraisals(request):
+    """Quản lý xem danh sách nhân viên cần đánh giá"""
+    try:
+        employee = Employee.objects.get(email=request.user.email)
+    except Employee.DoesNotExist:
+        messages.error(request, 'Không tìm thấy hồ sơ nhân viên')
+        return redirect('admin_home')
+    
+    if not employee.is_manager:
+        messages.error(request, 'Bạn không có quyền truy cập')
+        return redirect('admin_home')
+    
+    appraisals = Appraisal.objects.filter(manager=employee).select_related(
+        'period', 'employee'
+    ).order_by('-period__start_date', 'status')
+    
+    # Statistics
+    pending = appraisals.filter(status='pending_manager').count()
+    completed = appraisals.filter(status__in=['pending_hr', 'completed']).count()
+    
+    context = {
+        'appraisals': appraisals,
+        'pending': pending,
+        'completed': completed,
+    }
+    
+    return render(request, 'hod_template/manager_appraisals.html', context)
+
+
+@login_required
+@transaction.atomic
+def manager_review(request, appraisal_id):
+    """Quản lý đánh giá nhân viên"""
+    try:
+        manager = Employee.objects.get(email=request.user.email)
+    except Employee.DoesNotExist:
+        messages.error(request, 'Không tìm thấy hồ sơ nhân viên')
+        return redirect('admin_home')
+    
+    appraisal = get_object_or_404(Appraisal, id=appraisal_id, manager=manager)
+    
+    # Check if can review
+    if not appraisal.can_manager_review(manager):
+        messages.error(request, 'Không thể đánh giá lúc này')
+        return redirect('manager_appraisals')
+    
+    scores = appraisal.scores.select_related('criteria').all()
+    
+    if request.method == 'POST':
+        try:
+            # Save manager review form
+            form = ManagerReviewForm(request.POST, instance=appraisal)
+            if form.is_valid():
+                form.save()
+            
+            # Save scores
+            total_score = 0
+            total_weight = 0
+            for score in scores:
+                manager_score = request.POST.get(f'manager_score_{score.id}')
+                manager_comment = request.POST.get(f'manager_comment_{score.id}', '')
+                
+                if manager_score:
+                    score.manager_score = int(manager_score)
+                    score.manager_comment = manager_comment
+                    score.final_score = int(manager_score)  # Default final = manager score
+                    score.save()
+                    
+                    # Calculate weighted score
+                    total_score += int(manager_score) * float(score.criteria.weight)
+                    total_weight += float(score.criteria.weight)
+            
+            # Update appraisal
+            if total_weight > 0:
+                appraisal.manager_overall_score = round(total_score / total_weight, 2)
+                appraisal.final_score = appraisal.manager_overall_score
+            appraisal.manager_review_date = timezone.now()
+            appraisal.status = 'pending_hr'
+            appraisal.save()
+            
+            messages.success(request, 'Đã hoàn thành đánh giá!')
+            logger.info(f"Manager review completed by {manager.name} for {appraisal.employee.name}")
+            return redirect('manager_appraisals')
+            
+        except Exception as e:
+            logger.error(f"Error in manager review: {e}")
+            messages.error(request, f'Lỗi: {str(e)}')
+    else:
+        form = ManagerReviewForm(instance=appraisal)
+    
+    context = {
+        'appraisal': appraisal,
+        'scores': scores,
+        'form': form,
+    }
+    
+    return render(request, 'hod_template/manager_review.html', context)
+
+
+@login_required
+@hr_required
+def hr_appraisals(request):
+    """HR xem tất cả đánh giá cần phê duyệt"""
+    appraisals = Appraisal.objects.select_related(
+        'period', 'employee', 'manager'
+    ).order_by('-period__start_date', 'status')
+    
+    # Filter by status if provided
+    status_filter = request.GET.get('status')
+    if status_filter:
+        appraisals = appraisals.filter(status=status_filter)
+    
+    # Statistics
+    pending_hr = appraisals.filter(status='pending_hr').count()
+    completed = appraisals.filter(status='completed').count()
+    pending_self = appraisals.filter(status='pending_self').count()
+    pending_manager = appraisals.filter(status='pending_manager').count()
+    
+    context = {
+        'appraisals': appraisals,
+        'pending_hr': pending_hr,
+        'completed': completed,
+        'pending_self': pending_self,
+        'pending_manager': pending_manager,
+        'status_filter': status_filter,
+    }
+    
+    return render(request, 'hod_template/hr_appraisals.html', context)
+
+
+@login_required
+@hr_required
+@transaction.atomic
+def hr_final_review(request, appraisal_id):
+    """HR phê duyệt cuối cùng"""
+    appraisal = get_object_or_404(Appraisal, id=appraisal_id)
+    scores = appraisal.scores.select_related('criteria').all()
+    
+    if request.method == 'POST':
+        try:
+            form = HRFinalReviewForm(request.POST, instance=appraisal)
+            if form.is_valid():
+                appraisal = form.save(commit=False)
+                appraisal.status = 'completed'
+                appraisal.final_review_date = timezone.now()
+                
+                # Apply salary adjustment if any
+                if appraisal.salary_adjustment:
+                    employee = appraisal.employee
+                    employee.salary += float(appraisal.salary_adjustment)
+                    employee.save()
+                    logger.info(f"Salary adjusted for {employee.name}: +{appraisal.salary_adjustment}")
+                
+                appraisal.save()
+                
+                messages.success(request, 'Đã hoàn tất đánh giá!')
+                logger.info(f"HR final review completed for {appraisal.employee.name}")
+                return redirect('hr_appraisals')
+                
+        except Exception as e:
+            logger.error(f"Error in HR final review: {e}")
+            messages.error(request, f'Lỗi: {str(e)}')
+    else:
+        form = HRFinalReviewForm(instance=appraisal)
+    
+    context = {
+        'appraisal': appraisal,
+        'scores': scores,
+        'form': form,
+    }
+    
+    return render(request, 'hod_template/hr_final_review.html', context)
+
+
+@login_required
+def appraisal_detail(request, appraisal_id):
+    """Xem chi tiết đánh giá (read-only)"""
+    appraisal = get_object_or_404(Appraisal.objects.select_related(
+        'period', 'employee', 'manager'
+    ), id=appraisal_id)
+    
+    scores = appraisal.scores.select_related('criteria').all()
+    comments = appraisal.comments.select_related('author').all()
+    
+    context = {
+        'appraisal': appraisal,
+        'scores': scores,
+        'comments': comments,
+    }
+    
+    return render(request, 'hod_template/appraisal_detail.html', context)
 
 

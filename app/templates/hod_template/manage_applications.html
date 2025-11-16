@@ -1,0 +1,833 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+{% load dict_filters %}
+
+{% block page_title %}
+<i class="fas fa-users"></i> Quản lý ứng tuyển
+{% endblock page_title %}
+
+{% block custom_css %}
+<style>
+    /* Override AdminLTE styles */
+    .content {
+        padding: 15px !important;
+    }
+    
+    .breadcrumb {
+        background: transparent !important;
+        padding: 0.75rem 0 !important;
+        margin-bottom: 1rem !important;
+    }
+    
+    /* View Toggle */
+    .view-toggle {
+        display: inline-flex !important;
+        border: 2px solid #007bff !important;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    
+    .view-toggle button {
+        padding: 8px 20px !important;
+        border: none !important;
+        background: white !important;
+        color: #007bff !important;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 500;
+    }
+    
+    .view-toggle button:hover {
+        background: #e7f1ff !important;
+    }
+    
+    .view-toggle button.active {
+        background: #007bff !important;
+        color: white !important;
+    }
+    
+    .view-toggle button:not(:last-child) {
+        border-right: 2px solid #007bff !important;
+    }
+    
+    /* List View Styles */
+    #listView .application-card {
+        background: white !important;
+        border-radius: 10px;
+        padding: 20px !important;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+        transition: all 0.3s;
+        border-left: 4px solid #007bff !important;
+    }
+    
+    #listView .application-card:hover {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
+        transform: translateX(5px);
+    }
+    
+    #listView .application-header {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 15px;
+    }
+    
+    #listView .application-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 5px;
+    }
+    
+    #listView .application-code {
+        font-size: 0.85rem;
+        color: #6c757d;
+        background: #e9ecef;
+        padding: 3px 10px;
+        border-radius: 5px;
+    }
+    
+    #listView .application-job {
+        font-size: 1rem;
+        color: #007bff;
+        margin-bottom: 15px;
+        display: flex !important;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    #listView .application-info {
+        display: grid !important;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    
+    #listView .info-item {
+        font-size: 0.9rem;
+        color: #555;
+        display: flex !important;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    #listView .info-item i {
+        color: #007bff;
+        width: 20px;
+    }
+    
+    #listView .application-footer {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 15px;
+        border-top: 1px solid #e9ecef;
+    }
+    
+    #listView .application-meta {
+        display: flex !important;
+        gap: 20px;
+        align-items: center;
+    }
+    
+    #listView .rating-display {
+        display: flex !important;
+        gap: 3px;
+    }
+    
+    #listView .rating-display i {
+        color: #ffc107;
+    }
+    
+    /* Kanban View Styles */
+    .kanban-board {
+        display: flex !important;
+        overflow-x: auto;
+        gap: 15px;
+        padding: 20px 0;
+        min-height: 600px;
+        background: #ecf0f5;
+        border-radius: 5px;
+    }
+    
+    .kanban-column {
+        flex: 0 0 280px;
+        background: #f8f9fa !important;
+        border-radius: 10px;
+        padding: 15px !important;
+        min-height: 500px;
+    }
+    
+    .kanban-column-header {
+        font-weight: bold !important;
+        font-size: 1rem;
+        margin-bottom: 15px;
+        padding: 10px !important;
+        border-radius: 8px;
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .kanban-column-header .badge {
+        font-size: 0.85rem !important;
+    }
+    
+    /* Status colors */
+    .status-new { background: #17a2b8 !important; color: white !important; }
+    .status-screening { background: #6610f2 !important; color: white !important; }
+    .status-phone_interview { background: #6f42c1 !important; color: white !important; }
+    .status-interview { background: #007bff !important; color: white !important; }
+    .status-test { background: #0056b3 !important; color: white !important; }
+    .status-offer { background: #28a745 !important; color: white !important; }
+    .status-accepted { background: #20c997 !important; color: white !important; }
+    .status-rejected { background: #dc3545 !important; color: white !important; }
+    .status-withdrawn { background: #6c757d !important; color: white !important; }
+    
+    .kanban-cards {
+        min-height: 400px;
+    }
+    
+    .kanban-card {
+        background: white !important;
+        border-radius: 8px !important;
+        padding: 12px !important;
+        margin-bottom: 10px !important;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+        cursor: move !important;
+        transition: all 0.3s;
+        border-left: 4px solid #007bff !important;
+    }
+    
+    .kanban-card:hover {
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2) !important;
+        transform: translateY(-2px);
+    }
+    
+    .kanban-card.sortable-ghost {
+        opacity: 0.4;
+        background: #e9ecef !important;
+    }
+    
+    .kanban-card.sortable-chosen {
+        cursor: grabbing !important;
+    }
+    
+    .kanban-card-header {
+        font-weight: bold !important;
+        margin-bottom: 8px;
+        display: flex !important;
+        justify-content: space-between;
+        align-items: start;
+    }
+    
+    .kanban-card-title {
+        font-size: 0.95rem;
+        color: #333 !important;
+        flex: 1;
+    }
+    
+    .kanban-card-code {
+        font-size: 0.75rem;
+        color: #6c757d !important;
+        background: #e9ecef !important;
+        padding: 2px 6px !important;
+        border-radius: 4px !important;
+        margin-left: 5px;
+    }
+    
+    .kanban-card-job {
+        font-size: 0.85rem;
+        color: #6c757d !important;
+        margin-bottom: 8px;
+        display: flex !important;
+        align-items: center;
+        gap: 5px;
+    }
+    
+    .kanban-card-info {
+        font-size: 0.8rem;
+        color: #555 !important;
+        margin-bottom: 5px;
+    }
+    
+    .kanban-card-info i {
+        color: #007bff !important;
+        width: 18px;
+    }
+    
+    .kanban-card-meta {
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 10px;
+        padding-top: 10px !important;
+        border-top: 1px solid #e9ecef !important;
+        font-size: 0.75rem;
+        color: #6c757d !important;
+    }
+    
+    .kanban-card-rating {
+        display: flex !important;
+        gap: 2px;
+    }
+    
+    .kanban-card-rating i {
+        color: #ffc107 !important;
+    }
+    
+    .kanban-empty {
+        text-align: center;
+        padding: 30px !important;
+        color: #adb5bd !important;
+    }
+    
+    .kanban-empty i {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        display: block !important;
+    }
+    
+    /* Common Styles */
+    .filter-section {
+        background: white !important;
+        padding: 20px !important;
+        border-radius: 10px !important;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+    }
+    
+    .stats-row {
+        display: flex !important;
+        gap: 15px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+    
+    .stat-card {
+        flex: 1;
+        min-width: 200px;
+        background: white !important;
+        border-radius: 10px !important;
+        padding: 20px !important;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1) !important;
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .stat-card-content h3 {
+        margin: 0;
+        font-size: 2rem;
+        font-weight: bold !important;
+    }
+    
+    .stat-card-content p {
+        margin: 5px 0 0 0;
+        color: #6c757d !important;
+    }
+    
+    .stat-card-icon {
+        font-size: 3rem;
+        opacity: 0.3;
+    }
+    
+    .stat-card.info { border-left: 4px solid #17a2b8 !important; }
+    .stat-card.info .stat-card-icon { color: #17a2b8 !important; }
+    
+    .stat-card.success { border-left: 4px solid #28a745 !important; }
+    .stat-card.success .stat-card-icon { color: #28a745 !important; }
+    
+    .stat-card.warning { border-left: 4px solid #ffc107 !important; }
+    .stat-card.warning .stat-card-icon { color: #ffc107 !important; }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .kanban-column {
+            flex: 0 0 250px;
+        }
+        
+        .stats-row {
+            flex-direction: column;
+        }
+        
+        #listView .application-info {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+{% endblock custom_css %}
+
+{% block main_content %}
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        
+        <!-- Breadcrumb -->
+        <div class="row mb-3">
+            <div class="col-12">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'list_jobs_admin' %}">Tin tuyển dụng</a></li>
+                    <li class="breadcrumb-item active">Ứng tuyển</li>
+                </ol>
+            </div>
+        </div>
+        
+        <!-- Statistics -->
+        <div class="stats-row">
+            <div class="stat-card info">
+                <div class="stat-card-content">
+                    <h3>{{ total_applications }}</h3>
+                    <p>Tổng ứng tuyển</p>
+                </div>
+                <div class="stat-card-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+            </div>
+            
+            <div class="stat-card success">
+                <div class="stat-card-content">
+                    <h3>{{ new_applications }}</h3>
+                    <p>Hồ sơ mới</p>
+                </div>
+                <div class="stat-card-icon">
+                    <i class="fas fa-file-alt"></i>
+                </div>
+            </div>
+            
+            <div class="stat-card warning">
+                <div class="stat-card-content">
+                    <h3>{{ interview_scheduled }}</h3>
+                    <p>Đang phỏng vấn</p>
+                </div>
+                <div class="stat-card-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Filters and View Toggle -->
+        <div class="filter-section">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0"><i class="fas fa-filter"></i> Bộ lọc</h5>
+                <div class="view-toggle">
+                    <button type="button" id="listViewBtn" class="active">
+                        <i class="fas fa-list"></i> Danh sách
+                    </button>
+                    <button type="button" id="kanbanViewBtn">
+                        <i class="fas fa-columns"></i> Kanban
+                    </button>
+                </div>
+            </div>
+            
+            <form method="get" action="">
+                <input type="hidden" name="view" id="viewInput" value="{{ view_mode|default:'list' }}">
+                <div class="row">
+                    <div class="col-md-5">
+                        <div class="form-group mb-0">
+                            <label>Tìm kiếm</label>
+                            <input type="text" name="search" class="form-control" 
+                                   placeholder="Tên ứng viên, email, mã ứng tuyển..." 
+                                   value="{{ search_query|default:'' }}">
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-4">
+                        <div class="form-group mb-0">
+                            <label>Lọc theo tin tuyển dụng</label>
+                            <select name="job" class="form-control">
+                                <option value="">-- Tất cả tin tuyển dụng --</option>
+                                {% for job in jobs %}
+                                <option value="{{ job.id }}" 
+                                        {% if job_filter == job.id|stringformat:"s" %}selected{% endif %}>
+                                    {{ job.code }} - {{ job.title }}
+                                </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-3">
+                        <div class="form-group mb-0">
+                            <label>&nbsp;</label>
+                            <div class="btn-group btn-block">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search"></i> Lọc
+                                </button>
+                                <a href="?view={{ view_mode|default:'list' }}" class="btn btn-secondary">
+                                    <i class="fas fa-redo"></i> Reset
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
+        <!-- List View -->
+        <div id="listView" style="{% if view_mode == 'kanban' %}display: none;{% endif %}">
+            {% for app in applications %}
+            <div class="application-card">
+                <div class="application-header">
+                    <div>
+                        <div class="application-title">{{ app.full_name }}</div>
+                        <span class="application-code">{{ app.application_code }}</span>
+                    </div>
+                    <div>
+                        {% if app.status == 'new' %}
+                        <span class="badge badge-info badge-lg">{{ app.get_status_display }}</span>
+                        {% elif app.status == 'screening' %}
+                        <span class="badge badge-primary badge-lg">{{ app.get_status_display }}</span>
+                        {% elif app.status == 'interview' or app.status == 'phone_interview' %}
+                        <span class="badge badge-warning badge-lg">{{ app.get_status_display }}</span>
+                        {% elif app.status == 'offer' or app.status == 'accepted' %}
+                        <span class="badge badge-success badge-lg">{{ app.get_status_display }}</span>
+                        {% elif app.status == 'rejected' %}
+                        <span class="badge badge-danger badge-lg">{{ app.get_status_display }}</span>
+                        {% else %}
+                        <span class="badge badge-secondary badge-lg">{{ app.get_status_display }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                <div class="application-job">
+                    <i class="fas fa-briefcase"></i>
+                    <strong>{{ app.job.title }}</strong>
+                </div>
+                
+                <div class="application-info">
+                    <div class="info-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>{{ app.email }}</span>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <span>{{ app.phone }}</span>
+                    </div>
+                    {% if app.years_of_experience %}
+                    <div class="info-item">
+                        <i class="fas fa-briefcase"></i>
+                        <span>{{ app.years_of_experience }} năm kinh nghiệm</span>
+                    </div>
+                    {% endif %}
+                    <div class="info-item">
+                        <i class="far fa-clock"></i>
+                        <span>{{ app.created_at|date:"d/m/Y H:i" }}</span>
+                    </div>
+                </div>
+                
+                <div class="application-footer">
+                    <div class="application-meta">
+                        <div>
+                            {% if app.rating %}
+                            <div class="rating-display">
+                                {% for i in "12345" %}
+                                    {% if forloop.counter <= app.rating %}
+                                        <i class="fas fa-star"></i>
+                                    {% else %}
+                                        <i class="far fa-star"></i>
+                                    {% endif %}
+                                {% endfor %}
+                            </div>
+                            {% else %}
+                            <span class="text-muted">Chưa đánh giá</span>
+                            {% endif %}
+                        </div>
+                        {% if app.assigned_to %}
+                        <div class="text-muted">
+                            <i class="fas fa-user-check"></i> {{ app.assigned_to.name }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <a href="{% url 'application_detail' app.id %}" class="btn btn-primary">
+                            <i class="fas fa-eye"></i> Chi tiết
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="text-center py-5">
+                <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
+                <h5 class="text-muted">Chưa có ứng tuyển nào</h5>
+                <p class="text-muted">Các ứng tuyển sẽ hiển thị ở đây khi có người nộp đơn</p>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <!-- Kanban View -->
+        <div id="kanbanView" style="{% if view_mode != 'kanban' %}display: none;{% endif %}">
+            <div class="kanban-board">
+                {% for status_code, status_name in STATUS_CHOICES %}
+                <div class="kanban-column">
+                    <div class="kanban-column-header status-{{ status_code }}">
+                        <span>{{ status_name }}</span>
+                        <span class="badge badge-light">
+                            {% with apps=kanban_columns|get_item:status_code %}
+                                {{ apps|length }}
+                            {% endwith %}
+                        </span>
+                    </div>
+                    
+                    <div class="kanban-cards" data-status="{{ status_code }}">
+                        {% with apps=kanban_columns|get_item:status_code %}
+                        {% if apps %}
+                            {% for application in apps %}
+                            <div class="kanban-card" data-id="{{ application.id }}">
+                                <div class="kanban-card-header">
+                                    <div class="kanban-card-title">{{ application.full_name }}</div>
+                                    <span class="kanban-card-code">{{ application.application_code }}</span>
+                                </div>
+                                
+                                <div class="kanban-card-job">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>{{ application.job.title|truncatewords:4 }}</span>
+                                </div>
+                                
+                                <div class="kanban-card-info">
+                                    <i class="fas fa-envelope"></i> {{ application.email|truncatechars:25 }}
+                                </div>
+                                
+                                <div class="kanban-card-info">
+                                    <i class="fas fa-phone"></i> {{ application.phone }}
+                                </div>
+                                
+                                {% if application.years_of_experience %}
+                                <div class="kanban-card-info">
+                                    <i class="fas fa-briefcase"></i> {{ application.years_of_experience }} năm KN
+                                </div>
+                                {% endif %}
+                                
+                                <div class="kanban-card-meta">
+                                    <div>
+                                        {% if application.rating %}
+                                        <div class="kanban-card-rating">
+                                            {% for i in "12345" %}
+                                                {% if forloop.counter <= application.rating %}
+                                                    <i class="fas fa-star"></i>
+                                                {% else %}
+                                                    <i class="far fa-star"></i>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </div>
+                                        {% else %}
+                                        <span class="text-muted">Chưa đánh giá</span>
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        <i class="far fa-clock"></i> {{ application.created_at|date:"d/m/Y" }}
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-2">
+                                    <a href="{% url 'application_detail' application.id %}" 
+                                       class="btn btn-sm btn-block btn-outline-primary">
+                                        <i class="fas fa-eye"></i> Chi tiết
+                                    </a>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="kanban-empty">
+                                <i class="fas fa-inbox"></i>
+                                <p>Chưa có ứng viên</p>
+                            </div>
+                        {% endif %}
+                        {% endwith %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        
+    </div>
+</section>
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 9999; justify-content: center; align-items: center;">
+    <div class="spinner-border text-light" role="status" style="width: 3rem; height: 3rem;">
+        <span class="sr-only">Loading...</span>
+    </div>
+</div>
+
+{% endblock main_content %}
+
+{% block custom_js %}
+<!-- SortableJS for Kanban -->
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+<script>
+$(document).ready(function() {
+    // View toggle functionality
+    const viewMode = new URLSearchParams(window.location.search).get('view') || 'list';
+    
+    function switchView(mode) {
+        if (mode === 'list') {
+            $('#listView').show();
+            $('#kanbanView').hide();
+            $('#listViewBtn').addClass('active');
+            $('#kanbanViewBtn').removeClass('active');
+        } else {
+            $('#listView').hide();
+            $('#kanbanView').show();
+            $('#listViewBtn').removeClass('active');
+            $('#kanbanViewBtn').addClass('active');
+        }
+        $('#viewInput').val(mode);
+        
+        // Update URL without reload
+        const url = new URL(window.location);
+        url.searchParams.set('view', mode);
+        window.history.pushState({}, '', url);
+    }
+    
+    // Initialize view
+    switchView(viewMode);
+    
+    $('#listViewBtn').on('click', function() {
+        switchView('list');
+    });
+    
+    $('#kanbanViewBtn').on('click', function() {
+        switchView('kanban');
+        initKanban();
+    });
+    
+    // Initialize Kanban if in kanban view
+    if (viewMode === 'kanban') {
+        initKanban();
+    }
+    
+    function initKanban() {
+        // Initialize Sortable for each kanban column
+        const kanbanColumns = document.querySelectorAll('.kanban-cards');
+        
+        kanbanColumns.forEach(column => {
+            new Sortable(column, {
+                group: 'kanban',
+                animation: 150,
+                ghostClass: 'sortable-ghost',
+                chosenClass: 'sortable-chosen',
+                dragClass: 'sortable-drag',
+                
+                onEnd: function(evt) {
+                    const applicationId = evt.item.dataset.id;
+                    const newStatus = evt.to.dataset.status;
+                    const oldStatus = evt.from.dataset.status;
+                    
+                    // Don't update if dropped in same column
+                    if (newStatus === oldStatus) {
+                        return;
+                    }
+                    
+                    // Show loading
+                    $('#loadingOverlay').css('display', 'flex');
+                    
+                    // Update status via AJAX
+                    updateApplicationStatus(applicationId, newStatus, evt);
+                }
+            });
+        });
+    }
+    
+    function updateApplicationStatus(applicationId, newStatus, evt) {
+        $.ajax({
+            url: '/recruitment/applications/' + applicationId + '/status/',
+            method: 'POST',
+            data: JSON.stringify({
+                status: newStatus
+            }),
+            contentType: 'application/json',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            success: function(response) {
+                $('#loadingOverlay').hide();
+                
+                if (response.success) {
+                    // Update badge counts
+                    updateColumnCounts(evt.from, evt.to);
+                    
+                    // Show success message
+                    toastr.success('Cập nhật trạng thái thành công!');
+                } else {
+                    // Revert move on error
+                    evt.from.appendChild(evt.item);
+                    toastr.error('Có lỗi xảy ra: ' + (response.error || 'Unknown error'));
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#loadingOverlay').hide();
+                
+                // Revert move on error
+                evt.from.appendChild(evt.item);
+                
+                let errorMsg = 'Không thể cập nhật trạng thái!';
+                if (xhr.responseJSON && xhr.responseJSON.error) {
+                    errorMsg = xhr.responseJSON.error;
+                }
+                
+                toastr.error(errorMsg);
+                console.error('Error:', error);
+            }
+        });
+    }
+    
+    function updateColumnCounts(fromColumn, toColumn) {
+        // Update "from" column count
+        const fromCards = fromColumn.querySelectorAll('.kanban-card');
+        const fromBadge = fromColumn.parentElement.querySelector('.badge');
+        if (fromBadge) {
+            fromBadge.textContent = fromCards.length;
+        }
+        
+        // Update "to" column count
+        const toCards = toColumn.querySelectorAll('.kanban-card');
+        const toBadge = toColumn.parentElement.querySelector('.badge');
+        if (toBadge) {
+            toBadge.textContent = toCards.length;
+        }
+        
+        // Show/hide empty state
+        updateEmptyState(fromColumn);
+        updateEmptyState(toColumn);
+    }
+    
+    function updateEmptyState(column) {
+        const cards = column.querySelectorAll('.kanban-card');
+        const emptyState = column.querySelector('.kanban-empty');
+        
+        if (cards.length === 0 && !emptyState) {
+            column.innerHTML = '<div class="kanban-empty"><i class="fas fa-inbox"></i><p>Chưa có ứng viên</p></div>';
+        } else if (cards.length > 0 && emptyState) {
+            emptyState.remove();
+        }
+    }
+    
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    
+    // Configure toastr
+    toastr.options = {
+        "closeButton": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "timeOut": "3000"
+    };
+});
+</script>
+{% endblock custom_js %}

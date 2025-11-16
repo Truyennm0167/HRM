@@ -1042,3 +1042,260 @@ class PermissionAuditLog(models.Model):
     
     def __str__(self):
         return f"{self.get_action_display()}: {self.username} -> {self.resource_type} ({self.timestamp.strftime('%Y-%m-%d %H:%M')})"
+
+
+# ============================================================================
+# PERFORMANCE APPRAISAL MANAGEMENT
+# ============================================================================
+
+class AppraisalPeriod(models.Model):
+    """
+    Kỳ đánh giá nhân viên (ví dụ: Đánh giá cuối năm 2025, Đánh giá thử việc Q1)
+    HR tạo các kỳ đánh giá và định nghĩa tiêu chí
+    """
+    STATUS_CHOICES = [
+        ('draft', 'Nháp'),
+        ('active', 'Đang diễn ra'),
+        ('closed', 'Đã kết thúc'),
+        ('archived', 'Lưu trữ'),
+    ]
+    
+    name = models.CharField(max_length=200, help_text="Tên kỳ đánh giá (VD: Đánh giá năm 2025)")
+    description = models.TextField(blank=True, help_text="Mô tả mục đích, phạm vi đánh giá")
+    
+    # Timeline
+    start_date = models.DateField(help_text="Ngày bắt đầu kỳ đánh giá")
+    end_date = models.DateField(help_text="Ngày kết thúc kỳ đánh giá")
+    self_assessment_deadline = models.DateField(help_text="Deadline nhân viên tự đánh giá")
+    manager_review_deadline = models.DateField(help_text="Deadline quản lý hoàn thành đánh giá")
+    
+    # Status
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='draft')
+    
+    # Scope
+    applicable_departments = models.ManyToManyField(Department, blank=True, 
+                                                    help_text="Phòng ban áp dụng (để trống = tất cả)")
+    applicable_job_titles = models.ManyToManyField(JobTitle, blank=True,
+                                                   help_text="Chức danh áp dụng (để trống = tất cả)")
+    
+    # Metadata
+    created_by = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True, 
+                                   related_name='created_appraisal_periods')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['-start_date']
+        indexes = [
+            models.Index(fields=['status', '-start_date']),
+        ]
+    
+    def __str__(self):
+        return f"{self.name} ({self.start_date} - {self.end_date})"
+    
+    def is_active(self):
+        """Kiểm tra kỳ đánh giá có đang diễn ra không"""
+        from django.utils import timezone
+        today = timezone.now().date()
+        return self.status == 'active' and self.start_date <= today <= self.end_date
+    
+    def can_self_assess(self):
+        """Kiểm tra còn nhận tự đánh giá không"""
+        from django.utils import timezone
+        return self.status == 'active' and timezone.now().date() <= self.self_assessment_deadline
+
+
+class AppraisalCriteria(models.Model):
+    """
+    Tiêu chí đánh giá (KPI) cho từng kỳ
+    Ví dụ: Chất lượng công việc, Kỹ năng làm việc nhóm, Tuân thủ quy định
+    """
+    CATEGORY_CHOICES = [
+        ('performance', 'Hiệu suất công việc'),
+        ('behavior', 'Hành vi & Thái độ'),
+        ('skill', 'Kỹ năng chuyên môn'),
+        ('leadership', 'Năng lực lãnh đạo'),
+        ('development', 'Phát triển bản thân'),
+    ]
+    
+    period = models.ForeignKey(AppraisalPeriod, on_delete=models.CASCADE, related_name='criteria')
+    name = models.CharField(max_length=200, help_text="Tên tiêu chí (VD: Chất lượng công việc)")
+    description = models.TextField(help_text="Mô tả chi tiết tiêu chí")
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
+    
+    # Weight
+    weight = models.DecimalField(max_digits=5, decimal_places=2, default=1.0,
+                                 help_text="Trọng số (%) - tổng các tiêu chí = 100%")
+    max_score = models.IntegerField(default=5, help_text="Điểm tối đa (thường là 5 hoặc 10)")
+    
+    # Order
+    order = models.IntegerField(default=0, help_text="Thứ tự hiển thị")
+    
+    class Meta:
+        ordering = ['period', 'order', 'name']
+        verbose_name = "Appraisal Criterion"
+        verbose_name_plural = "Appraisal Criteria"
+    
+    def __str__(self):
+        return f"{self.period.name} - {self.name} ({self.weight}%)"
+
+
+class Appraisal(models.Model):
+    """
+    Đánh giá của một nhân viên trong một kỳ
+    Mỗi nhân viên có một Appraisal record cho mỗi period
+    """
+    STATUS_CHOICES = [
+        ('pending_self', 'Chờ nhân viên tự đánh giá'),
+        ('pending_manager', 'Chờ quản lý đánh giá'),
+        ('pending_hr', 'Chờ HR phê duyệt'),
+        ('completed', 'Hoàn thành'),
+        ('cancelled', 'Đã hủy'),
+    ]
+    
+    OVERALL_RATING_CHOICES = [
+        ('outstanding', 'Xuất sắc'),
+        ('exceeds', 'Vượt mong đợi'),
+        ('meets', 'Đạt yêu cầu'),
+        ('needs_improvement', 'Cần cải thiện'),
+        ('unsatisfactory', 'Không đạt'),
+    ]
+    
+    # Core Relationships
+    period = models.ForeignKey(AppraisalPeriod, on_delete=models.CASCADE, related_name='appraisals')
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE, related_name='appraisals')
+    manager = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True, 
+                                related_name='managed_appraisals',
+                                help_text="Người quản lý trực tiếp đánh giá")
+    
+    # Status & Timeline
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending_self')
+    self_assessment_date = models.DateTimeField(null=True, blank=True)
+    manager_review_date = models.DateTimeField(null=True, blank=True)
+    final_review_date = models.DateTimeField(null=True, blank=True)
+    
+    # Self Assessment
+    self_overall_score = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True,
+                                            help_text="Tổng điểm tự đánh giá")
+    self_comments = models.TextField(blank=True, help_text="Nhận xét của nhân viên")
+    self_achievements = models.TextField(blank=True, help_text="Thành tích nổi bật")
+    self_challenges = models.TextField(blank=True, help_text="Khó khăn gặp phải")
+    self_development_plan = models.TextField(blank=True, help_text="Kế hoạch phát triển")
+    
+    # Manager Review
+    manager_overall_score = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True,
+                                                help_text="Tổng điểm đánh giá của quản lý")
+    manager_comments = models.TextField(blank=True, help_text="Nhận xét của quản lý")
+    manager_strengths = models.TextField(blank=True, help_text="Điểm mạnh")
+    manager_weaknesses = models.TextField(blank=True, help_text="Điểm cần cải thiện")
+    manager_recommendations = models.TextField(blank=True, help_text="Đề xuất (thăng chức, tăng lương, đào tạo...)")
+    
+    # Final Result
+    final_score = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True,
+                                      help_text="Điểm cuối cùng (sau khi HR review)")
+    overall_rating = models.CharField(max_length=20, choices=OVERALL_RATING_CHOICES, null=True, blank=True)
+    hr_comments = models.TextField(blank=True, help_text="Nhận xét của HR")
+    
+    # Actions
+    salary_adjustment = models.DecimalField(max_digits=15, decimal_places=2, null=True, blank=True,
+                                           help_text="Điều chỉnh lương (nếu có)")
+    promotion_recommended = models.BooleanField(default=False)
+    training_recommended = models.TextField(blank=True, help_text="Khóa đào tạo đề xuất")
+    
+    # Metadata
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+        unique_together = ('period', 'employee')
+        indexes = [
+            models.Index(fields=['period', 'status']),
+            models.Index(fields=['employee', '-created_at']),
+        ]
+    
+    def __str__(self):
+        return f"{self.employee.name} - {self.period.name}"
+    
+    def calculate_final_score(self):
+        """Tính điểm tổng kết dựa trên các AppraisalScore"""
+        scores = self.scores.all()
+        if not scores:
+            return None
+        
+        total_weighted_score = 0
+        total_weight = 0
+        
+        for score in scores:
+            if score.final_score is not None and score.criteria.weight:
+                total_weighted_score += float(score.final_score) * float(score.criteria.weight)
+                total_weight += float(score.criteria.weight)
+        
+        if total_weight > 0:
+            return round(total_weighted_score / total_weight, 2)
+        return None
+    
+    def can_self_assess(self, user_employee):
+        """Kiểm tra nhân viên có thể tự đánh giá không"""
+        return (self.employee == user_employee and 
+                self.status == 'pending_self' and
+                self.period.can_self_assess())
+    
+    def can_manager_review(self, user_employee):
+        """Kiểm tra quản lý có thể đánh giá không"""
+        return (self.manager == user_employee and 
+                self.status == 'pending_manager')
+
+
+class AppraisalScore(models.Model):
+    """
+    Điểm số cho từng tiêu chí trong đánh giá
+    Có cả điểm tự đánh giá và điểm quản lý đánh giá
+    """
+    appraisal = models.ForeignKey(Appraisal, on_delete=models.CASCADE, related_name='scores')
+    criteria = models.ForeignKey(AppraisalCriteria, on_delete=models.CASCADE)
+    
+    # Self Assessment
+    self_score = models.IntegerField(null=True, blank=True, help_text="Điểm tự đánh giá")
+    self_comment = models.TextField(blank=True, help_text="Giải thích điểm tự đánh giá")
+    
+    # Manager Review
+    manager_score = models.IntegerField(null=True, blank=True, help_text="Điểm quản lý đánh giá")
+    manager_comment = models.TextField(blank=True, help_text="Giải thích điểm quản lý")
+    
+    # Final Score (có thể khác với manager_score nếu HR điều chỉnh)
+    final_score = models.IntegerField(null=True, blank=True, help_text="Điểm cuối cùng")
+    
+    class Meta:
+        ordering = ['criteria__order', 'criteria__name']
+        unique_together = ('appraisal', 'criteria')
+    
+    def __str__(self):
+        return f"{self.appraisal.employee.name} - {self.criteria.name}: Self={self.self_score}, Manager={self.manager_score}"
+
+
+class AppraisalComment(models.Model):
+    """
+    Comments và feedback trong quá trình đánh giá
+    Cho phép trao đổi giữa nhân viên - quản lý - HR
+    """
+    AUTHOR_TYPE_CHOICES = [
+        ('employee', 'Nhân viên'),
+        ('manager', 'Quản lý'),
+        ('hr', 'HR'),
+    ]
+    
+    appraisal = models.ForeignKey(Appraisal, on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    author_type = models.CharField(max_length=20, choices=AUTHOR_TYPE_CHOICES)
+    
+    content = models.TextField(help_text="Nội dung góp ý")
+    is_private = models.BooleanField(default=False, help_text="Chỉ HR và quản lý thấy")
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        ordering = ['created_at']
+    
+    def __str__(self):
+        return f"{self.author.name} ({self.get_author_type_display()}) - {self.created_at.strftime('%Y-%m-%d')}"

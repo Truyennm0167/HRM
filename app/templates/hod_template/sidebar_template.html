@@ -365,6 +365,43 @@
           </ul>
         </li>
 
+        <!-- Performance Appraisal -->
+        <li class="nav-item has-treeview {% if '/appraisal' in request.path %}menu-open{% endif %}">
+          <a href="#" class="nav-link {% if '/appraisal' in request.path %}active{% endif %}">
+            <i class="nav-icon fas fa-star"></i>
+            <p>
+              Đánh giá hiệu suất
+              <i class="right fas fa-angle-left"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+            <li class="nav-item">
+              <a href="{% url 'my_appraisals' %}" class="nav-link {% if '/appraisal/my-appraisals' in request.path %}active{% endif %}">
+                <i class="nav-icon fas fa-user-check"></i>
+                <p>Đánh giá của tôi</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'manager_appraisals' %}" class="nav-link {% if '/appraisal/manager' in request.path %}active{% endif %}">
+                <i class="nav-icon fas fa-users-cog"></i>
+                <p>Đánh giá team</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'hr_appraisals' %}" class="nav-link {% if '/appraisal/hr' in request.path %}active{% endif %}">
+                <i class="nav-icon fas fa-clipboard-check"></i>
+                <p>Quản lý đánh giá (HR)</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{% url 'appraisal_periods' %}" class="nav-link {% if '/appraisal/periods' in request.path %}active{% endif %}">
+                <i class="nav-icon fas fa-calendar-alt"></i>
+                <p>Kỳ đánh giá (HR)</p>
+              </a>
+            </li>
+          </ul>
+        </li>
+
         <!-- AI Recruitment -->
         <li class="nav-item has-treeview {% if '/ai/' in request.path %}menu-open{% endif %}">
           <a href="#" class="nav-link {% if '/ai/' in request.path %}active{% endif %}">
