@@ -1,0 +1,180 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}Dashboard - Employee Portal{% endblock %}
+
+{% block content %}
+<div class="portal-card">
+    <div class="portal-card-header">
+        <h2 class="portal-card-title">
+            <i class="fas fa-tachometer-alt"></i> Dashboard
+        </h2>
+    </div>
+    
+    <!-- Welcome Message -->
+    <div class="alert alert-info">
+        <i class="fas fa-info-circle"></i>
+        Xin chào <strong>{{ employee.full_name }}</strong>! Chào mừng đến với Employee Portal.
+    </div>
+    
+    <!-- Quick Stats -->
+    <div class="row">
+        <div class="col-md-3">
+            <div class="stat-box" style="background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);">
+                <div class="stat-number">{{ pending_leaves }}</div>
+                <div class="stat-label">
+                    <i class="fas fa-umbrella-beach"></i> Đơn phép chờ duyệt
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-box" style="background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);">
+                <div class="stat-number">{{ attendance_count }}</div>
+                <div class="stat-label">
+                    <i class="fas fa-calendar-check"></i> Ngày công tháng này
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-box" style="background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%);">
+                <div class="stat-number">{{ pending_expenses }}</div>
+                <div class="stat-label">
+                    <i class="fas fa-file-invoice-dollar"></i> Đơn chi phí chờ
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stat-box" style="background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%);">
+                <div class="stat-number">{{ pending_appraisals }}</div>
+                <div class="stat-label">
+                    <i class="fas fa-star"></i> Đánh giá chờ
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quick Actions -->
+    <div class="mt-4">
+        <h4 class="mb-3"><i class="fas fa-bolt"></i> Thao tác nhanh</h4>
+        <a href="{% url 'portal_leave_create' %}" class="quick-action-btn">
+            <i class="fas fa-plus-circle"></i> Xin nghỉ phép
+        </a>
+        <a href="{% url 'portal_expense_create' %}" class="quick-action-btn">
+            <i class="fas fa-plus-circle"></i> Tạo đơn hoàn tiền
+        </a>
+        <a href="{% url 'portal_payroll' %}" class="quick-action-btn">
+            <i class="fas fa-eye"></i> Xem bảng lương
+        </a>
+        <a href="{% url 'portal_attendance' %}" class="quick-action-btn">
+            <i class="fas fa-eye"></i> Xem chấm công
+        </a>
+    </div>
+</div>
+
+<!-- Leave Balance -->
+{% if leave_balances %}
+<div class="portal-card">
+    <div class="portal-card-header">
+        <h4 class="portal-card-title">
+            <i class="fas fa-umbrella-beach"></i> Số dư nghỉ phép
+        </h4>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Loại phép</th>
+                    <th>Tổng số ngày</th>
+                    <th>Đã dùng</th>
+                    <th>Còn lại</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for balance in leave_balances %}
+                <tr>
+                    <td>{{ balance.leave_type.name }}</td>
+                    <td>{{ balance.total_days }}</td>
+                    <td><span class="badge badge-warning">{{ balance.used_days }}</span></td>
+                    <td><span class="badge badge-success">{{ balance.remaining_days }}</span></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+
+<!-- Recent Payrolls -->
+{% if recent_payrolls %}
+<div class="portal-card">
+    <div class="portal-card-header">
+        <h4 class="portal-card-title">
+            <i class="fas fa-money-bill-wave"></i> Bảng lương gần đây
+        </h4>
+        <a href="{% url 'portal_payroll' %}" class="btn btn-sm btn-primary">Xem tất cả</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Tháng</th>
+                    <th>Lương cơ bản</th>
+                    <th>Thưởng</th>
+                    <th>Phạt</th>
+                    <th>Tổng</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for payroll in recent_payrolls %}
+                <tr>
+                    <td>{{ payroll.month }}/{{ payroll.year }}</td>
+                    <td>{{ payroll.base_salary|floatformat:0 }} đ</td>
+                    <td class="text-success">+{{ payroll.bonus|floatformat:0 }} đ</td>
+                    <td class="text-danger">-{{ payroll.penalty|floatformat:0 }} đ</td>
+                    <td><strong>{{ payroll.total_salary|floatformat:0 }} đ</strong></td>
+                    <td>
+                        <a href="{% url 'portal_payroll_detail' payroll.id %}" class="btn btn-sm btn-info">
+                            <i class="fas fa-eye"></i> Chi tiết
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endif %}
+
+<!-- Manager Notifications -->
+{% if manager_notifications %}
+<div class="portal-card" style="border-left: 4px solid #e74c3c;">
+    <div class="portal-card-header">
+        <h4 class="portal-card-title">
+            <i class="fas fa-bell"></i> Thông báo Manager
+            <span class="badge badge-manager">Manager</span>
+        </h4>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="alert alert-warning">
+                <h5><i class="fas fa-umbrella-beach"></i> {{ manager_notifications.pending_leaves }}</h5>
+                <p class="mb-0">Đơn nghỉ phép team chờ duyệt</p>
+                <a href="{% url 'portal_team_leaves' %}" class="btn btn-sm btn-warning mt-2">
+                    Xem ngay
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="alert alert-info">
+                <h5><i class="fas fa-file-invoice-dollar"></i> {{ manager_notifications.pending_expenses }}</h5>
+                <p class="mb-0">Đơn chi phí team chờ duyệt</p>
+                <a href="{% url 'portal_team_expenses' %}" class="btn btn-sm btn-info mt-2">
+                    Xem ngay
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

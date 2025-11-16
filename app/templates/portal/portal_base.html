@@ -1,0 +1,350 @@
+{% load static %}
+{% load permission_tags %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Employee Portal{% endblock %} - HRM System</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{% static 'plugins/fontawesome-free/css/all.min.css' %}">
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="{% static 'dist/css/adminlte.min.css' %}">
+    <!-- Custom Portal CSS -->
+    <style>
+        /* Portal Theme - Lighter, friendlier colors */
+        :root {
+            --portal-primary: #3498db;
+            --portal-secondary: #2ecc71;
+            --portal-accent: #e74c3c;
+            --portal-bg: #f8f9fa;
+            --portal-card: #ffffff;
+            --portal-text: #2c3e50;
+        }
+        
+        body {
+            background-color: var(--portal-bg);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .portal-header {
+            background: linear-gradient(135deg, var(--portal-primary) 0%, #2980b9 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .portal-navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        .portal-logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        .portal-user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .portal-switch-btn {
+            background-color: rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .portal-switch-btn:hover {
+            background-color: rgba(255,255,255,0.3);
+            transform: translateY(-2px);
+        }
+        
+        .portal-content {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .portal-sidebar {
+            background-color: var(--portal-card);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .portal-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .portal-menu-item {
+            margin-bottom: 0.5rem;
+        }
+        
+        .portal-menu-link {
+            display: flex;
+            align-items: center;
+            padding: 0.75rem 1rem;
+            color: var(--portal-text);
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        
+        .portal-menu-link:hover {
+            background-color: var(--portal-bg);
+            color: var(--portal-primary);
+            transform: translateX(5px);
+        }
+        
+        .portal-menu-link.active {
+            background-color: var(--portal-primary);
+            color: white;
+        }
+        
+        .portal-menu-icon {
+            margin-right: 0.75rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .portal-card {
+            background-color: var(--portal-card);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 1.5rem;
+        }
+        
+        .portal-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--portal-bg);
+        }
+        
+        .portal-card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--portal-text);
+        }
+        
+        .badge-portal {
+            background-color: var(--portal-primary);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+        
+        .badge-manager {
+            background-color: var(--portal-accent);
+        }
+        
+        .portal-footer {
+            background-color: var(--portal-card);
+            padding: 2rem 0;
+            margin-top: 3rem;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .quick-action-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--portal-primary);
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .quick-action-btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(52,152,219,0.3);
+            color: white;
+        }
+        
+        .stat-box {
+            background: linear-gradient(135deg, var(--portal-primary) 0%, #2980b9 100%);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+    </style>
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- Portal Header -->
+    <header class="portal-header">
+        <nav class="portal-navbar">
+            <a href="{% url 'portal_dashboard' %}" class="portal-logo">
+                <i class="fas fa-briefcase"></i> HRM Portal
+            </a>
+            
+            <div class="portal-user-menu">
+                <!-- Switch to Management (if has permission) -->
+                {% if user|can_access_management %}
+                <a href="{% url 'management_home' %}" class="portal-switch-btn">
+                    <i class="fas fa-cog"></i> Chuyển sang Quản lý
+                </a>
+                {% endif %}
+                
+                <!-- User Info -->
+                <div class="dropdown">
+                    <a href="#" class="portal-switch-btn dropdown-toggle" data-toggle="dropdown">
+                        <i class="fas fa-user"></i> 
+                        {{ user.username }}
+                        {% if user|is_manager %}
+                        <span class="badge badge-manager ml-1">Manager</span>
+                        {% endif %}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="{% url 'portal_profile' %}">
+                            <i class="fas fa-user-circle"></i> Hồ sơ cá nhân
+                        </a>
+                        <a class="dropdown-item" href="{% url 'portal_password_change' %}">
+                            <i class="fas fa-key"></i> Đổi mật khẩu
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'logout' %}">
+                            <i class="fas fa-sign-out-alt"></i> Đăng xuất
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Portal Content -->
+    <div class="portal-content">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-md-3">
+                <div class="portal-sidebar">
+                    <ul class="portal-menu">
+                        <li class="portal-menu-item">
+                            <a href="{% url 'portal_dashboard' %}" class="portal-menu-link {% if request.path == '/portal/' or request.path == '/portal/dashboard/' %}active{% endif %}">
+                                <i class="fas fa-tachometer-alt portal-menu-icon"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="portal-menu-item">
+                            <a href="{% url 'portal_leaves' %}" class="portal-menu-link {% if 'leaves' in request.path %}active{% endif %}">
+                                <i class="fas fa-umbrella-beach portal-menu-icon"></i>
+                                Nghỉ phép
+                            </a>
+                        </li>
+                        <li class="portal-menu-item">
+                            <a href="{% url 'portal_payroll' %}" class="portal-menu-link {% if 'payroll' in request.path %}active{% endif %}">
+                                <i class="fas fa-money-bill-wave portal-menu-icon"></i>
+                                Bảng lương
+                            </a>
+                        </li>
+                        <li class="portal-menu-item">
+                            <a href="{% url 'portal_attendance' %}" class="portal-menu-link {% if 'attendance' in request.path %}active{% endif %}">
+                                <i class="fas fa-calendar-check portal-menu-icon"></i>
+                                Chấm công
+                            </a>
+                        </li>
+                        <li class="portal-menu-item">
+                            <a href="{% url 'portal_expenses' %}" class="portal-menu-link {% if 'expenses' in request.path %}active{% endif %}">
+                                <i class="fas fa-file-invoice-dollar portal-menu-icon"></i>
+                                Chi phí
+                            </a>
+                        </li>
+                        <li class="portal-menu-item">
+                            <a href="{% url 'portal_profile' %}" class="portal-menu-link {% if 'profile' in request.path %}active{% endif %}">
+                                <i class="fas fa-user portal-menu-icon"></i>
+                                Hồ sơ
+                            </a>
+                        </li>
+                        
+                        {% if user|is_manager %}
+                        <li class="portal-menu-item" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #dee2e6;">
+                            <a href="{% url 'portal_approvals' %}" class="portal-menu-link {% if 'approvals' in request.path or 'team' in request.path %}active{% endif %}">
+                                <i class="fas fa-check-circle portal-menu-icon"></i>
+                                Phê duyệt
+                                <span class="badge badge-portal ml-auto">Manager</span>
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+            
+            <!-- Main Content -->
+            <div class="col-md-9">
+                <!-- Messages -->
+                {% if messages %}
+                <div class="mb-3">
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+                
+                <!-- Page Content -->
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- Portal Footer -->
+    <footer class="portal-footer text-center">
+        <div class="container">
+            <p class="mb-0 text-muted">
+                &copy; 2025 HRM System - Employee Portal
+            </p>
+        </div>
+    </footer>
+    
+    <!-- jQuery -->
+    <script src="{% static 'plugins/jquery/jquery.min.js' %}"></script>
+    <!-- Bootstrap -->
+    <script src="{% static 'plugins/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- AdminLTE -->
+    <script src="{% static 'dist/js/adminlte.min.js' %}"></script>
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
