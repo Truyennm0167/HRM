@@ -5,6 +5,7 @@
 ### 1. Cấu Trúc URL (hrm/urls.py)
 
 **Đặc điểm:**
+
 - Tất cả URLs đều nằm chung trong một file
 - Không có phân tách rõ ràng giữa admin và employee portal
 - Đã có một số URLs "portal" nhưng chỉ là 4 trang: dashboard, profile, payrolls, attendance
@@ -12,12 +13,14 @@
 **URLs Hiện Tại:**
 
 #### A. Authentication (app/urls.py)
+
 ```
 /login/ → auth_views.LoginView
 /logout/ → auth_views.LogoutView
 ```
 
 #### B. Employee Portal (Đã có - 4 trang)
+
 ```
 /portal/dashboard/ → employee_dashboard
 /portal/profile/ → employee_profile
@@ -27,6 +30,7 @@
 ```
 
 #### C. Admin Management (Tất cả còn lại - 100+ URLs)
+
 ```
 # Core HR Management
 / → admin_home
@@ -82,6 +86,7 @@
 ### 2. Views Structure (app/HodViews.py)
 
 **Đặc điểm:**
+
 - Một file duy nhất chứa TẤT CẢ views (4037 lines!)
 - Sử dụng decorators: `@login_required`, `@hr_required`, `@manager_or_hr_required`
 - Đã có custom decorators trong `app/decorators.py`
@@ -89,6 +94,7 @@
 **Phân Loại Views:**
 
 #### A. Employee Self-Service (5 views - đã có)
+
 ```python
 @login_required
 def employee_dashboard(request)
@@ -99,6 +105,7 @@ def my_attendance(request)
 ```
 
 #### B. HR Management (cần @hr_required)
+
 ```python
 @login_required
 @hr_required
@@ -109,6 +116,7 @@ def manage_expense_categories(request)
 ```
 
 #### C. Mixed (Employee + Manager)
+
 ```python
 @login_required
 def request_leave(request)  # Employee có thể tạo
@@ -120,6 +128,7 @@ def manage_expenses(request)  # Manager duyệt
 ```
 
 #### D. Public (No login required)
+
 ```python
 def careers_list(request)  # Trang tuyển dụng công khai
 def careers_detail(request, job_id)
@@ -129,6 +138,7 @@ def careers_apply(request, job_id)
 ### 3. Templates Structure
 
 **Đặc điểm:**
+
 - Base template: `hod_template/base_template.html` (tên cũ, có chữ "HOD" = Head of Department)
 - Sidebar: `hod_template/sidebar_template.html` - menu admin đầy đủ
 - Hiện có 5 templates portal riêng:
@@ -139,6 +149,7 @@ def careers_apply(request, job_id)
   - `my_attendance.html`
 
 **Template Hierarchy:**
+
 ```
 app/templates/
 ├── login.html
@@ -159,6 +170,7 @@ app/templates/
 ### 4. Permission System
 
 **Decorators hiện có (app/decorators.py):**
+
 ```python
 @hr_required  # Chỉ HR staff
 @manager_or_hr_required  # Manager hoặc HR
@@ -169,6 +181,7 @@ app/templates/
 ```
 
 **Permission Fields trong Employee Model:**
+
 ```python
 is_manager = models.BooleanField(default=False)
 # User model:
@@ -179,6 +192,7 @@ is_superuser = models.BooleanField(default=False)  # Director
 ### 5. Authentication Flow
 
 **Login Redirect:**
+
 - File: `app/urls.py`
 - Login view: `auth_views.LoginView` → template: `login.html`
 - Logout: `auth_views.LogoutView` → next_page: `/login/`
@@ -189,11 +203,14 @@ is_superuser = models.BooleanField(default=False)  # Director
 ## 🎯 YÊU CẦU MỚI
 
 ### Mục Tiêu
+
 1. **Tách rời 2 Portal:**
+
    - **Employee Portal** (`/portal/`) - Self-service cho nhân viên
    - **Admin Portal** (`/management/`) - Quản lý cho HR/Manager
 
 2. **Login Redirect:**
+
    - Tất cả user sau login → `/portal/` (mặc định)
    - Staff/Manager có nút chuyển sang `/management/`
    - Superuser có thể chọn portal hoặc admin
@@ -214,44 +231,59 @@ is_superuser = models.BooleanField(default=False)  # Director
 **Tính năng cần có:**
 
 #### 1. Dashboard (`/portal/dashboard/`)
+
 ✅ **Đã có** - `employee_dashboard`
+
 - Thông tin cá nhân
 - Thông báo
 - Quick actions
 - Lịch làm việc
 
 #### 2. Leave Management (`/portal/leaves/`)
+
 ⚠️ **Cần tạo mới** (hiện có `/leave/request/` và `/leave/history/` trong admin)
+
 - Xem số dư phép
 - Tạo đơn nghỉ phép
 - Lịch sử đơn
 - Hủy đơn (nếu pending)
 
 #### 3. Payroll View (`/portal/payroll/`)
+
 ✅ **Đã có** - `my_payrolls` ở `/portal/payrolls/`
+
 - Cần thêm: Download payslip PDF
 
 #### 4. Attendance (`/portal/attendance/`)
+
 ✅ **Đã có** - `my_attendance` ở `/portal/attendance/`
+
 - Cần thêm: Calendar view, statistics
 
 #### 5. Expense Management (`/portal/expenses/`)
+
 ⚠️ **Cần tạo mới** (hiện có `/expense/create/` và `/expense/history/` trong admin)
+
 - Tạo đơn hoàn tiền
 - Upload hóa đơn
 - Theo dõi trạng thái
 - Lịch sử
 
 #### 6. Profile (`/portal/profile/`)
+
 ✅ **Đã có** - `employee_profile` và `edit_employee_profile`
 
 #### 7. Documents & Announcements (`/portal/documents/`)
+
 ❌ **Cần tạo mới hoàn toàn**
+
 - Tài liệu công ty
 - Thông báo
 
 #### 8. Manager Features (nếu is_manager = True)
+
 ❌ **Cần tạo mới** - `/portal/approvals/`
+
 - Duyệt đơn nghỉ phép của team
 - Duyệt chi phí của team
 - Xem báo cáo team
@@ -265,6 +297,7 @@ is_superuser = models.BooleanField(default=False)  # Director
 **Tính năng:**
 
 #### A. HR Management (is_staff hoặc is_superuser)
+
 ```
 /management/ → admin_home
 /management/employees/ → employee_list
@@ -276,12 +309,14 @@ is_superuser = models.BooleanField(default=False)  # Director
 ```
 
 #### B. Attendance Management (Manager hoặc HR)
+
 ```
 /management/attendance/add/ → add_attendance
 /management/attendance/manage/ → manage_attendance
 ```
 
 #### C. Payroll Management (HR only)
+
 ```
 /management/payroll/calculate/ → calculate_payroll
 /management/payroll/manage/ → manage_payroll
@@ -289,35 +324,41 @@ is_superuser = models.BooleanField(default=False)  # Director
 ```
 
 #### D. Leave Management (Manager hoặc HR)
+
 ```
 /management/leave/types/ → manage_leave_types
 /management/leave/requests/ → manage_leave_requests
 ```
 
 #### E. Expense Management (Manager hoặc HR)
+
 ```
 /management/expense/categories/ → manage_expense_categories
 /management/expense/requests/ → manage_expenses
 ```
 
 #### F. Contract Management (HR only)
+
 ```
 /management/contracts/ → manage_contracts
 ```
 
 #### G. Recruitment (HR only)
+
 ```
 /management/recruitment/jobs/ → list_jobs_admin
 /management/recruitment/applications/ → applications_kanban
 ```
 
 #### H. Appraisal (HR/Manager)
+
 ```
 /management/appraisal/periods/ → appraisal_periods
 /management/appraisal/hr/ → hr_appraisals
 ```
 
 #### I. AI Recruitment (HR only)
+
 ```
 /management/ai/resumes/ → resume_list
 /management/ai/job-descriptions/ → job_description_list
@@ -326,6 +367,7 @@ is_superuser = models.BooleanField(default=False)  # Director
 ---
 
 ### III. PUBLIC (No login)
+
 ```
 /careers/ → careers_list
 /careers/<id>/ → careers_detail
@@ -468,8 +510,9 @@ def can_access_management(user):
 ## 📝 CÁC FILE CẦN TẠO/SỬA
 
 ### TẠO MỚI:
+
 1. ✅ `app/urls_portal.py` - Portal URLs
-2. ✅ `app/urls_management.py` - Management URLs  
+2. ✅ `app/urls_management.py` - Management URLs
 3. ✅ `app/urls_public.py` - Public URLs
 4. ✅ `app/portal_views.py` - Portal views
 5. ✅ `app/middleware/portal_redirect.py` - Login redirect
@@ -479,6 +522,7 @@ def can_access_management(user):
 9. ✅ `app/templates/portal/portal_base.html` - Portal base template
 
 ### SỬA ĐỔI:
+
 1. ✅ `hrm/urls.py` - Include new URL files
 2. ✅ `hrm/settings.py` - Add middleware, LOGIN_REDIRECT_URL
 3. ✅ `app/HodViews.py` → Rename to `app/management_views.py`
@@ -486,7 +530,9 @@ def can_access_management(user):
 5. ✅ `app/templates/hod_template/base_template.html` → `management/management_base.html`
 
 ### DI CHUYỂN:
+
 1. ✅ Move 5 portal views từ `HodViews.py` sang `portal_views.py`:
+
    - employee_dashboard
    - employee_profile
    - edit_employee_profile
@@ -503,12 +549,14 @@ def can_access_management(user):
 ## 🎨 UI/UX Changes
 
 ### Employee Portal Design:
+
 - **Navbar**: Logo, User dropdown, Notifications
 - **Sidebar**: Minimal menu (Dashboard, Leave, Payroll, Attendance, Expenses, Profile)
 - **Color Scheme**: Lighter, friendlier (blue/green)
 - **Footer**: Simple company info
 
 ### Admin Portal Design:
+
 - **Navbar**: Logo, Portal Switch Button, User dropdown
 - **Sidebar**: Full menu với categories
 - **Color Scheme**: Professional (dark blue/gray)
@@ -519,20 +567,26 @@ def can_access_management(user):
 ## ⚠️ RỦIRO & GIẢI PHÁP
 
 ### 1. Breaking Changes
+
 **Rủi ro:** URLs cũ sẽ bị thay đổi
-**Giải pháp:** 
+**Giải pháp:**
+
 - Giữ URLs cũ với redirect
 - Hoặc thông báo deprecation
 
 ### 2. Performance
+
 **Rủi ro:** Permission checks ở mỗi view
 **Giải pháp:**
+
 - Cache permissions
 - Use middleware efficiently
 
 ### 3. Testing
+
 **Rủi ro:** Khối lượng test lớn
 **Giải pháp:**
+
 - Test từng module riêng
 - Automated permission tests
 
@@ -554,11 +608,13 @@ def can_access_management(user):
 ## ✅ TODO SUMMARY
 
 ### PHASE 1 - Analysis & Design (3 tasks)
+
 - [x] **Todo 1:** Phân tích cấu trúc hiện tại ← DONE (file này)
 - [ ] **Todo 2:** Thiết kế kiến trúc Portal (xem section "KIẾN TRÚC MỚI")
 - [ ] **Todo 3:** Tạo middleware phân quyền
 
 ### PHASE 2 - Employee Portal (7 tasks)
+
 - [ ] **Todo 4:** Dashboard
 - [ ] **Todo 5:** Leave Management
 - [ ] **Todo 6:** Payroll View
@@ -568,19 +624,23 @@ def can_access_management(user):
 - [ ] **Todo 10:** Documents & Announcements
 
 ### PHASE 3 - Admin Portal (2 tasks)
+
 - [ ] **Todo 11:** Admin Layout
 - [ ] **Todo 12:** Permission System
 
 ### PHASE 4 - Integration (2 tasks)
+
 - [ ] **Todo 13:** Login Flow
 - [ ] **Todo 14:** Manager Portal Features
 
 ### PHASE 5 - QA (1 task)
+
 - [ ] **Todo 15:** Testing & Bug Fixes
 
 ---
 
 **Kết luận:** Hệ thống hiện tại đã có nền tảng tốt với decorators và một số portal views. Công việc chính là:
+
 1. Tái cấu trúc URLs và views thành 3 modules: Portal, Management, Public
 2. Tạo middleware redirect sau login
 3. Xây dựng thêm ~10 portal views mới
