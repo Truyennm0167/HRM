@@ -1,0 +1,47 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}Đơn nghỉ phép bị từ chối{% endblock %}
+
+{% block header_title %}Thông báo đơn nghỉ phép{% endblock %}
+{% block header_subtitle %}Leave Request Rejected{% endblock %}
+
+{% block content %}
+<div class="greeting">
+    <p>Kính gửi <strong>{{ employee_name }}</strong>,</p>
+</div>
+
+<div class="alert alert-danger">
+    <strong>Thông báo!</strong> Đơn xin nghỉ phép của bạn không được phê duyệt.
+</div>
+
+<p>Rất tiếc, đơn xin nghỉ phép của bạn không thể được phê duyệt vào thời điểm này.</p>
+
+<div class="info-box">
+    <h3>Chi tiết đơn nghỉ phép</h3>
+    <div class="info-row">
+        <div class="info-label">Loại nghỉ phép:</div>
+        <div class="info-value">{{ leave_type }}</div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">Từ ngày:</div>
+        <div class="info-value">{{ start_date|date:"d/m/Y" }}</div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">Đến ngày:</div>
+        <div class="info-value">{{ end_date|date:"d/m/Y" }}</div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">Trạng thái:</div>
+        <div class="info-value"><span style="color: #dc3545; font-weight: bold;">✗ Không được phê duyệt</span></div>
+    </div>
+</div>
+
+<div class="alert alert-warning">
+    <h4 style="margin-top: 0;">Lý do từ chối:</h4>
+    <p style="margin: 5px 0;">{{ reason }}</p>
+</div>
+
+<p>Nếu bạn có bất kỳ câu hỏi nào hoặc muốn thảo luận thêm về đơn nghỉ phép, vui lòng liên hệ trực tiếp với người quản lý hoặc phòng Nhân sự.</p>
+
+<p>Bạn có thể nộp đơn nghỉ phép mới với thời gian khác nếu cần.</p>
+{% endblock %}

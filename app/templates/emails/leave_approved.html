@@ -1,0 +1,58 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}Đơn nghỉ phép đã được phê duyệt{% endblock %}
+
+{% block header_title %}Phê duyệt nghỉ phép{% endblock %}
+{% block header_subtitle %}Leave Request Approved{% endblock %}
+
+{% block content %}
+<div class="greeting">
+    <p>Kính gửi <strong>{{ employee_name }}</strong>,</p>
+</div>
+
+<div class="alert alert-success">
+    <strong>Chúc mừng!</strong> Đơn xin nghỉ phép của bạn đã được phê duyệt.
+</div>
+
+<p>Đơn xin nghỉ phép của bạn đã được <strong>{{ approved_by }}</strong> phê duyệt.</p>
+
+<div class="info-box">
+    <h3>Chi tiết nghỉ phép</h3>
+    <div class="info-row">
+        <div class="info-label">Loại nghỉ phép:</div>
+        <div class="info-value"><strong>{{ leave_type }}</strong></div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">Từ ngày:</div>
+        <div class="info-value">{{ start_date|date:"d/m/Y" }}</div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">Đến ngày:</div>
+        <div class="info-value">{{ end_date|date:"d/m/Y" }}</div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">Số ngày nghỉ:</div>
+        <div class="info-value"><strong>{{ duration }} ngày</strong></div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">Trạng thái:</div>
+        <div class="info-value"><span style="color: #28a745; font-weight: bold;">✓ {{ status }}</span></div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">Người phê duyệt:</div>
+        <div class="info-value">{{ approved_by }}</div>
+    </div>
+</div>
+
+<div class="alert alert-info">
+    <h4 style="margin-top: 0;">Lưu ý quan trọng:</h4>
+    <ul style="margin: 10px 0; padding-left: 20px;">
+        <li>Vui lòng bàn giao công việc trước khi nghỉ</li>
+        <li>Thông báo cho đồng nghiệp về kế hoạch nghỉ phép</li>
+        <li>Đảm bảo email và điện thoại có thể liên lạc trong trường hợp khẩn cấp</li>
+        <li>Nếu có thay đổi, vui lòng thông báo sớm cho phòng nhân sự</li>
+    </ul>
+</div>
+
+<p>Chúc bạn có kỳ nghỉ vui vẻ và thư giãn!</p>
+{% endblock %}

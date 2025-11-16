@@ -6934,3 +6934,622 @@ INFO 2025-11-16 20:59:02,714 basehttp "POST /login/ HTTP/1.1" 302 0
 INFO 2025-11-16 20:59:02,731 HodViews Admin home accessed by hr_user
 INFO 2025-11-16 20:59:02,791 basehttp "GET / HTTP/1.1" 200 34995
 INFO 2025-11-16 20:59:11,855 basehttp "GET /employee_list HTTP/1.1" 200 34982
+INFO 2025-11-16 21:00:55,451 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-16 21:00:55,483 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-16 21:00:58,732 middleware Login attempt for username: admin from IP: 127.0.0.1
+INFO 2025-11-16 21:00:59,142 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-16 21:00:59,163 HodViews Admin home accessed by admin
+INFO 2025-11-16 21:00:59,196 basehttp "GET / HTTP/1.1" 200 34382
+INFO 2025-11-16 21:01:02,949 basehttp "GET /admin/ HTTP/1.1" 200 15208
+INFO 2025-11-16 21:01:07,707 basehttp "GET /admin/auth/user/ HTTP/1.1" 200 19803
+INFO 2025-11-16 21:01:07,817 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-16 21:01:11,478 basehttp "GET /admin/auth/group/ HTTP/1.1" 200 15654
+INFO 2025-11-16 21:01:11,552 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-16 21:01:18,087 basehttp "GET /admin/auth/user/ HTTP/1.1" 200 19803
+INFO 2025-11-16 21:01:18,168 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-16 21:01:39,937 basehttp "GET /admin/app/permissionauditlog/ HTTP/1.1" 200 25153
+INFO 2025-11-16 21:01:40,022 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-16 21:01:53,736 basehttp "GET / HTTP/1.1" 302 0
+INFO 2025-11-16 21:01:53,748 basehttp "GET /login/?next=/ HTTP/1.1" 200 2905
+INFO 2025-11-16 21:01:54,042 basehttp "GET /static/dist/js/adminlte.min.js HTTP/1.1" 200 24244
+INFO 2025-11-16 21:01:54,045 basehttp "GET /static/plugins/icheck-bootstrap/icheck-bootstrap.min.css HTTP/1.1" 200 12505
+INFO 2025-11-16 21:01:54,053 basehttp "GET /static/plugins/fontawesome-free/css/all.min.css HTTP/1.1" 200 56842
+INFO 2025-11-16 21:01:54,072 basehttp "GET /static/dist/css/adminlte.min.css HTTP/1.1" 200 656504
+INFO 2025-11-16 21:01:54,132 basehttp "GET /static/plugins/fontawesome-free/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 75728
+INFO 2025-11-16 21:01:54,146 basehttp "GET /static/plugins/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 78635
+INFO 2025-11-16 21:01:54,162 basehttp "GET /static/plugins/jquery/jquery.min.js HTTP/1.1" 200 88145
+INFO 2025-11-16 21:02:09,038 middleware Login attempt for username: hr_user from IP: 127.0.0.1
+INFO 2025-11-16 21:02:09,386 basehttp "POST /login/?next=/ HTTP/1.1" 302 0
+INFO 2025-11-16 21:02:09,402 HodViews Admin home accessed by hr_user
+INFO 2025-11-16 21:02:09,427 basehttp "GET / HTTP/1.1" 200 34995
+INFO 2025-11-16 21:02:09,481 basehttp "GET /static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css HTTP/1.1" 200 9071
+INFO 2025-11-16 21:02:09,492 basehttp "GET /static/plugins/summernote/summernote-bs4.css HTTP/1.1" 200 18647
+INFO 2025-11-16 21:02:09,500 basehttp "GET /static/dist/img/user1-128x128.jpg HTTP/1.1" 200 2879
+INFO 2025-11-16 21:02:09,501 basehttp "GET /static/plugins/jqvmap/jqvmap.min.css HTTP/1.1" 200 613
+INFO 2025-11-16 21:02:09,502 basehttp "GET /static/plugins/daterangepicker/daterangepicker.css HTTP/1.1" 200 8069
+INFO 2025-11-16 21:02:09,503 basehttp "GET /static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css HTTP/1.1" 200 19470
+INFO 2025-11-16 21:02:09,503 basehttp "GET /static/dist/img/Logo-TITOPS.png HTTP/1.1" 200 17797
+INFO 2025-11-16 21:02:09,517 basehttp "GET /static/dist/img/AdminLTELogo.png HTTP/1.1" 200 10380
+INFO 2025-11-16 21:02:09,519 basehttp "GET /static/dist/img/user8-128x128.jpg HTTP/1.1" 200 5060
+INFO 2025-11-16 21:02:09,519 basehttp "GET /static/dist/img/user3-128x128.jpg HTTP/1.1" 200 3511
+INFO 2025-11-16 21:02:09,520 basehttp "GET /static/plugins/fontawesome-free/webfonts/fa-regular-400.woff2 HTTP/1.1" 200 13584
+INFO 2025-11-16 21:02:09,527 basehttp "GET /static/plugins/sparklines/sparkline.js HTTP/1.1" 200 7219
+INFO 2025-11-16 21:02:09,552 basehttp "GET /static/plugins/jqvmap/maps/jquery.vmap.usa.js HTTP/1.1" 200 47712
+INFO 2025-11-16 21:02:09,564 basehttp "GET /static/plugins/jqvmap/jquery.vmap.min.js HTTP/1.1" 200 21150
+INFO 2025-11-16 21:02:09,572 basehttp "GET /static/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js HTTP/1.1" 200 56879
+INFO 2025-11-16 21:02:09,572 basehttp "GET /static/plugins/moment/moment.min.js HTTP/1.1" 200 53324
+INFO 2025-11-16 21:02:09,575 basehttp "GET /static/plugins/chart.js/Chart.min.js HTTP/1.1" 200 172812
+INFO 2025-11-16 21:02:09,580 basehttp "GET /static/dist/js/adminlte.js HTTP/1.1" 200 55314
+INFO 2025-11-16 21:02:09,582 basehttp "GET /static/plugins/jquery-knob/jquery.knob.min.js HTTP/1.1" 200 10804
+INFO 2025-11-16 21:02:09,586 basehttp "GET /static/dist/js/pages/dashboard.js HTTP/1.1" 200 7577
+INFO 2025-11-16 21:02:09,588 basehttp "GET /static/dist/js/demo.js HTTP/1.1" 200 12351
+INFO 2025-11-16 21:02:09,590 basehttp "GET /static/plugins/daterangepicker/daterangepicker.js HTTP/1.1" 200 67268
+INFO 2025-11-16 21:02:09,604 basehttp "GET /static/plugins/summernote/summernote-bs4.min.js HTTP/1.1" 200 127927
+INFO 2025-11-16 21:02:09,624 basehttp "GET /static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js HTTP/1.1" 200 42076
+INFO 2025-11-16 21:02:09,631 basehttp "GET /static/plugins/jquery-ui/jquery-ui.min.js HTTP/1.1" 200 253669
+INFO 2025-11-16 21:02:11,738 basehttp "GET /appraisal/my-appraisals/ HTTP/1.1" 200 31565
+INFO 2025-11-16 21:02:13,467 basehttp "GET /appraisal/4/self-assess/ HTTP/1.1" 200 47812
+INFO 2025-11-16 21:05:24,571 HodViews Self assessment completed by HR Manager for period Đánh giá Q4 2024
+INFO 2025-11-16 21:05:24,591 basehttp "POST /appraisal/4/self-assess/ HTTP/1.1" 302 0
+INFO 2025-11-16 21:05:24,628 basehttp "GET /appraisal/my-appraisals/ HTTP/1.1" 200 31573
+INFO 2025-11-16 21:05:29,059 basehttp "GET /appraisal/manager/ HTTP/1.1" 302 0
+INFO 2025-11-16 21:05:29,079 HodViews Admin home accessed by hr_user
+INFO 2025-11-16 21:05:29,111 basehttp "GET / HTTP/1.1" 200 34384
+INFO 2025-11-16 21:05:35,271 basehttp "GET /appraisal/hr/ HTTP/1.1" 200 45589
+INFO 2025-11-16 21:05:42,459 basehttp "GET /appraisal/4/detail/ HTTP/1.1" 200 41386
+INFO 2025-11-16 21:05:42,525 basehttp "GET /static/dist/img/user2-160x160.jpg HTTP/1.1" 200 7070
+INFO 2025-11-16 21:06:06,895 basehttp "GET /admin/ HTTP/1.1" 200 10779
+INFO 2025-11-16 21:06:07,020 basehttp "GET /static/admin/css/base.css HTTP/1.1" 304 0
+INFO 2025-11-16 21:06:07,020 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 304 0
+INFO 2025-11-16 21:06:07,024 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 304 0
+INFO 2025-11-16 21:06:07,025 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 304 0
+INFO 2025-11-16 21:06:07,025 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 304 0
+INFO 2025-11-16 21:06:07,025 basehttp "GET /static/admin/css/dashboard.css HTTP/1.1" 304 0
+INFO 2025-11-16 21:06:07,044 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 304 0
+INFO 2025-11-16 21:06:07,055 basehttp "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 304 0
+INFO 2025-11-16 21:06:07,055 basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 304 0
+INFO 2025-11-16 21:06:11,638 basehttp "POST /admin/logout/ HTTP/1.1" 302 0
+INFO 2025-11-16 21:06:11,654 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-16 21:06:26,148 middleware Login attempt for username: manager_user from IP: 127.0.0.1
+INFO 2025-11-16 21:06:26,626 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-16 21:06:26,667 HodViews Admin home accessed by manager_user
+INFO 2025-11-16 21:06:26,720 basehttp "GET / HTTP/1.1" 200 35574
+INFO 2025-11-16 21:06:32,219 basehttp "GET /appraisal/manager/ HTTP/1.1" 200 40053
+INFO 2025-11-16 21:06:32,338 basehttp "GET /media/avatars/d1ce923ba8234cec9ffae94871ba99a1_sontung.jpg HTTP/1.1" 200 576065
+INFO 2025-11-16 21:06:39,332 basehttp "GET /appraisal/4/manager-review/ HTTP/1.1" 200 52625
+INFO 2025-11-16 21:06:39,421 basehttp "GET /static/dist/img/user2-160x160.jpg HTTP/1.1" 200 7070
+INFO 2025-11-16 21:09:18,209 HodViews Manager review completed by IT Manager for HR Manager
+INFO 2025-11-16 21:09:18,223 basehttp "POST /appraisal/4/manager-review/ HTTP/1.1" 302 0
+INFO 2025-11-16 21:09:18,283 basehttp "GET /appraisal/manager/ HTTP/1.1" 200 39998
+INFO 2025-11-16 21:09:23,019 basehttp "GET /appraisal/4/detail/ HTTP/1.1" 200 42304
+INFO 2025-11-16 21:09:49,880 basehttp "GET /appraisal/hr/ HTTP/1.1" 200 45443
+INFO 2025-11-16 21:09:54,672 basehttp "GET /appraisal/4/hr-review/ HTTP/1.1" 200 39956
+INFO 2025-11-16 21:10:33,212 HodViews Salary adjusted for HR Manager: +5000000
+INFO 2025-11-16 21:10:33,217 HodViews HR final review completed for HR Manager
+INFO 2025-11-16 21:10:33,243 basehttp "POST /appraisal/4/hr-review/ HTTP/1.1" 302 0
+INFO 2025-11-16 21:10:33,300 basehttp "GET /appraisal/hr/ HTTP/1.1" 200 45629
+INFO 2025-11-16 21:10:36,697 basehttp "GET /appraisal/4/detail/ HTTP/1.1" 200 43777
+INFO 2025-11-16 21:13:32,206 basehttp "GET /appraisal/7/detail/ HTTP/1.1" 200 40590
+INFO 2025-11-16 21:13:42,138 basehttp "GET /appraisal/my-appraisals/ HTTP/1.1" 200 31563
+INFO 2025-11-16 21:13:48,634 basehttp "GET /appraisal/my-appraisals/ HTTP/1.1" 200 32526
+INFO 2025-11-16 21:13:52,430 basehttp "GET /appraisal/4/detail/ HTTP/1.1" 200 43777
+INFO 2025-11-16 21:13:57,525 basehttp "GET /employee_list HTTP/1.1" 200 34982
+INFO 2025-11-16 21:14:02,052 basehttp "GET /employee/6/ HTTP/1.1" 200 32582
+WARNING 2025-11-16 21:14:02,429 basehttp "GET /static/img/default-profile.png HTTP/1.1" 404 1929
+INFO 2025-11-16 21:14:07,343 HodViews Admin home accessed by hr_user
+INFO 2025-11-16 21:14:07,371 basehttp "GET / HTTP/1.1" 200 36204
+INFO 2025-11-16 21:14:16,816 basehttp "GET /appraisal/hr/ HTTP/1.1" 200 45263
+INFO 2025-11-16 21:14:22,321 basehttp "GET /appraisal/periods/ HTTP/1.1" 200 31889
+INFO 2025-11-16 21:14:25,642 basehttp "GET /appraisal/periods/1/ HTTP/1.1" 200 48654
+INFO 2025-11-16 21:20:37,990 basehttp "GET /appraisal/hr/ HTTP/1.1" 200 45263
+INFO 2025-11-16 21:20:39,540 basehttp "GET /appraisal/manager/ HTTP/1.1" 302 0
+INFO 2025-11-16 21:20:39,565 HodViews Admin home accessed by hr_user
+INFO 2025-11-16 21:20:39,609 basehttp "GET / HTTP/1.1" 200 36204
+INFO 2025-11-16 21:20:49,129 basehttp "GET /org-chart/ HTTP/1.1" 200 50464
+INFO 2025-11-16 21:20:55,350 HodViews Admin home accessed by hr_user
+INFO 2025-11-16 21:20:55,393 basehttp "GET / HTTP/1.1" 200 36204
+INFO 2025-11-16 21:25:13,814 autoreload D:\Study\CT201\Project\hrm\hrm\settings.py changed, reloading.
+INFO 2025-11-16 21:25:15,848 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 22:22:01,531 autoreload D:\Study\CT201\Project\hrm\hrm\settings.py changed, reloading.
+INFO 2025-11-16 22:22:03,409 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 22:34:49,536 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 22:35:01,394 basehttp "GET / HTTP/1.1" 302 0
+INFO 2025-11-16 22:35:01,428 basehttp "GET /login/?next=/ HTTP/1.1" 200 3042
+INFO 2025-11-16 22:35:08,466 middleware Login attempt for username: hr_user from IP: 127.0.0.1
+INFO 2025-11-16 22:35:08,943 basehttp "POST /login/?next=/ HTTP/1.1" 302 0
+INFO 2025-11-16 22:35:08,964 HodViews Admin home accessed by hr_user
+INFO 2025-11-16 22:35:09,052 basehttp "GET / HTTP/1.1" 200 36204
+INFO 2025-11-16 22:35:13,711 basehttp "GET /department HTTP/1.1" 301 0
+INFO 2025-11-16 22:35:13,755 basehttp "GET /department/ HTTP/1.1" 200 34219
+INFO 2025-11-16 22:35:14,071 basehttp "GET /static/plugins/summernote/font/summernote.woff?1d9aeaaff0a8939558a45be6cd52cd4c HTTP/1.1" 200 10604
+INFO 2025-11-16 22:35:16,876 basehttp "GET /job_title HTTP/1.1" 200 34553
+INFO 2025-11-16 22:35:18,033 basehttp "GET /contracts/ HTTP/1.1" 200 45985
+INFO 2025-11-16 22:36:19,133 autoreload D:\Study\CT201\Project\hrm\hrm\settings.py changed, reloading.
+INFO 2025-11-16 22:36:20,337 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 22:52:49,294 autoreload D:\Study\CT201\Project\hrm\hrm\settings.py changed, reloading.
+INFO 2025-11-16 22:52:50,593 autoreload Watching for file changes with StatReloader
+INFO 2025-11-16 22:57:31,624 basehttp "GET /salary-rules/components/ HTTP/1.1" 302 0
+INFO 2025-11-16 22:57:31,625 basehttp "GET /portal/dashboard/ HTTP/1.1" 302 0
+INFO 2025-11-16 22:57:31,645 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-16 22:57:32,824 basehttp "GET /login/?next=/salary-rules/components/ HTTP/1.1" 200 2905
+INFO 2025-11-16 22:57:32,824 basehttp "GET /login/?next=/portal/dashboard/ HTTP/1.1" 200 2905
+INFO 2025-11-17 01:19:08,461 autoreload Watching for file changes with StatReloader
+INFO 2025-11-17 01:19:20,576 basehttp "GET / HTTP/1.1" 302 0
+INFO 2025-11-17 01:19:20,604 basehttp "GET /login/?next=/ HTTP/1.1" 200 2905
+INFO 2025-11-17 01:19:20,939 basehttp "GET /static/plugins/icheck-bootstrap/icheck-bootstrap.min.css HTTP/1.1" 200 12505
+INFO 2025-11-17 01:19:20,948 basehttp "GET /static/plugins/fontawesome-free/css/all.min.css HTTP/1.1" 200 56842
+INFO 2025-11-17 01:19:20,948 basehttp "GET /static/dist/js/adminlte.min.js HTTP/1.1" 200 24244
+INFO 2025-11-17 01:19:20,950 basehttp "GET /static/plugins/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 78635
+INFO 2025-11-17 01:19:20,958 basehttp "GET /static/plugins/jquery/jquery.min.js HTTP/1.1" 200 88145
+INFO 2025-11-17 01:19:20,967 basehttp "GET /static/dist/css/adminlte.min.css HTTP/1.1" 200 656504
+INFO 2025-11-17 01:19:21,056 basehttp "GET /static/plugins/fontawesome-free/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 75728
+INFO 2025-11-17 01:19:30,894 middleware Login attempt for username: user1 from IP: 127.0.0.1
+INFO 2025-11-17 01:19:31,297 basehttp "POST /login/?next=/ HTTP/1.1" 302 0
+WARNING 2025-11-17 01:19:31,313 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:19:31,324 HodViews Admin home accessed by user1
+INFO 2025-11-17 01:19:31,393 basehttp "GET / HTTP/1.1" 200 40525
+INFO 2025-11-17 01:19:31,457 basehttp "GET /static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css HTTP/1.1" 200 9071
+INFO 2025-11-17 01:19:31,468 basehttp "GET /static/plugins/jqvmap/jqvmap.min.css HTTP/1.1" 200 613
+INFO 2025-11-17 01:19:31,469 basehttp "GET /static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css HTTP/1.1" 200 19470
+INFO 2025-11-17 01:19:31,470 basehttp "GET /static/plugins/summernote/summernote-bs4.css HTTP/1.1" 200 18647
+INFO 2025-11-17 01:19:31,471 basehttp "GET /static/dist/img/user3-128x128.jpg HTTP/1.1" 200 3511
+INFO 2025-11-17 01:19:31,471 basehttp "GET /static/dist/img/user8-128x128.jpg HTTP/1.1" 200 5060
+INFO 2025-11-17 01:19:31,472 basehttp "GET /static/dist/img/user1-128x128.jpg HTTP/1.1" 200 2879
+INFO 2025-11-17 01:19:31,473 basehttp "GET /static/plugins/daterangepicker/daterangepicker.css HTTP/1.1" 200 8069
+INFO 2025-11-17 01:19:31,481 basehttp "GET /static/plugins/sparklines/sparkline.js HTTP/1.1" 200 7219
+INFO 2025-11-17 01:19:31,481 basehttp "GET /static/dist/img/AdminLTELogo.png HTTP/1.1" 200 10380
+INFO 2025-11-17 01:19:31,485 basehttp "GET /static/dist/img/Logo-TITOPS.png HTTP/1.1" 200 17797
+INFO 2025-11-17 01:19:31,489 basehttp "GET /static/plugins/jqvmap/jquery.vmap.min.js HTTP/1.1" 200 21150
+INFO 2025-11-17 01:19:31,496 basehttp "GET /static/plugins/moment/moment.min.js HTTP/1.1" 200 53324
+INFO 2025-11-17 01:19:31,497 basehttp "GET /static/plugins/jqvmap/maps/jquery.vmap.usa.js HTTP/1.1" 200 47712
+INFO 2025-11-17 01:19:31,497 basehttp "GET /static/plugins/jquery-knob/jquery.knob.min.js HTTP/1.1" 200 10804
+INFO 2025-11-17 01:19:31,499 basehttp "GET /static/plugins/chart.js/Chart.min.js HTTP/1.1" 200 172812
+INFO 2025-11-17 01:19:31,503 basehttp "GET /static/plugins/daterangepicker/daterangepicker.js HTTP/1.1" 200 67268
+INFO 2025-11-17 01:19:31,510 basehttp "GET /static/dist/js/pages/dashboard.js HTTP/1.1" 200 7577
+INFO 2025-11-17 01:19:31,510 basehttp "GET /static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js HTTP/1.1" 200 42076
+INFO 2025-11-17 01:19:31,512 basehttp "GET /static/dist/js/adminlte.js HTTP/1.1" 200 55314
+INFO 2025-11-17 01:19:31,517 basehttp "GET /static/plugins/jquery-ui/jquery-ui.min.js HTTP/1.1" 200 253669
+INFO 2025-11-17 01:19:31,519 basehttp "GET /static/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js HTTP/1.1" 200 56879
+INFO 2025-11-17 01:19:31,520 basehttp "GET /static/dist/js/demo.js HTTP/1.1" 200 12351
+INFO 2025-11-17 01:19:31,522 basehttp "GET /static/plugins/summernote/summernote-bs4.min.js HTTP/1.1" 200 127927
+INFO 2025-11-17 01:19:31,716 basehttp "GET /static/plugins/fontawesome-free/webfonts/fa-regular-400.woff2 HTTP/1.1" 200 13584
+WARNING 2025-11-17 01:19:36,821 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:19:37,345 basehttp "GET /department HTTP/1.1" 301 0
+WARNING 2025-11-17 01:19:37,361 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:19:37,387 basehttp "GET /department/ HTTP/1.1" 200 36175
+INFO 2025-11-17 01:19:37,595 basehttp "GET /static/plugins/summernote/font/summernote.woff?1d9aeaaff0a8939558a45be6cd52cd4c HTTP/1.1" 200 10604
+WARNING 2025-11-17 01:19:47,035 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:19:47,069 basehttp "GET /job_title HTTP/1.1" 200 34708
+WARNING 2025-11-17 01:19:53,004 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+WARNING 2025-11-17 01:19:53,017 permissions Permission denied: user1 tried to access View (ID: None) - Required: One of: HR, Manager - Reason: User not in any of required groups: HR, Manager
+WARNING 2025-11-17 01:19:53,018 log Forbidden (Permission denied): /contracts/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 181, in _wrapped_view
+    raise PermissionDenied(f"User must be in one of: {group_names}")
+django.core.exceptions.PermissionDenied: User must be in one of: ('HR', 'Manager')
+WARNING 2025-11-17 01:19:53,111 basehttp "GET /contracts/ HTTP/1.1" 403 135
+WARNING 2025-11-17 01:19:55,621 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+WARNING 2025-11-17 01:19:55,624 log Forbidden (Permission denied): /add_employee
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\decorators.py", line 31, in wrapped_view
+    raise PermissionDenied
+django.core.exceptions.PermissionDenied
+WARNING 2025-11-17 01:19:55,637 basehttp "GET /add_employee HTTP/1.1" 403 135
+WARNING 2025-11-17 01:19:57,409 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:19:57,450 basehttp "GET /employee_list HTTP/1.1" 200 36928
+WARNING 2025-11-17 01:20:00,620 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:20:00,647 basehttp "GET /employee_list?page=2 HTTP/1.1" 200 36085
+WARNING 2025-11-17 01:20:03,484 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:20:03,528 basehttp "GET /employee_list?page=1 HTTP/1.1" 200 36928
+WARNING 2025-11-17 01:20:06,190 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:20:06,212 basehttp "GET /employee_list?page=2 HTTP/1.1" 200 36085
+WARNING 2025-11-17 01:20:08,236 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:20:08,273 basehttp "GET /employee_list?page=1 HTTP/1.1" 200 36928
+WARNING 2025-11-17 01:20:15,160 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:20:15,375 basehttp "GET /payroll/calculate/ HTTP/1.1" 200 40468
+WARNING 2025-11-17 01:20:18,064 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+WARNING 2025-11-17 01:20:18,074 permissions Permission denied: user1 tried to access View (ID: None) - Required: One of: HR, Manager - Reason: User not in any of required groups: HR, Manager
+WARNING 2025-11-17 01:20:18,077 log Forbidden (Permission denied): /payroll/manage/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 181, in _wrapped_view
+    raise PermissionDenied(f"User must be in one of: {group_names}")
+django.core.exceptions.PermissionDenied: User must be in one of: ('HR', 'Manager')
+WARNING 2025-11-17 01:20:18,093 basehttp "GET /payroll/manage/ HTTP/1.1" 403 135
+WARNING 2025-11-17 01:20:25,940 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:20:26,005 basehttp "GET /org-chart/ HTTP/1.1" 200 62676
+WARNING 2025-11-17 01:21:01,281 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+WARNING 2025-11-17 01:21:01,288 permissions Permission denied: user1 tried to access View (ID: None) - Required: HR - Reason: User not in required group: HR
+WARNING 2025-11-17 01:21:01,289 log Forbidden (Permission denied): /salary-rules/components/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 144, in _wrapped_view
+    raise PermissionDenied(f"User must be in '{group_name}' group")
+django.core.exceptions.PermissionDenied: User must be in 'HR' group
+WARNING 2025-11-17 01:21:01,302 basehttp "GET /salary-rules/components/ HTTP/1.1" 403 135
+WARNING 2025-11-17 01:21:05,130 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:21:05,158 HodViews Employee dashboard accessed by Huỳnh Ngọc Chi
+INFO 2025-11-17 01:21:05,177 basehttp "GET /portal/dashboard/ HTTP/1.1" 200 32773
+WARNING 2025-11-17 01:21:12,685 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:21:12,802 basehttp "GET /leave/request/ HTTP/1.1" 200 30488
+WARNING 2025-11-17 01:21:16,591 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:21:16,601 HodViews Employee dashboard accessed by Huỳnh Ngọc Chi
+INFO 2025-11-17 01:21:16,628 basehttp "GET /portal/dashboard/ HTTP/1.1" 200 32773
+WARNING 2025-11-17 01:21:20,154 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:21:20,163 HodViews Payrolls viewed by Huỳnh Ngọc Chi
+INFO 2025-11-17 01:21:20,183 basehttp "GET /portal/payrolls/ HTTP/1.1" 200 30192
+WARNING 2025-11-17 01:21:24,992 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:21:25,004 HodViews Employee dashboard accessed by Huỳnh Ngọc Chi
+INFO 2025-11-17 01:21:25,032 basehttp "GET /portal/dashboard/ HTTP/1.1" 200 32773
+WARNING 2025-11-17 01:21:25,965 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:21:25,973 HodViews Attendance viewed by Huỳnh Ngọc Chi
+INFO 2025-11-17 01:21:26,007 basehttp "GET /portal/attendance/ HTTP/1.1" 200 34594
+WARNING 2025-11-17 01:21:28,852 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:21:28,860 HodViews Attendance viewed by Huỳnh Ngọc Chi
+INFO 2025-11-17 01:21:28,889 basehttp "GET /portal/attendance/ HTTP/1.1" 200 34594
+WARNING 2025-11-17 01:21:30,111 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:21:30,118 HodViews Payrolls viewed by Huỳnh Ngọc Chi
+INFO 2025-11-17 01:21:30,139 basehttp "GET /portal/payrolls/ HTTP/1.1" 200 30192
+WARNING 2025-11-17 01:21:32,073 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:21:32,076 HodViews Profile viewed by Huỳnh Ngọc Chi
+INFO 2025-11-17 01:21:32,114 basehttp "GET /portal/profile/ HTTP/1.1" 200 37882
+WARNING 2025-11-17 01:21:44,439 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:21:44,458 basehttp "GET /portal/profile/edit/ HTTP/1.1" 200 34923
+WARNING 2025-11-17 01:21:53,346 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:21:53,352 HodViews Payrolls viewed by Huỳnh Ngọc Chi
+INFO 2025-11-17 01:21:53,368 basehttp "GET /portal/payrolls/ HTTP/1.1" 200 30192
+WARNING 2025-11-17 01:21:55,135 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:21:55,137 HodViews Profile viewed by Huỳnh Ngọc Chi
+INFO 2025-11-17 01:21:55,152 basehttp "GET /portal/profile/ HTTP/1.1" 200 37882
+WARNING 2025-11-17 01:21:56,084 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:21:56,094 HodViews Payrolls viewed by Huỳnh Ngọc Chi
+INFO 2025-11-17 01:21:56,109 basehttp "GET /portal/payrolls/ HTTP/1.1" 200 30192
+WARNING 2025-11-17 01:21:57,454 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:21:57,478 basehttp "GET /payroll/calculate/ HTTP/1.1" 200 40468
+WARNING 2025-11-17 01:21:58,947 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+WARNING 2025-11-17 01:21:58,954 permissions Permission denied: user1 tried to access View (ID: None) - Required: One of: HR, Manager - Reason: User not in any of required groups: HR, Manager
+WARNING 2025-11-17 01:21:58,955 log Forbidden (Permission denied): /payroll/manage/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 181, in _wrapped_view
+    raise PermissionDenied(f"User must be in one of: {group_names}")
+django.core.exceptions.PermissionDenied: User must be in one of: ('HR', 'Manager')
+WARNING 2025-11-17 01:21:58,968 basehttp "GET /payroll/manage/ HTTP/1.1" 403 135
+WARNING 2025-11-17 01:22:00,015 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:22:00,041 basehttp "GET /payroll/calculate/ HTTP/1.1" 200 40468
+WARNING 2025-11-17 01:22:14,337 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:22:14,347 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-17 01:22:14,359 basehttp "GET /login/ HTTP/1.1" 200 8341
+INFO 2025-11-17 01:22:17,456 middleware Login attempt for username: admin from IP: 127.0.0.1
+INFO 2025-11-17 01:22:17,829 basehttp "POST /login/ HTTP/1.1" 200 3105
+INFO 2025-11-17 01:26:27,071 middleware Login attempt for username: user1 from IP: 127.0.0.1
+INFO 2025-11-17 01:26:27,485 basehttp "POST /login/ HTTP/1.1" 302 0
+WARNING 2025-11-17 01:26:27,498 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:26:27,504 HodViews Admin home accessed by user1
+INFO 2025-11-17 01:26:27,534 basehttp "GET / HTTP/1.1" 200 40525
+WARNING 2025-11-17 01:26:56,296 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:26:56,335 basehttp "GET /employee_list HTTP/1.1" 200 36928
+WARNING 2025-11-17 01:27:03,009 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:27:03,063 basehttp "GET /org-chart/ HTTP/1.1" 200 62676
+WARNING 2025-11-17 01:27:19,707 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:27:19,742 basehttp "GET /appraisal/my-appraisals/ HTTP/1.1" 200 28372
+WARNING 2025-11-17 01:27:21,044 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:27:21,070 basehttp "GET /appraisal/manager/ HTTP/1.1" 200 28828
+WARNING 2025-11-17 01:27:23,005 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:27:23,027 basehttp "GET /appraisal/periods/ HTTP/1.1" 200 29435
+WARNING 2025-11-17 01:27:27,419 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:27:27,445 basehttp "GET /admin HTTP/1.1" 301 0
+WARNING 2025-11-17 01:27:27,464 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:27:27,498 basehttp "GET /admin/ HTTP/1.1" 302 0
+WARNING 2025-11-17 01:27:27,512 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:27:27,744 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 3886
+INFO 2025-11-17 01:27:27,820 basehttp "GET /static/admin/css/login.css HTTP/1.1" 200 958
+INFO 2025-11-17 01:27:27,820 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2694
+INFO 2025-11-17 01:27:27,821 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2929
+INFO 2025-11-17 01:27:27,823 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 200 18559
+INFO 2025-11-17 01:27:27,825 basehttp "GET /static/admin/css/base.css HTTP/1.1" 200 21310
+INFO 2025-11-17 01:27:27,853 basehttp "GET /static/admin/img/icon-alert.svg HTTP/1.1" 200 504
+INFO 2025-11-17 01:27:27,860 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 200 1943
+INFO 2025-11-17 01:27:27,867 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+WARNING 2025-11-17 01:27:32,521 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:27:32,978 basehttp "POST /admin/login/?next=/admin/ HTTP/1.1" 200 3862
+WARNING 2025-11-17 01:27:54,727 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:27:54,742 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 3701
+WARNING 2025-11-17 01:27:58,394 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:27:58,425 basehttp "GET /employee_list HTTP/1.1" 200 36928
+WARNING 2025-11-17 01:28:06,955 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+WARNING 2025-11-17 01:28:06,966 permissions Permission denied: user1 tried to access View (ID: None) - Required: HR - Reason: User not in required group: HR
+WARNING 2025-11-17 01:28:06,971 log Forbidden (Permission denied): /contracts/create/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 144, in _wrapped_view
+    raise PermissionDenied(f"User must be in '{group_name}' group")
+django.core.exceptions.PermissionDenied: User must be in 'HR' group
+WARNING 2025-11-17 01:28:06,988 basehttp "GET /contracts/create/ HTTP/1.1" 403 135
+WARNING 2025-11-17 01:28:07,753 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:28:07,781 basehttp "GET /employee_list HTTP/1.1" 200 36928
+WARNING 2025-11-17 01:28:13,200 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:28:13,232 basehttp "GET /employee/17/ HTTP/1.1" 200 32735
+WARNING 2025-11-17 01:28:13,281 basehttp "GET /static/img/default-profile.png HTTP/1.1" 404 1929
+WARNING 2025-11-17 01:28:16,242 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:28:16,283 basehttp "GET /employee_list HTTP/1.1" 200 36928
+WARNING 2025-11-17 01:28:25,523 middleware User user1 (ngọcchi1@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:28:25,533 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-17 01:28:25,560 basehttp "GET /login/ HTTP/1.1" 200 4069
+INFO 2025-11-17 01:28:29,707 middleware Login attempt for username: user3 from IP: 127.0.0.1
+INFO 2025-11-17 01:28:30,012 basehttp "POST /login/ HTTP/1.1" 302 0
+WARNING 2025-11-17 01:28:30,030 middleware User user3 (quốctuấn3@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:28:30,043 HodViews Admin home accessed by user3
+INFO 2025-11-17 01:28:30,083 basehttp "GET / HTTP/1.1" 200 40525
+WARNING 2025-11-17 01:28:35,291 middleware User user3 (quốctuấn3@company.vn) has no group assignment. IP: 127.0.0.1
+WARNING 2025-11-17 01:28:35,299 permissions Permission denied: user3 tried to access View (ID: None) - Required: One of: HR, Manager - Reason: User not in any of required groups: HR, Manager
+WARNING 2025-11-17 01:28:35,301 log Forbidden (Permission denied): /contracts/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 181, in _wrapped_view
+    raise PermissionDenied(f"User must be in one of: {group_names}")
+django.core.exceptions.PermissionDenied: User must be in one of: ('HR', 'Manager')
+WARNING 2025-11-17 01:28:35,316 basehttp "GET /contracts/ HTTP/1.1" 403 135
+WARNING 2025-11-17 01:28:36,386 middleware User user3 (quốctuấn3@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:28:36,392 HodViews Admin home accessed by user3
+INFO 2025-11-17 01:28:36,425 basehttp "GET / HTTP/1.1" 200 40525
+WARNING 2025-11-17 01:38:09,335 middleware User user3 (quốctuấn3@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:38:09,500 basehttp "GET /appraisal/my-appraisals/ HTTP/1.1" 200 28754
+WARNING 2025-11-17 01:38:12,069 middleware User user3 (quốctuấn3@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:38:12,076 HodViews Admin home accessed by user3
+INFO 2025-11-17 01:38:12,154 basehttp "GET / HTTP/1.1" 200 40525
+WARNING 2025-11-17 01:38:14,432 middleware User user3 (quốctuấn3@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:38:14,453 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-17 01:38:14,471 basehttp "GET /login/ HTTP/1.1" 200 3255
+INFO 2025-11-17 01:44:31,240 autoreload Watching for file changes with StatReloader
+INFO 2025-11-17 01:44:49,824 middleware Login attempt for username: chihn from IP: 127.0.0.1
+INFO 2025-11-17 01:44:50,240 basehttp "POST /login/ HTTP/1.1" 302 0
+WARNING 2025-11-17 01:44:50,256 middleware User chihn (chihn@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:44:50,261 HodViews Admin home accessed by chihn
+INFO 2025-11-17 01:44:50,328 basehttp "GET / HTTP/1.1" 200 40518
+WARNING 2025-11-17 01:44:52,777 middleware User chihn (chihn@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:44:52,828 basehttp "GET /org-chart/ HTTP/1.1" 200 62239
+WARNING 2025-11-17 01:45:12,673 middleware User chihn (chihn@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:45:12,685 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-17 01:45:12,702 basehttp "GET /login/ HTTP/1.1" 200 3422
+INFO 2025-11-17 01:45:16,494 middleware Login attempt for username: nhungvm from IP: 127.0.0.1
+INFO 2025-11-17 01:45:16,877 basehttp "POST /login/ HTTP/1.1" 302 0
+WARNING 2025-11-17 01:45:16,891 middleware User nhungvm (nhungvm@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:45:16,897 HodViews Admin home accessed by nhungvm
+INFO 2025-11-17 01:45:16,931 basehttp "GET / HTTP/1.1" 200 40520
+WARNING 2025-11-17 01:45:20,136 middleware User nhungvm (nhungvm@company.vn) has no group assignment. IP: 127.0.0.1
+WARNING 2025-11-17 01:45:20,149 permissions Permission denied: nhungvm tried to access View (ID: None) - Required: One of: HR, Manager - Reason: User not in any of required groups: HR, Manager
+WARNING 2025-11-17 01:45:20,158 log Forbidden (Permission denied): /payroll/manage/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 181, in _wrapped_view
+    raise PermissionDenied(f"User must be in one of: {group_names}")
+django.core.exceptions.PermissionDenied: User must be in one of: ('HR', 'Manager')
+WARNING 2025-11-17 01:45:20,191 basehttp "GET /payroll/manage/ HTTP/1.1" 403 135
+WARNING 2025-11-17 01:45:21,345 middleware User nhungvm (nhungvm@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:45:21,351 HodViews Admin home accessed by nhungvm
+INFO 2025-11-17 01:45:21,404 basehttp "GET / HTTP/1.1" 200 40520
+WARNING 2025-11-17 01:45:30,825 middleware User nhungvm (nhungvm@company.vn) has no group assignment. IP: 127.0.0.1
+INFO 2025-11-17 01:45:30,844 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-17 01:45:30,860 basehttp "GET /login/ HTTP/1.1" 200 3744
+INFO 2025-11-17 01:45:43,086 middleware Login attempt for username: hr_user from IP: 127.0.0.1
+INFO 2025-11-17 01:45:43,475 basehttp "POST /login/ HTTP/1.1" 200 3105
+INFO 2025-11-17 01:50:09,547 autoreload Watching for file changes with StatReloader
+INFO 2025-11-17 01:50:13,010 middleware Login attempt for username: nhungtm from IP: 127.0.0.1
+INFO 2025-11-17 01:50:13,468 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-17 01:50:13,489 HodViews Admin home accessed by nhungtm
+INFO 2025-11-17 01:50:13,570 basehttp "GET / HTTP/1.1" 200 40542
+INFO 2025-11-17 01:50:18,855 basehttp "GET /org-chart/ HTTP/1.1" 200 62285
+INFO 2025-11-17 01:50:21,694 basehttp "GET /payroll/manage/ HTTP/1.1" 200 35827
+INFO 2025-11-17 01:50:27,268 basehttp "GET /attendance/manage/ HTTP/1.1" 200 31938
+INFO 2025-11-17 01:50:30,985 basehttp "GET /attendance/manage/ HTTP/1.1" 200 31938
+INFO 2025-11-17 01:50:32,465 basehttp "GET /attendance/add/ HTTP/1.1" 200 55986
+INFO 2025-11-17 01:50:34,044 basehttp "GET /org-chart/ HTTP/1.1" 200 62285
+INFO 2025-11-17 01:50:36,965 basehttp "GET /contracts/ HTTP/1.1" 200 34857
+INFO 2025-11-17 01:50:38,669 basehttp "GET /contracts/create/ HTTP/1.1" 200 39149
+INFO 2025-11-17 01:50:40,059 basehttp "GET /contracts/ HTTP/1.1" 200 34857
+INFO 2025-11-17 01:52:08,228 basehttp "GET /org-chart/ HTTP/1.1" 200 62285
+INFO 2025-11-17 01:52:50,442 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-17 01:52:50,459 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-17 01:52:55,559 middleware Login attempt for username: hunghv from IP: 127.0.0.1
+INFO 2025-11-17 01:52:55,978 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-17 01:52:55,998 HodViews Admin home accessed by hunghv
+INFO 2025-11-17 01:52:56,028 basehttp "GET / HTTP/1.1" 200 40541
+INFO 2025-11-17 01:53:00,173 basehttp "GET /payroll/calculate/ HTTP/1.1" 200 40485
+INFO 2025-11-17 01:53:01,314 basehttp "GET /payroll/manage/ HTTP/1.1" 302 0
+INFO 2025-11-17 01:53:01,328 HodViews Admin home accessed by hunghv
+INFO 2025-11-17 01:53:01,368 basehttp "GET / HTTP/1.1" 200 40541
+INFO 2025-11-17 01:53:14,035 basehttp "GET /org-chart/ HTTP/1.1" 200 62284
+INFO 2025-11-17 01:53:26,516 HodViews Admin home accessed by hunghv
+INFO 2025-11-17 01:53:26,559 basehttp "GET / HTTP/1.1" 200 40541
+INFO 2025-11-17 01:57:33,015 autoreload Watching for file changes with StatReloader
+INFO 2025-11-17 01:57:38,107 HodViews Admin home accessed by hunghv
+INFO 2025-11-17 01:57:38,180 basehttp "GET / HTTP/1.1" 200 40532
+INFO 2025-11-17 01:57:48,575 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-17 01:57:48,591 basehttp "GET /login/ HTTP/1.1" 200 3058
+INFO 2025-11-17 01:57:52,101 middleware Login attempt for username: hangpt from IP: 127.0.0.1
+INFO 2025-11-17 01:57:52,467 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-17 01:57:52,494 HodViews Admin home accessed by hangpt
+INFO 2025-11-17 01:57:52,555 basehttp "GET / HTTP/1.1" 200 40532
+INFO 2025-11-17 01:57:57,947 basehttp "GET /org-chart/ HTTP/1.1" 200 62253
+INFO 2025-11-17 01:58:01,305 basehttp "GET /recruitment/jobs/ HTTP/1.1" 200 56344
+INFO 2025-11-17 01:58:08,500 basehttp "GET /recruitment/jobs/?closing_soon=true HTTP/1.1" 200 56344
+INFO 2025-11-17 01:58:09,841 basehttp "GET /recruitment/jobs/?closing_soon=true HTTP/1.1" 200 56344
+INFO 2025-11-17 01:58:14,746 basehttp "GET /recruitment/applications/?job=6 HTTP/1.1" 200 76182
+INFO 2025-11-17 01:58:30,464 basehttp "GET /recruitment/applications/4/ HTTP/1.1" 200 45537
+INFO 2025-11-17 01:58:45,858 basehttp "GET /recruitment/applications/ HTTP/1.1" 200 172705
+INFO 2025-11-17 01:58:47,732 basehttp "GET /recruitment/jobs/ HTTP/1.1" 200 56344
+INFO 2025-11-17 01:58:50,032 basehttp "GET /recruitment/jobs/6/ HTTP/1.1" 200 50474
+WARNING 2025-11-17 01:58:51,706 log Not Found: /careers/6/
+WARNING 2025-11-17 01:58:51,707 basehttp "GET /careers/6/ HTTP/1.1" 404 13105
+INFO 2025-11-17 01:59:06,621 basehttp "GET /recruitment/jobs/create/ HTTP/1.1" 200 45162
+INFO 2025-11-17 01:59:08,218 basehttp "GET /recruitment/applications/ HTTP/1.1" 200 172705
+INFO 2025-11-17 01:59:09,764 basehttp "GET /careers/ HTTP/1.1" 200 19438
+INFO 2025-11-17 01:59:12,098 basehttp "GET /careers/10/ HTTP/1.1" 200 16051
+INFO 2025-11-17 01:59:17,032 basehttp "GET /careers/ HTTP/1.1" 200 19438
+INFO 2025-11-17 01:59:18,611 basehttp "GET /careers/9/ HTTP/1.1" 200 16090
+INFO 2025-11-17 01:59:19,826 basehttp "GET /careers/ HTTP/1.1" 200 19438
+INFO 2025-11-17 01:59:21,198 basehttp "GET /careers/7/ HTTP/1.1" 200 16104
+INFO 2025-11-17 01:59:23,134 basehttp "GET /careers/ HTTP/1.1" 200 19438
+INFO 2025-11-17 01:59:28,263 basehttp "GET /recruitment/jobs/ HTTP/1.1" 200 56344
+INFO 2025-11-17 01:59:33,164 basehttp "GET /recruitment/jobs/7/ HTTP/1.1" 200 51994
+INFO 2025-11-17 01:59:34,350 basehttp "GET /careers/7/ HTTP/1.1" 200 16104
+INFO 2025-11-17 01:59:36,773 basehttp "GET /careers/ HTTP/1.1" 200 19438
+INFO 2025-11-17 01:59:43,951 HodViews Admin home accessed by hangpt
+INFO 2025-11-17 01:59:43,986 basehttp "GET / HTTP/1.1" 200 40532
+INFO 2025-11-17 02:00:02,524 basehttp "GET /recruitment/applications/ HTTP/1.1" 200 172705
+INFO 2025-11-17 02:00:24,294 basehttp "GET /recruitment/jobs/ HTTP/1.1" 200 56344
+INFO 2025-11-17 02:00:31,554 basehttp "GET /careers/ HTTP/1.1" 200 19438
+INFO 2025-11-17 02:00:48,157 basehttp "GET /recruitment/jobs/create/ HTTP/1.1" 200 45162
+INFO 2025-11-17 02:00:50,393 basehttp "GET /recruitment/applications/ HTTP/1.1" 200 172705
+INFO 2025-11-17 02:00:52,256 basehttp "GET /salary-rules/components/ HTTP/1.1" 200 30616
+INFO 2025-11-17 02:00:54,142 basehttp "GET /salary-rules/bulk-assign/ HTTP/1.1" 200 46400
+INFO 2025-11-17 02:01:02,363 basehttp "GET /salary-rules/templates/ HTTP/1.1" 200 26339
+INFO 2025-11-17 02:01:11,130 basehttp "GET /salary-rules/history/ HTTP/1.1" 200 30884
+INFO 2025-11-17 02:01:13,103 basehttp "GET /salary-rules/history/ HTTP/1.1" 200 30884
+INFO 2025-11-17 02:01:20,094 basehttp "GET /salary-rules/components/ HTTP/1.1" 200 30616
+INFO 2025-11-17 02:01:20,957 basehttp "GET /org-chart/ HTTP/1.1" 200 62253
+INFO 2025-11-17 02:01:24,939 basehttp "GET /payroll/calculate/ HTTP/1.1" 200 40474
+INFO 2025-11-17 02:01:27,894 basehttp "POST /payroll/get-data/ HTTP/1.1" 200 277
+INFO 2025-11-17 02:01:33,282 basehttp "GET /payroll/manage/ HTTP/1.1" 200 43402
+INFO 2025-11-17 02:01:42,273 basehttp "GET /payroll/view/115/ HTTP/1.1" 200 30793
+INFO 2025-11-17 02:01:46,148 basehttp "GET /payroll/manage/ HTTP/1.1" 200 43402
+INFO 2025-11-17 02:01:57,167 basehttp "GET /payroll/edit/153/ HTTP/1.1" 200 40468
+INFO 2025-11-17 02:02:00,516 basehttp "GET /payroll/manage/ HTTP/1.1" 200 43402
+INFO 2025-11-17 02:02:05,612 basehttp "GET /attendance/manage/ HTTP/1.1" 200 1558725
+INFO 2025-11-17 02:02:58,576 basehttp "GET /leave/history/ HTTP/1.1" 200 35993
+INFO 2025-11-17 02:03:21,452 basehttp "GET /leave/view/76/ HTTP/1.1" 200 34463
+INFO 2025-11-17 02:03:46,154 basehttp "GET /leave/manage/ HTTP/1.1" 200 42668
+INFO 2025-11-17 02:03:50,695 basehttp "GET /leave/types/ HTTP/1.1" 200 46259
+INFO 2025-11-17 02:04:10,405 HodViews Expense categories viewed by hangpt
+INFO 2025-11-17 02:04:10,427 basehttp "GET /expense/categories/ HTTP/1.1" 200 44103
+INFO 2025-11-17 02:04:18,525 HodViews Employee dashboard accessed by Phạm Thị Hằng
+INFO 2025-11-17 02:04:18,551 basehttp "GET /portal/dashboard/ HTTP/1.1" 200 39570
+INFO 2025-11-17 02:04:23,591 HodViews Attendance viewed by Phạm Thị Hằng
+INFO 2025-11-17 02:04:23,622 basehttp "GET /portal/attendance/ HTTP/1.1" 200 66601
+INFO 2025-11-17 02:04:36,588 HodViews Profile viewed by Phạm Thị Hằng
+INFO 2025-11-17 02:04:36,608 basehttp "GET /portal/profile/ HTTP/1.1" 200 37856
+INFO 2025-11-17 02:04:39,483 HodViews Employee dashboard accessed by Phạm Thị Hằng
+INFO 2025-11-17 02:04:39,497 basehttp "GET /portal/dashboard/ HTTP/1.1" 200 39570
+INFO 2025-11-17 02:04:43,619 HodViews Payrolls viewed by Phạm Thị Hằng
+INFO 2025-11-17 02:04:43,640 basehttp "GET /portal/payrolls/ HTTP/1.1" 200 33372
+INFO 2025-11-17 02:04:50,942 basehttp "GET /payroll/view/153/ HTTP/1.1" 200 30801
+INFO 2025-11-17 02:04:53,631 basehttp "GET /payroll/manage/ HTTP/1.1" 200 43402
+INFO 2025-11-17 02:05:00,757 HodViews Employee dashboard accessed by Phạm Thị Hằng
+INFO 2025-11-17 02:05:00,774 basehttp "GET /portal/dashboard/ HTTP/1.1" 200 39570
+INFO 2025-11-17 02:05:08,296 HodViews Expense history viewed by Phạm Thị Hằng
+INFO 2025-11-17 02:05:08,318 basehttp "GET /expense/history/ HTTP/1.1" 200 31727
+INFO 2025-11-17 02:05:12,144 HodViews Expense 93 viewed by hangpt
+INFO 2025-11-17 02:05:12,174 basehttp "GET /expense/view/93/ HTTP/1.1" 200 35212
+INFO 2025-11-17 02:05:20,558 HodViews Expense categories viewed by hangpt
+INFO 2025-11-17 02:05:20,592 basehttp "GET /expense/categories/ HTTP/1.1" 200 44103
+INFO 2025-11-17 02:05:24,276 basehttp "GET /org-chart/ HTTP/1.1" 200 62253
+INFO 2025-11-17 02:06:05,030 HodViews Employee dashboard accessed by Phạm Thị Hằng
+INFO 2025-11-17 02:06:05,042 basehttp "GET /portal/dashboard/ HTTP/1.1" 200 39570
+INFO 2025-11-17 02:07:34,722 HodViews Profile viewed by Phạm Thị Hằng
+INFO 2025-11-17 02:07:34,738 basehttp "GET /portal/profile/ HTTP/1.1" 200 37856
+INFO 2025-11-17 02:07:36,055 HodViews Payrolls viewed by Phạm Thị Hằng
+INFO 2025-11-17 02:07:36,074 basehttp "GET /portal/payrolls/ HTTP/1.1" 200 33372
+INFO 2025-11-17 02:07:49,188 HodViews Attendance viewed by Phạm Thị Hằng
+INFO 2025-11-17 02:07:49,209 basehttp "GET /portal/attendance/ HTTP/1.1" 200 66601
+INFO 2025-11-17 02:07:50,635 HodViews Payrolls viewed by Phạm Thị Hằng
+INFO 2025-11-17 02:07:50,663 basehttp "GET /portal/payrolls/ HTTP/1.1" 200 33372
+INFO 2025-11-17 02:07:51,133 HodViews Profile viewed by Phạm Thị Hằng
+INFO 2025-11-17 02:07:51,158 basehttp "GET /portal/profile/ HTTP/1.1" 200 37856
+INFO 2025-11-17 02:07:52,230 HodViews Payrolls viewed by Phạm Thị Hằng
+INFO 2025-11-17 02:07:52,256 basehttp "GET /portal/payrolls/ HTTP/1.1" 200 33372
+INFO 2025-11-17 02:08:21,334 basehttp "GET /employee_list HTTP/1.1" 200 36921
+INFO 2025-11-17 02:08:26,398 basehttp "GET /employee/152/ HTTP/1.1" 200 32732
+WARNING 2025-11-17 02:08:26,470 basehttp "GET /static/img/default-profile.png HTTP/1.1" 404 1929
+INFO 2025-11-17 02:08:34,708 basehttp "GET /employee_list HTTP/1.1" 200 36921
+INFO 2025-11-17 02:08:41,325 HodViews Employee dashboard accessed by Phạm Thị Hằng
+INFO 2025-11-17 02:08:41,341 basehttp "GET /portal/dashboard/ HTTP/1.1" 200 39570
+INFO 2025-11-17 02:09:14,071 HodViews Profile viewed by Phạm Thị Hằng
+INFO 2025-11-17 02:09:14,090 basehttp "GET /portal/profile/ HTTP/1.1" 200 37856
+INFO 2025-11-17 02:09:18,256 HodViews Payrolls viewed by Phạm Thị Hằng
+INFO 2025-11-17 02:09:18,275 basehttp "GET /portal/payrolls/ HTTP/1.1" 200 33372
+INFO 2025-11-17 02:11:19,914 HodViews Admin home accessed by hangpt
+INFO 2025-11-17 02:11:19,949 basehttp "GET / HTTP/1.1" 200 40532
+INFO 2025-11-17 02:11:22,792 basehttp "GET /add_employee HTTP/1.1" 200 37541
+INFO 2025-11-17 02:11:22,873 basehttp "GET /add_employee HTTP/1.1" 200 37541
+INFO 2025-11-17 02:11:42,251 basehttp "GET /recruitment/jobs/ HTTP/1.1" 200 56344

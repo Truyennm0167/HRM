@@ -1,0 +1,57 @@
+{% extends "emails/base_email.html" %}
+
+{% block title %}Thông báo hợp đồng sắp hết hạn{% endblock %}
+
+{% block header_title %}Nhắc nhở hợp đồng{% endblock %}
+{% block header_subtitle %}Contract Expiry Warning{% endblock %}
+
+{% block content %}
+<div class="greeting">
+    <p>Kính gửi <strong>{{ employee_name }}</strong>,</p>
+</div>
+
+<div class="alert alert-warning">
+    <strong>⚠ Quan trọng!</strong> Hợp đồng lao động của bạn sắp hết hạn.
+</div>
+
+<p>Chúng tôi xin thông báo rằng hợp đồng lao động của bạn sẽ hết hạn trong <strong>{{ days_until_expiry }} ngày</strong> nữa.</p>
+
+<div class="info-box">
+    <h3>Thông tin hợp đồng</h3>
+    <div class="info-row">
+        <div class="info-label">Loại hợp đồng:</div>
+        <div class="info-value">{{ contract_type }}</div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">Ngày bắt đầu:</div>
+        <div class="info-value">{{ start_date|date:"d/m/Y" }}</div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">Ngày kết thúc:</div>
+        <div class="info-value"><strong style="color: #dc3545;">{{ end_date|date:"d/m/Y" }}</strong></div>
+    </div>
+    <div class="info-row">
+        <div class="info-label">Thời gian còn lại:</div>
+        <div class="info-value"><strong style="color: #dc3545;">{{ days_until_expiry }} ngày</strong></div>
+    </div>
+</div>
+
+<h3>Các bước tiếp theo:</h3>
+<ol style="line-height: 2;">
+    <li><strong>Liên hệ với phòng Nhân sự</strong> để thảo luận về việc gia hạn hợp đồng</li>
+    <li><strong>Chuẩn bị tài liệu</strong> cần thiết (nếu có yêu cầu)</li>
+    <li><strong>Thực hiện thủ tục</strong> gia hạn trước ngày hết hạn ít nhất 7 ngày</li>
+</ol>
+
+<div class="alert alert-info">
+    <h4 style="margin-top: 0;">Thông tin liên hệ:</h4>
+    <p style="margin: 5px 0;"><strong>Phòng Nhân sự</strong></p>
+    <p style="margin: 5px 0;">Email: hr@company.com</p>
+    <p style="margin: 5px 0;">Điện thoại: (024) 1234-5678</p>
+    <p style="margin: 5px 0;">Giờ làm việc: 8:00 - 17:30 (Thứ 2 - Thứ 6)</p>
+</div>
+
+<p><strong>Quan trọng:</strong> Nếu bạn muốn gia hạn hợp đồng hoặc có bất kỳ câu hỏi nào về quy trình, vui lòng liên hệ với phòng Nhân sự càng sớm càng tốt để đảm bảo quá trình gia hạn diễn ra suôn sẻ.</p>
+
+<p>Nếu bạn không có kế hoạch gia hạn hợp đồng, vui lòng thông báo trước ít nhất 30 ngày để chúng tôi có thể sắp xếp công việc phù hợp.</p>
+{% endblock %}

@@ -82,16 +82,34 @@ WSGI_APPLICATION = 'hrm.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# Database selection priority:
+# 1. PostgreSQL (recommended for production)
+# 2. MySQL (alternative)
+# 3. SQLite (development only)
+
+USE_POSTGRESQL = os.getenv('USE_POSTGRESQL', '0') == '1'
+USE_MYSQL = os.getenv('USE_MYSQL', '0') == '1'
 USE_SQLITE = os.getenv('USE_SQLITE', '1') == '1'
 
-if USE_SQLITE:
+if USE_POSTGRESQL:
+    # PostgreSQL Configuration (Recommended for Production)
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.getenv('POSTGRES_DB', 'hrm_db'),
+            'USER': os.getenv('POSTGRES_USER', 'postgres'),
+            'PASSWORD': os.getenv('POSTGRES_PASSWORD', ''),
+            'HOST': os.getenv('POSTGRES_HOST', 'localhost'),
+            'PORT': os.getenv('POSTGRES_PORT', '5432'),
+            'OPTIONS': {
+                'options': '-c search_path=public',
+            },
+            'CONN_MAX_AGE': 600,  # Keep connections alive for 10 minutes
+            'ATOMIC_REQUESTS': True,  # Wrap each request in a transaction
         }
     }
-else:
+elif USE_MYSQL:
+    # MySQL Configuration
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.mysql',
@@ -100,6 +118,21 @@ else:
             'PASSWORD': os.getenv('MYSQL_PASSWORD', ''),
             'HOST': os.getenv('MYSQL_HOST', '127.0.0.1'),
             'PORT': os.getenv('MYSQL_PORT', '3306'),
+            'OPTIONS': {
+                'charset': 'utf8mb4',
+                'init_command': "SET sql_mode='STRICT_TRANS_TABLES'",
+            },
+            'CONN_MAX_AGE': 600,
+            'ATOMIC_REQUESTS': True,
+        }
+    }
+else:
+    # SQLite Configuration (Development Only)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+            'ATOMIC_REQUESTS': True,
         }
     }
 
@@ -229,6 +262,43 @@ LOGGING = {
 LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/'
 LOGOUT_REDIRECT_URL = '/login/'
+
+# ============================================================
+# EMAIL CONFIGURATION
+# ============================================================
+
+# Email backend configuration
+if DEBUG:
+    # Development: Console backend (prints to console)
+    # EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+    
+    # Development: Use Gmail SMTP for testing
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.gmail.com'
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER', '')  # Set in environment
+    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD', '')  # App password
+    DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'HRM System <noreply@hrm.local>')
+    SERVER_EMAIL = DEFAULT_FROM_EMAIL
+else:
+    # Production: SMTP configuration
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
+    EMAIL_PORT = int(os.getenv('EMAIL_PORT', '587'))
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+    EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+    DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL', 'HRM System <noreply@company.com>')
+    SERVER_EMAIL = os.getenv('SERVER_EMAIL', 'admin@company.com')
+
+# Email timeout
+EMAIL_TIMEOUT = 10
+
+# Admin email for error notifications
+ADMINS = [
+    ('Admin', os.getenv('ADMIN_EMAIL', 'admin@company.com')),
+]
 
 # Security Settings (for production)
 if not DEBUG:
