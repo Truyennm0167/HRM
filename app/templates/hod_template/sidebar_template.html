@@ -25,7 +25,7 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item {% if request.path == '/' %}active{% endif %}">
-          <a href="/" class="nav-link {% if request.path == '/' %}active{% endif %}">
+          <a href="{% url 'admin_home' %}" class="nav-link {% if request.path == '/' %}active{% endif %}">
             <i class="nav-icon fas fa-tachometer-alt"></i>
             <p>Tổng quan</p>
           </a>
@@ -40,13 +40,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/department" class="nav-link {% if '/department' in request.path %}active{% endif %}">
+              <a href="{% url 'department_page' %}" class="nav-link {% if '/department' in request.path %}active{% endif %}">
                 <i class="nav-icon fas fa-building"></i>
                 <p>Phòng ban</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/job_title" class="nav-link {% if '/job_title' in request.path %}active{% endif %}">
+              <a href="{% url 'job_title' %}" class="nav-link {% if '/job_title' in request.path %}active{% endif %}">
                 <i class="nav-icon fas fa-briefcase"></i>
                 <p>Chức vụ</p>
               </a>
@@ -58,13 +58,13 @@
               </a>
             </li>
             <li class="nav-item">
-              <a href="/add_employee" class="nav-link {% if '/add_employee' in request.path %}active{% endif %}">
+              <a href="{% url 'add_employee' %}" class="nav-link {% if '/add_employee' in request.path %}active{% endif %}">
                 <i class="nav-icon fas fa-user-plus"></i>
                 <p>Thêm mới nhân viên</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/employee_list" class="nav-link {% if '/employee_list' in request.path %}active{% endif %}">
+              <a href="{% url 'employee_list' %}" class="nav-link {% if '/employee_list' in request.path %}active{% endif %}">
                 <i class="nav-icon fas fa-list"></i>
                 <p>Danh sách nhân viên</p>
               </a>
@@ -83,13 +83,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/payroll/calculate/" class="nav-link {% if '/payroll/calculate' in request.path %}active{% endif %}">
+              <a href="{% url 'calculate_payroll' %}" class="nav-link {% if '/payroll/calculate' in request.path %}active{% endif %}">
                 <i class="nav-icon fas fa-calculator"></i>
                 <p>Tính lương</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/payroll/manage/" class="nav-link {% if '/payroll/manage' in request.path %}active{% endif %}">
+              <a href="{% url 'manage_payroll' %}" class="nav-link {% if '/payroll/manage' in request.path %}active{% endif %}">
                 <i class="nav-icon fas fa-file-invoice-dollar"></i>
                 <p>Bảng lương</p>
               </a>
@@ -108,13 +108,13 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="/attendance/add/" class="nav-link {% if '/attendance/add' in request.path %}active{% endif %}">
+              <a href="{% url 'add_attendance' %}" class="nav-link {% if '/attendance/add' in request.path %}active{% endif %}">
                 <i class="nav-icon fas fa-calendar-plus"></i>
                 <p>Thêm bảng chấm công</p>
               </a>
             </li>
             <li class="nav-item">
-              <a href="/attendance/manage/" class="nav-link {% if '/attendance/manage' in request.path %}active{% endif %}">
+              <a href="{% url 'manage_attendance' %}" class="nav-link {% if '/attendance/manage' in request.path %}active{% endif %}">
                 <i class="nav-icon fas fa-calendar-alt"></i>
                 <p>Quản lý bảng chấm công</p>
               </a>

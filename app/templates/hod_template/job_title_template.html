@@ -17,7 +17,7 @@ Chức vụ
             </div>
           </div>
           <!-- /.card-header -->
-          <form role="form" action="/add_job_title_save" method="post" id="jobTitleForm">
+          <form role="form" action="{% url 'add_job_title_save' %}" method="post" id="jobTitleForm">
               {% csrf_token %}
               <input type="hidden" id="job_title_id" name="id_job_title" value="">
             <div class="card-body" style="display: block;">
@@ -154,14 +154,14 @@ Chức vụ
       deleteButton.textContent = 'Xóa chức vụ';
       deleteButton.onclick = function () {
         if (confirm("Bạn có chắc chắn muốn xóa chức vụ này không?")) {
-          window.location.href = `/delete_job_title/${id}/`;
+          window.location.href = `/management/job-titles/${id}/delete/`;
         }
       };
       document.querySelector('.card-footer').prepend(deleteButton);
     } else {
       document.getElementById('delete_button').onclick = function () {
         if (confirm("Bạn có chắc chắn muốn xóa chức vụ này không?")) {
-          window.location.href = `/delete_job_title/${id}/`;
+          window.location.href = `/management/job-titles/${id}/delete/`;
         }
       };
     }

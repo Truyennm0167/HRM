@@ -143,45 +143,76 @@ urlpatterns = [
     
     path('employees/', management_views.employee_list, name='employee_list'),
     path('employees/add/', management_views.add_employee, name='add_employee'),
+    path('employees/add/save/', management_views.add_employee_save, name='add_employee_save'),  # Backward compatibility
     path('employees/<int:employee_id>/', management_views.employee_detail_view, name='employee_detail'),
     path('employees/<int:employee_id>/edit/', management_views.update_employee, name='update_employee'),
+    path('employees/<int:employee_id>/edit/save/', management_views.update_employee_save, name='update_employee_save'),  # Backward compatibility
+    path('employees/<int:employee_id>/delete/', management_views.delete_employee, name='delete_employee'),
     
     path('departments/', management_views.department_page, name='department_page'),
+    path('departments/add/', management_views.add_department_save, name='add_department_save'),  # Backward compatibility
+    path('departments/<int:department_id>/delete/', management_views.delete_department, name='delete_department'),  # Backward compatibility
     path('job-titles/', management_views.job_title, name='job_title'),
+    path('job-titles/add/', management_views.add_job_title_save, name='add_job_title_save'),  # Backward compatibility
+    path('job-titles/<int:job_title_id>/delete/', management_views.delete_job_title, name='delete_job_title'),  # Backward compatibility
     path('org-chart/', management_views.org_chart, name='org_chart'),
     
     path('attendance/add/', management_views.add_attendance, name='add_attendance'),
+    path('attendance/add/save/', management_views.add_attendance_save, name='add_attendance_save'),  # Backward compatibility
+    path('attendance/check-date/', management_views.check_attendance_date, name='check_attendance_date'),
     path('attendance/manage/', management_views.manage_attendance, name='manage_attendance'),
+    path('attendance/export/', management_views.export_attendance, name='export_attendance'),  # Backward compatibility
     path('attendance/<int:attendance_id>/edit/', management_views.edit_attendance, name='edit_attendance'),
+    path('attendance/<int:attendance_id>/delete/', management_views.delete_attendance, name='delete_attendance'),
     
     path('payroll/calculate/', management_views.calculate_payroll, name='calculate_payroll'),
+    path('payroll/save/', management_views.save_payroll, name='save_payroll'),
     path('payroll/manage/', management_views.manage_payroll, name='manage_payroll'),
+    path('payroll/export/', management_views.export_payroll, name='export_payroll'),
     path('payroll/<int:payroll_id>/edit/', management_views.edit_payroll, name='edit_payroll'),
     path('payroll/<int:payroll_id>/', management_views.view_payroll, name='view_payroll'),
     
     path('leave/types/', management_views.manage_leave_types, name='manage_leave_types'),
+    path('leave/types/save/', management_views.add_leave_type_save, name='add_leave_type_save'),
+    path('leave/types/<int:leave_type_id>/delete/', management_views.delete_leave_type, name='delete_leave_type'),
     path('leave/requests/', management_views.manage_leave_requests, name='manage_leave_requests'),
     path('leave/requests/', management_views.manage_leave_requests, name='request_leave'),  # Backward compatibility
     path('leave/history/', management_views.manage_leave_requests, name='leave_history'),  # Backward compatibility
+    path('leave/requests/<int:request_id>/', management_views.view_leave_request, name='view_leave_request'),
     path('leave/requests/<int:request_id>/approve/', management_views.approve_leave_request, name='approve_leave_request'),
+    path('leave/requests/<int:request_id>/reject/', management_views.reject_leave_request, name='reject_leave_request'),
     
     path('expense/categories/', management_views.manage_expense_categories, name='manage_expense_categories'),
+    path('expense/categories/add/', management_views.add_expense_category_save, name='add_expense_category_save'),
+    path('expense/categories/<int:category_id>/edit/', management_views.edit_expense_category_save, name='edit_expense_category_save'),
+    path('expense/categories/<int:category_id>/delete/', management_views.delete_expense_category, name='delete_expense_category'),
     path('expense/requests/', management_views.manage_expenses, name='manage_expenses'),
     path('expense/requests/', management_views.manage_expenses, name='create_expense'),  # Backward compatibility
     path('expense/requests/', management_views.manage_expenses, name='expense_history'),  # Backward compatibility
+    path('expense/requests/<int:expense_id>/', management_views.view_expense, name='view_expense'),
     path('expense/requests/<int:expense_id>/approve/', management_views.approve_expense, name='approve_expense'),
+    path('expense/requests/<int:expense_id>/reject/', management_views.reject_expense, name='reject_expense'),
+    path('expense/requests/<int:expense_id>/mark-paid/', management_views.mark_expense_as_paid, name='mark_expense_as_paid'),
     
     path('recruitment/jobs/', management_views.list_jobs_admin, name='list_jobs_admin'),
     path('recruitment/jobs/create/', management_views.create_job, name='create_job'),
+    path('recruitment/jobs/<int:job_id>/', management_views.job_detail_admin, name='job_detail_admin'),  # Backward compatibility
+    path('recruitment/jobs/<int:job_id>/edit/', management_views.edit_job, name='edit_job'),
     path('recruitment/applications/', management_views.applications_kanban, name='applications_kanban'),
+    path('recruitment/applications/<int:application_id>/', management_views.application_detail, name='application_detail'),
     
     path('salary-rules/components/', management_views.salary_components, name='salary_components'),
+    path('salary-rules/components/create/', management_views.create_salary_component, name='create_salary_component'),  # Backward compatibility
+    path('salary-rules/components/<int:component_id>/edit/', management_views.edit_salary_component, name='edit_salary_component'),
     path('salary-rules/bulk-assign/', management_views.bulk_assign_salary_rules, name='bulk_assign_salary_rules'),
     path('salary-rules/templates/', management_views.salary_rule_templates, name='salary_rule_templates'),
+    path('salary-rules/templates/create/', management_views.create_salary_rule_template, name='create_salary_rule_template'),
     path('salary-rules/history/', management_views.salary_calculation_history, name='salary_calculation_history'),
     path('salary-rules/employee/<int:employee_id>/', management_views.employee_salary_rules, name='employee_salary_rules'),
     
     path('appraisal/periods/', management_views.appraisal_periods, name='appraisal_periods'),
+    path('appraisal/periods/create/', management_views.create_appraisal_period, name='create_appraisal_period'),  # Backward compatibility
+    path('appraisal/periods/<int:period_id>/', management_views.appraisal_period_detail, name='appraisal_period_detail'),
     path('appraisal/manager/', management_views.manager_appraisals, name='manager_appraisals'),
     path('appraisal/hr/', management_views.hr_appraisals, name='hr_appraisals'),
     path('appraisal/', management_views.manager_appraisals, name='my_appraisals'),  # Backward compatibility

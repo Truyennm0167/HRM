@@ -15,7 +15,7 @@ Phòng ban
           </button>
         </div>
       </div>
-      <form role="form" action="/add_department_save/" method="post" id="departmentForm">
+      <form role="form" action="{% url 'add_department_save' %}" method="post" id="departmentForm">
         {% csrf_token %}
         <input type="hidden" name="department_id_hidden" id="department_id_hidden">
         <div class="card-body" style="display: block;">
@@ -156,7 +156,7 @@ Phòng ban
       deleteBtn.innerText = 'Xóa phòng ban';
       deleteBtn.onclick = () => {
         if (confirm('Bạn có chắc chắn muốn xóa phòng ban này không?')) {
-          window.location.href = `/delete_department/${id}/`;
+          window.location.href = `/management/departments/${id}/delete/`;
         }
       };
       document.querySelector('.card-footer').prepend(deleteBtn);

@@ -442,6 +442,7 @@ def employee_list(request):
         employees = employees.filter(status=status)
 
     # Phân trang
+    employees = employees.order_by('employee_code')  # Add ordering to avoid warning
     paginator = Paginator(employees, 10)  # Hiển thị 10 nhân viên mỗi trang
     page = request.GET.get('page')
     try:
@@ -2130,6 +2131,7 @@ def list_jobs_admin(request):
     
     # Pagination
     from django.core.paginator import Paginator
+    jobs = jobs.order_by('-created_at')  # Fix UnorderedObjectListWarning
     paginator = Paginator(jobs, 15)
     page_number = request.GET.get('page')
     jobs = paginator.get_page(page_number)

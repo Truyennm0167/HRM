@@ -332,17 +332,17 @@ Quản Lý Chi Phí
 
 <script>
 function approveExpense(expenseId) {
-    document.getElementById('approveForm').action = `/expense/approve/${expenseId}/`;
+    document.getElementById('approveForm').action = `/management/expense/requests/${expenseId}/approve/`;
     $('#approveModal').modal('show');
 }
 
 function rejectExpense(expenseId) {
-    document.getElementById('rejectForm').action = `/expense/reject/${expenseId}/`;
+    document.getElementById('rejectForm').action = `/management/expense/requests/${expenseId}/reject/`;
     $('#rejectModal').modal('show');
 }
 
 function markAsPaid(expenseId) {
-    document.getElementById('paidForm').action = `/expense/mark-paid/${expenseId}/`;
+    document.getElementById('paidForm').action = `/management/expense/requests/${expenseId}/mark-paid/`;
     $('#paidModal').modal('show');
 }
 </script>

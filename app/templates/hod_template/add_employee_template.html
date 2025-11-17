@@ -7,7 +7,7 @@ Thêm mới nhân viên
 <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-        <form role="form" action="/add_employee_save" method="post" enctype="multipart/form-data">
+        <form role="form" action="{% url 'management_add_employee_save' %}" method="post" enctype="multipart/form-data">
           {% csrf_token %}
           <div class="row">
             <!-- LEFT COLUMN -->

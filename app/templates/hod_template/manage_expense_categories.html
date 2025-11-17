@@ -144,7 +144,7 @@ Quản Lý Danh Mục Chi Phí
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form method="post" action="{% url 'edit_expense_category_save' %}">
+            <form method="post" id="editCategoryForm">
                 {% csrf_token %}
                 <input type="hidden" name="category_id" id="edit_category_id">
                 <div class="modal-body">
@@ -208,12 +208,14 @@ function editCategory(id, name, code, description, isActive) {
     document.getElementById('edit_code').value = code;
     document.getElementById('edit_description').value = description;
     document.getElementById('edit_is_active').checked = isActive;
+    // Set form action dynamically
+    document.getElementById('editCategoryForm').action = `/management/expense/categories/${id}/edit/`;
     $('#editModal').modal('show');
 }
 
 function deleteCategory(id, name) {
     document.getElementById('delete_category_name').textContent = name;
-    document.getElementById('deleteForm').action = `/expense/category/delete/${id}/`;
+    document.getElementById('deleteForm').action = `/management/expense/categories/${id}/delete/`;
     $('#deleteModal').modal('show');
 }
 </script>
