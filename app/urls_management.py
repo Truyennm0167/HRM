@@ -162,7 +162,7 @@ urlpatterns = [
     path('leave/types/', management_views.manage_leave_types, name='manage_leave_types'),
     path('leave/requests/', management_views.manage_leave_requests, name='manage_leave_requests'),
     path('leave/requests/', management_views.manage_leave_requests, name='request_leave'),  # Backward compatibility
-    path('leave/history/', management_views.manage_leave_requests, name='leave_history'),  # Backward compatibility - redirects to leave requests
+    path('leave/history/', management_views.manage_leave_requests, name='leave_history'),  # Backward compatibility
     path('leave/requests/<int:request_id>/approve/', management_views.approve_leave_request, name='approve_leave_request'),
     
     path('expense/categories/', management_views.manage_expense_categories, name='manage_expense_categories'),
@@ -172,12 +172,17 @@ urlpatterns = [
     path('expense/requests/<int:expense_id>/approve/', management_views.approve_expense, name='approve_expense'),
     
     path('recruitment/jobs/', management_views.list_jobs_admin, name='list_jobs_admin'),
+    path('recruitment/jobs/create/', management_views.create_job, name='create_job'),
     path('recruitment/applications/', management_views.applications_kanban, name='applications_kanban'),
     
     path('salary-rules/components/', management_views.salary_components, name='salary_components'),
+    path('salary-rules/bulk-assign/', management_views.bulk_assign_salary_rules, name='bulk_assign_salary_rules'),
+    path('salary-rules/templates/', management_views.salary_rule_templates, name='salary_rule_templates'),
+    path('salary-rules/history/', management_views.salary_calculation_history, name='salary_calculation_history'),
     path('salary-rules/employee/<int:employee_id>/', management_views.employee_salary_rules, name='employee_salary_rules'),
     
     path('appraisal/periods/', management_views.appraisal_periods, name='appraisal_periods'),
     path('appraisal/manager/', management_views.manager_appraisals, name='manager_appraisals'),
     path('appraisal/hr/', management_views.hr_appraisals, name='hr_appraisals'),
+    path('appraisal/', management_views.manager_appraisals, name='my_appraisals'),  # Backward compatibility
 ]
