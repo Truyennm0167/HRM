@@ -183,13 +183,13 @@
                                         <strong>{{ expense.employee.full_name }}</strong>
                                         <br>
                                         <small class="text-muted">
-                                            {{ expense.expense_date|date:"d/m/Y" }} - 
+                                            {{ expense.date|date:"d/m/Y" }} - 
                                             <strong class="text-primary">{{ expense.amount|floatformat:0 }}đ</strong>
                                         </small>
                                     </td>
                                     <td>
                                         <span class="badge badge-secondary">
-                                            {{ expense.get_expense_type_display }}
+                                            {{ expense.category.name }}
                                         </span>
                                     </td>
                                     <td class="text-right">

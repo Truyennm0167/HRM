@@ -8847,3 +8847,1510 @@ INFO 2025-11-17 13:09:44,542 autoreload D:\Study\CT201\Project\hrm\app\portal_vi
 INFO 2025-11-17 13:09:45,579 autoreload Watching for file changes with StatReloader
 INFO 2025-11-17 13:12:45,671 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
 INFO 2025-11-17 13:12:46,930 autoreload Watching for file changes with StatReloader
+INFO 2025-11-17 16:24:38,255 autoreload Watching for file changes with StatReloader
+INFO 2025-11-17 16:24:43,818 basehttp "GET /admin HTTP/1.1" 301 0
+INFO 2025-11-17 16:24:43,882 basehttp "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-11-17 16:24:44,370 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4181
+INFO 2025-11-17 16:24:44,951 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2929
+INFO 2025-11-17 16:24:44,952 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2694
+INFO 2025-11-17 16:24:44,952 basehttp "GET /static/admin/css/login.css HTTP/1.1" 200 958
+INFO 2025-11-17 16:24:44,960 basehttp "GET /static/admin/css/base.css HTTP/1.1" 200 21310
+INFO 2025-11-17 16:24:44,960 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 200 18559
+INFO 2025-11-17 16:24:45,031 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 200 1943
+INFO 2025-11-17 16:24:45,032 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+WARNING 2025-11-17 16:24:45,146 log Not Found: /favicon.ico
+WARNING 2025-11-17 16:24:45,147 basehttp "GET /favicon.ico HTTP/1.1" 404 6182
+INFO 2025-11-17 16:28:12,519 basehttp "POST /admin/login/?next=/admin/ HTTP/1.1" 200 4342
+WARNING 2025-11-17 16:28:19,171 log Not Found: /
+WARNING 2025-11-17 16:28:19,173 basehttp "GET / HTTP/1.1" 404 6131
+INFO 2025-11-17 16:28:33,036 basehttp "GET /portal HTTP/1.1" 301 0
+INFO 2025-11-17 16:28:33,052 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-11-17 16:28:33,067 basehttp "GET /login/?next=/portal/ HTTP/1.1" 200 2905
+INFO 2025-11-17 16:28:46,945 basehttp "POST /login/?next=/portal/ HTTP/1.1" 200 3105
+INFO 2025-11-17 16:37:28,837 autoreload Watching for file changes with StatReloader
+INFO 2025-11-17 16:37:32,024 basehttp "GET /login/?next=/portal/ HTTP/1.1" 200 2905
+INFO 2025-11-17 16:37:34,968 basehttp "POST /login/?next=/portal/ HTTP/1.1" 302 0
+INFO 2025-11-17 16:37:35,027 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-11-17 16:37:35,052 basehttp "GET /login/ HTTP/1.1" 200 3049
+INFO 2025-11-17 16:37:39,763 basehttp "GET /admin HTTP/1.1" 301 0
+INFO 2025-11-17 16:37:39,926 basehttp "GET /admin/ HTTP/1.1" 200 15208
+INFO 2025-11-17 16:37:40,116 basehttp "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+INFO 2025-11-17 16:37:40,145 basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+INFO 2025-11-17 16:37:40,147 basehttp "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+INFO 2025-11-17 16:37:44,154 basehttp "GET /admin/auth/user/ HTTP/1.1" 200 28199
+INFO 2025-11-17 16:37:44,239 basehttp "GET /static/admin/css/changelists.css HTTP/1.1" 200 6566
+INFO 2025-11-17 16:37:44,264 basehttp "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+INFO 2025-11-17 16:37:44,271 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-17 16:37:44,293 basehttp "GET /static/admin/js/core.js HTTP/1.1" 200 5682
+INFO 2025-11-17 16:37:44,295 basehttp "GET /static/admin/js/actions.js HTTP/1.1" 200 7872
+INFO 2025-11-17 16:37:44,296 basehttp "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+INFO 2025-11-17 16:37:44,299 basehttp "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+INFO 2025-11-17 16:37:44,303 basehttp "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 8943
+INFO 2025-11-17 16:37:44,315 basehttp "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+INFO 2025-11-17 16:37:44,319 basehttp "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+INFO 2025-11-17 16:37:44,333 basehttp "GET /static/admin/img/icon-no.svg HTTP/1.1" 200 560
+INFO 2025-11-17 16:37:44,418 basehttp "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 292458
+INFO 2025-11-17 16:37:44,428 basehttp "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 232381
+INFO 2025-11-17 16:37:44,449 basehttp "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+INFO 2025-11-17 16:37:44,463 basehttp "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+INFO 2025-11-17 16:37:44,463 basehttp "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+WARNING 2025-11-17 16:38:06,175 log Not Found: /
+WARNING 2025-11-17 16:38:06,176 basehttp "GET / HTTP/1.1" 404 6131
+INFO 2025-11-17 16:38:13,046 basehttp "GET /portal HTTP/1.1" 301 0
+INFO 2025-11-17 16:38:13,064 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-11-17 16:38:13,077 basehttp "GET /login/?next=/portal/ HTTP/1.1" 200 2905
+INFO 2025-11-17 16:38:13,161 basehttp "GET /static/plugins/icheck-bootstrap/icheck-bootstrap.min.css HTTP/1.1" 200 12505
+INFO 2025-11-17 16:38:13,163 basehttp "GET /static/plugins/fontawesome-free/css/all.min.css HTTP/1.1" 200 56842
+INFO 2025-11-17 16:38:13,193 basehttp "GET /static/dist/js/adminlte.min.js HTTP/1.1" 200 24244
+INFO 2025-11-17 16:38:13,198 basehttp "GET /static/dist/css/adminlte.min.css HTTP/1.1" 200 656504
+INFO 2025-11-17 16:38:13,222 basehttp "GET /static/plugins/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 78635
+INFO 2025-11-17 16:38:13,234 basehttp "GET /static/plugins/jquery/jquery.min.js HTTP/1.1" 200 88145
+INFO 2025-11-17 16:38:13,422 basehttp "GET /static/plugins/fontawesome-free/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 75728
+INFO 2025-11-17 16:38:16,996 basehttp "POST /login/?next=/portal/ HTTP/1.1" 302 0
+INFO 2025-11-17 16:38:17,060 basehttp "GET /portal/ HTTP/1.1" 200 18011
+INFO 2025-11-17 16:38:21,240 basehttp "GET /portal/leaves/ HTTP/1.1" 200 15219
+INFO 2025-11-17 16:38:29,022 basehttp "GET /portal/payroll/ HTTP/1.1" 200 17766
+INFO 2025-11-17 16:38:32,609 basehttp "GET /portal/payroll/133/ HTTP/1.1" 200 14733
+INFO 2025-11-17 16:38:34,941 basehttp "GET /portal/payroll/ HTTP/1.1" 200 17766
+INFO 2025-11-17 16:38:37,160 basehttp "GET /portal/attendance/ HTTP/1.1" 200 31604
+INFO 2025-11-17 16:38:41,940 basehttp "GET /portal/expenses/ HTTP/1.1" 200 19601
+INFO 2025-11-17 16:38:44,401 basehttp "GET /portal/profile/ HTTP/1.1" 200 20180
+INFO 2025-11-17 16:38:44,477 basehttp "GET /static/dist/img/avatar.png HTTP/1.1" 200 8543
+ERROR 2025-11-17 16:38:46,361 log Internal Server Error: /portal/profile/edit/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 593, in profile_edit
+    return render(request, 'portal/profile/edit.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: portal/profile/edit.html
+ERROR 2025-11-17 16:38:46,366 basehttp "GET /portal/profile/edit/ HTTP/1.1" 500 96014
+ERROR 2025-11-17 16:38:54,433 log Internal Server Error: /portal/profile/password/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 640, in password_change
+    return render(request, 'portal/profile/password_change.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: portal/profile/password_change.html
+ERROR 2025-11-17 16:38:54,435 basehttp "GET /portal/profile/password/ HTTP/1.1" 500 96340
+INFO 2025-11-17 16:39:01,081 basehttp "GET /portal/expenses/ HTTP/1.1" 200 19601
+INFO 2025-11-17 16:39:04,452 basehttp "GET /portal/expenses/97/ HTTP/1.1" 200 15903
+INFO 2025-11-17 16:39:08,271 basehttp "GET /portal/profile/ HTTP/1.1" 200 20180
+INFO 2025-11-17 16:39:51,344 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-17 16:39:51,356 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-17 16:39:57,509 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-17 16:39:57,565 basehttp "GET /portal/ HTTP/1.1" 200 19931
+INFO 2025-11-17 16:40:00,084 basehttp "GET /portal/approvals/ HTTP/1.1" 200 23302
+ERROR 2025-11-17 16:40:02,585 log Internal Server Error: /portal/team/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 36, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 711, in team_leaves
+    return render(request, 'portal/approvals/team_leaves.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'portal_approvals_dashboard' not found. 'portal_approvals_dashboard' is not a valid view function or pattern name.
+ERROR 2025-11-17 16:40:02,594 basehttp "GET /portal/team/leaves/ HTTP/1.1" 500 179855
+WARNING 2025-11-17 16:40:17,140 log Method Not Allowed: /portal/team/leaves/87/approve/
+WARNING 2025-11-17 16:40:17,142 basehttp "GET /portal/team/leaves/87/approve/ HTTP/1.1" 405 51
+WARNING 2025-11-17 16:40:23,360 log Method Not Allowed: /portal/team/leaves/75/approve/
+WARNING 2025-11-17 16:40:23,361 basehttp "GET /portal/team/leaves/75/approve/ HTTP/1.1" 405 51
+ERROR 2025-11-17 16:40:25,605 log Internal Server Error: /portal/team/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 36, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 711, in team_leaves
+    return render(request, 'portal/approvals/team_leaves.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'portal_approvals_dashboard' not found. 'portal_approvals_dashboard' is not a valid view function or pattern name.
+ERROR 2025-11-17 16:40:25,611 basehttp "GET /portal/team/leaves/ HTTP/1.1" 500 179855
+INFO 2025-11-17 16:41:07,704 management_views Admin home accessed by dungpd
+ERROR 2025-11-17 16:41:08,225 log Internal Server Error: /management/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 104, in admin_home
+    return render(request, "hod_template/home_content.html", context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 208, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 177, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'leave_history' not found. 'leave_history' is not a valid view function or pattern name.
+ERROR 2025-11-17 16:41:08,232 basehttp "GET /management/ HTTP/1.1" 500 232556
+INFO 2025-11-17 16:41:11,600 basehttp "GET /portal/profile/ HTTP/1.1" 200 21101
+ERROR 2025-11-17 16:41:13,243 log Internal Server Error: /portal/profile/edit/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 593, in profile_edit
+    return render(request, 'portal/profile/edit.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: portal/profile/edit.html
+ERROR 2025-11-17 16:41:13,246 basehttp "GET /portal/profile/edit/ HTTP/1.1" 500 96023
+ERROR 2025-11-17 16:41:15,178 log Internal Server Error: /portal/profile/password/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 640, in password_change
+    return render(request, 'portal/profile/password_change.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: portal/profile/password_change.html
+ERROR 2025-11-17 16:41:15,181 basehttp "GET /portal/profile/password/ HTTP/1.1" 500 96349
+INFO 2025-11-17 16:42:41,422 basehttp "GET /portal/expenses/ HTTP/1.1" 200 15942
+INFO 2025-11-17 16:42:42,213 basehttp "GET /portal/attendance/ HTTP/1.1" 200 32403
+INFO 2025-11-17 16:42:43,029 basehttp "GET /portal/payroll/ HTTP/1.1" 200 18288
+INFO 2025-11-17 16:42:44,492 basehttp "GET /portal/attendance/ HTTP/1.1" 200 32403
+INFO 2025-11-17 16:42:48,158 basehttp "GET /portal/payroll/ HTTP/1.1" 200 18288
+INFO 2025-11-17 16:42:49,206 basehttp "GET /portal/leaves/ HTTP/1.1" 200 16019
+INFO 2025-11-17 16:42:51,282 basehttp "GET /portal/ HTTP/1.1" 200 19931
+ERROR 2025-11-17 16:43:01,757 log Internal Server Error: /portal/team/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 36, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 711, in team_leaves
+    return render(request, 'portal/approvals/team_leaves.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'portal_approvals_dashboard' not found. 'portal_approvals_dashboard' is not a valid view function or pattern name.
+ERROR 2025-11-17 16:43:01,762 basehttp "GET /portal/team/leaves/ HTTP/1.1" 500 179845
+INFO 2025-11-17 16:43:08,903 basehttp "GET /portal/approvals/ HTTP/1.1" 200 23302
+INFO 2025-11-17 16:45:58,559 basehttp "GET /portal/approvals/ HTTP/1.1" 200 23302
+INFO 2025-11-17 16:46:00,744 basehttp "GET /portal/profile/ HTTP/1.1" 200 21101
+INFO 2025-11-17 16:46:01,924 basehttp "GET /portal/profile/edit/ HTTP/1.1" 200 18123
+INFO 2025-11-17 16:46:22,854 basehttp "POST /portal/profile/edit/ HTTP/1.1" 200 19122
+WARNING 2025-11-17 16:46:22,926 log Not Found: /media/2bd3e2f0-4869-4d01-a5f8-5272b54acc2c.jpg
+WARNING 2025-11-17 16:46:22,927 basehttp "GET /media/2bd3e2f0-4869-4d01-a5f8-5272b54acc2c.jpg HTTP/1.1" 404 6383
+INFO 2025-11-17 16:46:37,074 basehttp "POST /portal/profile/edit/ HTTP/1.1" 302 0
+INFO 2025-11-17 16:46:37,108 basehttp "GET /portal/profile/ HTTP/1.1" 200 21610
+INFO 2025-11-17 16:46:37,183 basehttp "GET /media/avatars/426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_HTkvHCf.jpg HTTP/1.1" 200 411816
+INFO 2025-11-17 16:46:39,777 basehttp "GET /portal/ HTTP/1.1" 200 19931
+INFO 2025-11-17 16:46:41,306 basehttp "GET /portal/profile/ HTTP/1.1" 200 21129
+INFO 2025-11-17 16:46:41,365 basehttp "GET /media/avatars/426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_HTkvHCf.jpg HTTP/1.1" 304 0
+INFO 2025-11-17 16:46:44,272 basehttp "GET /portal/profile/ HTTP/1.1" 200 21129
+INFO 2025-11-17 16:46:44,324 basehttp "GET /media/avatars/426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_HTkvHCf.jpg HTTP/1.1" 304 0
+INFO 2025-11-17 16:46:45,774 basehttp "GET /portal/profile/password/ HTTP/1.1" 200 21035
+INFO 2025-11-17 16:46:53,455 basehttp "GET /portal/profile/ HTTP/1.1" 200 21129
+INFO 2025-11-17 16:46:53,509 basehttp "GET /media/avatars/426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_HTkvHCf.jpg HTTP/1.1" 304 0
+INFO 2025-11-17 16:46:56,649 basehttp "GET /portal/ HTTP/1.1" 200 19931
+INFO 2025-11-17 16:46:58,074 basehttp "GET /portal/leaves/ HTTP/1.1" 200 16019
+INFO 2025-11-17 16:46:58,897 basehttp "GET /portal/payroll/ HTTP/1.1" 200 18288
+INFO 2025-11-17 16:46:59,851 basehttp "GET /portal/attendance/ HTTP/1.1" 200 32403
+INFO 2025-11-17 16:47:00,380 basehttp "GET /portal/approvals/ HTTP/1.1" 200 23302
+WARNING 2025-11-17 16:47:02,743 log Method Not Allowed: /portal/team/leaves/87/approve/
+WARNING 2025-11-17 16:47:02,744 basehttp "GET /portal/team/leaves/87/approve/ HTTP/1.1" 405 51
+INFO 2025-11-17 16:47:06,045 basehttp "GET /portal/ HTTP/1.1" 200 19931
+ERROR 2025-11-17 16:47:09,682 log Internal Server Error: /portal/leaves/create/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 238, in leave_create
+    return render(request, 'portal/leaves/create.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'portal_leaves_list' not found. 'portal_leaves_list' is not a valid view function or pattern name.
+ERROR 2025-11-17 16:47:09,688 basehttp "GET /portal/leaves/create/ HTTP/1.1" 500 185298
+INFO 2025-11-17 16:47:13,279 basehttp "GET /portal/expenses/create/ HTTP/1.1" 200 16412
+INFO 2025-11-17 16:47:15,606 basehttp "GET /portal/leaves/ HTTP/1.1" 200 16019
+ERROR 2025-11-17 16:47:16,587 log Internal Server Error: /portal/leaves/create/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 238, in leave_create
+    return render(request, 'portal/leaves/create.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'portal_leaves_list' not found. 'portal_leaves_list' is not a valid view function or pattern name.
+ERROR 2025-11-17 16:47:16,592 basehttp "GET /portal/leaves/create/ HTTP/1.1" 500 185305
+INFO 2025-11-17 16:47:19,331 basehttp "GET /portal/ HTTP/1.1" 200 19931
+INFO 2025-11-17 16:47:20,198 basehttp "GET /portal/payroll/ HTTP/1.1" 200 18288
+INFO 2025-11-17 16:47:21,649 basehttp "GET /portal/payroll/117/ HTTP/1.1" 200 15657
+INFO 2025-11-17 16:47:28,152 basehttp "GET /portal/payroll/ HTTP/1.1" 200 18288
+INFO 2025-11-17 16:47:34,816 basehttp "GET /portal/payroll/117/ HTTP/1.1" 200 15657
+INFO 2025-11-17 16:47:37,726 basehttp "GET /portal/payroll/ HTTP/1.1" 200 18288
+INFO 2025-11-17 16:47:43,077 basehttp "GET /portal/payroll/117/ HTTP/1.1" 200 15657
+INFO 2025-11-17 16:47:45,221 basehttp "GET /portal/payroll/ HTTP/1.1" 200 18288
+INFO 2025-11-17 16:47:46,372 basehttp "GET /portal/payroll/155/ HTTP/1.1" 200 15655
+INFO 2025-11-17 16:47:47,790 basehttp "GET /portal/payroll/ HTTP/1.1" 200 18288
+INFO 2025-11-17 16:47:51,299 basehttp "GET /portal/attendance/ HTTP/1.1" 200 32403
+INFO 2025-11-17 16:48:01,251 basehttp "GET /portal/attendance/? HTTP/1.1" 200 32403
+INFO 2025-11-17 16:48:02,225 basehttp "GET /portal/attendance/? HTTP/1.1" 200 32403
+INFO 2025-11-17 16:48:06,249 basehttp "GET /portal/expenses/ HTTP/1.1" 200 15942
+INFO 2025-11-17 16:48:07,517 basehttp "GET /portal/expenses/create/ HTTP/1.1" 200 16412
+INFO 2025-11-17 16:48:49,402 basehttp "POST /portal/expenses/create/ HTTP/1.1" 200 17313
+INFO 2025-11-17 16:49:24,355 basehttp "GET /portal/payroll/ HTTP/1.1" 200 18288
+INFO 2025-11-17 16:49:26,545 basehttp "GET /portal/ HTTP/1.1" 200 19931
+INFO 2025-11-17 16:49:27,191 basehttp "GET /portal/leaves/ HTTP/1.1" 200 16019
+ERROR 2025-11-17 16:49:28,756 log Internal Server Error: /portal/leaves/create/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 238, in leave_create
+    return render(request, 'portal/leaves/create.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'portal_leaves_list' not found. 'portal_leaves_list' is not a valid view function or pattern name.
+ERROR 2025-11-17 16:49:28,761 basehttp "GET /portal/leaves/create/ HTTP/1.1" 500 185305
+INFO 2025-11-17 16:50:17,155 basehttp "GET /portal/ HTTP/1.1" 200 19931
+ERROR 2025-11-17 16:50:18,330 log Internal Server Error: /portal/leaves/create/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 238, in leave_create
+    return render(request, 'portal/leaves/create.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'portal_leaves_list' not found. 'portal_leaves_list' is not a valid view function or pattern name.
+ERROR 2025-11-17 16:50:18,337 basehttp "GET /portal/leaves/create/ HTTP/1.1" 500 185298
+INFO 2025-11-17 16:50:19,754 basehttp "GET /portal/expenses/create/ HTTP/1.1" 200 16412
+INFO 2025-11-17 16:57:54,399 basehttp "GET /portal/expenses/ HTTP/1.1" 200 15942
+INFO 2025-11-17 16:57:58,588 basehttp "GET /portal/expenses/?status=pending HTTP/1.1" 200 15942
+INFO 2025-11-17 16:57:59,216 basehttp "GET /portal/expenses/?status=approved HTTP/1.1" 200 15942
+INFO 2025-11-17 16:57:59,757 basehttp "GET /portal/expenses/?status=rejected HTTP/1.1" 200 15942
+INFO 2025-11-17 16:58:00,745 basehttp "GET /portal/expenses/?status= HTTP/1.1" 200 15942
+INFO 2025-11-17 16:58:03,355 basehttp "GET /portal/attendance/ HTTP/1.1" 200 32403
+INFO 2025-11-17 16:58:10,092 basehttp "GET /portal/payroll/ HTTP/1.1" 200 18288
+INFO 2025-11-17 16:58:12,947 basehttp "GET /portal/leaves/ HTTP/1.1" 200 16019
+INFO 2025-11-17 16:58:13,876 basehttp "GET /portal/ HTTP/1.1" 200 19931
+INFO 2025-11-17 16:58:14,465 basehttp "GET /portal/attendance/ HTTP/1.1" 200 32403
+INFO 2025-11-17 16:58:19,880 basehttp "GET /portal/payroll/ HTTP/1.1" 200 18288
+INFO 2025-11-17 16:58:21,004 basehttp "GET /portal/leaves/ HTTP/1.1" 200 16019
+INFO 2025-11-17 16:58:21,538 basehttp "GET /portal/ HTTP/1.1" 200 19931
+INFO 2025-11-17 16:58:22,164 basehttp "GET /portal/expenses/ HTTP/1.1" 200 15942
+INFO 2025-11-17 16:58:25,044 basehttp "GET /portal/profile/ HTTP/1.1" 200 21129
+INFO 2025-11-17 16:58:25,104 basehttp "GET /media/avatars/426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_HTkvHCf.jpg HTTP/1.1" 304 0
+INFO 2025-11-17 16:58:32,272 management_views Admin home accessed by dungpd
+ERROR 2025-11-17 16:58:32,886 log Internal Server Error: /management/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 104, in admin_home
+    return render(request, "hod_template/home_content.html", context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 208, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 177, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'leave_history' not found. 'leave_history' is not a valid view function or pattern name.
+ERROR 2025-11-17 16:58:32,893 basehttp "GET /management/ HTTP/1.1" 500 232554
+INFO 2025-11-17 16:58:41,985 management_views Admin home accessed by dungpd
+ERROR 2025-11-17 16:58:42,582 log Internal Server Error: /management/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 104, in admin_home
+    return render(request, "hod_template/home_content.html", context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 208, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 177, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'leave_history' not found. 'leave_history' is not a valid view function or pattern name.
+ERROR 2025-11-17 16:58:42,587 basehttp "GET /management/ HTTP/1.1" 500 232554
+INFO 2025-11-17 16:58:58,062 basehttp "GET /portal/approvals/ HTTP/1.1" 200 23302
+WARNING 2025-11-17 16:58:59,997 log Method Not Allowed: /portal/team/leaves/87/approve/
+WARNING 2025-11-17 16:58:59,998 basehttp "GET /portal/team/leaves/87/approve/ HTTP/1.1" 405 51
+ERROR 2025-11-17 16:59:06,404 log Internal Server Error: /portal/team/expenses/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 36, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 820, in team_expenses
+    return render(request, 'portal/approvals/team_expenses.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'portal_approvals_dashboard' not found. 'portal_approvals_dashboard' is not a valid view function or pattern name.
+ERROR 2025-11-17 16:59:06,409 basehttp "GET /portal/team/expenses/ HTTP/1.1" 500 179638
+ERROR 2025-11-17 16:59:26,599 log Internal Server Error: /portal/team/expenses/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 36, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 820, in team_expenses
+    return render(request, 'portal/approvals/team_expenses.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'portal_approvals_dashboard' not found. 'portal_approvals_dashboard' is not a valid view function or pattern name.
+ERROR 2025-11-17 16:59:26,603 basehttp "GET /portal/team/expenses/ HTTP/1.1" 500 179638
+ERROR 2025-11-17 16:59:31,788 log Internal Server Error: /portal/team/expenses/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 36, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 820, in team_expenses
+    return render(request, 'portal/approvals/team_expenses.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'portal_approvals_dashboard' not found. 'portal_approvals_dashboard' is not a valid view function or pattern name.
+ERROR 2025-11-17 16:59:31,795 basehttp "GET /portal/team/expenses/ HTTP/1.1" 500 179638
+ERROR 2025-11-17 16:59:33,676 log Internal Server Error: /portal/team/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 36, in wrapper
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 711, in team_leaves
+    return render(request, 'portal/approvals/team_leaves.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'portal_approvals_dashboard' not found. 'portal_approvals_dashboard' is not a valid view function or pattern name.
+ERROR 2025-11-17 16:59:33,684 basehttp "GET /portal/team/leaves/ HTTP/1.1" 500 179855
+INFO 2025-11-17 17:03:03,021 autoreload D:\Study\CT201\Project\hrm\app\urls_management.py changed, reloading.
+INFO 2025-11-17 17:03:04,484 autoreload Watching for file changes with StatReloader
+INFO 2025-11-17 17:03:18,228 autoreload D:\Study\CT201\Project\hrm\app\urls_management.py changed, reloading.
+INFO 2025-11-17 17:03:19,178 autoreload Watching for file changes with StatReloader
+INFO 2025-11-17 17:03:44,698 autoreload D:\Study\CT201\Project\hrm\app\urls_portal.py changed, reloading.
+INFO 2025-11-17 17:03:45,896 autoreload Watching for file changes with StatReloader
+INFO 2025-11-17 17:04:14,498 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-17 17:04:15,679 autoreload Watching for file changes with StatReloader
+INFO 2025-11-17 17:07:58,054 basehttp "GET /portal/approvals/ HTTP/1.1" 200 23308
+INFO 2025-11-17 17:08:04,152 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 25464
+WARNING 2025-11-17 17:08:15,587 log Not Found: /portal/leaves/87/
+WARNING 2025-11-17 17:08:15,588 basehttp "GET /portal/leaves/87/ HTTP/1.1" 404 3772
+INFO 2025-11-17 17:08:20,082 basehttp "GET /portal/profile/ HTTP/1.1" 200 21129
+INFO 2025-11-17 17:08:20,144 basehttp "GET /media/avatars/426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_HTkvHCf.jpg HTTP/1.1" 304 0
+INFO 2025-11-17 17:08:21,724 basehttp "GET /portal/expenses/ HTTP/1.1" 200 15942
+INFO 2025-11-17 17:08:22,747 basehttp "GET /portal/attendance/ HTTP/1.1" 200 32403
+INFO 2025-11-17 17:08:23,414 basehttp "GET /portal/payroll/ HTTP/1.1" 200 18288
+INFO 2025-11-17 17:08:24,324 basehttp "GET /portal/leaves/ HTTP/1.1" 200 16019
+INFO 2025-11-17 17:08:25,115 basehttp "GET /portal/ HTTP/1.1" 200 19931
+WARNING 2025-11-17 17:08:28,310 log Not Found: /
+WARNING 2025-11-17 17:08:28,312 basehttp "GET / HTTP/1.1" 404 6131
+INFO 2025-11-17 17:08:33,074 basehttp "GET /portal/dashboard/ HTTP/1.1" 200 19931
+INFO 2025-11-17 17:08:34,890 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-17 17:08:34,905 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-17 17:08:54,096 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-17 17:08:54,165 basehttp "GET /portal/ HTTP/1.1" 200 18028
+INFO 2025-11-17 17:09:01,599 basehttp "GET /portal/leaves/ HTTP/1.1" 200 15220
+ERROR 2025-11-17 17:09:03,062 log Internal Server Error: /portal/leaves/create/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 238, in leave_create
+    return render(request, 'portal/leaves/create.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'portal_leaves_list' not found. 'portal_leaves_list' is not a valid view function or pattern name.
+ERROR 2025-11-17 17:09:03,072 basehttp "GET /portal/leaves/create/ HTTP/1.1" 500 184550
+ERROR 2025-11-17 17:09:12,878 log Internal Server Error: /portal/leaves/create/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 238, in leave_create
+    return render(request, 'portal/leaves/create.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'portal_leaves_list' not found. 'portal_leaves_list' is not a valid view function or pattern name.
+ERROR 2025-11-17 17:09:12,883 basehttp "GET /portal/leaves/create/ HTTP/1.1" 500 184550
+INFO 2025-11-17 17:09:14,586 basehttp "GET /portal/ HTTP/1.1" 200 18028
+ERROR 2025-11-17 17:09:15,751 log Internal Server Error: /portal/leaves/create/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 238, in leave_create
+    return render(request, 'portal/leaves/create.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'portal_leaves_list' not found. 'portal_leaves_list' is not a valid view function or pattern name.
+ERROR 2025-11-17 17:09:15,757 basehttp "GET /portal/leaves/create/ HTTP/1.1" 500 184543
+INFO 2025-11-17 17:09:17,385 basehttp "GET /portal/expenses/create/ HTTP/1.1" 200 16220
+INFO 2025-11-17 17:09:53,207 basehttp "POST /portal/expenses/create/ HTTP/1.1" 302 0
+INFO 2025-11-17 17:09:53,237 basehttp "GET /portal/expenses/ HTTP/1.1" 200 25285
+INFO 2025-11-17 17:09:55,885 basehttp "GET /portal/expenses/125/ HTTP/1.1" 200 16089
+INFO 2025-11-17 17:09:59,709 basehttp "GET /portal/expenses/ HTTP/1.1" 200 24754
+INFO 2025-11-17 17:10:11,041 basehttp "GET /portal/profile/ HTTP/1.1" 200 20141
+INFO 2025-11-17 17:10:15,005 basehttp "GET /portal/profile/edit/ HTTP/1.1" 200 17307
+INFO 2025-11-17 17:10:19,118 basehttp "GET /portal/profile/ HTTP/1.1" 200 20141
+INFO 2025-11-17 17:10:21,417 basehttp "GET /portal/expenses/ HTTP/1.1" 200 24754
+INFO 2025-11-17 17:10:25,686 basehttp "GET /portal/approvals/ HTTP/1.1" 302 0
+INFO 2025-11-17 17:10:25,720 basehttp "GET /portal/ HTTP/1.1" 200 18496
+INFO 2025-11-17 17:10:30,871 basehttp "GET /portal/expenses/ HTTP/1.1" 200 24754
+INFO 2025-11-17 17:10:32,994 basehttp "GET /portal/expenses/125/ HTTP/1.1" 200 16089
+INFO 2025-11-17 17:10:42,950 basehttp "GET /portal/ HTTP/1.1" 200 18028
+INFO 2025-11-17 17:10:45,952 basehttp "GET /portal/payroll/ HTTP/1.1" 200 17483
+INFO 2025-11-17 17:10:47,762 basehttp "GET /portal/attendance/ HTTP/1.1" 200 31604
+INFO 2025-11-17 17:10:50,829 basehttp "GET /portal/team/leaves/ HTTP/1.1" 302 0
+INFO 2025-11-17 17:10:50,868 basehttp "GET /portal/ HTTP/1.1" 200 18496
+INFO 2025-11-17 17:10:52,150 basehttp "GET /portal/ HTTP/1.1" 200 18028
+INFO 2025-11-17 17:11:06,421 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-17 17:11:06,431 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-17 17:11:10,541 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-17 17:11:10,576 basehttp "GET /portal/ HTTP/1.1" 200 19931
+INFO 2025-11-17 17:11:14,299 basehttp "GET /portal/approvals/ HTTP/1.1" 200 23308
+INFO 2025-11-17 17:11:16,585 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 19947
+INFO 2025-11-17 17:11:28,640 management_views Admin home accessed by dungpd
+ERROR 2025-11-17 17:11:29,214 log Internal Server Error: /management/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 104, in admin_home
+    return render(request, "hod_template/home_content.html", context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 208, in render
+    return template.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 177, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'create_job' not found. 'create_job' is not a valid view function or pattern name.
+ERROR 2025-11-17 17:11:29,221 basehttp "GET /management/ HTTP/1.1" 500 232595
+INFO 2025-11-17 17:11:38,822 basehttp "GET /portal/ HTTP/1.1" 200 19931
+INFO 2025-11-17 17:11:40,599 basehttp "GET /portal/leaves/ HTTP/1.1" 200 16019
+INFO 2025-11-17 17:11:41,629 basehttp "GET /portal/payroll/ HTTP/1.1" 200 18288
+INFO 2025-11-17 17:11:43,381 basehttp "GET /portal/payroll/117/ HTTP/1.1" 200 15657
+INFO 2025-11-17 17:11:46,027 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-17 17:11:46,039 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-17 17:11:51,690 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-17 17:11:51,720 basehttp "GET /portal/ HTTP/1.1" 200 18028
+INFO 2025-11-17 17:11:55,186 basehttp "GET /portal/profile/ HTTP/1.1" 200 20141
+INFO 2025-11-17 17:11:56,886 basehttp "GET /portal/ HTTP/1.1" 200 18028
+ERROR 2025-11-17 17:11:58,120 log Internal Server Error: /portal/leaves/create/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 238, in leave_create
+    return render(request, 'portal/leaves/create.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'portal_leaves_list' not found. 'portal_leaves_list' is not a valid view function or pattern name.
+ERROR 2025-11-17 17:11:58,124 basehttp "GET /portal/leaves/create/ HTTP/1.1" 500 184543
+INFO 2025-11-17 17:12:06,198 autoreload D:\Study\CT201\Project\hrm\app\urls_management.py changed, reloading.
+INFO 2025-11-17 17:12:07,548 autoreload Watching for file changes with StatReloader

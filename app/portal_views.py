@@ -683,11 +683,20 @@ def approvals_dashboard(request):
         status='pending'
     ).select_related('employee', 'category').order_by('-date')
     
+    # Calculate stats
+    stats = {
+        'team_members': team_members.count(),
+        'pending_leaves': pending_leaves.count(),
+        'pending_expenses': pending_expenses.count(),
+        'total_pending': pending_leaves.count() + pending_expenses.count(),
+    }
+    
     context = {
         'employee': employee,
         'team_members': team_members,
         'pending_leaves': pending_leaves,
         'pending_expenses': pending_expenses,
+        'stats': stats,
     }
     
     return render(request, 'portal/approvals/dashboard.html', context)

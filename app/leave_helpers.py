@@ -63,7 +63,7 @@ def check_leave_balance(employee, leave_type, requested_days, year=None):
             employee=employee,
             leave_type=leave_type,
             year=year,
-            total_days=leave_type.default_days,
+            total_days=leave_type.max_days_per_year,
             used_days=0
         )
     
@@ -100,7 +100,7 @@ def update_leave_balance(employee, leave_type, days, operation='add', year=None)
         leave_type=leave_type,
         year=year,
         defaults={
-            'total_days': leave_type.default_days,
+            'total_days': leave_type.max_days_per_year,
             'used_days': 0
         }
     )

@@ -37,25 +37,25 @@
                             {% endfor %}
                         {% endif %}
 
-                        <!-- Expense Type -->
+                        <!-- Expense Category -->
                         <div class="form-group">
-                            <label for="{{ form.expense_type.id_for_label }}">
+                            <label for="{{ form.category.id_for_label }}">
                                 <i class="fas fa-tag mr-1"></i>Loại chi phí <span class="text-danger">*</span>
                             </label>
-                            {{ form.expense_type }}
-                            {% if form.expense_type.errors %}
-                                <div class="text-danger">{{ form.expense_type.errors }}</div>
+                            {{ form.category }}
+                            {% if form.category.errors %}
+                                <div class="text-danger">{{ form.category.errors }}</div>
                             {% endif %}
                         </div>
 
                         <!-- Expense Date -->
                         <div class="form-group">
-                            <label for="{{ form.expense_date.id_for_label }}">
+                            <label for="{{ form.date.id_for_label }}">
                                 <i class="fas fa-calendar-day mr-1"></i>Ngày phát sinh chi phí <span class="text-danger">*</span>
                             </label>
-                            {{ form.expense_date }}
-                            {% if form.expense_date.errors %}
-                                <div class="text-danger">{{ form.expense_date.errors }}</div>
+                            {{ form.date }}
+                            {% if form.date.errors %}
+                                <div class="text-danger">{{ form.date.errors }}</div>
                             {% endif %}
                         </div>
 

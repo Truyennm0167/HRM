@@ -54,4 +54,13 @@ urlpatterns = [
     path('appraisal/', portal_views.my_appraisals, name='portal_my_appraisals'),
     path('appraisal/<int:appraisal_id>/', portal_views.appraisal_detail, name='portal_appraisal_detail'),
     path('appraisal/<int:appraisal_id>/self-assess/', portal_views.self_assessment, name='portal_self_assessment'),
+    
+    # ========================================
+    # BACKWARD COMPATIBILITY ALIASES
+    # Old URL names for existing templates
+    # ========================================
+    path('', portal_views.dashboard, name='employee_dashboard'),  # Old name for dashboard
+    path('profile/', portal_views.profile_view, name='employee_profile'),  # Old name for profile
+    path('payroll/', portal_views.payroll_list, name='my_payrolls'),  # Old name for payroll
+    path('attendance/', portal_views.attendance_list, name='my_attendance'),  # Old name for attendance
 ]

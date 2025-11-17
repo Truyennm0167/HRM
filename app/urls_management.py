@@ -162,10 +162,13 @@ urlpatterns = [
     path('leave/types/', management_views.manage_leave_types, name='manage_leave_types'),
     path('leave/requests/', management_views.manage_leave_requests, name='manage_leave_requests'),
     path('leave/requests/', management_views.manage_leave_requests, name='request_leave'),  # Backward compatibility
+    path('leave/history/', management_views.manage_leave_requests, name='leave_history'),  # Backward compatibility - redirects to leave requests
     path('leave/requests/<int:request_id>/approve/', management_views.approve_leave_request, name='approve_leave_request'),
     
     path('expense/categories/', management_views.manage_expense_categories, name='manage_expense_categories'),
     path('expense/requests/', management_views.manage_expenses, name='manage_expenses'),
+    path('expense/requests/', management_views.manage_expenses, name='create_expense'),  # Backward compatibility
+    path('expense/requests/', management_views.manage_expenses, name='expense_history'),  # Backward compatibility
     path('expense/requests/<int:expense_id>/approve/', management_views.approve_expense, name='approve_expense'),
     
     path('recruitment/jobs/', management_views.list_jobs_admin, name='list_jobs_admin'),

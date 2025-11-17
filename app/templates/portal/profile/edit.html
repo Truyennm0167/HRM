@@ -1,0 +1,177 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}Chỉnh sửa hồ sơ{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2><i class="fas fa-user-edit mr-2"></i>Chỉnh sửa hồ sơ cá nhân</h2>
+            <p class="text-muted">Cập nhật thông tin liên hệ và ảnh đại diện</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Thông tin được phép chỉnh sửa</h3>
+                    <div class="card-tools">
+                        <a href="{% url 'portal_profile' %}" class="btn btn-tool">
+                            <i class="fas fa-arrow-left"></i> Quay lại
+                        </a>
+                    </div>
+                </div>
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="card-body">
+                        <!-- Display messages -->
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                    {{ message }}
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+
+                        <!-- Display form errors -->
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                <h5><i class="icon fas fa-ban"></i> Lỗi!</h5>
+                                <ul class="mb-0">
+                                    {% for field in form %}
+                                        {% for error in field.errors %}
+                                            <li>{{ field.label }}: {{ error }}</li>
+                                        {% endfor %}
+                                    {% endfor %}
+                                    {% for error in form.non_field_errors %}
+                                        <li>{{ error }}</li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        {% endif %}
+
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle"></i>
+                            <strong>Lưu ý:</strong> Bạn chỉ có thể chỉnh sửa thông tin liên hệ cá nhân. 
+                            Để thay đổi thông tin công việc (phòng ban, chức vụ, lương), vui lòng liên hệ phòng Nhân sự.
+                        </div>
+
+                        <!-- Current Avatar -->
+                        <div class="form-group">
+                            <label>Ảnh đại diện hiện tại</label>
+                            <div class="text-center mb-3">
+                                {% if employee.avatar %}
+                                    <img src="{{ employee.avatar.url }}" 
+                                         alt="Current Avatar" 
+                                         class="img-thumbnail"
+                                         style="max-width: 200px; max-height: 200px; object-fit: cover;">
+                                {% else %}
+                                    <img src="{% static 'dist/img/avatar.png' %}" 
+                                         alt="Default Avatar" 
+                                         class="img-thumbnail"
+                                         style="max-width: 200px; max-height: 200px; object-fit: cover;">
+                                    <p class="text-muted mt-2">Chưa có ảnh đại diện</p>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <!-- Avatar Upload -->
+                        <div class="form-group">
+                            <label for="{{ form.avatar.id_for_label }}">
+                                <i class="fas fa-image mr-1"></i>Ảnh đại diện mới
+                            </label>
+                            {{ form.avatar }}
+                            <small class="form-text text-muted">
+                                <i class="fas fa-exclamation-triangle text-warning"></i>
+                                Chỉ chấp nhận file ảnh (JPG, PNG, GIF). Kích thước tối đa: 2MB
+                            </small>
+                            {% if form.avatar.errors %}
+                                <div class="text-danger">{{ form.avatar.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <hr>
+
+                        <!-- Phone -->
+                        <div class="form-group">
+                            <label for="{{ form.phone.id_for_label }}" class="required">
+                                <i class="fas fa-phone mr-1"></i>Số điện thoại
+                            </label>
+                            {{ form.phone }}
+                            <small class="form-text text-muted">Số điện thoại liên hệ của bạn</small>
+                            {% if form.phone.errors %}
+                                <div class="text-danger">{{ form.phone.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Email -->
+                        <div class="form-group">
+                            <label for="{{ form.email.id_for_label }}" class="required">
+                                <i class="fas fa-envelope mr-1"></i>Email
+                            </label>
+                            {{ form.email }}
+                            <small class="form-text text-muted">Email liên hệ (dùng để đăng nhập)</small>
+                            {% if form.email.errors %}
+                                <div class="text-danger">{{ form.email.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Address -->
+                        <div class="form-group">
+                            <label for="{{ form.address.id_for_label }}" class="required">
+                                <i class="fas fa-map-marker-alt mr-1"></i>Địa chỉ
+                            </label>
+                            {{ form.address }}
+                            <small class="form-text text-muted">Địa chỉ liên hệ hiện tại</small>
+                            {% if form.address.errors %}
+                                <div class="text-danger">{{ form.address.errors.0 }}</div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Read-only info -->
+                        <div class="alert alert-secondary">
+                            <h6><i class="fas fa-lock mr-2"></i>Thông tin không thể chỉnh sửa:</h6>
+                            <ul class="mb-0">
+                                <li><strong>Họ tên:</strong> {{ employee.name }}</li>
+                                <li><strong>Mã nhân viên:</strong> {{ employee.employee_code }}</li>
+                                <li><strong>Phòng ban:</strong> {{ employee.department.name }}</li>
+                                <li><strong>Chức vụ:</strong> {{ employee.job_position }}</li>
+                                <li><strong>Lương:</strong> {{ employee.salary|floatformat:0 }} VNĐ</li>
+                            </ul>
+                            <small class="text-muted">Để thay đổi thông tin này, vui lòng liên hệ phòng Nhân sự.</small>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <a href="{% url 'portal_profile' %}" class="btn btn-default">
+                                    <i class="fas fa-times mr-1"></i> Hủy
+                                </a>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-save mr-1"></i> Lưu thay đổi
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.required:after {
+    content: " *";
+    color: red;
+}
+</style>
+{% endblock %}
