@@ -15,8 +15,14 @@ from .models import (
     Payroll, Attendance, Expense, ExpenseCategory,
     Appraisal, AppraisalScore
 )
-from .forms import LeaveRequestForm, ExpenseForm
+from .forms import LeaveRequestForm, ExpenseForm, EmployeeProfileForm, PasswordChangeForm
 from .permissions import get_user_employee
+from .leave_helpers import (
+    calculate_working_days, check_leave_balance, 
+    update_leave_balance, approve_leave_request, 
+    reject_leave_request, cancel_leave_request,
+    get_leave_summary
+)
 
 # Decorator for manager-only views
 def require_manager_permission(view_func):
@@ -160,9 +166,59 @@ def leave_create(request):
             leave_request = form.save(commit=False)
             leave_request.employee = employee
             leave_request.status = 'pending'
+            
+            # Calculate total days using helper function
+            total_days = calculate_working_days(
+                leave_request.start_date, 
+                leave_request.end_date
+            )
+            leave_request.total_days = total_days
+            
+            # Check leave balance using helper function
+            current_year = leave_request.start_date.year
+            has_balance, message, leave_balance = check_leave_balance(
+                employee=employee,
+                leave_type=leave_request.leave_type,
+                requested_days=total_days,
+                year=current_year
+            )
+            
+            if not has_balance:
+                messages.error(request, message)
+                # Re-render form with error
+                leave_balances = LeaveBalance.objects.filter(
+                    employee=employee,
+                    year=current_year
+                ).select_related('leave_type')
+                
+                context = {
+                    'employee': employee,
+                    'form': form,
+                    'leave_balances': leave_balances,
+                }
+                return render(request, 'portal/leaves/create.html', context)
+            
+            # Update leave balance using helper function
+            update_leave_balance(
+                employee=employee,
+                leave_type=leave_request.leave_type,
+                days=total_days,
+                operation='add',
+                year=current_year
+            )
+            
+            # Save leave request
             leave_request.save()
-            messages.success(request, 'Đã gửi đơn xin nghỉ phép thành công!')
+            
+            messages.success(
+                request, 
+                f'Đã gửi đơn xin nghỉ phép thành công! '
+                f'Số ngày: {total_days} ngày. '
+                f'Đơn đang chờ phê duyệt.'
+            )
             return redirect('portal_leaves')
+        else:
+            messages.error(request, 'Vui lòng kiểm tra lại thông tin form.')
     else:
         form = LeaveRequestForm()
     
@@ -352,9 +408,69 @@ def expense_create(request):
             expense = form.save(commit=False)
             expense.employee = employee
             expense.status = 'pending'
-            expense.save()
-            messages.success(request, 'Đã tạo đơn hoàn tiền thành công!')
-            return redirect('portal_expenses')
+            
+            # Validate file upload if provided
+            if 'receipt' in request.FILES:
+                receipt_file = request.FILES['receipt']
+                
+                # Check file size (max 5MB)
+                max_size = 5 * 1024 * 1024  # 5MB in bytes
+                if receipt_file.size > max_size:
+                    messages.error(
+                        request,
+                        f'Kích thước file quá lớn! '
+                        f'Tối đa 5MB, file của bạn: {receipt_file.size / (1024*1024):.2f}MB'
+                    )
+                    context = {
+                        'employee': employee,
+                        'form': form,
+                    }
+                    return render(request, 'portal/expenses/create.html', context)
+                
+                # Check file extension
+                allowed_extensions = ['jpg', 'jpeg', 'png', 'gif', 'pdf']
+                file_extension = receipt_file.name.split('.')[-1].lower()
+                if file_extension not in allowed_extensions:
+                    messages.error(
+                        request,
+                        f'Định dạng file không hợp lệ! '
+                        f'Chỉ chấp nhận: {", ".join(allowed_extensions)}'
+                    )
+                    context = {
+                        'employee': employee,
+                        'form': form,
+                    }
+                    return render(request, 'portal/expenses/create.html', context)
+            
+            # Additional validation: Check if amount exceeds category limit (if exists)
+            if hasattr(expense.category, 'max_amount') and expense.category.max_amount:
+                if expense.amount > expense.category.max_amount:
+                    messages.warning(
+                        request,
+                        f'Số tiền vượt quá hạn mức của danh mục '
+                        f'({expense.category.max_amount:,.0f} VNĐ). '
+                        f'Đơn cần được phê duyệt bởi cấp cao hơn.'
+                    )
+            
+            # Save expense
+            try:
+                expense.save()
+                messages.success(
+                    request,
+                    f'Đã tạo đơn hoàn tiền thành công! '
+                    f'Số tiền: {expense.amount:,.0f} VNĐ. '
+                    f'Đơn đang chờ phê duyệt.'
+                )
+                return redirect('portal_expenses')
+            except Exception as e:
+                messages.error(request, f'Lỗi khi lưu đơn: {str(e)}')
+                context = {
+                    'employee': employee,
+                    'form': form,
+                }
+                return render(request, 'portal/expenses/create.html', context)
+        else:
+            messages.error(request, 'Vui lòng kiểm tra lại thông tin form.')
     else:
         form = ExpenseForm()
     
@@ -421,17 +537,107 @@ def profile_edit(request):
         messages.error(request, 'Không tìm thấy thông tin nhân viên.')
         return redirect('login')
     
-    # TODO: Implement profile edit form (only personal fields)
-    messages.info(request, 'Tính năng chỉnh sửa profile sẽ được cập nhật sau.')
-    return redirect('portal_profile')
+    if request.method == 'POST':
+        form = EmployeeProfileForm(request.POST, request.FILES, instance=employee)
+        if form.is_valid():
+            # Validate avatar file if provided
+            if 'avatar' in request.FILES:
+                avatar_file = request.FILES['avatar']
+                
+                # Check file size (max 2MB)
+                max_size = 2 * 1024 * 1024  # 2MB in bytes
+                if avatar_file.size > max_size:
+                    messages.error(
+                        request,
+                        f'Kích thước ảnh quá lớn! '
+                        f'Tối đa 2MB, ảnh của bạn: {avatar_file.size / (1024*1024):.2f}MB'
+                    )
+                    context = {
+                        'employee': employee,
+                        'form': form,
+                    }
+                    return render(request, 'portal/profile/edit.html', context)
+                
+                # Check file extension
+                allowed_extensions = ['jpg', 'jpeg', 'png', 'gif']
+                file_extension = avatar_file.name.split('.')[-1].lower()
+                if file_extension not in allowed_extensions:
+                    messages.error(
+                        request,
+                        f'Định dạng ảnh không hợp lệ! '
+                        f'Chỉ chấp nhận: {", ".join(allowed_extensions)}'
+                    )
+                    context = {
+                        'employee': employee,
+                        'form': form,
+                    }
+                    return render(request, 'portal/profile/edit.html', context)
+            
+            # Save profile changes
+            try:
+                form.save()
+                messages.success(request, 'Đã cập nhật thông tin cá nhân thành công!')
+                return redirect('portal_profile')
+            except Exception as e:
+                messages.error(request, f'Lỗi khi lưu thông tin: {str(e)}')
+        else:
+            messages.error(request, 'Vui lòng kiểm tra lại thông tin form.')
+    else:
+        form = EmployeeProfileForm(instance=employee)
+    
+    context = {
+        'employee': employee,
+        'form': form,
+    }
+    
+    return render(request, 'portal/profile/edit.html', context)
 
 
 @login_required
 def password_change(request):
     """Đổi mật khẩu"""
-    # TODO: Implement password change
-    messages.info(request, 'Tính năng đổi mật khẩu sẽ được cập nhật sau.')
-    return redirect('portal_profile')
+    employee = get_user_employee(request.user)
+    if not employee:
+        messages.error(request, 'Không tìm thấy thông tin nhân viên.')
+        return redirect('login')
+    
+    if request.method == 'POST':
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            # Get new password from form
+            new_password = form.cleaned_data['new_password']
+            
+            # Update password
+            try:
+                request.user.set_password(new_password)
+                request.user.save()
+                
+                # Update session to prevent logout
+                from django.contrib.auth import update_session_auth_hash
+                update_session_auth_hash(request, request.user)
+                
+                messages.success(
+                    request,
+                    'Đã đổi mật khẩu thành công! '
+                    'Vui lòng sử dụng mật khẩu mới cho lần đăng nhập tiếp theo.'
+                )
+                return redirect('portal_profile')
+            except Exception as e:
+                messages.error(request, f'Lỗi khi đổi mật khẩu: {str(e)}')
+        else:
+            # Display form errors
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, error)
+    else:
+        form = PasswordChangeForm(request.user)
+    
+    context = {
+        'employee': employee,
+        'form': form,
+    }
+    
+    return render(request, 'portal/profile/password_change.html', context)
 
 
 # ======================== DOCUMENTS & ANNOUNCEMENTS ========================
@@ -508,59 +714,92 @@ def team_leaves(request):
 @login_required
 @require_manager_permission
 def team_leave_approve(request, leave_id):
-    """Phê duyệt đơn nghỉ phép"""
+    """Phê duyệt đơn nghỉ phép (AJAX)"""
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'message': 'Method not allowed'}, status=405)
+    
     employee = get_user_employee(request.user)
-    leave_request = get_object_or_404(
-        LeaveRequest, 
-        id=leave_id, 
-        employee__department=employee.department
-    )
     
-    if leave_request.status == 'pending':
-        leave_request.status = 'approved'
-        leave_request.approved_by = employee
-        leave_request.approved_at = timezone.now()
-        leave_request.save()
-        
-        # Update leave balance
-        leave_balance = LeaveBalance.objects.get(
-            employee=leave_request.employee,
-            leave_type=leave_request.leave_type,
-            year=leave_request.start_date.year
+    try:
+        leave_request = get_object_or_404(
+            LeaveRequest, 
+            id=leave_id, 
+            employee__department=employee.department
         )
-        days = (leave_request.end_date - leave_request.start_date).days + 1
-        leave_balance.used_days += days
-        leave_balance.remaining_days -= days
-        leave_balance.save()
         
-        messages.success(request, 'Đã phê duyệt đơn nghỉ phép.')
-    else:
-        messages.error(request, 'Đơn này không ở trạng thái chờ duyệt.')
-    
-    return redirect('portal_team_leaves')
+        # Use helper function for approval
+        success, message = approve_leave_request(leave_request, employee)
+        
+        if success:
+            return JsonResponse({
+                'success': True,
+                'message': message,
+                'leave': {
+                    'id': leave_request.id,
+                    'employee_name': leave_request.employee.name,
+                    'leave_type': leave_request.leave_type.name,
+                    'start_date': leave_request.start_date.strftime('%d/%m/%Y'),
+                    'end_date': leave_request.end_date.strftime('%d/%m/%Y'),
+                    'total_days': leave_request.total_days,
+                    'status': leave_request.status,
+                    'approved_by': employee.name,
+                    'approved_at': leave_request.approved_at.strftime('%d/%m/%Y %H:%M') if leave_request.approved_at else None
+                }
+            })
+        else:
+            return JsonResponse({'success': False, 'message': message}, status=400)
+            
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': f'Lỗi: {str(e)}'}, status=500)
 
 
 @login_required
 @require_manager_permission
 def team_leave_reject(request, leave_id):
-    """Từ chối đơn nghỉ phép"""
+    """Từ chối đơn nghỉ phép (AJAX)"""
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'message': 'Method not allowed'}, status=405)
+    
     employee = get_user_employee(request.user)
-    leave_request = get_object_or_404(
-        LeaveRequest, 
-        id=leave_id, 
-        employee__department=employee.department
-    )
     
-    if leave_request.status == 'pending':
-        leave_request.status = 'rejected'
-        leave_request.approved_by = employee
-        leave_request.approved_at = timezone.now()
-        leave_request.save()
-        messages.success(request, 'Đã từ chối đơn nghỉ phép.')
-    else:
-        messages.error(request, 'Đơn này không ở trạng thái chờ duyệt.')
-    
-    return redirect('portal_team_leaves')
+    try:
+        import json
+        data = json.loads(request.body)
+        rejection_reason = data.get('reason', '')
+        
+        if not rejection_reason:
+            return JsonResponse({'success': False, 'message': 'Vui lòng nhập lý do từ chối'}, status=400)
+        
+        leave_request = get_object_or_404(
+            LeaveRequest, 
+            id=leave_id, 
+            employee__department=employee.department
+        )
+        
+        # Use helper function for rejection
+        success, message = reject_leave_request(leave_request, employee, rejection_reason)
+        
+        if success:
+            return JsonResponse({
+                'success': True,
+                'message': message,
+                'leave': {
+                    'id': leave_request.id,
+                    'employee_name': leave_request.employee.name,
+                    'leave_type': leave_request.leave_type.name,
+                    'status': leave_request.status,
+                    'rejection_reason': leave_request.rejection_reason,
+                    'approved_by': employee.name,
+                    'approved_at': leave_request.approved_at.strftime('%d/%m/%Y %H:%M') if leave_request.approved_at else None
+                }
+            })
+        else:
+            return JsonResponse({'success': False, 'message': message}, status=400)
+            
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'message': 'Invalid JSON data'}, status=400)
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': f'Lỗi: {str(e)}'}, status=500)
 
 
 @login_required
@@ -584,47 +823,106 @@ def team_expenses(request):
 @login_required
 @require_manager_permission
 def team_expense_approve(request, expense_id):
-    """Phê duyệt đơn hoàn tiền"""
-    employee = get_user_employee(request.user)
-    expense = get_object_or_404(
-        Expense, 
-        id=expense_id, 
-        employee__department=employee.department
-    )
+    """Phê duyệt đơn hoàn tiền (AJAX)"""
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'message': 'Method not allowed'}, status=405)
     
-    if expense.status == 'pending':
+    employee = get_user_employee(request.user)
+    
+    try:
+        expense = get_object_or_404(
+            Expense, 
+            id=expense_id, 
+            employee__department=employee.department
+        )
+        
+        if expense.status != 'pending':
+            return JsonResponse({
+                'success': False, 
+                'message': 'Đơn này không ở trạng thái chờ duyệt'
+            }, status=400)
+        
+        # Approve expense
         expense.status = 'approved'
         expense.approved_by = employee
         expense.approved_at = timezone.now()
         expense.save()
-        messages.success(request, 'Đã phê duyệt đơn hoàn tiền.')
-    else:
-        messages.error(request, 'Đơn này không ở trạng thái chờ duyệt.')
-    
-    return redirect('portal_team_expenses')
+        
+        return JsonResponse({
+            'success': True,
+            'message': 'Đã phê duyệt đơn hoàn tiền thành công',
+            'expense': {
+                'id': expense.id,
+                'employee_name': expense.employee.name,
+                'category': expense.category.name,
+                'amount': float(expense.amount),
+                'amount_formatted': f'{expense.amount:,.0f} VNĐ',
+                'date': expense.date.strftime('%d/%m/%Y'),
+                'description': expense.description,
+                'status': expense.status,
+                'approved_by': employee.name,
+                'approved_at': expense.approved_at.strftime('%d/%m/%Y %H:%M')
+            }
+        })
+            
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': f'Lỗi: {str(e)}'}, status=500)
 
 
 @login_required
 @require_manager_permission
 def team_expense_reject(request, expense_id):
-    """Từ chối đơn hoàn tiền"""
-    employee = get_user_employee(request.user)
-    expense = get_object_or_404(
-        Expense, 
-        id=expense_id, 
-        employee__department=employee.department
-    )
+    """Từ chối đơn hoàn tiền (AJAX)"""
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'message': 'Method not allowed'}, status=405)
     
-    if expense.status == 'pending':
+    employee = get_user_employee(request.user)
+    
+    try:
+        import json
+        data = json.loads(request.body)
+        rejection_reason = data.get('reason', '')
+        
+        if not rejection_reason:
+            return JsonResponse({'success': False, 'message': 'Vui lòng nhập lý do từ chối'}, status=400)
+        
+        expense = get_object_or_404(
+            Expense, 
+            id=expense_id, 
+            employee__department=employee.department
+        )
+        
+        if expense.status != 'pending':
+            return JsonResponse({
+                'success': False, 
+                'message': 'Đơn này không ở trạng thái chờ duyệt'
+            }, status=400)
+        
+        # Reject expense
         expense.status = 'rejected'
         expense.approved_by = employee
         expense.approved_at = timezone.now()
+        expense.rejection_reason = rejection_reason
         expense.save()
-        messages.success(request, 'Đã từ chối đơn hoàn tiền.')
-    else:
-        messages.error(request, 'Đơn này không ở trạng thái chờ duyệt.')
-    
-    return redirect('portal_team_expenses')
+        
+        return JsonResponse({
+            'success': True,
+            'message': 'Đã từ chối đơn hoàn tiền',
+            'expense': {
+                'id': expense.id,
+                'employee_name': expense.employee.name,
+                'category': expense.category.name,
+                'status': expense.status,
+                'rejection_reason': expense.rejection_reason,
+                'approved_by': employee.name,
+                'approved_at': expense.approved_at.strftime('%d/%m/%Y %H:%M')
+            }
+        })
+            
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'message': 'Invalid JSON data'}, status=400)
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': f'Lỗi: {str(e)}'}, status=500)
 
 
 @login_required

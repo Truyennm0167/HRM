@@ -115,6 +115,115 @@ class ExpenseForm(forms.ModelForm):
         return expense_date
 
 
+class EmployeeProfileForm(forms.ModelForm):
+    """Form để nhân viên tự chỉnh sửa thông tin cá nhân (giới hạn)"""
+    class Meta:
+        model = Employee
+        fields = ['phone', 'address', 'email', 'avatar']
+        widgets = {
+            'phone': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Số điện thoại'
+            }),
+            'address': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Địa chỉ hiện tại'
+            }),
+            'email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Email'
+            }),
+            'avatar': forms.FileInput(attrs={
+                'class': 'form-control-file',
+                'accept': 'image/*'
+            }),
+        }
+    
+    def clean_phone(self):
+        phone = self.cleaned_data.get('phone')
+        if phone:
+            # Check if phone already exists (excluding current employee)
+            existing = Employee.objects.filter(phone=phone).exclude(id=self.instance.id)
+            if existing.exists():
+                raise forms.ValidationError("Số điện thoại này đã được sử dụng")
+        return phone
+    
+    def clean_email(self):
+        email = self.cleaned_data.get('email')
+        if email:
+            # Check if email already exists (excluding current employee)
+            existing = Employee.objects.filter(email=email).exclude(id=self.instance.id)
+            if existing.exists():
+                raise forms.ValidationError("Email này đã được sử dụng")
+        return email
+
+
+class PasswordChangeForm(forms.Form):
+    """Form để nhân viên đổi mật khẩu"""
+    old_password = forms.CharField(
+        label="Mật khẩu hiện tại",
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Nhập mật khẩu hiện tại'
+        })
+    )
+    new_password = forms.CharField(
+        label="Mật khẩu mới",
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Nhập mật khẩu mới'
+        })
+    )
+    confirm_password = forms.CharField(
+        label="Xác nhận mật khẩu mới",
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control',
+            'placeholder': 'Nhập lại mật khẩu mới'
+        })
+    )
+    
+    def __init__(self, user, *args, **kwargs):
+        self.user = user
+        super().__init__(*args, **kwargs)
+    
+    def clean_old_password(self):
+        old_password = self.cleaned_data.get('old_password')
+        if not self.user.check_password(old_password):
+            raise forms.ValidationError("Mật khẩu hiện tại không đúng")
+        return old_password
+    
+    def clean_new_password(self):
+        new_password = self.cleaned_data.get('new_password')
+        
+        # Validate password strength
+        if len(new_password) < 8:
+            raise forms.ValidationError("Mật khẩu phải có ít nhất 8 ký tự")
+        
+        if new_password.isdigit():
+            raise forms.ValidationError("Mật khẩu không thể chỉ chứa số")
+        
+        if new_password.isalpha():
+            raise forms.ValidationError("Mật khẩu phải chứa cả chữ và số")
+        
+        return new_password
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        new_password = cleaned_data.get('new_password')
+        confirm_password = cleaned_data.get('confirm_password')
+        old_password = cleaned_data.get('old_password')
+        
+        if new_password and confirm_password:
+            if new_password != confirm_password:
+                raise forms.ValidationError("Mật khẩu mới và xác nhận không khớp")
+        
+        if old_password and new_password:
+            if old_password == new_password:
+                raise forms.ValidationError("Mật khẩu mới phải khác mật khẩu hiện tại")
+        
+        return cleaned_data
+
+
 class ContractForm(forms.ModelForm):
     """Form để tạo/sửa hợp đồng lao động"""
     class Meta:
