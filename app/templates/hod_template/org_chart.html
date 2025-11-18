@@ -359,12 +359,26 @@ $(document).ready(function() {
     // Search functionality
     $('#searchEmployee').on('keyup', function() {
         const searchTerm = $(this).val().toLowerCase();
+        
+        if (searchTerm === '') {
+            // Reset: show all nodes
+            $('.tree-node, .tree-children').show();
+            return;
+        }
+        
+        // Hide all first
+        $('.tree-node').hide();
+        $('.tree-children').hide();
+        
+        // Find and show matching nodes + their parents
         $('.tree-node').each(function() {
             const text = $(this).text().toLowerCase();
             if (text.includes(searchTerm)) {
+                // Show the matching node
                 $(this).show();
-            } else {
-                $(this).hide();
+                
+                // Show parent department (if this is an employee node)
+                $(this).closest('.tree-children').show().prev('.tree-node.department').show();
             }
         });
     });
@@ -372,13 +386,22 @@ $(document).ready(function() {
     // Department filter
     $('#filterDepartment').on('change', function() {
         const deptId = $(this).val();
+        const deptName = $(this).find('option:selected').text().toLowerCase();
+        
         if (deptId === '') {
-            $('.tree-node').show();
-            $('.tree-children').show();
+            $('.tree-node, .tree-children').show();
         } else {
-            // Filter logic (simplified for demo)
+            // Hide all first
             $('.tree-node').hide();
-            $('.tree-node:contains("' + $(this).find('option:selected').text() + '")').show();
+            $('.tree-children').hide();
+            
+            // Show the selected department and its employees
+            $('.tree-node.department').each(function() {
+                if ($(this).text().toLowerCase().includes(deptName)) {
+                    $(this).show();
+                    $(this).next('.tree-children').show().find('.tree-node').show();
+                }
+            });
         }
     });
     
