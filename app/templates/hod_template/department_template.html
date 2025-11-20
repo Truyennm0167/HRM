@@ -156,7 +156,18 @@ Phòng ban
       deleteBtn.innerText = 'Xóa phòng ban';
       deleteBtn.onclick = () => {
         if (confirm('Bạn có chắc chắn muốn xóa phòng ban này không?')) {
-          window.location.href = `/management/departments/${id}/delete/`;
+          // Create form and submit via POST
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = `/management/departments/${id}/delete/`;
+          const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+          const csrfInput = document.createElement('input');
+          csrfInput.type = 'hidden';
+          csrfInput.name = 'csrfmiddlewaretoken';
+          csrfInput.value = csrfToken;
+          form.appendChild(csrfInput);
+          document.body.appendChild(form);
+          form.submit();
         }
       };
       document.querySelector('.card-footer').prepend(deleteBtn);

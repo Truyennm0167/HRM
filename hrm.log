@@ -17246,3 +17246,1613 @@ INFO 2025-11-18 01:17:20,162 basehttp "GET /portal/attendance/ HTTP/1.1" 302 0
 INFO 2025-11-18 01:17:20,191 basehttp "GET /login/?next=/portal/attendance/ HTTP/1.1" 200 2905
 INFO 2025-11-18 01:17:29,818 basehttp "POST /login/?next=/portal/attendance/ HTTP/1.1" 302 0
 INFO 2025-11-18 01:17:29,887 basehttp "GET /portal/attendance/ HTTP/1.1" 200 31604
+INFO 2025-11-18 16:35:47,497 autoreload Watching for file changes with StatReloader
+INFO 2025-11-18 16:35:59,586 basehttp "GET /admin/app/employee/ HTTP/1.1" 302 0
+INFO 2025-11-18 16:36:00,008 basehttp "GET /admin/login/?next=/admin/app/employee/ HTTP/1.1" 200 4207
+INFO 2025-11-18 16:36:01,554 basehttp "GET /static/admin/css/base.css HTTP/1.1" 200 21310
+INFO 2025-11-18 16:36:01,734 basehttp "GET /static/admin/css/login.css HTTP/1.1" 200 958
+INFO 2025-11-18 16:36:01,734 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2694
+INFO 2025-11-18 16:36:01,753 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 200 18559
+INFO 2025-11-18 16:36:01,762 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2929
+INFO 2025-11-18 16:36:01,895 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-11-18 16:36:02,027 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 200 1943
+WARNING 2025-11-18 16:36:12,104 log Not Found: /favicon.ico
+WARNING 2025-11-18 16:36:12,105 basehttp "GET /favicon.ico HTTP/1.1" 404 7076
+INFO 2025-11-18 16:40:11,772 basehttp "POST /admin/login/?next=/admin/app/employee/ HTTP/1.1" 302 0
+INFO 2025-11-18 16:40:12,437 basehttp "GET /admin/app/employee/ HTTP/1.1" 200 27342
+INFO 2025-11-18 16:40:12,555 basehttp "GET /static/admin/css/base.css HTTP/1.1" 200 21310
+INFO 2025-11-18 16:40:12,573 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2929
+INFO 2025-11-18 16:40:12,580 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2694
+INFO 2025-11-18 16:40:12,582 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 200 18559
+INFO 2025-11-18 16:40:12,606 basehttp "GET /static/admin/css/changelists.css HTTP/1.1" 200 6566
+INFO 2025-11-18 16:40:12,632 basehttp "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+INFO 2025-11-18 16:40:12,644 basehttp "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+INFO 2025-11-18 16:40:12,654 basehttp "GET /static/admin/js/core.js HTTP/1.1" 200 5682
+INFO 2025-11-18 16:40:12,664 basehttp "GET /static/admin/js/actions.js HTTP/1.1" 200 7872
+INFO 2025-11-18 16:40:12,668 basehttp "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 8943
+INFO 2025-11-18 16:40:12,668 basehttp "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+INFO 2025-11-18 16:40:12,690 basehttp "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+INFO 2025-11-18 16:40:12,708 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 3343
+INFO 2025-11-18 16:40:12,769 basehttp "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 292458
+INFO 2025-11-18 16:40:12,782 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 200 1943
+INFO 2025-11-18 16:40:12,797 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-11-18 16:40:12,807 basehttp "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 232381
+INFO 2025-11-18 16:40:12,835 basehttp "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+INFO 2025-11-18 16:40:12,841 basehttp "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+INFO 2025-11-18 16:40:12,843 basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+WARNING 2025-11-18 16:42:15,862 log Not Found: /
+WARNING 2025-11-18 16:42:15,864 basehttp "GET / HTTP/1.1" 404 7025
+INFO 2025-11-18 16:42:19,325 basehttp "GET /portal HTTP/1.1" 301 0
+INFO 2025-11-18 16:42:19,354 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-11-18 16:42:19,383 basehttp "GET /login/?next=/portal/ HTTP/1.1" 200 2905
+INFO 2025-11-18 16:42:19,477 basehttp "GET /static/plugins/icheck-bootstrap/icheck-bootstrap.min.css HTTP/1.1" 200 12505
+INFO 2025-11-18 16:42:19,485 basehttp "GET /static/plugins/fontawesome-free/css/all.min.css HTTP/1.1" 200 56842
+INFO 2025-11-18 16:42:19,514 basehttp "GET /static/dist/css/adminlte.min.css HTTP/1.1" 200 656504
+INFO 2025-11-18 16:42:19,591 basehttp "GET /static/dist/js/adminlte.min.js HTTP/1.1" 200 24244
+INFO 2025-11-18 16:42:19,603 basehttp "GET /static/plugins/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 78635
+INFO 2025-11-18 16:42:19,620 basehttp "GET /static/plugins/jquery/jquery.min.js HTTP/1.1" 200 88145
+INFO 2025-11-18 16:42:19,723 basehttp "GET /static/plugins/fontawesome-free/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 75728
+INFO 2025-11-18 16:42:26,263 basehttp "POST /login/?next=/portal/ HTTP/1.1" 302 0
+INFO 2025-11-18 16:42:26,402 basehttp "GET /portal/ HTTP/1.1" 200 18027
+INFO 2025-11-18 16:42:30,109 basehttp "GET /admin HTTP/1.1" 301 0
+INFO 2025-11-18 16:42:30,204 basehttp "GET /admin/ HTTP/1.1" 200 15208
+INFO 2025-11-18 16:42:30,383 basehttp "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+INFO 2025-11-18 16:42:30,412 basehttp "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+INFO 2025-11-18 16:42:44,403 basehttp "GET /management HTTP/1.1" 301 0
+INFO 2025-11-18 16:42:44,434 management_views Admin home accessed by admin
+INFO 2025-11-18 16:42:44,602 basehttp "GET /management/ HTTP/1.1" 200 42366
+INFO 2025-11-18 16:42:57,672 basehttp "GET /management/departments/ HTTP/1.1" 200 36956
+INFO 2025-11-18 16:43:26,985 basehttp "GET /management/employees/add/ HTTP/1.1" 200 38041
+INFO 2025-11-18 16:43:27,350 basehttp "GET /management/employees/add/ HTTP/1.1" 200 38041
+INFO 2025-11-18 16:44:01,991 management_views Admin home accessed by admin
+INFO 2025-11-18 16:44:02,049 basehttp "GET /management/ HTTP/1.1" 200 42366
+ERROR 2025-11-18 16:44:27,401 log Internal Server Error: /management/attendance/add/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 590, in add_attendance
+    return render(request, "hod_template/add_attendance.html", {"employees": employees})
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'get_attendance_data' not found. 'get_attendance_data' is not a valid view function or pattern name.
+ERROR 2025-11-18 16:44:27,452 basehttp "GET /management/attendance/add/ HTTP/1.1" 500 183324
+INFO 2025-11-18 16:48:24,331 basehttp "GET /portal/leaves/ HTTP/1.1" 200 15220
+INFO 2025-11-18 16:48:25,906 basehttp "GET /portal/payroll/ HTTP/1.1" 200 17483
+INFO 2025-11-18 16:48:27,257 basehttp "GET /portal/attendance/ HTTP/1.1" 200 31604
+INFO 2025-11-18 16:48:28,400 basehttp "GET /portal/expenses/ HTTP/1.1" 200 24754
+INFO 2025-11-18 16:48:29,735 basehttp "GET /portal/profile/ HTTP/1.1" 200 20141
+INFO 2025-11-18 16:48:29,820 basehttp "GET /static/dist/img/avatar.png HTTP/1.1" 200 8543
+INFO 2025-11-18 16:48:31,551 basehttp "GET /portal/ HTTP/1.1" 200 18027
+INFO 2025-11-18 16:48:33,610 basehttp "GET /portal/leaves/ HTTP/1.1" 200 15220
+INFO 2025-11-18 16:48:35,403 basehttp "GET /portal/payroll/ HTTP/1.1" 200 17483
+ERROR 2025-11-18 16:52:23,952 log Internal Server Error: /management/attendance/add/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 590, in add_attendance
+    return render(request, "hod_template/add_attendance.html", {"employees": employees})
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'get_attendance_data' not found. 'get_attendance_data' is not a valid view function or pattern name.
+ERROR 2025-11-18 16:52:23,961 basehttp "GET /management/attendance/add/ HTTP/1.1" 500 183324
+INFO 2025-11-18 16:52:56,717 management_views Expense categories viewed by admin
+INFO 2025-11-18 16:52:56,785 basehttp "GET /management/expense/categories/ HTTP/1.1" 200 45843
+INFO 2025-11-18 16:53:58,836 management_views Expense category Team Building created
+INFO 2025-11-18 16:53:58,863 basehttp "POST /management/expense/categories/add/ HTTP/1.1" 302 0
+INFO 2025-11-18 16:53:58,882 management_views Expense categories viewed by admin
+INFO 2025-11-18 16:53:58,905 basehttp "GET /management/expense/categories/ HTTP/1.1" 200 47151
+ERROR 2025-11-18 16:54:05,696 log Internal Server Error: /management/expense/categories/26/edit/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+TypeError: edit_expense_category_save() got an unexpected keyword argument 'category_id'
+ERROR 2025-11-18 16:54:05,701 basehttp "POST /management/expense/categories/26/edit/ HTTP/1.1" 500 82334
+INFO 2025-11-18 16:54:24,729 basehttp "GET /management/expense/requests/ HTTP/1.1" 302 0
+INFO 2025-11-18 16:54:24,784 management_views Admin home accessed by admin
+INFO 2025-11-18 16:54:24,841 basehttp "GET /management/ HTTP/1.1" 200 42366
+INFO 2025-11-18 16:54:28,056 management_views Expense categories viewed by admin
+INFO 2025-11-18 16:54:28,083 basehttp "GET /management/expense/categories/ HTTP/1.1" 200 47151
+ERROR 2025-11-18 16:54:41,431 log Internal Server Error: /management/expense/categories/26/edit/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+TypeError: edit_expense_category_save() got an unexpected keyword argument 'category_id'
+ERROR 2025-11-18 16:54:41,434 basehttp "POST /management/expense/categories/26/edit/ HTTP/1.1" 500 82541
+INFO 2025-11-18 16:54:48,723 management_views Expense category Team Building deleted
+INFO 2025-11-18 16:54:48,748 basehttp "POST /management/expense/categories/26/delete/ HTTP/1.1" 302 0
+INFO 2025-11-18 16:54:48,772 management_views Expense categories viewed by admin
+INFO 2025-11-18 16:54:48,798 basehttp "GET /management/expense/categories/ HTTP/1.1" 200 45843
+INFO 2025-11-18 16:55:04,161 basehttp "GET /management/recruitment/jobs/ HTTP/1.1" 200 60997
+ERROR 2025-11-18 16:55:15,553 log Internal Server Error: /management/recruitment/jobs/11/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 2227, in job_detail_admin
+    return render(request, 'hod_template/job_detail_admin.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'delete_job' not found. 'delete_job' is not a valid view function or pattern name.
+ERROR 2025-11-18 16:55:15,561 basehttp "GET /management/recruitment/jobs/11/ HTTP/1.1" 500 193129
+INFO 2025-11-18 16:56:36,155 basehttp "GET /careers/ HTTP/1.1" 200 21832
+INFO 2025-11-18 16:56:43,085 basehttp "GET /careers/11/ HTTP/1.1" 200 16778
+INFO 2025-11-18 16:56:46,203 basehttp "GET /careers/ HTTP/1.1" 200 21832
+INFO 2025-11-18 16:57:05,815 basehttp "GET /careers/11/ HTTP/1.1" 200 16778
+INFO 2025-11-18 16:57:09,924 basehttp "GET /careers/ HTTP/1.1" 200 21832
+INFO 2025-11-18 16:57:14,954 basehttp "GET /careers/10/ HTTP/1.1" 200 16699
+INFO 2025-11-18 16:57:25,685 basehttp "GET /careers/10/apply/ HTTP/1.1" 200 23300
+INFO 2025-11-18 16:59:10,082 basehttp "POST /careers/10/apply/ HTTP/1.1" 302 0
+INFO 2025-11-18 16:59:10,197 basehttp "GET /careers/10/ HTTP/1.1" 200 16699
+INFO 2025-11-18 16:59:15,761 basehttp "GET /careers/11/ HTTP/1.1" 200 16778
+INFO 2025-11-18 16:59:20,085 basehttp "GET /management/recruitment/applications/ HTTP/1.1" 200 177923
+WARNING 2025-11-18 16:59:42,958 log Not Found: /recruitment/applications/21/status/
+WARNING 2025-11-18 16:59:42,962 basehttp "POST /recruitment/applications/21/status/ HTTP/1.1" 404 7149
+WARNING 2025-11-18 17:00:44,578 log Not Found: /recruitment/applications/21/status/
+WARNING 2025-11-18 17:00:44,581 basehttp "POST /recruitment/applications/21/status/ HTTP/1.1" 404 7149
+WARNING 2025-11-18 17:01:02,274 log Not Found: /recruitment/applications/19/status/
+WARNING 2025-11-18 17:01:02,276 basehttp "POST /recruitment/applications/19/status/ HTTP/1.1" 404 7149
+WARNING 2025-11-18 17:01:04,284 log Not Found: /recruitment/applications/16/status/
+WARNING 2025-11-18 17:01:04,287 basehttp "POST /recruitment/applications/16/status/ HTTP/1.1" 404 7149
+WARNING 2025-11-18 17:01:05,592 log Not Found: /recruitment/applications/18/status/
+WARNING 2025-11-18 17:01:05,593 basehttp "POST /recruitment/applications/18/status/ HTTP/1.1" 404 7149
+WARNING 2025-11-18 17:01:06,930 log Not Found: /recruitment/applications/8/status/
+WARNING 2025-11-18 17:01:06,932 basehttp "POST /recruitment/applications/8/status/ HTTP/1.1" 404 7146
+INFO 2025-11-18 17:01:13,139 basehttp "GET /management/recruitment/jobs/create/ HTTP/1.1" 200 46090
+INFO 2025-11-18 17:01:13,925 basehttp "GET /management/recruitment/jobs/ HTTP/1.1" 200 60997
+INFO 2025-11-18 17:01:21,625 basehttp "GET /management/org-chart/ HTTP/1.1" 200 66380
+INFO 2025-11-18 17:01:58,942 basehttp "GET /careers/ HTTP/1.1" 200 21832
+INFO 2025-11-18 17:02:01,525 management_views Admin home accessed by admin
+INFO 2025-11-18 17:02:01,604 basehttp "GET /management/ HTTP/1.1" 200 42366
+INFO 2025-11-18 17:30:19,706 basehttp "GET /add_employee HTTP/1.1" 302 0
+INFO 2025-11-18 17:30:19,770 basehttp "GET /management/employees/add/ HTTP/1.1" 200 38041
+INFO 2025-11-18 17:30:19,874 basehttp "GET /management/employees/add/ HTTP/1.1" 200 38041
+INFO 2025-11-18 17:30:27,124 basehttp "GET /management/employees/ HTTP/1.1" 200 37600
+INFO 2025-11-18 17:30:29,081 basehttp "GET /management/employees/171/ HTTP/1.1" 200 33019
+WARNING 2025-11-18 17:30:29,149 basehttp "GET /static/img/default-profile.png HTTP/1.1" 404 1929
+ERROR 2025-11-18 17:30:33,299 log Internal Server Error: /management/employees/171/edit/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 501, in update_employee
+    return render(request, "hod_template/update_employee_template.html", context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'update_employee_save' with no arguments not found. 1 pattern(s) tried: ['management/employees/(?P<employee_id>[0-9]+)/edit/save/\\Z']
+ERROR 2025-11-18 17:30:33,313 basehttp "GET /management/employees/171/edit/ HTTP/1.1" 500 192978
+ERROR 2025-11-18 17:31:13,739 log Internal Server Error: /management/employees/171/edit/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 501, in update_employee
+    return render(request, "hod_template/update_employee_template.html", context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'update_employee_save' with no arguments not found. 1 pattern(s) tried: ['management/employees/(?P<employee_id>[0-9]+)/edit/save/\\Z']
+ERROR 2025-11-18 17:31:13,742 basehttp "GET /management/employees/171/edit/ HTTP/1.1" 500 192978
+INFO 2025-11-18 17:31:17,738 basehttp "GET /management/employees/ HTTP/1.1" 200 37600
+INFO 2025-11-18 17:31:21,800 basehttp "GET /management/employees/add/ HTTP/1.1" 200 38041
+INFO 2025-11-18 17:31:21,898 basehttp "GET /management/employees/add/ HTTP/1.1" 200 38041
+INFO 2025-11-18 17:34:07,456 management_views Employee Nguyễn Minh Truyền (NV0002) created by admin
+INFO 2025-11-18 17:34:07,471 basehttp "POST /management/employees/add/save/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:34:07,496 basehttp "GET /add_employee HTTP/1.1" 302 0
+INFO 2025-11-18 17:34:07,522 basehttp "GET /management/employees/add/ HTTP/1.1" 200 38163
+INFO 2025-11-18 17:34:07,623 basehttp "GET /management/employees/add/ HTTP/1.1" 200 38041
+INFO 2025-11-18 17:34:13,586 basehttp "GET /management/employees/ HTTP/1.1" 200 37602
+INFO 2025-11-18 17:34:16,143 basehttp "GET /management/employees/173/ HTTP/1.1" 200 33128
+INFO 2025-11-18 17:34:16,255 basehttp "GET /media/avatars/0d83f6eb2ddb44cb9d446a9af58be3fb_426ee7ce-73d7-4c88-a3ba-ec9c3b268a52.jpg HTTP/1.1" 200 411816
+ERROR 2025-11-18 17:34:20,171 log Internal Server Error: /management/employees/173/edit/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 501, in update_employee
+    return render(request, "hod_template/update_employee_template.html", context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'update_employee_save' with no arguments not found. 1 pattern(s) tried: ['management/employees/(?P<employee_id>[0-9]+)/edit/save/\\Z']
+ERROR 2025-11-18 17:34:20,176 basehttp "GET /management/employees/173/edit/ HTTP/1.1" 500 193148
+ERROR 2025-11-18 17:35:45,769 management_views Error adding employee: UNIQUE constraint failed: app_employee.phone
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+sqlite3.IntegrityError: UNIQUE constraint failed: app_employee.phone
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 256, in add_employee_save
+    employee.save()
+    ~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\base.py", line 814, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\base.py", line 877, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\base.py", line 1020, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, fields, returning_fields, raw
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\base.py", line 1061, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\backends\sqlite3\base.py", line 328, in execute
+    return super().execute(query, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+django.db.utils.IntegrityError: UNIQUE constraint failed: app_employee.phone
+INFO 2025-11-18 17:35:46,089 basehttp "POST /management/employees/add/save/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:35:46,114 basehttp "GET /add_employee HTTP/1.1" 302 0
+INFO 2025-11-18 17:35:46,139 basehttp "GET /management/employees/add/ HTTP/1.1" 200 38207
+INFO 2025-11-18 17:35:46,243 basehttp "GET /management/employees/add/ HTTP/1.1" 200 38041
+INFO 2025-11-18 17:36:01,590 basehttp "GET /management/employees/ HTTP/1.1" 200 37602
+INFO 2025-11-18 17:36:03,495 basehttp "GET /management/employees/173/ HTTP/1.1" 200 33128
+INFO 2025-11-18 17:36:03,573 basehttp "GET /media/avatars/0d83f6eb2ddb44cb9d446a9af58be3fb_426ee7ce-73d7-4c88-a3ba-ec9c3b268a52.jpg HTTP/1.1" 304 0
+ERROR 2025-11-18 17:36:34,079 log Internal Server Error: /management/employees/173/edit/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 501, in update_employee
+    return render(request, "hod_template/update_employee_template.html", context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'update_employee_save' with no arguments not found. 1 pattern(s) tried: ['management/employees/(?P<employee_id>[0-9]+)/edit/save/\\Z']
+ERROR 2025-11-18 17:36:34,085 basehttp "GET /management/employees/173/edit/ HTTP/1.1" 500 193148
+INFO 2025-11-18 17:38:23,324 basehttp "GET /management/departments/ HTTP/1.1" 200 37045
+INFO 2025-11-18 17:39:15,799 basehttp "POST /management/departments/add/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:39:15,841 basehttp "GET /management/departments/ HTTP/1.1" 200 37893
+INFO 2025-11-18 17:39:43,839 basehttp "POST /management/departments/add/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:39:43,877 basehttp "GET /management/departments/ HTTP/1.1" 200 37900
+INFO 2025-11-18 17:39:50,754 basehttp "POST /management/departments/add/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:39:50,788 basehttp "GET /management/departments/ HTTP/1.1" 200 37911
+WARNING 2025-11-18 17:39:55,546 log Method Not Allowed (GET): /management/departments/83/delete/
+WARNING 2025-11-18 17:39:55,564 basehttp "GET /management/departments/83/delete/ HTTP/1.1" 405 0
+INFO 2025-11-18 17:39:59,374 basehttp "GET /management/departments/ HTTP/1.1" 200 37783
+WARNING 2025-11-18 17:40:03,585 log Method Not Allowed (GET): /management/departments/83/delete/
+WARNING 2025-11-18 17:40:03,595 basehttp "GET /management/departments/83/delete/ HTTP/1.1" 405 0
+WARNING 2025-11-18 17:40:32,645 log Method Not Allowed (GET): /management/departments/83/delete/
+WARNING 2025-11-18 17:40:32,655 basehttp "GET /management/departments/83/delete/ HTTP/1.1" 405 0
+WARNING 2025-11-18 17:40:37,343 log Method Not Allowed (GET): /management/departments/83/delete/
+WARNING 2025-11-18 17:40:37,354 basehttp "GET /management/departments/83/delete/ HTTP/1.1" 405 0
+INFO 2025-11-18 17:41:41,014 basehttp "GET /management/job-titles/ HTTP/1.1" 200 35543
+INFO 2025-11-18 17:42:05,615 basehttp "POST /management/job-titles/add/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:42:05,646 basehttp "GET /management/job-titles/ HTTP/1.1" 200 36426
+INFO 2025-11-18 17:42:16,770 basehttp "POST /management/job-titles/add/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:42:16,794 basehttp "GET /management/job-titles/ HTTP/1.1" 200 36433
+WARNING 2025-11-18 17:42:22,573 log Method Not Allowed (GET): /management/job-titles/62/delete/
+WARNING 2025-11-18 17:42:22,582 basehttp "GET /management/job-titles/62/delete/ HTTP/1.1" 405 0
+INFO 2025-11-18 17:44:20,982 management_views Expense categories viewed by admin
+INFO 2025-11-18 17:44:21,017 basehttp "GET /management/expense/categories/ HTTP/1.1" 200 45843
+INFO 2025-11-18 17:44:30,678 basehttp "GET /management/expense/requests/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:44:30,691 management_views Admin home accessed by admin
+INFO 2025-11-18 17:44:30,738 basehttp "GET /management/ HTTP/1.1" 200 42997
+INFO 2025-11-18 17:44:35,775 basehttp "GET /management/expense/requests/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:44:35,786 management_views Admin home accessed by admin
+INFO 2025-11-18 17:44:35,817 basehttp "GET /management/ HTTP/1.1" 200 42997
+INFO 2025-11-18 17:44:37,652 basehttp "GET /management/expense/requests/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:44:37,665 management_views Admin home accessed by admin
+INFO 2025-11-18 17:44:37,697 basehttp "GET /management/ HTTP/1.1" 200 42997
+INFO 2025-11-18 17:44:44,306 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:44:44,327 basehttp "GET /login/ HTTP/1.1" 200 3332
+INFO 2025-11-18 17:45:00,139 basehttp "POST /login/ HTTP/1.1" 200 3105
+INFO 2025-11-18 17:45:04,530 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:45:04,582 basehttp "GET /portal/ HTTP/1.1" 200 19915
+INFO 2025-11-18 17:45:07,352 management_views Admin home accessed by hangpt
+INFO 2025-11-18 17:45:07,378 basehttp "GET /management/ HTTP/1.1" 200 42998
+INFO 2025-11-18 17:45:11,363 basehttp "GET /management/departments/ HTTP/1.1" 200 37784
+WARNING 2025-11-18 17:45:18,430 log Method Not Allowed (GET): /management/departments/83/delete/
+WARNING 2025-11-18 17:45:18,440 basehttp "GET /management/departments/83/delete/ HTTP/1.1" 405 0
+INFO 2025-11-18 17:45:26,728 basehttp "GET /management/job-titles/ HTTP/1.1" 200 36179
+WARNING 2025-11-18 17:45:31,089 log Method Not Allowed (GET): /management/job-titles/62/delete/
+WARNING 2025-11-18 17:45:31,098 basehttp "GET /management/job-titles/62/delete/ HTTP/1.1" 405 0
+INFO 2025-11-18 17:45:54,618 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:45:54,639 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 45730
+INFO 2025-11-18 17:46:00,035 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:46:00,059 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 45730
+INFO 2025-11-18 17:46:00,984 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:46:01,004 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 45730
+INFO 2025-11-18 17:46:01,737 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:46:01,769 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 45730
+INFO 2025-11-18 17:46:02,309 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:46:02,326 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 45730
+INFO 2025-11-18 17:46:02,772 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:46:02,801 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 45730
+INFO 2025-11-18 17:46:16,094 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:46:16,112 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 45730
+INFO 2025-11-18 17:46:17,108 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:46:17,125 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 45730
+INFO 2025-11-18 17:46:18,303 management_views Expense categories viewed by hangpt
+INFO 2025-11-18 17:46:18,319 basehttp "GET /management/expense/categories/ HTTP/1.1" 200 45844
+INFO 2025-11-18 17:46:19,304 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:46:19,564 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 45730
+INFO 2025-11-18 17:46:21,955 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:46:21,979 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 45730
+INFO 2025-11-18 17:46:22,831 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:46:22,854 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 45730
+INFO 2025-11-18 17:46:40,420 management_views Expense 93 approved by Phạm Thị Hằng
+INFO 2025-11-18 17:46:40,438 basehttp "POST /management/expense/requests/93/approve/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:46:40,460 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:46:40,495 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 45499
+INFO 2025-11-18 17:46:44,423 management_views Expense 93 marked as paid by Phạm Thị Hằng
+INFO 2025-11-18 17:46:44,468 basehttp "POST /management/expense/requests/93/mark-paid/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:46:44,487 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:46:44,523 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 45206
+INFO 2025-11-18 17:46:46,307 management_views Expense 93 viewed by hangpt
+INFO 2025-11-18 17:46:46,348 basehttp "GET /management/expense/requests/93/ HTTP/1.1" 200 37934
+INFO 2025-11-18 17:46:53,317 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:46:53,331 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 45206
+INFO 2025-11-18 17:47:18,273 management_views Expense 93 viewed by hangpt
+INFO 2025-11-18 17:47:18,289 basehttp "GET /management/expense/requests/93/ HTTP/1.1" 200 37934
+INFO 2025-11-18 17:47:27,751 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:47:27,763 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 45206
+INFO 2025-11-18 17:47:40,408 basehttp "GET /portal/expenses/ HTTP/1.1" 200 24754
+INFO 2025-11-18 17:47:41,976 basehttp "GET /portal/expenses/create/ HTTP/1.1" 200 16220
+INFO 2025-11-18 17:51:05,116 basehttp "POST /portal/expenses/create/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:51:05,148 basehttp "GET /portal/expenses/ HTTP/1.1" 200 28009
+INFO 2025-11-18 17:51:11,143 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:51:11,166 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 45206
+INFO 2025-11-18 17:51:22,169 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:51:22,185 basehttp "GET /management/expense/requests/?status=pending&employee=&category=&from_date=&to_date= HTTP/1.1" 200 43138
+INFO 2025-11-18 17:51:29,391 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:51:29,409 basehttp "GET /management/expense/requests/?status=&employee=&category=&from_date=&to_date= HTTP/1.1" 200 45206
+INFO 2025-11-18 17:51:35,573 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:51:35,595 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 45206
+INFO 2025-11-18 17:51:40,754 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:51:40,774 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 45206
+INFO 2025-11-18 17:51:41,480 management_views All expenses viewed by hangpt
+INFO 2025-11-18 17:51:41,513 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 45206
+INFO 2025-11-18 17:51:47,020 basehttp "GET /management/org-chart/ HTTP/1.1" 200 68445
+INFO 2025-11-18 17:53:28,774 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:53:28,784 basehttp "GET /login/ HTTP/1.1" 200 3172
+INFO 2025-11-18 17:53:34,148 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:53:34,214 basehttp "GET /portal/ HTTP/1.1" 200 19911
+INFO 2025-11-18 17:53:36,735 basehttp "GET /portal/approvals/ HTTP/1.1" 200 41760
+INFO 2025-11-18 17:53:36,806 basehttp "GET /media/avatars/0d83f6eb2ddb44cb9d446a9af58be3fb_426ee7ce-73d7-4c88-a3ba-ec9c3b268a52.jpg HTTP/1.1" 200 411816
+WARNING 2025-11-18 17:53:41,021 log Method Not Allowed: /portal/team/expenses/126/approve/
+WARNING 2025-11-18 17:53:41,022 basehttp "GET /portal/team/expenses/126/approve/ HTTP/1.1" 405 51
+INFO 2025-11-18 17:53:49,292 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 19947
+INFO 2025-11-18 17:55:23,571 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:55:23,581 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-18 17:55:27,829 basehttp "POST /login/ HTTP/1.1" 200 3105
+INFO 2025-11-18 17:55:45,937 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:55:45,980 basehttp "GET /portal/ HTTP/1.1" 200 19915
+INFO 2025-11-18 17:55:55,430 basehttp "GET /management/contracts/ HTTP/1.1" 200 35238
+INFO 2025-11-18 17:56:12,281 basehttp "GET /management/contracts/expiring/ HTTP/1.1" 200 29323
+INFO 2025-11-18 17:56:14,112 basehttp "GET /management/contracts/ HTTP/1.1" 200 35238
+INFO 2025-11-18 17:56:27,021 basehttp "GET /management/contracts/create/ HTTP/1.1" 200 38835
+INFO 2025-11-18 17:57:47,411 management_views Contract HD2025111880F739 created by hangpt@company.vn
+INFO 2025-11-18 17:57:47,425 basehttp "POST /management/contracts/create/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:57:47,468 basehttp "GET /management/contracts/1/ HTTP/1.1" 200 39260
+INFO 2025-11-18 17:57:53,641 basehttp "GET /management/contracts/1/edit/ HTTP/1.1" 200 38907
+INFO 2025-11-18 17:58:01,652 management_views Contract HD2025111880F739 updated by hangpt@company.vn
+INFO 2025-11-18 17:58:01,665 basehttp "POST /management/contracts/1/edit/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:58:01,702 basehttp "GET /management/contracts/1/ HTTP/1.1" 200 41483
+INFO 2025-11-18 17:58:04,630 basehttp "GET /management/contracts/ HTTP/1.1" 200 36791
+INFO 2025-11-18 17:58:07,019 basehttp "GET /management/contracts/1/ HTTP/1.1" 200 41483
+INFO 2025-11-18 17:58:39,083 management_views Contract HD2025111880F739 renewed to HD20251118FE4733
+INFO 2025-11-18 17:58:39,094 basehttp "POST /management/contracts/1/renew/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:58:39,120 basehttp "GET /management/contracts/2/ HTTP/1.1" 200 40432
+INFO 2025-11-18 17:58:53,066 basehttp "GET /management/contracts/ HTTP/1.1" 200 38342
+INFO 2025-11-18 17:58:58,213 basehttp "GET /management/contracts/2/ HTTP/1.1" 200 40432
+INFO 2025-11-18 17:59:00,324 basehttp "GET /management/contracts/2/edit/ HTTP/1.1" 200 38933
+INFO 2025-11-18 17:59:07,130 management_views Contract HD20251118FE4733 updated by hangpt@company.vn
+INFO 2025-11-18 17:59:07,141 basehttp "POST /management/contracts/2/edit/ HTTP/1.1" 302 0
+INFO 2025-11-18 17:59:07,171 basehttp "GET /management/contracts/2/ HTTP/1.1" 200 42524
+INFO 2025-11-18 17:59:10,869 basehttp "GET /management/contracts/ HTTP/1.1" 200 38353
+INFO 2025-11-18 17:59:26,871 basehttp "GET /management/contracts/create/ HTTP/1.1" 200 38835
+INFO 2025-11-18 18:00:15,991 management_views Contract HD20251118091378 created by hangpt@company.vn
+INFO 2025-11-18 18:00:16,010 basehttp "POST /management/contracts/create/ HTTP/1.1" 302 0
+INFO 2025-11-18 18:00:16,053 basehttp "GET /management/contracts/3/ HTTP/1.1" 200 39819
+INFO 2025-11-18 18:00:22,809 basehttp "GET /management/contracts/ HTTP/1.1" 200 40513
+INFO 2025-11-18 18:00:25,033 basehttp "GET /management/contracts/expiring/ HTTP/1.1" 200 35536
+INFO 2025-11-18 18:00:36,537 basehttp "GET /management/contracts/ HTTP/1.1" 200 40513
+INFO 2025-11-18 18:00:38,554 basehttp "GET /management/contracts/?expiring=true HTTP/1.1" 200 40513
+INFO 2025-11-18 18:00:40,851 basehttp "GET /management/contracts/?expiring=true HTTP/1.1" 200 40513
+INFO 2025-11-18 18:00:42,437 basehttp "GET /management/contracts/?expiring=true HTTP/1.1" 200 40513
+INFO 2025-11-18 18:00:43,121 basehttp "GET /management/contracts/?expiring=true HTTP/1.1" 200 40513
+INFO 2025-11-18 18:00:43,499 basehttp "GET /management/contracts/?expiring=true HTTP/1.1" 200 40513
+INFO 2025-11-18 18:00:43,706 basehttp "GET /management/contracts/?expiring=true HTTP/1.1" 200 40513
+INFO 2025-11-18 18:00:44,042 basehttp "GET /management/contracts/?expiring=true HTTP/1.1" 200 40513
+INFO 2025-11-18 18:00:44,404 basehttp "GET /management/contracts/?expiring=true HTTP/1.1" 200 40513
+INFO 2025-11-18 18:00:44,766 basehttp "GET /management/contracts/?expiring=true HTTP/1.1" 200 40513
+INFO 2025-11-18 18:00:45,044 basehttp "GET /management/contracts/?expiring=true HTTP/1.1" 200 40513
+INFO 2025-11-18 18:00:45,300 basehttp "GET /management/contracts/?expiring=true HTTP/1.1" 200 40513
+INFO 2025-11-18 18:00:47,360 basehttp "GET /management/contracts/expiring/ HTTP/1.1" 200 35536
+INFO 2025-11-18 18:01:04,101 basehttp "GET /management/contracts/ HTTP/1.1" 200 40513
+INFO 2025-11-18 18:01:22,859 basehttp "GET /management/contracts/expiring/ HTTP/1.1" 200 35536
+INFO 2025-11-18 18:01:39,305 management_views Contract HD20251118091378 renewed to HD202511187DAB68
+INFO 2025-11-18 18:01:39,324 basehttp "POST /management/contracts/3/renew/ HTTP/1.1" 302 0
+INFO 2025-11-18 18:01:39,360 basehttp "GET /management/contracts/4/ HTTP/1.1" 200 40850
+INFO 2025-11-18 18:01:43,218 basehttp "GET /management/contracts/ HTTP/1.1" 200 42327
+INFO 2025-11-18 18:01:51,045 basehttp "GET /management/contracts/4/ HTTP/1.1" 200 40850
+INFO 2025-11-18 18:01:52,757 basehttp "GET /management/contracts/4/edit/ HTTP/1.1" 200 38955
+INFO 2025-11-18 18:01:56,826 management_views Contract HD202511187DAB68 updated by hangpt@company.vn
+INFO 2025-11-18 18:01:56,850 basehttp "POST /management/contracts/4/edit/ HTTP/1.1" 302 0
+INFO 2025-11-18 18:01:56,888 basehttp "GET /management/contracts/4/ HTTP/1.1" 200 42942
+INFO 2025-11-18 18:02:03,749 basehttp "GET /management/contracts/ HTTP/1.1" 200 42338
+INFO 2025-11-18 18:07:43,941 basehttp "GET /management/org-chart/ HTTP/1.1" 200 68445
+INFO 2025-11-18 18:10:22,262 basehttp "GET /management/leave/requests/ HTTP/1.1" 200 40738
+INFO 2025-11-18 18:10:34,377 basehttp "GET /management/leave/requests/86/ HTTP/1.1" 200 35286
+INFO 2025-11-18 18:10:40,907 basehttp "GET /management/leave/requests/ HTTP/1.1" 200 40738
+INFO 2025-11-18 18:10:42,972 basehttp "GET /management/leave/requests/76/ HTTP/1.1" 200 34943
+INFO 2025-11-18 18:10:45,739 basehttp "GET /management/leave/requests/ HTTP/1.1" 200 40738
+INFO 2025-11-18 18:10:48,001 basehttp "GET /management/leave/requests/ HTTP/1.1" 200 40738
+INFO 2025-11-18 18:10:49,240 basehttp "GET /management/leave/requests/ HTTP/1.1" 200 40738
+INFO 2025-11-18 18:10:50,093 basehttp "GET /management/leave/types/ HTTP/1.1" 200 46685
+INFO 2025-11-18 18:10:53,258 basehttp "GET /management/leave/history/ HTTP/1.1" 200 40744
+INFO 2025-11-18 18:10:56,122 basehttp "GET /management/leave/requests/ HTTP/1.1" 200 40738
+INFO 2025-11-18 18:11:21,022 basehttp "GET /management/leave/requests/ HTTP/1.1" 200 40738
+INFO 2025-11-18 18:11:31,116 basehttp "GET /portal/approvals/ HTTP/1.1" 200 20529
+INFO 2025-11-19 00:52:41,112 basehttp "GET /management/employees/ HTTP/1.1" 302 0
+INFO 2025-11-19 00:52:41,153 basehttp "GET /login/?next=/management/employees/ HTTP/1.1" 200 2905
+INFO 2025-11-19 00:53:07,783 basehttp "POST /login/?next=/management/employees/ HTTP/1.1" 302 0
+INFO 2025-11-19 00:53:07,876 basehttp "GET /management/employees/ HTTP/1.1" 200 37693
+INFO 2025-11-19 00:53:10,233 basehttp "GET /management/employees/171/ HTTP/1.1" 200 33020
+WARNING 2025-11-19 00:53:10,353 basehttp "GET /static/img/default-profile.png HTTP/1.1" 404 1929
+INFO 2025-11-19 00:53:11,610 management_views Employee Nguyen Van A (EMP001) deleted by hangpt
+INFO 2025-11-19 00:53:11,675 basehttp "POST /management/employees/171/delete/ HTTP/1.1" 302 0
+INFO 2025-11-19 00:53:11,718 basehttp "GET /management/employees/ HTTP/1.1" 200 37706
+INFO 2025-11-19 00:53:15,796 basehttp "GET /management/org-chart/ HTTP/1.1" 200 67400
+INFO 2025-11-19 01:11:43,064 basehttp "GET /management/employees/ HTTP/1.1" 200 37706
+INFO 2025-11-19 01:11:45,271 basehttp "GET /management/employees/?search=a&department=&status= HTTP/1.1" 200 36508
+INFO 2025-11-19 01:11:50,272 basehttp "GET /management/employees/?search=&department=&status= HTTP/1.1" 200 37706
+INFO 2025-11-19 01:11:52,216 basehttp "GET /management/employees/?search=&department=&status= HTTP/1.1" 200 37706
+INFO 2025-11-19 01:11:54,344 basehttp "GET /management/employees/?page=2 HTTP/1.1" 200 37762
+INFO 2025-11-19 01:11:56,125 basehttp "GET /management/employees/?page=3 HTTP/1.1" 200 30647
+INFO 2025-11-19 01:11:57,775 basehttp "GET /management/employees/?page=1 HTTP/1.1" 200 37706
+INFO 2025-11-19 01:12:00,935 basehttp "GET /management/org-chart/ HTTP/1.1" 200 67400
+INFO 2025-11-19 01:12:20,145 basehttp "GET /management/employees/ HTTP/1.1" 200 37706
+INFO 2025-11-19 01:12:21,688 basehttp "GET /management/employees/172/ HTTP/1.1" 200 33025
+WARNING 2025-11-19 01:12:21,784 basehttp "GET /static/img/default-profile.png HTTP/1.1" 404 1929
+INFO 2025-11-19 01:12:23,083 management_views Employee Tran Thi B (MGR001) deleted by hangpt
+INFO 2025-11-19 01:12:23,115 basehttp "POST /management/employees/172/delete/ HTTP/1.1" 302 0
+INFO 2025-11-19 01:12:23,161 basehttp "GET /management/employees/ HTTP/1.1" 200 37543
+INFO 2025-11-19 01:12:25,191 basehttp "GET /management/org-chart/ HTTP/1.1" 200 66354
+ERROR 2025-11-19 01:30:31,976 log Internal Server Error: /management/attendance/add/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 590, in add_attendance
+    return render(request, "hod_template/add_attendance.html", {"employees": employees})
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'get_attendance_data' not found. 'get_attendance_data' is not a valid view function or pattern name.
+ERROR 2025-11-19 01:30:32,007 basehttp "GET /management/attendance/add/ HTTP/1.1" 500 182695
+WARNING 2025-11-19 01:37:33,883 log Not Found: /management/attendance/manage//
+WARNING 2025-11-19 01:37:33,885 basehttp "GET //management/attendance/manage// HTTP/1.1" 404 44275
+ERROR 2025-11-19 01:37:53,483 log Internal Server Error: /management/attendance/manage/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 582, in manage_attendance
+    return render(request, "hod_template/manage_attendance.html", {
+        "attendances": attendances,
+        "departments": departments
+    })
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'delete_attendance' with no arguments not found. 1 pattern(s) tried: ['management/attendance/(?P<attendance_id>[0-9]+)/delete/\\Z']
+ERROR 2025-11-19 01:37:53,488 basehttp "GET /management/attendance/manage/ HTTP/1.1" 500 193369
+INFO 2025-11-19 01:38:47,981 management_views All expenses viewed by hangpt
+INFO 2025-11-19 01:38:48,018 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 44796
+INFO 2025-11-19 01:38:50,118 management_views All expenses viewed by hangpt
+INFO 2025-11-19 01:38:50,140 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 44796
+INFO 2025-11-19 01:38:51,611 management_views All expenses viewed by hangpt
+INFO 2025-11-19 01:38:51,633 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 44796
+INFO 2025-11-19 02:06:34,776 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-19 02:06:34,793 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-19 02:06:55,961 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-19 02:06:56,013 basehttp "GET /portal/ HTTP/1.1" 200 19931
+INFO 2025-11-19 02:06:57,499 basehttp "GET /portal/approvals/ HTTP/1.1" 200 25364
+INFO 2025-11-19 02:07:03,787 management_views Admin home accessed by dungpd
+INFO 2025-11-19 02:07:03,825 basehttp "GET /management/ HTTP/1.1" 200 41771
+WARNING 2025-11-19 02:07:08,297 permissions Permission denied: dungpd tried to access View (ID: None) - Required: One of: HR, Manager - Reason: User not in any of required groups: HR, Manager
+WARNING 2025-11-19 02:07:08,302 log Forbidden (Permission denied): /management/expense/requests/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 181, in _wrapped_view
+    raise PermissionDenied(f"User must be in one of: {group_names}")
+django.core.exceptions.PermissionDenied: User must be in one of: ('HR', 'Manager')
+WARNING 2025-11-19 02:07:08,325 basehttp "GET /management/expense/requests/ HTTP/1.1" 403 135
+WARNING 2025-11-19 02:07:10,581 permissions Permission denied: dungpd tried to access View (ID: None) - Required: One of: HR, Manager - Reason: User not in any of required groups: HR, Manager
+WARNING 2025-11-19 02:07:10,584 log Forbidden (Permission denied): /management/expense/requests/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 181, in _wrapped_view
+    raise PermissionDenied(f"User must be in one of: {group_names}")
+django.core.exceptions.PermissionDenied: User must be in one of: ('HR', 'Manager')
+WARNING 2025-11-19 02:07:10,596 basehttp "GET /management/expense/requests/ HTTP/1.1" 403 135
+INFO 2025-11-19 02:07:15,211 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-19 02:07:15,226 basehttp "GET /login/ HTTP/1.1" 200 3231
+INFO 2025-11-19 02:07:25,309 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-19 02:07:25,384 basehttp "GET /portal/ HTTP/1.1" 200 19915
+INFO 2025-11-19 02:07:27,884 management_views Admin home accessed by hangpt
+INFO 2025-11-19 02:07:27,934 basehttp "GET /management/ HTTP/1.1" 200 41771
+ERROR 2025-11-19 02:27:19,826 log Internal Server Error: /management/payroll/calculate/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 717, in calculate_payroll
+    return render(request, "hod_template/calculate_payroll.html", {
+        "employees": employees,
+        "years": years
+    })
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'get_payroll_data' not found. 'get_payroll_data' is not a valid view function or pattern name.
+ERROR 2025-11-19 02:27:19,833 basehttp "GET /management/payroll/calculate/ HTTP/1.1" 500 181798
+ERROR 2025-11-19 02:46:31,313 log Internal Server Error: /management/payroll/manage/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 165, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 932, in manage_payroll
+    return render(request, "hod_template/manage_payroll.html", {
+        "payrolls": payrolls,
+    ...<2 lines>...
+        "is_hr": is_hr
+    })
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'delete_payroll' not found. 'delete_payroll' is not a valid view function or pattern name.
+ERROR 2025-11-19 02:46:31,320 basehttp "GET /management/payroll/manage/ HTTP/1.1" 500 197366
+INFO 2025-11-19 02:46:54,604 basehttp "GET /management/recruitment/jobs/ HTTP/1.1" 200 61243
+INFO 2025-11-19 02:47:08,102 basehttp "GET /management/recruitment/jobs/11/edit/ HTTP/1.1" 200 46392
+INFO 2025-11-19 02:47:38,665 management_views Job posting JOB2025001 updated by hangpt
+INFO 2025-11-19 02:47:38,677 basehttp "POST /management/recruitment/jobs/11/edit/ HTTP/1.1" 302 0
+ERROR 2025-11-19 02:47:38,776 log Internal Server Error: /management/recruitment/jobs/11/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 2227, in job_detail_admin
+    return render(request, 'hod_template/job_detail_admin.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'delete_job' not found. 'delete_job' is not a valid view function or pattern name.
+ERROR 2025-11-19 02:47:38,782 basehttp "GET /management/recruitment/jobs/11/ HTTP/1.1" 500 193211
+INFO 2025-11-19 02:47:40,889 basehttp "GET /management/recruitment/jobs/11/edit/ HTTP/1.1" 200 46754
+INFO 2025-11-19 02:47:56,041 management_views Job posting JOB2025001 updated by hangpt
+INFO 2025-11-19 02:47:56,061 basehttp "POST /management/recruitment/jobs/11/edit/ HTTP/1.1" 302 0
+ERROR 2025-11-19 02:47:56,159 log Internal Server Error: /management/recruitment/jobs/11/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 2227, in job_detail_admin
+    return render(request, 'hod_template/job_detail_admin.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'delete_job' not found. 'delete_job' is not a valid view function or pattern name.
+ERROR 2025-11-19 02:47:56,165 basehttp "GET /management/recruitment/jobs/11/ HTTP/1.1" 500 193211
+INFO 2025-11-19 02:48:33,562 basehttp "GET /management/recruitment/applications/ HTTP/1.1" 200 177924
+ERROR 2025-11-19 02:48:42,246 log Internal Server Error: /management/recruitment/applications/21/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 2392, in application_detail
+    return render(request, 'hod_template/application_detail.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'update_application' not found. 'update_application' is not a valid view function or pattern name.
+ERROR 2025-11-19 02:48:42,251 basehttp "GET /management/recruitment/applications/21/ HTTP/1.1" 500 194579
+WARNING 2025-11-19 02:49:28,653 log Not Found: /management/management/salary-rules/components/
+WARNING 2025-11-19 02:49:28,655 basehttp "GET /management/management/salary-rules/components/ HTTP/1.1" 404 44323
+INFO 2025-11-19 02:49:31,545 basehttp "GET /management/salary-rules/components/ HTTP/1.1" 200 31971
+INFO 2025-11-19 02:49:43,760 basehttp "GET /management/salary-rules/components/1/edit/ HTTP/1.1" 200 33925
+INFO 2025-11-19 02:49:55,694 basehttp "POST /management/salary-rules/components/1/edit/ HTTP/1.1" 302 0
+INFO 2025-11-19 02:49:55,738 basehttp "GET /management/salary-rules/components/ HTTP/1.1" 200 31971
+INFO 2025-11-19 02:53:24,725 basehttp "GET /management/salary-rules/bulk-assign/ HTTP/1.1" 200 47869
+INFO 2025-11-19 02:53:27,435 basehttp "GET /management/salary-rules/templates/ HTTP/1.1" 200 26699
+INFO 2025-11-19 02:53:31,331 basehttp "GET /management/salary-rules/templates/create/ HTTP/1.1" 200 29102
+INFO 2025-11-19 03:07:29,626 basehttp "GET /management/salary-rules/components/ HTTP/1.1" 200 31971
+INFO 2025-11-19 03:07:31,906 basehttp "GET /management/salary-rules/templates/ HTTP/1.1" 200 26699
+INFO 2025-11-19 03:07:33,090 basehttp "GET /management/salary-rules/bulk-assign/ HTTP/1.1" 200 47869
+INFO 2025-11-19 03:07:33,815 basehttp "GET /management/salary-rules/history/ HTTP/1.1" 200 31364
+INFO 2025-11-19 03:07:34,464 basehttp "GET /management/salary-rules/bulk-assign/ HTTP/1.1" 200 47869
+INFO 2025-11-19 03:07:35,222 basehttp "GET /management/salary-rules/templates/ HTTP/1.1" 200 26699
+INFO 2025-11-19 03:07:36,652 basehttp "GET /management/salary-rules/templates/create/ HTTP/1.1" 200 29102
+INFO 2025-11-19 03:08:21,518 basehttp "POST /management/salary-rules/templates/create/ HTTP/1.1" 200 29102
+INFO 2025-11-19 03:08:23,294 basehttp "GET /management/salary-rules/bulk-assign/ HTTP/1.1" 200 47869
+INFO 2025-11-19 03:08:24,110 basehttp "GET /management/salary-rules/components/ HTTP/1.1" 200 31971
+ERROR 2025-11-19 03:08:24,842 log Internal Server Error: /management/salary-rules/templates/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 128, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 3012, in salary_rule_templates
+    return render(request, 'hod_template/salary_rule_templates.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 238, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'edit_salary_rule_template' not found. 'edit_salary_rule_template' is not a valid view function or pattern name.
+ERROR 2025-11-19 03:08:24,849 basehttp "GET /management/salary-rules/templates/ HTTP/1.1" 500 192204
+INFO 2025-11-19 03:09:18,679 basehttp "GET /management/salary-rules/history/ HTTP/1.1" 200 31364
+INFO 2025-11-19 03:09:25,255 basehttp "GET /management/appraisal/ HTTP/1.1" 200 29952
+INFO 2025-11-19 03:09:28,533 basehttp "GET /management/appraisal/ HTTP/1.1" 200 28756
+INFO 2025-11-19 03:10:02,204 basehttp "GET /management/appraisal/ HTTP/1.1" 200 28756
+INFO 2025-11-19 03:10:03,918 basehttp "GET /management/appraisal/manager/ HTTP/1.1" 200 28762
+INFO 2025-11-19 03:10:06,729 basehttp "GET /management/appraisal/hr/ HTTP/1.1" 200 30890
+INFO 2025-11-19 03:10:11,196 basehttp "GET /management/appraisal/periods/ HTTP/1.1" 200 32342
+ERROR 2025-11-19 03:34:40,470 log Internal Server Error: /management/appraisal/periods/1/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 3663, in appraisal_period_detail
+    return render(request, 'hod_template/appraisal_period_detail.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'generate_appraisals' not found. 'generate_appraisals' is not a valid view function or pattern name.
+ERROR 2025-11-19 03:34:40,477 basehttp "GET /management/appraisal/periods/1/ HTTP/1.1" 500 185260
+INFO 2025-11-19 03:35:27,264 management_views Expense categories viewed by hangpt
+INFO 2025-11-19 03:35:27,281 basehttp "GET /management/expense/categories/ HTTP/1.1" 200 45844
+INFO 2025-11-19 03:36:02,185 management_views Expense category Team Building created
+INFO 2025-11-19 03:36:02,204 basehttp "POST /management/expense/categories/add/ HTTP/1.1" 302 0
+INFO 2025-11-19 03:36:02,221 management_views Expense categories viewed by hangpt
+INFO 2025-11-19 03:36:02,238 basehttp "GET /management/expense/categories/ HTTP/1.1" 200 47152
+ERROR 2025-11-19 03:36:12,861 log Internal Server Error: /management/expense/categories/27/edit/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+TypeError: edit_expense_category_save() got an unexpected keyword argument 'category_id'
+ERROR 2025-11-19 03:36:12,863 basehttp "POST /management/expense/categories/27/edit/ HTTP/1.1" 500 82469
+ERROR 2025-11-19 03:36:20,588 log Internal Server Error: /management/expense/categories/27/edit/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\views\decorators\http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+TypeError: edit_expense_category_save() got an unexpected keyword argument 'category_id'
+ERROR 2025-11-19 03:36:20,590 basehttp "POST /management/expense/categories/27/edit/ HTTP/1.1" 500 82469
+INFO 2025-11-19 03:36:53,380 management_views Expense category Team Building deleted
+INFO 2025-11-19 03:36:53,398 basehttp "POST /management/expense/categories/27/delete/ HTTP/1.1" 302 0
+INFO 2025-11-19 03:36:53,414 management_views Expense categories viewed by hangpt
+INFO 2025-11-19 03:36:53,429 basehttp "GET /management/expense/categories/ HTTP/1.1" 200 45844
+INFO 2025-11-19 03:39:56,385 autoreload D:\Study\CT201\Project\hrm\app\urls_management.py changed, reloading.
+INFO 2025-11-19 03:40:01,640 autoreload Watching for file changes with StatReloader
+INFO 2025-11-19 03:40:19,960 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-11-19 03:40:20,906 autoreload Watching for file changes with StatReloader
+INFO 2025-11-19 04:03:18,412 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-11-19 04:03:19,461 autoreload Watching for file changes with StatReloader
+INFO 2025-11-19 04:46:43,112 autoreload D:\Study\CT201\Project\hrm\app\urls_management.py changed, reloading.
+INFO 2025-11-19 04:46:44,272 autoreload Watching for file changes with StatReloader
+INFO 2025-11-19 21:15:14,583 autoreload Watching for file changes with StatReloader
+INFO 2025-11-19 21:15:25,662 basehttp "GET /management/ HTTP/1.1" 302 0
+INFO 2025-11-19 21:15:25,804 basehttp "GET /login/?next=/management/ HTTP/1.1" 200 3169
+INFO 2025-11-19 21:15:32,901 basehttp "POST /login/?next=/management/ HTTP/1.1" 302 0
+INFO 2025-11-19 21:15:32,919 management_views Admin home accessed by hangpt
+INFO 2025-11-19 21:15:33,131 basehttp "GET /management/ HTTP/1.1" 200 41771
+INFO 2025-11-19 21:15:37,758 management_views Admin home accessed by hangpt
+INFO 2025-11-19 21:15:37,801 basehttp "GET /management/ HTTP/1.1" 200 41771
+INFO 2025-11-19 21:15:39,278 basehttp "GET /management/departments/ HTTP/1.1" 200 38129
+INFO 2025-11-19 21:15:40,170 basehttp "GET /management/job-titles/ HTTP/1.1" 200 37189
+INFO 2025-11-19 21:15:42,918 basehttp "GET /management/leave/requests/ HTTP/1.1" 200 40738
+INFO 2025-11-19 21:18:02,593 basehttp "GET /portal/ HTTP/1.1" 200 19915
+INFO 2025-11-19 21:18:07,164 basehttp "GET /portal/profile/ HTTP/1.1" 200 21088
+INFO 2025-11-19 21:18:07,340 basehttp "GET /static/dist/img/avatar.png HTTP/1.1" 200 8543
+INFO 2025-11-20 09:28:47,490 autoreload D:\Study\CT201\Project\hrm\app\urls_management.py changed, reloading.
+INFO 2025-11-20 09:28:47,919 autoreload D:\Study\CT201\Project\hrm\app\urls_management.py changed, reloading.
+INFO 2025-11-20 09:28:52,891 autoreload Watching for file changes with StatReloader
+INFO 2025-11-20 09:28:52,891 autoreload Watching for file changes with StatReloader

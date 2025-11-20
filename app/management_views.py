@@ -1457,10 +1457,9 @@ def add_expense_category_save(request):
 
 @login_required
 @require_POST
-def edit_expense_category_save(request):
+def edit_expense_category_save(request, category_id):
     """Chỉnh sửa danh mục chi phí"""
     try:
-        category_id = request.POST.get('category_id')
         category = ExpenseCategory.objects.get(id=category_id)
         
         form = ExpenseCategoryForm(request.POST, instance=category)

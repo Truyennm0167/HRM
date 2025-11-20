@@ -7,6 +7,10 @@
 {% endblock page_title %}
 
 {% block custom_css %}
+<script>
+    // Django URL for update application status
+    const UPDATE_APPLICATION_STATUS_URL = "{% url 'update_application_status' 0 %}";
+</script>
 <style>
     /* Override AdminLTE styles */
     .content {
@@ -460,7 +464,7 @@ $(document).ready(function() {
     
     function updateApplicationStatus(applicationId, newStatus, evt) {
         $.ajax({
-            url: '/recruitment/applications/' + applicationId + '/status/',
+            url: UPDATE_APPLICATION_STATUS_URL.replace('0', applicationId),
             method: 'POST',
             data: JSON.stringify({
                 status: newStatus

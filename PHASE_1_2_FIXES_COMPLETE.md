@@ -23,11 +23,16 @@ Fixed 16 NoReverseMatch errors by adding backward compatibility URL aliases in `
 
    - Added URL aliases without `management_` prefix
    - File: `app/urls_management.py` lines 158-159
+     Lỗi: NoReverseMatch at /management/attendance/add/
+     Reverse for 'get_attendance_data' not found. 'get_attendance_data' is not a valid view function or pattern name.
 
 2. **Expense Categories** (`edit_expense_category_save`)
 
    - Added URL alias with category_id parameter
    - File: `app/urls_management.py` line 183
+
+Lỗi: TypeError at /management/expense/categories/26/edit/
+edit_expense_category_save() got an unexpected keyword argument 'category_id'
 
 3. **Recruitment Jobs** (`job_detail_admin`)
 

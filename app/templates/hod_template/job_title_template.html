@@ -154,14 +154,36 @@ Chức vụ
       deleteButton.textContent = 'Xóa chức vụ';
       deleteButton.onclick = function () {
         if (confirm("Bạn có chắc chắn muốn xóa chức vụ này không?")) {
-          window.location.href = `/management/job-titles/${id}/delete/`;
+          // Create form and submit via POST
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = `/management/job-titles/${id}/delete/`;
+          const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+          const csrfInput = document.createElement('input');
+          csrfInput.type = 'hidden';
+          csrfInput.name = 'csrfmiddlewaretoken';
+          csrfInput.value = csrfToken;
+          form.appendChild(csrfInput);
+          document.body.appendChild(form);
+          form.submit();
         }
       };
       document.querySelector('.card-footer').prepend(deleteButton);
     } else {
       document.getElementById('delete_button').onclick = function () {
         if (confirm("Bạn có chắc chắn muốn xóa chức vụ này không?")) {
-          window.location.href = `/management/job-titles/${id}/delete/`;
+          // Create form and submit via POST
+          const form = document.createElement('form');
+          form.method = 'POST';
+          form.action = `/management/job-titles/${id}/delete/`;
+          const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+          const csrfInput = document.createElement('input');
+          csrfInput.type = 'hidden';
+          csrfInput.name = 'csrfmiddlewaretoken';
+          csrfInput.value = csrfToken;
+          form.appendChild(csrfInput);
+          document.body.appendChild(form);
+          form.submit();
         }
       };
     }
