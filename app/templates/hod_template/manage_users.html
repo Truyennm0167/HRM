@@ -1,0 +1,175 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}Quản Lý Người Dùng{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản Lý Người Dùng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item active">Quản lý người dùng</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            {% endfor %}
+        {% endif %}
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Danh Sách Người Dùng</h3>
+                        <div class="card-tools">
+                            <a href="{% url 'management_create_user' %}" class="btn btn-sm btn-success">
+                                <i class="fas fa-plus"></i> Tạo Người Dùng Mới
+                            </a>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table id="users_table" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>STT</th>
+                                    <th>Username</th>
+                                    <th>Email</th>
+                                    <th>Họ Tên</th>
+                                    <th>Nhóm Quyền</th>
+                                    <th>Trạng Thái</th>
+                                    <th>Ngày Tạo</th>
+                                    <th>Thao Tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for user in users %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>
+                                        <strong>{{ user.username }}</strong>
+                                        {% if user.is_superuser %}
+                                        <span class="badge badge-danger ml-1">Superuser</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ user.email }}</td>
+                                    <td>{{ user.first_name }} {{ user.last_name }}</td>
+                                    <td>
+                                        {% for group in user.groups.all %}
+                                        <span class="badge 
+                                            {% if group.name == 'HR' %}badge-success
+                                            {% elif group.name == 'Manager' %}badge-primary
+                                            {% elif group.name == 'Employee' %}badge-info
+                                            {% else %}badge-secondary{% endif %}">
+                                            {{ group.name }}
+                                        </span>
+                                        {% empty %}
+                                        <span class="text-muted">Chưa có nhóm</span>
+                                        {% endfor %}
+                                    </td>
+                                    <td>
+                                        {% if user.is_active %}
+                                        <span class="badge badge-success">Hoạt động</span>
+                                        {% else %}
+                                        <span class="badge badge-danger">Khóa</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ user.date_joined|date:"d/m/Y H:i" }}</td>
+                                    <td>
+                                        <a href="{% url 'management_edit_user' user.id %}" class="btn btn-sm btn-primary" title="Chỉnh sửa">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        {% if not user.is_superuser %}
+                                        <button class="btn btn-sm btn-danger delete-user" 
+                                                data-id="{{ user.id }}" 
+                                                data-username="{{ user.username }}" 
+                                                title="Xóa">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+$(document).ready(function() {
+    $('#users_table').DataTable({
+        "responsive": true,
+        "lengthChange": true,
+        "autoWidth": false,
+        "pageLength": 25,
+        "order": [[6, "desc"]], // Sort by date created
+        "language": {
+            "search": "Tìm kiếm:",
+            "lengthMenu": "Hiển thị _MENU_ bản ghi",
+            "info": "Hiển thị _START_ đến _END_ của _TOTAL_ bản ghi",
+            "infoEmpty": "Không có bản ghi nào",
+            "infoFiltered": "(được lọc từ _MAX_ bản ghi)",
+            "zeroRecords": "Không tìm thấy bản ghi nào",
+            "paginate": {
+                "first": "Đầu",
+                "last": "Cuối",
+                "next": "Tiếp",
+                "previous": "Trước"
+            }
+        }
+    });
+
+    // Delete user
+    $('.delete-user').click(function() {
+        var userId = $(this).data('id');
+        var username = $(this).data('username');
+        
+        if (confirm('Bạn có chắc muốn xóa người dùng "' + username + '"?\n\nCảnh báo: Thao tác này không thể hoàn tác!')) {
+            $.ajax({
+                url: "{% url 'management_delete_user' 0 %}".replace('0', userId),
+                type: "POST",
+                headers: {
+                    'X-CSRFToken': "{{ csrf_token }}"
+                },
+                success: function(response) {
+                    if (response.status === "success") {
+                        alert(response.message);
+                        location.reload();
+                    } else {
+                        alert("Lỗi: " + response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", status, error);
+                    alert("Lỗi kết nối: " + error);
+                }
+            });
+        }
+    });
+});
+</script>
+{% endblock custom_js %}

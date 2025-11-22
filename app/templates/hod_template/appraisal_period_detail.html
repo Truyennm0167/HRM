@@ -197,6 +197,7 @@
                                         <th>Trọng số</th>
                                         <th>Điểm tối đa</th>
                                         <th>Mô tả</th>
+                                        <th>Thao tác</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -217,6 +218,14 @@
                                         <td><strong>{{ c.weight }}%</strong></td>
                                         <td>{{ c.max_score }}</td>
                                         <td><small>{{ c.description|truncatewords:15 }}</small></td>
+                                        <td>
+                                            <a href="{% url 'management_edit_appraisal_criteria' c.id %}" class="btn btn-sm btn-primary" title="Chỉnh sửa">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <button class="btn btn-sm btn-danger delete-criteria" data-id="{{ c.id }}" data-name="{{ c.name }}" title="Xóa">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </td>
                                     </tr>
                                     {% endfor %}
                                 </tbody>
@@ -313,6 +322,34 @@ $(document).ready(function() {
         "autoWidth": false,
         "language": {
             "url": "//cdn.datatables.net/plug-ins/1.10.24/i18n/Vietnamese.json"
+        }
+    });
+
+    // Delete criteria
+    $('.delete-criteria').click(function() {
+        var criteriaId = $(this).data('id');
+        var criteriaName = $(this).data('name');
+        
+        if (confirm('Bạn có chắc muốn xóa tiêu chí "' + criteriaName + '"?')) {
+            $.ajax({
+                url: "{% url 'management_delete_appraisal_criteria' 0 %}".replace('0', criteriaId),
+                type: "POST",
+                headers: {
+                    'X-CSRFToken': "{{ csrf_token }}"
+                },
+                success: function(response) {
+                    if (response.status === "success") {
+                        alert(response.message);
+                        location.reload();
+                    } else {
+                        alert("Lỗi: " + response.message);
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("AJAX Error:", status, error);
+                    alert("Lỗi kết nối: " + error);
+                }
+            });
         }
     });
 });

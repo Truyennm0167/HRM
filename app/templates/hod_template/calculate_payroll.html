@@ -1,4 +1,5 @@
 {% extends 'hod_template/base_template.html' %}
+{% load humanize %}
 {% block page_title %}
 Tính Lương
 {% endblock page_title %}
@@ -27,9 +28,18 @@ Tính Lương
                                 <div class="form-group">
                                     <label>Tháng</label>
                                     <select class="form-control" id="month">
-                                        {% for i in "123456789101112"|make_list %}
-                                        <option value="{{ i }}">{{ i }}</option>
-                                        {% endfor %}
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
                                     </select>
                                 </div>
                             </div>
@@ -136,6 +146,16 @@ Tính Lương
 {% endblock main_content %}
 {% block custom_js %}
 <script>
+    // Global format function for thousand separator
+    function formatNumber(num) {
+        if (!num && num !== 0) return '';
+        return Math.round(num).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
+    
+    function unformatNumber(str) {
+        return parseFloat(str.replace(/,/g, '')) || 0;
+    }
+
     $(document).ready(function() {
         // Lấy danh sách năm từ năm hiện tại trở về trước 5 năm
         var currentYear = new Date().getFullYear();
@@ -144,6 +164,24 @@ Tính Lương
             years.push(i);
         }
         $("#year").html(years.map(year => `<option value="${year}">${year}</option>`).join(''));
+
+        // If edit mode, populate form with existing payroll data
+        {% if edit_mode and payroll %}
+        $("#employee").val({{ payroll.employee.id }});
+        $("#month").val({{ payroll.month }});
+        $("#year").val({{ payroll.year }});
+        $("#hidden_employee_id").val({{ payroll.employee.id }});
+        $("#hidden_month").val({{ payroll.month }});
+        $("#hidden_year").val({{ payroll.year }});
+        $(".base-salary").val({{ payroll.base_salary }});
+        $(".salary-coefficient").val({{ payroll.salary_coefficient }});
+        $(".hourly-rate").val({{ payroll.hourly_rate }});
+        $(".total-hours").val({{ payroll.total_working_hours }});
+        $(".bonus").val({{ payroll.bonus }});
+        $(".penalty").val({{ payroll.penalty }});
+        $(".total-salary").val({{ payroll.total_salary }});
+        $("input[name='notes']").val("{{ payroll.notes|default:'' }}");
+        {% endif %}
 
         // Tự động tính lại tổng lương khi thay đổi thưởng/phạt
         $(".bonus, .penalty").change(function() {
@@ -177,14 +215,14 @@ Tính Lương
                 },
                 success: function(response) {
                     if(response.status == "success") {
-                        // Cập nhật dữ liệu
-                        $(".base-salary").val(response.data.base_salary);
+                        // Cập nhật dữ liệu với format
+                        $(".base-salary").val(formatNumber(response.data.base_salary));
                         $(".salary-coefficient").val(response.data.salary_coefficient);
-                        $(".hourly-rate").val(response.data.hourly_rate);
+                        $(".hourly-rate").val(formatNumber(response.data.hourly_rate));
                         $(".total-hours").val(response.data.total_working_hours);
-                        $(".bonus").val(response.data.bonus);
-                        $(".penalty").val(response.data.penalty);
-                        $(".total-salary").val(response.data.total_salary);
+                        $(".bonus").val(formatNumber(response.data.bonus));
+                        $(".penalty").val(formatNumber(response.data.penalty));
+                        $(".total-salary").val(formatNumber(response.data.total_salary));
                         $("input[name='notes']").val(response.data.notes);
                     } else {
                         alert(response.message || "Có lỗi xảy ra khi tính lương");
@@ -193,16 +231,30 @@ Tính Lương
             });
         });
 
+        // Auto-format number fields on blur
+        $(".base-salary, .hourly-rate, .bonus, .penalty").on('blur', function() {
+            var value = unformatNumber($(this).val());
+            $(this).val(formatNumber(value));
+            
+            // Recalculate total if needed
+            var hourlyRate = unformatNumber($(".hourly-rate").val()) || 0;
+            var totalHours = parseFloat($(".total-hours").val()) || 0;
+            var bonus = unformatNumber($(".bonus").val()) || 0;
+            var penalty = unformatNumber($(".penalty").val()) || 0;
+            var totalSalary = Math.round((hourlyRate * totalHours) + bonus - penalty);
+            $(".total-salary").val(formatNumber(totalSalary));
+        });
+        
         // Xử lý khi form được submit
         $("form").submit(function(e) {
             e.preventDefault();
             
-            // Lấy giá trị từ các trường input
-            var baseSalary = parseFloat($(".base-salary").val().replace(/[^\d.-]/g, '')) || 0;
-            var hourlyRate = parseFloat($(".hourly-rate").val().replace(/[^\d.-]/g, '')) || 0;
+            // Lấy giá trị từ các trường input (remove commas)
+            var baseSalary = unformatNumber($(".base-salary").val()) || 0;
+            var hourlyRate = unformatNumber($(".hourly-rate").val()) || 0;
             var totalHours = parseFloat($(".total-hours").val()) || 0;
-            var bonus = parseFloat($(".bonus").val()) || 0;
-            var penalty = parseFloat($(".penalty").val()) || 0;
+            var bonus = unformatNumber($(".bonus").val()) || 0;
+            var penalty = unformatNumber($(".penalty").val()) || 0;
             var totalSalary = Math.round((hourlyRate * totalHours) + bonus - penalty);
 
             // Cập nhật giá trị trước khi submit

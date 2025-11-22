@@ -14,7 +14,7 @@
                     <div class="card-body">
                         <div class="form-group">
                             <label>Ngày Chấm Công</label>
-                            <input type="date" class="form-control" name="attendance_date" id="attendance_date" value="{{ attendance_date }}" required>
+                            <input type="date" class="form-control" name="attendance_date" id="attendance_date" value="{% if attendance_date %}{{ attendance_date }}{% else %}{{ today|date:'Y-m-d' }}{% endif %}" required>
                         </div>
                     </div>
                 </div>

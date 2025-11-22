@@ -224,7 +224,7 @@ Cập nhật nhân viên
       <!-- Submit -->
       <div class="card-footer d-flex justify-content-between">
         <button type="submit" class="btn btn-warning w-100 mr-2">Cập nhật</button>
-        <a href="{% url 'delete_employee' employee.id %}" class="btn btn-danger w-100">Xóa</a>
+        <button type="button" class="btn btn-danger w-100" onclick="deleteEmployee({{ employee.id }})">Xóa</button>
       </div>
     </form>
   </div>
@@ -241,5 +241,20 @@ Cập nhật nhân viên
       preview.style.display = "block";
     }
   });
+
+  function deleteEmployee(employeeId) {
+    if (confirm('Bạn có chắc chắn muốn xóa nhân viên này?')) {
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = '/management/employees/' + employeeId + '/delete/';
+      const csrfInput = document.createElement('input');
+      csrfInput.type = 'hidden';
+      csrfInput.name = 'csrfmiddlewaretoken';
+      csrfInput.value = document.querySelector('[name=csrfmiddlewaretoken]').value;
+      form.appendChild(csrfInput);
+      document.body.appendChild(form);
+      form.submit();
+    }
+  }
 </script>
 {% endblock custom_js %}

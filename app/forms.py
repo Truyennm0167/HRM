@@ -474,6 +474,12 @@ class AppraisalCriteriaForm(forms.ModelForm):
             'max_score': forms.NumberInput(attrs={'class': 'form-control', 'value': '5', 'min': '1'}),
             'order': forms.NumberInput(attrs={'class': 'form-control', 'value': '0'}),
         }
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Make order field optional with default value
+        self.fields['order'].required = False
+        self.fields['order'].initial = 0
 
 
 class SelfAssessmentForm(forms.ModelForm):

@@ -155,18 +155,22 @@ Quản Lý Bảng Chấm Công
             var id = $(this).data('id');
             if (confirm('Bạn có chắc chắn muốn xóa bảng chấm công này?')) {
                 $.ajax({
-                    url: "{% url 'delete_attendance' %}",
+                    url: "/management/attendance/" + id + "/delete/",
                     type: "POST",
                     data: {
-                        id: id,
                         csrfmiddlewaretoken: "{{ csrf_token }}"
                     },
                     success: function(response) {
                         if (response.status == "success") {
                             location.reload();
                         } else {
-                            alert("Có lỗi xảy ra khi xóa bảng chấm công");
+                            alert("Có lỗi xảy ra: " + (response.message || "Không xóa được"));
                         }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("AJAX Error:", status, error);
+                        console.error("Response:", xhr.responseText);
+                        alert("Lỗi kết nối: " + error);
                     }
                 });
             }

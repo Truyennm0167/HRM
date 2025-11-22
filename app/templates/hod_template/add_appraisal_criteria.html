@@ -1,7 +1,7 @@
 {% extends 'hod_template/base_template.html' %}
 {% load static %}
 
-{% block page_title %}Thêm Tiêu Chí Đánh Giá{% endblock page_title %}
+{% block page_title %}{% if is_edit %}Chỉnh Sửa{% else %}Thêm{% endif %} Tiêu Chí Đánh Giá{% endblock page_title %}
 
 {% block main_content %}
 <!-- Content Header -->
@@ -9,14 +9,14 @@
     <div class="container-fluid">
         <div class="row mb-2">
             <div class="col-sm-6">
-                <h1>Thêm Tiêu Chí Đánh Giá</h1>
+                <h1>{% if is_edit %}Chỉnh Sửa{% else %}Thêm{% endif %} Tiêu Chí Đánh Giá</h1>
             </div>
             <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                     <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
                     <li class="breadcrumb-item"><a href="{% url 'appraisal_periods' %}">Kỳ đánh giá</a></li>
                     <li class="breadcrumb-item"><a href="{% url 'appraisal_period_detail' period.id %}">{{ period.name }}</a></li>
-                    <li class="breadcrumb-item active">Thêm tiêu chí</li>
+                    <li class="breadcrumb-item active">{% if is_edit %}Chỉnh sửa{% else %}Thêm{% endif %} tiêu chí</li>
                 </ol>
             </div>
         </div>
@@ -33,7 +33,7 @@
                         <h3 class="card-title">Thông tin tiêu chí (KPI)</h3>
                     </div>
                     
-                    <form method="POST" action="{% url 'add_appraisal_criteria' period.id %}">
+                    <form method="POST" {% if is_edit %}action="{% url 'management_edit_appraisal_criteria' criteria.id %}"{% else %}action="{% url 'add_appraisal_criteria' period.id %}"{% endif %}>
                         {% csrf_token %}
                         <div class="card-body">
                             {% if messages %}
@@ -131,7 +131,7 @@
 
                         <div class="card-footer">
                             <button type="submit" class="btn btn-success">
-                                <i class="fas fa-plus"></i> Thêm tiêu chí
+                                <i class="fas {% if is_edit %}fa-save{% else %}fa-plus{% endif %}"></i> {% if is_edit %}Cập nhật{% else %}Thêm{% endif %} tiêu chí
                             </button>
                             <a href="{% url 'appraisal_period_detail' period.id %}" class="btn btn-secondary">
                                 <i class="fas fa-arrow-left"></i> Quay lại

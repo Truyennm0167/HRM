@@ -1,0 +1,288 @@
+{% extends 'hod_template/base_template.html' %}
+{% load static %}
+
+{% block page_title %}{% if is_edit %}Chỉnh Sửa{% else %}Tạo{% endif %} Người Dùng{% endblock page_title %}
+
+{% block main_content %}
+<!-- Content Header -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>{% if is_edit %}Chỉnh Sửa{% else %}Tạo{% endif %} Người Dùng</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Trang chủ</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'management_manage_users' %}">Người dùng</a></li>
+                    <li class="breadcrumb-item active">{% if is_edit %}Chỉnh sửa{% else %}Tạo mới{% endif %}</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Thông Tin Người Dùng</h3>
+                    </div>
+                    
+                    <form method="POST" {% if is_edit %}action="{% url 'management_edit_user' user_obj.id %}"{% else %}action="{% url 'management_create_user' %}"{% endif %}>
+                        {% csrf_token %}
+                        <div class="card-body">
+                            <!-- Username -->
+                            <div class="form-group">
+                                <label for="username">Username <span class="text-danger">*</span></label>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="username" 
+                                       name="username" 
+                                       value="{{ user_obj.username|default:'' }}" 
+                                       required
+                                       {% if is_edit %}readonly{% endif %}>
+                                <small class="form-text text-muted">
+                                    {% if is_edit %}Username không thể thay đổi{% else %}Chỉ chứa chữ cái, số, và @/./+/-/_{% endif %}
+                                </small>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="form-group">
+                                <label for="email">Email <span class="text-danger">*</span></label>
+                                <input type="email" 
+                                       class="form-control" 
+                                       id="email" 
+                                       name="email" 
+                                       value="{{ user_obj.email|default:'' }}" 
+                                       required>
+                            </div>
+
+                            <!-- Full Name -->
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="first_name">Họ và Tên Đệm</label>
+                                        <input type="text" 
+                                               class="form-control" 
+                                               id="first_name" 
+                                               name="first_name" 
+                                               value="{{ user_obj.first_name|default:'' }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="last_name">Tên</label>
+                                        <input type="text" 
+                                               class="form-control" 
+                                               id="last_name" 
+                                               name="last_name" 
+                                               value="{{ user_obj.last_name|default:'' }}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Password (only for create) -->
+                            {% if not is_edit %}
+                            <div class="form-group">
+                                <label for="password">Mật Khẩu <span class="text-danger">*</span></label>
+                                <input type="password" 
+                                       class="form-control" 
+                                       id="password" 
+                                       name="password" 
+                                       required>
+                                <small class="form-text text-muted">
+                                    Tối thiểu 8 ký tự, không được quá đơn giản
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <label for="password2">Xác Nhận Mật Khẩu <span class="text-danger">*</span></label>
+                                <input type="password" 
+                                       class="form-control" 
+                                       id="password2" 
+                                       name="password2" 
+                                       required>
+                            </div>
+                            {% endif %}
+
+                            <!-- Groups/Roles -->
+                            <div class="form-group">
+                                <label>Nhóm Quyền <span class="text-danger">*</span></label>
+                                <div class="row">
+                                    {% for group in all_groups %}
+                                    <div class="col-md-4">
+                                        <div class="custom-control custom-checkbox">
+                                            <input type="checkbox" 
+                                                   class="custom-control-input" 
+                                                   id="group_{{ group.id }}" 
+                                                   name="groups" 
+                                                   value="{{ group.id }}"
+                                                   {% if group in user_obj.groups.all %}checked{% endif %}>
+                                            <label class="custom-control-label" for="group_{{ group.id }}">
+                                                {{ group.name }}
+                                            </label>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <small class="form-text text-muted">
+                                    <strong>HR:</strong> Toàn quyền quản lý<br>
+                                    <strong>Manager:</strong> Quản lý phòng ban, đánh giá nhân viên<br>
+                                    <strong>Employee:</strong> Quyền cơ bản
+                                </small>
+                            </div>
+
+                            <!-- Link to Employee -->
+                            <div class="form-group">
+                                <label for="employee_id">Liên Kết Với Nhân Viên (tùy chọn)</label>
+                                <select class="form-control select2" id="employee_id" name="employee_id">
+                                    <option value="">-- Không liên kết --</option>
+                                    {% for emp in employees %}
+                                    <option value="{{ emp.id }}" 
+                                            {% if user_obj.employee and emp.id == user_obj.employee.id %}selected{% endif %}>
+                                        {{ emp.employee_code }} - {{ emp.name }} ({{ emp.department.name }})
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                                <small class="form-text text-muted">
+                                    Liên kết tài khoản với hồ sơ nhân viên (dựa trên email)
+                                </small>
+                            </div>
+
+                            <!-- Status -->
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    <input type="checkbox" 
+                                           class="custom-control-input" 
+                                           id="is_active" 
+                                           name="is_active"
+                                           {% if not is_edit or user_obj.is_active %}checked{% endif %}>
+                                    <label class="custom-control-label" for="is_active">
+                                        Tài khoản hoạt động
+                                    </label>
+                                </div>
+                                <small class="form-text text-muted">
+                                    Bỏ chọn để khóa tài khoản (không cho phép đăng nhập)
+                                </small>
+                            </div>
+
+                            {% if is_edit %}
+                            <!-- Change Password Section -->
+                            <hr>
+                            <h5>Đổi Mật Khẩu (tùy chọn)</h5>
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle"></i> Chỉ điền nếu muốn thay đổi mật khẩu
+                            </div>
+                            <div class="form-group">
+                                <label for="new_password">Mật Khẩu Mới</label>
+                                <input type="password" 
+                                       class="form-control" 
+                                       id="new_password" 
+                                       name="new_password">
+                            </div>
+                            <div class="form-group">
+                                <label for="new_password2">Xác Nhận Mật Khẩu Mới</label>
+                                <input type="password" 
+                                       class="form-control" 
+                                       id="new_password2" 
+                                       name="new_password2">
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-save"></i> {% if is_edit %}Cập Nhật{% else %}Tạo Người Dùng{% endif %}
+                            </button>
+                            <a href="{% url 'management_manage_users' %}" class="btn btn-secondary">
+                                <i class="fas fa-arrow-left"></i> Quay Lại
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock main_content %}
+
+{% block custom_js %}
+<script>
+$(document).ready(function() {
+    // Initialize Select2
+    $('.select2').select2({
+        theme: 'bootstrap4',
+        placeholder: '-- Chọn nhân viên --',
+        allowClear: true
+    });
+
+    // Password validation
+    {% if not is_edit %}
+    $('form').submit(function(e) {
+        var password = $('#password').val();
+        var password2 = $('#password2').val();
+        
+        if (password !== password2) {
+            e.preventDefault();
+            alert('Mật khẩu xác nhận không khớp!');
+            return false;
+        }
+        
+        if (password.length < 8) {
+            e.preventDefault();
+            alert('Mật khẩu phải có ít nhất 8 ký tự!');
+            return false;
+        }
+    });
+    {% else %}
+    $('form').submit(function(e) {
+        var newPassword = $('#new_password').val();
+        var newPassword2 = $('#new_password2').val();
+        
+        // Only validate if user entered new password
+        if (newPassword || newPassword2) {
+            if (newPassword !== newPassword2) {
+                e.preventDefault();
+                alert('Mật khẩu xác nhận không khớp!');
+                return false;
+            }
+            
+            if (newPassword.length < 8) {
+                e.preventDefault();
+                alert('Mật khẩu phải có ít nhất 8 ký tự!');
+                return false;
+            }
+        }
+    });
+    {% endif %}
+
+    // Auto-suggest employee based on email
+    $('#email').on('blur', function() {
+        var email = $(this).val();
+        if (email && !$('#employee_id').val()) {
+            // Try to find matching employee
+            $('#employee_id option').each(function() {
+                if ($(this).text().indexOf(email) !== -1) {
+                    $('#employee_id').val($(this).val()).trigger('change');
+                    return false;
+                }
+            });
+        }
+    });
+});
+</script>
+{% endblock custom_js %}

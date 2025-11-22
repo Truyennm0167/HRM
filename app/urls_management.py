@@ -39,7 +39,6 @@ urlpatterns = [
     path('attendance/check-date/', management_views.check_attendance_date, name='management_check_attendance_date'),
     path('attendance/get-data/', management_views.get_attendance_data, name='management_get_attendance_data'),
     path('attendance/<int:attendance_id>/edit/', management_views.edit_attendance, name='management_edit_attendance'),
-    path('attendance/delete/', management_views.delete_attendance, name='management_delete_attendance'),
     path('attendance/export/', management_views.export_attendance, name='management_export_attendance'),
     
     # Payroll Management
@@ -118,12 +117,20 @@ urlpatterns = [
     path('appraisal/periods/create/', management_views.create_appraisal_period, name='management_create_appraisal_period'),
     path('appraisal/periods/<int:period_id>/', management_views.appraisal_period_detail, name='management_appraisal_period_detail'),
     path('appraisal/periods/<int:period_id>/add-criteria/', management_views.add_appraisal_criteria, name='management_add_appraisal_criteria'),
+    path('appraisal/criteria/<int:criteria_id>/edit/', management_views.edit_appraisal_criteria, name='management_edit_appraisal_criteria'),
+    path('appraisal/criteria/<int:criteria_id>/delete/', management_views.delete_appraisal_criteria, name='management_delete_appraisal_criteria'),
     path('appraisal/periods/<int:period_id>/generate/', management_views.generate_appraisals, name='management_generate_appraisals'),
     path('appraisal/manager/', management_views.manager_appraisals, name='management_manager_appraisals'),
     path('appraisal/<int:appraisal_id>/manager-review/', management_views.manager_review, name='management_manager_review'),
     path('appraisal/hr/', management_views.hr_appraisals, name='management_hr_appraisals'),
     path('appraisal/<int:appraisal_id>/hr-review/', management_views.hr_final_review, name='management_hr_final_review'),
     path('appraisal/<int:appraisal_id>/detail/', management_views.appraisal_detail, name='management_appraisal_detail'),
+    
+    # User Management
+    path('users/', management_views.manage_users, name='management_manage_users'),
+    path('users/create/', management_views.create_user, name='management_create_user'),
+    path('users/<int:user_id>/edit/', management_views.edit_user, name='management_edit_user'),
+    path('users/<int:user_id>/delete/', management_views.delete_user, name='management_delete_user'),
     
     # ========================================
     # BACKWARD COMPATIBILITY ALIASES
@@ -132,6 +139,7 @@ urlpatterns = [
     
     # Old names without 'management_' prefix
     path('', management_views.admin_home, name='admin_home'),
+    path('appraisal/<int:appraisal_id>/detail/', management_views.appraisal_detail, name='appraisal_detail'),  # Backward compatibility
     path('contracts/', management_views.manage_contracts, name='manage_contracts'),
     path('contracts/create/', management_views.create_contract, name='create_contract'),
     path('contracts/<int:contract_id>/', management_views.contract_detail, name='contract_detail'),
@@ -206,6 +214,10 @@ urlpatterns = [
     path('recruitment/applications/<int:application_id>/', management_views.application_detail, name='application_detail'),
     path('recruitment/applications/<int:application_id>/update/', management_views.update_application, name='update_application'),  # Backward compatibility
     path('recruitment/applications/<int:application_id>/status/', management_views.update_application_status, name='update_application_status'),  # Backward compatibility
+    path('recruitment/applications/<int:application_id>/note/', management_views.add_application_note, name='add_application_note'),  # Backward compatibility
+    path('recruitment/applications/<int:application_id>/convert/', management_views.convert_to_employee, name='convert_to_employee'),  # Backward compatibility
+    
+    path('payroll/confirm/', management_views.confirm_payroll, name='confirm_payroll'),  # Backward compatibility
     
     path('salary-rules/components/', management_views.salary_components, name='salary_components'),
     path('salary-rules/components/create/', management_views.create_salary_component, name='create_salary_component'),  # Backward compatibility
@@ -214,6 +226,7 @@ urlpatterns = [
     path('salary-rules/templates/', management_views.salary_rule_templates, name='salary_rule_templates'),
     path('salary-rules/templates/create/', management_views.create_salary_rule_template, name='create_salary_rule_template'),
     path('salary-rules/templates/<int:template_id>/edit/', management_views.edit_salary_rule_template, name='edit_salary_rule_template'),  # Backward compatibility
+    path('salary-rules/template-item/<int:item_id>/delete/', management_views.delete_template_item, name='delete_template_item'),  # Backward compatibility
     path('salary-rules/history/', management_views.salary_calculation_history, name='salary_calculation_history'),
     path('salary-rules/employee/<int:employee_id>/', management_views.employee_salary_rules, name='employee_salary_rules'),
     
@@ -221,6 +234,7 @@ urlpatterns = [
     path('appraisal/periods/create/', management_views.create_appraisal_period, name='create_appraisal_period'),  # Backward compatibility
     path('appraisal/periods/<int:period_id>/', management_views.appraisal_period_detail, name='appraisal_period_detail'),
     path('appraisal/periods/<int:period_id>/generate/', management_views.generate_appraisals, name='generate_appraisals'),  # Backward compatibility
+    path('appraisal/periods/<int:period_id>/add-criteria/', management_views.add_appraisal_criteria, name='add_appraisal_criteria'),  # Backward compatibility
     path('appraisal/manager/', management_views.manager_appraisals, name='manager_appraisals'),
     path('appraisal/hr/', management_views.hr_appraisals, name='hr_appraisals'),
     path('appraisal/', management_views.manager_appraisals, name='my_appraisals'),  # Backward compatibility

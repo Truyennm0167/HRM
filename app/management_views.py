@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User, Group
 from django.views.decorators.http import require_http_methods, require_POST
 from django.core.exceptions import ValidationError
 
@@ -502,9 +503,8 @@ def update_employee(request, employee_id):
 
 @login_required
 @require_POST
-def update_employee_save(request):
+def update_employee_save(request, employee_id):
     if request.method == "POST":
-        employee_id = request.POST.get("employee_id")
         employee = get_object_or_404(Employee, pk=employee_id)
 
         # Cập nhật các trường cơ bản
@@ -587,7 +587,11 @@ def manage_attendance(request):
 @login_required
 def add_attendance(request):
     employees = Employee.objects.select_related('department').all()
-    return render(request, "hod_template/add_attendance.html", {"employees": employees})
+    today = datetime.now().date()
+    return render(request, "hod_template/add_attendance.html", {
+        "employees": employees,
+        "today": today
+    })
 
 @login_required
 @require_POST
@@ -656,17 +660,18 @@ def edit_attendance(request, attendance_id):
 
 @login_required
 @require_POST
-def delete_attendance(request):
-    if request.method == "POST":
-        attendance_id = request.POST.get("id")
-        try:
-            logger.info(f"Deleting attendance ID {attendance_id} by {request.user.username}")
-            attendance = Attendance.objects.get(id=attendance_id)
-            attendance.delete()
-            return JsonResponse({"status": "success"})
-        except Exception as e:
-            logger.error(f"Error deleting attendance: {e}")
-            return JsonResponse({"status": "error"})
+def delete_attendance(request, attendance_id):
+    try:
+        logger.info(f"Deleting attendance ID {attendance_id} by {request.user.username}")
+        attendance = Attendance.objects.get(id=attendance_id)
+        attendance.delete()
+        return JsonResponse({"status": "success"})
+    except Attendance.DoesNotExist:
+        logger.error(f"Attendance {attendance_id} not found")
+        return JsonResponse({"status": "error", "message": "Không tìm thấy bảng chấm công"})
+    except Exception as e:
+        logger.error(f"Error deleting attendance: {e}")
+        return JsonResponse({"status": "error", "message": str(e)})
 
 @login_required
 def export_attendance(request):
@@ -774,7 +779,13 @@ def get_payroll_data(request):
             ).aggregate(total=Sum('total_days'))['total'] or 0
 
             # Tính lương theo giờ
-            hourly_rate = (employee.salary * employee.job_title.salary_coefficient) / (standard_working_days * 8)
+            try:
+                if standard_working_days > 0:
+                    hourly_rate = float(employee.salary * employee.job_title.salary_coefficient) / float(standard_working_days * 8)
+                else:
+                    hourly_rate = 0
+            except (ValueError, ZeroDivisionError):
+                hourly_rate = 0
 
             # Tính lương cho ngày nghỉ phép có lương (8 giờ/ngày)
             paid_leave_salary = paid_leave_days * 8 * hourly_rate
@@ -907,27 +918,28 @@ def save_payroll(request):
 @login_required
 @require_hr_or_manager
 def manage_payroll(request):
-    """Quản lý bảng lương (HR: all, Manager: department only with salary hidden)"""
+    """Quản lý bảng lương (HR: all, Manager: all, Employee: own only)"""
     # Get current user's employee record
-    try:
-        user_employee = Employee.objects.get(email=request.user.email)
-    except Employee.DoesNotExist:
-        messages.error(request, "Không tìm thấy hồ sơ nhân viên của bạn")
-        return redirect('admin_home')
+    is_hr = request.user.groups.filter(name='HR').exists()
+    is_manager = request.user.groups.filter(name='Manager').exists() or request.user.is_superuser
     
     # Optimize query with select_related
     payrolls = Payroll.objects.select_related('employee', 'employee__department').all().order_by('-year', '-month')
     
-    # Row-level filtering: Managers see only their department's payrolls
-    if not request.user.groups.filter(name='HR').exists():
-        payrolls = payrolls.filter(employee__department=user_employee.department)
+    # Row-level filtering: Only regular employees see their own payroll
+    if not is_hr and not is_manager:
+        # Regular employee: see only their own
+        try:
+            user_employee = Employee.objects.get(email=request.user.email)
+            payrolls = payrolls.filter(employee=user_employee)
+        except Employee.DoesNotExist:
+            messages.error(request, "Không tìm thấy hồ sơ nhân viên của bạn")
+            return redirect('admin_home')
+    # HR and Managers can see all payrolls
     
     departments = Department.objects.all()
     current_year = datetime.now().year
     years = range(current_year, current_year - 5, -1)
-    
-    # Pass flag to template to hide salary info for non-HR
-    is_hr = request.user.groups.filter(name='HR').exists()
     
     return render(request, "hod_template/manage_payroll.html", {
         "payrolls": payrolls,
@@ -999,21 +1011,26 @@ def confirm_payroll(request):
 @login_required
 @require_hr_or_manager
 def view_payroll(request, payroll_id):
-    """Xem chi tiết bảng lương (HR: full info, Manager: department only, no salary for Manager)"""
+    """Xem chi tiết bảng lương (HR: full info, Manager/Superuser: all, Employee: own only)"""
     from .permissions import can_view_employee_salary
     
     payroll = get_object_or_404(Payroll, id=payroll_id)
     
-    # Check row-level permission for Managers
-    if not request.user.groups.filter(name='HR').exists():
+    # Check permissions - only restrict for regular employees
+    is_hr = request.user.groups.filter(name='HR').exists()
+    is_manager = request.user.groups.filter(name='Manager').exists() or request.user.is_superuser
+    
+    if not is_hr and not is_manager:
+        # Regular employee: can only view their own payroll
         try:
             user_employee = Employee.objects.get(email=request.user.email)
-            if payroll.employee.department != user_employee.department:
-                messages.error(request, "Bạn không có quyền xem bảng lương này")
+            if payroll.employee != user_employee:
+                messages.error(request, "Bạn chỉ có thể xem bảng lương của chính mình")
                 return redirect('manage_payroll')
         except Employee.DoesNotExist:
             messages.error(request, "Không tìm thấy hồ sơ nhân viên của bạn")
             return redirect('manage_payroll')
+    # HR and Managers can view all payrolls (no restriction)
     
     # Check if user can view salary information
     can_view_salary = can_view_employee_salary(request.user, payroll.employee)
@@ -1025,8 +1042,28 @@ def view_payroll(request, payroll_id):
 
 @login_required
 def export_payroll(request):
+    # Get filter parameters from request
+    month = request.GET.get('month')
+    year = request.GET.get('year')
+    department = request.GET.get('department')  # This is now department NAME, not ID
+    status = request.GET.get('status')
+    
+    # Build dynamic filename based on filters
+    filename_parts = ['BangLuong']
+    if month:
+        filename_parts.append(f'Thang{month}')
+    if year:
+        filename_parts.append(f'Nam{year}')
+    if department:
+        filename_parts.append(department.replace(' ', '_'))
+    if status:
+        status_map = {'pending': 'ChuaXacNhan', 'confirmed': 'DaXacNhan'}
+        filename_parts.append(status_map.get(status, status.replace(' ', '_')))
+    
+    filename = '_'.join(filename_parts) + '.xls'
+    
     response = HttpResponse(content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; filename="payroll_report.xls"'
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
     
     wb = xlwt.Workbook(encoding='utf-8')
     ws = wb.add_sheet('Bảng Lương')
@@ -1041,10 +1078,22 @@ def export_payroll(request):
     for col_num, column_title in enumerate(columns):
         ws.write(row_num, col_num, column_title, font_style)
     
-    # Sheet body, remaining rows
+    # Sheet body, remaining rows - Apply filters
     font_style = xlwt.XFStyle()
     
-    rows = Payroll.objects.all().values_list(
+    payrolls = Payroll.objects.all()
+    
+    # Apply filters
+    if month:
+        payrolls = payrolls.filter(month=month)
+    if year:
+        payrolls = payrolls.filter(year=year)
+    if department:
+        payrolls = payrolls.filter(employee__department__name=department)  # Filter by NAME
+    if status:
+        payrolls = payrolls.filter(status=status)
+    
+    rows = payrolls.values_list(
         'month', 'year', 'employee__employee_code', 'employee__name',
         'employee__department__name', 'base_salary', 'salary_coefficient',
         'hourly_rate', 'total_working_hours', 'bonus', 'penalty',
@@ -3680,9 +3729,13 @@ def add_appraisal_criteria(request, period_id):
                 return redirect('appraisal_period_detail', period_id=period.id)
             except Exception as e:
                 logger.error(f"Error adding criteria: {e}")
-                messages.error(request, f'Lỗi: {str(e)}')
+                messages.error(request, f'Lỗi khi lưu: {str(e)}')
         else:
-            messages.error(request, 'Vui lòng kiểm tra lại thông tin')
+            # Show validation errors
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'{field}: {error}')
+            logger.warning(f"Form validation failed: {form.errors}")
     else:
         form = AppraisalCriteriaForm()
     
@@ -3691,6 +3744,69 @@ def add_appraisal_criteria(request, period_id):
         'period': period,
     }
     return render(request, 'hod_template/add_appraisal_criteria.html', context)
+
+
+@login_required
+@hr_required
+def edit_appraisal_criteria(request, criteria_id):
+    """Chỉnh sửa tiêu chí đánh giá"""
+    criteria = get_object_or_404(AppraisalCriteria, id=criteria_id)
+    period = criteria.period
+    
+    if request.method == 'POST':
+        form = AppraisalCriteriaForm(request.POST, instance=criteria)
+        if form.is_valid():
+            try:
+                criteria = form.save()
+                messages.success(request, f'Đã cập nhật tiêu chí: {criteria.name}')
+                logger.info(f"Updated criteria {criteria.name} in period {period.name}")
+                return redirect('appraisal_period_detail', period_id=period.id)
+            except Exception as e:
+                logger.error(f"Error updating criteria: {e}")
+                messages.error(request, f'Lỗi khi cập nhật: {str(e)}')
+        else:
+            for field, errors in form.errors.items():
+                for error in errors:
+                    messages.error(request, f'{field}: {error}')
+    else:
+        form = AppraisalCriteriaForm(instance=criteria)
+    
+    context = {
+        'form': form,
+        'period': period,
+        'criteria': criteria,
+        'is_edit': True,
+    }
+    return render(request, 'hod_template/add_appraisal_criteria.html', context)
+
+
+@login_required
+@hr_required
+@require_POST
+def delete_appraisal_criteria(request, criteria_id):
+    """Xóa tiêu chí đánh giá"""
+    try:
+        criteria = AppraisalCriteria.objects.get(id=criteria_id)
+        period_id = criteria.period.id
+        criteria_name = criteria.name
+        criteria.delete()
+        
+        logger.info(f"Deleted criteria {criteria_name}")
+        return JsonResponse({
+            "status": "success",
+            "message": f"Đã xóa tiêu chí: {criteria_name}"
+        })
+    except AppraisalCriteria.DoesNotExist:
+        return JsonResponse({
+            "status": "error",
+            "message": "Không tìm thấy tiêu chí"
+        }, status=404)
+    except Exception as e:
+        logger.error(f"Error deleting criteria: {e}")
+        return JsonResponse({
+            "status": "error",
+            "message": str(e)
+        }, status=500)
 
 
 @login_required
@@ -4035,3 +4151,224 @@ def appraisal_detail(request, appraisal_id):
     return render(request, 'hod_template/appraisal_detail.html', context)
 
 
+# ========================================
+# USER MANAGEMENT VIEWS
+# ========================================
+
+@login_required
+@hr_required
+def manage_users(request):
+    """Quản lý người dùng hệ thống"""
+    users = User.objects.all().prefetch_related('groups').order_by('-date_joined')
+    
+    context = {
+        'users': users,
+    }
+    return render(request, 'hod_template/manage_users.html', context)
+
+
+@login_required
+@hr_required
+def create_user(request):
+    """Tạo người dùng mới"""
+    if request.method == 'POST':
+        try:
+            username = request.POST.get('username')
+            email = request.POST.get('email')
+            password = request.POST.get('password')
+            password2 = request.POST.get('password2')
+            first_name = request.POST.get('first_name', '')
+            last_name = request.POST.get('last_name', '')
+            is_active = request.POST.get('is_active') == 'on'
+            group_ids = request.POST.getlist('groups')
+            employee_id = request.POST.get('employee_id')
+            
+            # Validate
+            if User.objects.filter(username=username).exists():
+                messages.error(request, 'Username đã tồn tại!')
+                return redirect('management_create_user')
+            
+            if User.objects.filter(email=email).exists():
+                messages.error(request, 'Email đã được sử dụng!')
+                return redirect('management_create_user')
+            
+            if password != password2:
+                messages.error(request, 'Mật khẩu xác nhận không khớp!')
+                return redirect('management_create_user')
+            
+            if len(password) < 8:
+                messages.error(request, 'Mật khẩu phải có ít nhất 8 ký tự!')
+                return redirect('management_create_user')
+            
+            # Create user
+            user = User.objects.create_user(
+                username=username,
+                email=email,
+                password=password,
+                first_name=first_name,
+                last_name=last_name,
+                is_active=is_active
+            )
+            
+            # Assign groups
+            if group_ids:
+                groups = Group.objects.filter(id__in=group_ids)
+                user.groups.set(groups)
+            
+            # Link to employee if specified
+            if employee_id:
+                try:
+                    employee = Employee.objects.get(id=employee_id)
+                    employee.email = email  # Update employee email to match
+                    employee.save()
+                except Employee.DoesNotExist:
+                    pass
+            
+            messages.success(request, f'Đã tạo người dùng: {username}')
+            logger.info(f"Created user {username} by {request.user.username}")
+            return redirect('management_manage_users')
+            
+        except Exception as e:
+            logger.error(f"Error creating user: {e}")
+            messages.error(request, f'Lỗi khi tạo người dùng: {str(e)}')
+            return redirect('management_create_user')
+    
+    # GET request
+    all_groups = Group.objects.all()
+    employees = Employee.objects.filter(status__in=[1, 2]).select_related('department')
+    
+    context = {
+        'all_groups': all_groups,
+        'employees': employees,
+        'is_edit': False,
+    }
+    return render(request, 'hod_template/user_form.html', context)
+
+
+@login_required
+@hr_required
+def edit_user(request, user_id):
+    """Chỉnh sửa người dùng"""
+    user_obj = get_object_or_404(User, id=user_id)
+    
+    if request.method == 'POST':
+        try:
+            email = request.POST.get('email')
+            first_name = request.POST.get('first_name', '')
+            last_name = request.POST.get('last_name', '')
+            is_active = request.POST.get('is_active') == 'on'
+            group_ids = request.POST.getlist('groups')
+            employee_id = request.POST.get('employee_id')
+            new_password = request.POST.get('new_password')
+            new_password2 = request.POST.get('new_password2')
+            
+            # Validate email uniqueness (except current user)
+            if User.objects.filter(email=email).exclude(id=user_id).exists():
+                messages.error(request, 'Email đã được sử dụng bởi người dùng khác!')
+                return redirect('management_edit_user', user_id=user_id)
+            
+            # Update basic info
+            user_obj.email = email
+            user_obj.first_name = first_name
+            user_obj.last_name = last_name
+            user_obj.is_active = is_active
+            
+            # Update password if provided
+            if new_password:
+                if new_password != new_password2:
+                    messages.error(request, 'Mật khẩu xác nhận không khớp!')
+                    return redirect('management_edit_user', user_id=user_id)
+                
+                if len(new_password) < 8:
+                    messages.error(request, 'Mật khẩu phải có ít nhất 8 ký tự!')
+                    return redirect('management_edit_user', user_id=user_id)
+                
+                user_obj.set_password(new_password)
+            
+            user_obj.save()
+            
+            # Update groups
+            if group_ids:
+                groups = Group.objects.filter(id__in=group_ids)
+                user_obj.groups.set(groups)
+            else:
+                user_obj.groups.clear()
+            
+            # Link to employee
+            if employee_id:
+                try:
+                    employee = Employee.objects.get(id=employee_id)
+                    employee.email = email
+                    employee.save()
+                except Employee.DoesNotExist:
+                    pass
+            
+            messages.success(request, f'Đã cập nhật người dùng: {user_obj.username}')
+            logger.info(f"Updated user {user_obj.username} by {request.user.username}")
+            return redirect('management_manage_users')
+            
+        except Exception as e:
+            logger.error(f"Error updating user: {e}")
+            messages.error(request, f'Lỗi khi cập nhật: {str(e)}')
+            return redirect('management_edit_user', user_id=user_id)
+    
+    # GET request
+    all_groups = Group.objects.all()
+    employees = Employee.objects.filter(status__in=[1, 2]).select_related('department')
+    
+    # Try to find linked employee
+    try:
+        user_obj.employee = Employee.objects.get(email=user_obj.email)
+    except Employee.DoesNotExist:
+        user_obj.employee = None
+    
+    context = {
+        'user_obj': user_obj,
+        'all_groups': all_groups,
+        'employees': employees,
+        'is_edit': True,
+    }
+    return render(request, 'hod_template/user_form.html', context)
+
+
+@login_required
+@hr_required
+@require_POST
+def delete_user(request, user_id):
+    """Xóa người dùng"""
+    try:
+        user = User.objects.get(id=user_id)
+        
+        # Prevent deleting superuser
+        if user.is_superuser:
+            return JsonResponse({
+                "status": "error",
+                "message": "Không thể xóa superuser!"
+            }, status=403)
+        
+        # Prevent deleting self
+        if user.id == request.user.id:
+            return JsonResponse({
+                "status": "error",
+                "message": "Không thể xóa chính mình!"
+            }, status=403)
+        
+        username = user.username
+        user.delete()
+        
+        logger.info(f"Deleted user {username} by {request.user.username}")
+        return JsonResponse({
+            "status": "success",
+            "message": f"Đã xóa người dùng: {username}"
+        })
+    except User.DoesNotExist:
+        return JsonResponse({
+            "status": "error",
+            "message": "Không tìm thấy người dùng"
+        }, status=404)
+    except Exception as e:
+        logger.error(f"Error deleting user: {e}")
+        return JsonResponse({
+            "status": "error",
+            "message": str(e)
+        }, status=500)

@@ -20,9 +20,18 @@ Quản Lý Bảng Lương
                                     <label>Tháng</label>
                                     <select class="form-control" id="month">
                                         <option value="">Tất cả</option>
-                                        {% for i in "123456789101112"|make_list %}
-                                        <option value="{{ i }}">{{ i }}</option>
-                                        {% endfor %}
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
                                     </select>
                                 </div>
                             </div>
@@ -94,7 +103,7 @@ Quản Lý Bảng Lương
                                             {% if is_hr %}
                                             <td>{{ payroll.total_salary|floatformat:0|intcomma }} VNĐ</td>
                                             {% endif %}
-                                            <td>
+                                            <td data-status="{{ payroll.status }}">
                                                 {% if payroll.status == 'pending' %}
                                                 <button class="btn btn-warning btn-sm">Chưa xác nhận</button>
                                                 {% else %}
@@ -126,10 +135,27 @@ Quản Lý Bảng Lương
 {% block custom_js %}
 <script>
     $(document).ready(function() {
+        // Custom sorting plugin for month/year column (MM/YYYY format)
+        $.fn.dataTable.ext.type.order['month-year-pre'] = function(data) {
+            if (!data || data === '') return 0;
+            var parts = data.split('/');
+            if (parts.length !== 2) return 0;
+            var month = parseInt(parts[0]) || 0;
+            var year = parseInt(parts[1]) || 0;
+            // Return YYYYMM format for proper sorting
+            return year * 100 + month;
+        };
+
         // Initialize DataTable
         var table = $('#payroll_table').DataTable({
             "pageLength": 10,
             "order": [[1, "desc"]],
+            "columnDefs": [
+                {
+                    "targets": 1, // Month/Year column
+                    "type": "month-year"
+                }
+            ],
             "language": {
                 "search": "Tìm kiếm:",
                 "lengthMenu": "Hiển thị _MENU_ bản ghi",
@@ -156,18 +182,27 @@ Quản Lý Bảng Lương
             // Clear existing filters
             table.search('').columns().search('');
 
-            // Apply new filters
-            if (month) {
-                table.column(1).search(month);
+            // Build month/year search pattern
+            var monthYearPattern = '';
+            if (month && year) {
+                monthYearPattern = '^' + month + '\\/' + year + '$';
+            } else if (month) {
+                monthYearPattern = '^' + month + '\\/';
+            } else if (year) {
+                monthYearPattern = '\\/' + year + '$';
             }
-            if (year) {
-                table.column(1).search(year);
+
+            // Apply filters
+            if (monthYearPattern) {
+                table.column(1).search(monthYearPattern, true, false);
             }
             if (department) {
-                table.column(4).search(department);
+                table.column(4).search(department, false, true);
             }
             if (status) {
-                table.column(6).search(status);
+                // Status filter: search for pending or confirmed
+                var statusValue = status === 'Chưa xác nhận' ? 'pending' : 'confirmed';
+                table.column({% if is_hr %}6{% else %}5{% endif %}).search(statusValue, false, true);
             }
 
             table.draw();
@@ -175,7 +210,24 @@ Quản Lý Bảng Lương
 
         // Export to Excel
         $("#export").click(function() {
-            window.location.href = "{% url 'export_payroll' %}";
+            var month = $("#month").val();
+            var year = $("#year").val();
+            var department = $("#department").val();
+            var status = $("#status").val();
+            
+            // Build URL with query parameters
+            var url = "{% url 'export_payroll' %}";
+            var params = [];
+            if (month) params.push('month=' + month);
+            if (year) params.push('year=' + year);
+            if (department) params.push('department=' + department);
+            if (status) params.push('status=' + status);
+            
+            if (params.length > 0) {
+                url += '?' + params.join('&');
+            }
+            
+            window.location.href = url;
         });
 
         // Delete payroll

@@ -35,34 +35,41 @@
 
 #### ✅ Test 1.1: Thêm Nhân Viên
 
-- [ ] Navigate: `/management/employees/add/`
-- [ ] Điền đầy đủ thông tin bắt buộc (\*, email unique)
-- [ ] Click **"Lưu"**
+- [ ] Navigate: `/management/employees/add/` - OK
+- [ ] Điền đầy đủ thông tin bắt buộc (\*, email unique) - OK
+- [ ] Click **"Lưu"** - OK
 - [ ] **Expected:**
-  - POST thành công → 200/302
-  - Redirect đến hồ sơ nhân viên mới tạo
-  - Dữ liệu lưu chính xác
+  - POST thành công → 200/302 - Trả về HTTP/1.1" 200
+  - Redirect đến hồ sơ nhân viên mới tạo - KHÔNG. Cần điều chỉnh lại chổ này
+  - Dữ liệu lưu chính xác - OK
 
 #### ✅ Test 1.2: Sửa Nhân Viên
 
 **BUG FIXED:** Template thiếu employee_id trong URL
 
-- [ ] Navigate: `/management/employees/{id}/edit/`
-- [ ] Form action giờ là: `{% url 'update_employee_save' employee.id %}`
-- [ ] Sửa tên hoặc email
-- [ ] Click **"Cập nhật"**
+- [ ] Navigate: `/management/employees/{id}/edit/` - OK
+- [ ] Form action giờ là: `{% url 'update_employee_save' employee.id %}` - OK
+- [ ] Sửa tên hoặc email - OK
+- [ ] Click **"Cập nhật"** - OK
 - [ ] **Expected:**
-  - POST đến `/management/employees/{id}/edit/save/` (KHÔNG thiếu ID)
+  - POST đến `/management/employees/{id}/edit/save/` (KHÔNG thiếu ID) - LỖI
+    TypeError at /management/employees/173/edit/save/
+    update_employee_save() got an unexpected keyword argument 'employee_id'
   - Cập nhật thành công
   - KHÔNG có NoReverseMatch
 
 #### ✅ Test 1.3: Xóa Nhân Viên
 
-- [ ] Navigate: `/management/employees/`
-- [ ] Click vào 1 nhân viên → Click **"Xóa nhân viên"**
+- [ ] Navigate: `/management/employees/` - OK
+- [ ] Click vào 1 nhân viên → Click **"Xóa nhân viên"** - OK
 - [ ] **Expected:**
-  - Modal xác nhận xuất hiện
-  - KHÔNG có lỗi 500 NoReverseMatch
+  - Modal xác nhận xuất hiện - CHƯA CÓ
+  - KHÔNG có lỗi 500 NoReverseMatch - OK
+
+Tuy nhiên còn lỗi khi vào /management/employees/{id}/edit/ và nhấn nút Xóa nhân viên trong trang này
+INFO "GET /management/employees/174/edit/ HTTP/1.1" 200 36739
+WARNING Method Not Allowed (GET): /management/employees/174/delete/
+WARNING "GET /management/employees/174/delete/ HTTP/1.1" 405 0
 
 ---
 
@@ -72,23 +79,25 @@
 
 **BUG FIXED:** Thiếu URL `get_attendance_data`
 
-- [ ] Navigate: `/management/attendance/add/`
+- [ ] Navigate: `/management/attendance/add/` - OK
 - [ ] **Expected:**
-  - Trang load thành công (KHÔNG NoReverseMatch)
-  - Có thể chọn nhân viên và ngày
-- [ ] Chọn nhân viên + ngày → Submit
-- [ ] **Expected:** Điểm danh được lưu
+  - Trang load thành công (KHÔNG NoReverseMatch) - OK
+  - Có thể chọn nhân viên và ngày - OK
+- [ ] Chọn nhân viên + ngày → Submit - OK
+- [ ] **Expected:** Điểm danh được lưu - LỖI
+      NoReverseMatch at /management/attendance/manage/
+      Reverse for 'delete_attendance' with no arguments not found. 1 pattern(s) tried: ['management/attendance/(?P<attendance_id>[0-9]+)/delete/\\Z']
 
 #### ✅ Test 2.2: Quản Lý Điểm Danh
 
 **BUG FIXED:** Template gọi `delete_attendance` không đúng cách
 
-- [ ] Navigate: `/management/attendance/manage/`
+- [ ] Navigate: `/management/attendance/manage/` - LỖI
 - [ ] **Expected:**
-  - Trang load thành công
-  - Hiển thị bảng điểm danh với DataTable
-- [ ] Click **"Xóa"** trên 1 bản ghi
-- [ ] **Expected:** Xóa thành công (URL có attendance_id)
+  - Trang load thành công - LỖI
+  - Hiển thị bảng điểm danh với DataTable - CHƯA TEST ĐƯỢC
+- [ ] Click **"Xóa"** trên 1 bản ghi - CHƯA TEST ĐƯỢC
+- [ ] **Expected:** Xóa thành công (URL có attendance_id) - CHƯA TEST ĐƯỢC
 
 ---
 
@@ -96,43 +105,43 @@
 
 #### ✅ Test 3.1: Thêm Phòng Ban
 
-- [ ] Navigate: `/management/departments/`
-- [ ] Điền tên phòng ban mới
-- [ ] Click **"Lưu"**
-- [ ] **Expected:**
-  - POST thành công → `/management/departments/add/`
-  - Phòng ban xuất hiện trong danh sách
+- [ ] Navigate: `/management/departments/` - OK
+- [ ] Điền tên phòng ban mới - OK
+- [ ] Click **"Lưu"** - OK
+- [ ] **Expected:** - OK
+  - POST thành công → `/management/departments/add/` - OK
+  - Phòng ban xuất hiện trong danh sách - OK
 
 #### ✅ Test 3.2: Xóa Phòng Ban
 
 **BUG FIXED:** JavaScript dùng GET (window.location), đã đổi thành POST form
 
-- [ ] Navigate: `/management/departments/`
-- [ ] Click **"Sửa"** → Click **"Xóa phòng ban"** (màu đỏ)
+- [ ] Navigate: `/management/departments/` - OK
+- [ ] Click **"Sửa"** → Click **"Xóa phòng ban"** (màu đỏ) - OK
 - [ ] **Expected:**
-  - JavaScript tạo form POST với CSRF token
-  - Submit POST request → `/management/departments/{id}/delete/`
-  - KHÔNG còn lỗi 405 Method Not Allowed
-  - Xóa thành công
+  - JavaScript tạo form POST với CSRF token - OK
+  - Submit POST request → `/management/departments/{id}/delete/` - OK
+  - KHÔNG còn lỗi 405 Method Not Allowed - OK
+  - Xóa thành công - OK
 
 #### ✅ Test 3.3: Thêm Chức Vụ
 
-- [ ] Navigate: `/management/job-titles/`
-- [ ] Điền tên + hệ số lương
-- [ ] Click **"Lưu"**
-- [ ] **Expected:** POST thành công, chức vụ xuất hiện
+- [ ] Navigate: `/management/job-titles/` - OK
+- [ ] Điền tên + hệ số lương - OK
+- [ ] Click **"Lưu"** - OK
+- [ ] **Expected:** POST thành công, chức vụ xuất hiện - OK
 
 #### ✅ Test 3.4: Xóa Chức Vụ
 
 **BUG FIXED:** JavaScript dùng GET, đã đổi thành POST form
 
-- [ ] Navigate: `/management/job-titles/`
-- [ ] Click **"Sửa"** → Click **"Xóa chức vụ"** (màu đỏ)
+- [ ] Navigate: `/management/job-titles/` - OK
+- [ ] Click **"Sửa"** → Click **"Xóa chức vụ"** (màu đỏ) - OK
 - [ ] **Expected:**
-  - JavaScript tạo form POST với CSRF token
-  - Submit POST request → `/management/job-titles/{id}/delete/`
-  - KHÔNG còn lỗi 405 Method Not Allowed
-  - Xóa thành công
+  - JavaScript tạo form POST với CSRF token - OK
+  - Submit POST request → `/management/job-titles/{id}/delete/` - OK
+  - KHÔNG còn lỗi 405 Method Not Allowed - OK
+  - Xóa thành công - OK
 
 ---
 
@@ -142,35 +151,39 @@
 
 **BUG FIXED:** Thiếu URL `get_payroll_data`
 
-- [ ] Navigate: `/management/payroll/calculate/`
+- [ ] Navigate: `/management/payroll/calculate/` - OK
 - [ ] **Expected:**
-  - Trang load thành công (KHÔNG NoReverseMatch)
-  - Có thể chọn tháng/năm
-- [ ] Click **"Tính lương"**
-- [ ] **Expected:** Hiển thị bảng lương tạm tính
+  - Trang load thành công (KHÔNG NoReverseMatch) - OK
+  - Có thể chọn tháng/năm - OK
+- [ ] Click **"Tính lương"** - OK
+- [ ] **Expected:** Hiển thị bảng lương tạm tính - OK
 
 #### ✅ Test 4.2: Lưu Bảng Lương
 
-- [ ] Sau khi tính lương xong → Click **"Lưu bảng lương"**
+- [ ] Sau khi tính lương xong → Click **"Lưu bảng lương"** - LỖI
+      NoReverseMatch at /management/payroll/manage/
+      Reverse for 'confirm_payroll' not found. 'confirm_payroll' is not a valid view function or pattern name.
 - [ ] **Expected:**
-  - POST thành công → `/management/payroll/save/`
-  - Lưu vào database
+  - POST thành công → `/management/payroll/save/` - CHƯA TEST ĐƯỢC
+  - Lưu vào database - CHƯA TEST ĐƯỢC
 
 #### ✅ Test 4.3: Quản Lý Bảng Lương
 
 **BUG FIXED:** Thiếu URL `delete_payroll`
 
-- [ ] Navigate: `/management/payroll/manage/`
+- [ ] Navigate: `/management/payroll/manage/` - LỖI
+      NoReverseMatch at /management/payroll/manage/
+      Reverse for 'confirm_payroll' not found. 'confirm_payroll' is not a valid view function or pattern name.
 - [ ] **Expected:**
-  - Trang load thành công (KHÔNG NoReverseMatch)
-  - Hiển thị danh sách bảng lương
-- [ ] Click **"Xóa"** trên 1 bảng lương
-- [ ] **Expected:** Xóa thành công
+  - Trang load thành công (KHÔNG NoReverseMatch) - CHƯA TEST ĐƯỢC
+  - Hiển thị danh sách bảng lương - CHƯA TEST ĐƯỢC
+- [ ] Click **"Xóa"** trên 1 bảng lương - CHƯA TEST ĐƯỢC
+- [ ] **Expected:** Xóa thành công - CHƯA TEST ĐƯỢC
 
 #### ✅ Test 4.4: Xuất Excel
 
-- [ ] Tại trang quản lý → Click **"Xuất Excel"**
-- [ ] **Expected:** File .xlsx tải về thành công
+- [ ] Tại trang quản lý → Click **"Xuất Excel"** - CHƯA TEST ĐƯỢC
+- [ ] **Expected:** File .xlsx tải về thành công - CHƯA TEST ĐƯỢC
 
 ---
 
@@ -180,33 +193,33 @@
 
 **BUG FIXED:** View nhận sai parameter (từ POST data → URL parameter)
 
-- [ ] Navigate: `/management/expense/categories/`
-- [ ] Click **"Sửa"** trên 1 danh mục
-- [ ] Modal mở với dữ liệu đúng
-- [ ] Sửa tên → Submit
+- [ ] Navigate: `/management/expense/categories/` - OK
+- [ ] Click **"Sửa"** trên 1 danh mục - OK
+- [ ] Modal mở với dữ liệu đúng - OK
+- [ ] Sửa tên → Submit - OK
 - [ ] **Expected:**
-  - POST thành công → `/management/expense/categories/{id}/edit/`
-  - KHÔNG còn lỗi `unexpected keyword argument 'category_id'`
-  - Cập nhật thành công
+  - POST thành công → `/management/expense/categories/{id}/edit/` - OK
+  - KHÔNG còn lỗi `unexpected keyword argument 'category_id'` - OK
+  - Cập nhật thành công - OK
 
 #### ✅ Test 5.2: Duyệt/Từ Chối Chi Phí
 
-- [ ] Navigate: `/management/expense/requests/`
-- [ ] Tìm expense "Chờ duyệt"
-- [ ] Click **"Duyệt"** → Submit
+- [ ] Navigate: `/management/expense/requests/` - OK
+- [ ] Tìm expense "Chờ duyệt" - OK
+- [ ] Click **"Duyệt"** → Submit - OK
 - [ ] **Expected:**
-  - AJAX POST thành công → `/management/expense/requests/{id}/approve/`
-  - Status → "Đã duyệt"
-- [ ] Với expense khác → Click **"Từ chối"** → Submit
-- [ ] **Expected:** Status → "Từ chối"
+  - AJAX POST thành công → `/management/expense/requests/{id}/approve/` - OK
+  - Status → "Đã duyệt" - OK
+- [ ] Với expense khác → Click **"Từ chối"** → Submit - OK
+- [ ] **Expected:** Status → "Từ chối" - OK
 
 #### ✅ Test 5.3: Đánh Dấu Đã Thanh Toán
 
-- [ ] Tìm expense "Đã duyệt"
-- [ ] Click **"Đánh dấu đã thanh toán"** → Submit
+- [ ] Tìm expense "Đã duyệt" - OK
+- [ ] Click **"Đánh dấu đã thanh toán"** → Submit - OK
 - [ ] **Expected:**
-  - AJAX POST → `/management/expense/requests/{id}/mark-paid/`
-  - Status → "Đã thanh toán"
+  - AJAX POST → `/management/expense/requests/{id}/mark-paid/` - OK
+  - Status → "Đã thanh toán" - OK
 
 ---
 
@@ -216,28 +229,30 @@
 
 **BUG FIXED:** Thiếu URL `delete_job`
 
-- [ ] Navigate: `/management/recruitment/jobs/`
-- [ ] Click **"Sửa"** trên 1 job
+- [ ] Navigate: `/management/recruitment/jobs/` - OK
+- [ ] Click **"Sửa"** trên 1 job - OK
 - [ ] **Expected:**
-  - Trang edit load thành công
-  - KHÔNG còn NoReverseMatch cho delete_job
+  - Trang edit load thành công - OK
+  - KHÔNG còn NoReverseMatch cho delete_job - OK
 
 #### ✅ Test 6.2: Xem Chi Tiết Ứng Viên
 
 **BUG FIXED:** Thiếu URL `update_application`
 
-- [ ] Navigate: `/management/recruitment/applications/`
-- [ ] Click vào 1 ứng viên
+- [ ] Navigate: `/management/recruitment/applications/` - OK
+- [ ] Click vào 1 ứng viên - LỖI
 - [ ] **Expected:**
-  - Trang chi tiết load thành công
-  - KHÔNG còn NoReverseMatch cho update_application
+  - Trang chi tiết load thành công - LỖI
+    NoReverseMatch at /management/recruitment/applications/21/
+    Reverse for 'add_application_note' not found. 'add_application_note' is not a valid view function or pattern name
+  - KHÔNG còn NoReverseMatch cho update_application - LỖI
 
 #### ✅ Test 6.3: Chuyển Trạng Thái Ứng Viên
 
-- [ ] Tại trang chi tiết ứng viên
-- [ ] Chọn trạng thái mới (Screening, Interview, Offer, v.v.)
+- [ ] Tại trang chi tiết ứng viên - CHƯA TEST ĐƯỢC
+- [ ] Chọn trạng thái mới (Screening, Interview, Offer, v.v.) - CHƯA TEST ĐƯỢC
 - [ ] Click **"Cập nhật"**
-- [ ] **Expected:** Trạng thái thay đổi thành công
+- [ ] **Expected:** Trạng thái thay đổi thành công - CHƯA TEST ĐƯỢC
 
 ---
 
@@ -245,30 +260,32 @@
 
 #### ✅ Test 7.1: Sửa Thành Phần Lương
 
-- [ ] Navigate: `/management/salary-rules/components/`
-- [ ] Click **"Sửa"** trên 1 component
-- [ ] **Expected:** Modal mở với dữ liệu
-- [ ] **⚠️ LƯU Ý:** Kiểm tra giá trị hiển thị đúng (không bị 0)
-- [ ] Sửa giá trị → Submit
+- [ ] Navigate: `/management/salary-rules/components/` - OK
+- [ ] Click **"Sửa"** trên 1 component - OK
+- [ ] **Expected:** Modal mở với dữ liệu -
+- [ ] **⚠️ LƯU Ý:** Kiểm tra giá trị hiển thị đúng (không bị 0) - VẪN LỖI
+- [ ] Sửa giá trị → Submit - VẪN CÒN LỖI SAI DỮ LIỆU
 - [ ] **Expected:** Cập nhật thành công
 
 #### ✅ Test 7.2: Quản Lý Mẫu Quy Tắc Lương
 
 **BUG FIXED:** Thiếu URL `edit_salary_rule_template`
 
-- [ ] Navigate: `/management/salary-rules/templates/`
+- [ ] Navigate: `/management/salary-rules/templates/` - OK
 - [ ] **Expected:**
-  - Trang load thành công
-  - KHÔNG còn NoReverseMatch
-- [ ] Click **"Tạo mẫu mới"**
-- [ ] **Expected:** Trang tạo mẫu load OK
+  - Trang load thành công - OK
+  - KHÔNG còn NoReverseMatch - OK
+- [ ] Click **"Tạo mẫu mới"** - OK
+- [ ] **Expected:** Trang tạo mẫu load - OK
 
 #### ✅ Test 7.3: Sửa Mẫu Quy Tắc
 
 - [ ] Tại trang templates → Click **"Sửa"** trên 1 mẫu
 - [ ] **Expected:**
-  - Trang edit load thành công
-  - URL: `/management/salary-rules/templates/{id}/edit/`
+  - Trang edit load thành công - LỖI
+    NoReverseMatch at /management/salary-rules/templates/2/edit/
+    Reverse for 'delete_template_item' not found. 'delete_template_item' is not a valid view function or pattern name.
+  - URL: `/management/salary-rules/templates/{id}/edit/` - LỖI
 
 ---
 
@@ -278,19 +295,21 @@
 
 **BUG FIXED:** Thiếu URL `generate_appraisals`
 
-- [ ] Navigate: `/management/appraisal/periods/`
-- [ ] Click vào 1 kỳ đánh giá
+- [ ] Navigate: `/management/appraisal/periods/` - OK
+- [ ] Click vào 1 kỳ đánh giá - LỖI
+      NoReverseMatch at /management/appraisal/periods/1/
+      Reverse for 'add_appraisal_criteria' not found. 'add_appraisal_criteria' is not a valid view function or pattern name.
 - [ ] **Expected:**
-  - Trang chi tiết load thành công
-  - KHÔNG còn NoReverseMatch cho generate_appraisals
+  - Trang chi tiết load thành công - LỖI
+  - KHÔNG còn NoReverseMatch cho generate_appraisals - LỖI
 
 #### ✅ Test 8.2: Tạo Phiếu Đánh Giá Tự Động
 
-- [ ] Tại trang chi tiết kỳ đánh giá
-- [ ] Click **"Tạo phiếu đánh giá"**
+- [ ] Tại trang chi tiết kỳ đánh giá - CHƯA TEST ĐƯỢC
+- [ ] Click **"Tạo phiếu đánh giá"** - CHƯA TEST ĐƯỢC
 - [ ] **Expected:**
-  - POST thành công → `/management/appraisal/periods/{id}/generate/`
-  - Tạo phiếu cho tất cả nhân viên
+  - POST thành công → `/management/appraisal/periods/{id}/generate/` - CHƯA TEST ĐƯỢC
+  - Tạo phiếu cho tất cả nhân viên - CHƯA TEST ĐƯỢC
 
 ---
 
@@ -300,7 +319,7 @@
 
 **BUG FIXED trong Phase 3:** Template field names không khớp form
 
-- [ ] Navigate: `/management/contracts/create/`
+- [ ] Navigate: `/management/contracts/create/` - OK
 - [ ] **Kiểm tra các trường hiển thị:**
   - ✅ Nhân viên, Loại HĐ, Ngày ký, Ngày bắt đầu/kết thúc
   - ✅ Lương cơ bản (NOT "hệ số lương")
@@ -308,17 +327,17 @@
   - ✅ Nơi làm việc (NOT "workplace")
   - ✅ Thời gian làm việc, Điều khoản, Ghi chú, File đính kèm
   - ❌ KHÔNG CÒN: Số HĐ, Hệ số lương, Phụ cấp, Mô tả công việc, Quyền lợi, Bảo hiểm
-- [ ] Điền đầy đủ → Click **"Tạo hợp đồng"**
+- [ ] Điền đầy đủ → Click **"Tạo hợp đồng"** - OK
 - [ ] **Expected:**
-  - Lưu thành công
-  - Mã HĐ tự động: CT-YYYYMMDD-XXXX
-  - Redirect đến chi tiết HĐ
+  - Lưu thành công - OK
+  - Mã HĐ tự động: CT-YYYYMMDD-XXXX - OK
+  - Redirect đến chi tiết HĐ - OK
 
 #### ✅ Test 9.2: HĐ Không Xác Định Thời Hạn
 
-- [ ] Chọn loại: "Không xác định thời hạn"
-- [ ] **Expected:** Trường "Ngày kết thúc" bị disable
-- [ ] Submit → Lưu với end_date = NULL
+- [ ] Chọn loại: "Không xác định thời hạn" - OK
+- [ ] **Expected:** Trường "Ngày kết thúc" bị disable - OK
+- [ ] Submit → Lưu với end_date = NULL - OK
 
 ---
 
@@ -328,20 +347,20 @@
 
 **BUG FIXED trong Phase 3:** Search không giữ hierarchy
 
-- [ ] Navigate: `/management/org-chart/`
-- [ ] Nhập tên nhân viên (vd: "Nguyễn")
+- [ ] Navigate: `/management/org-chart/` - OK
+- [ ] Nhập tên nhân viên (vd: "Nguyễn") - OK
 - [ ] **Expected:**
-  - ✅ Hiển thị tất cả NV matching
-  - ✅ Hiển thị cả PHÒNG BAN của họ
-  - ✅ Cấu trúc phân cấp được giữ
+  - ✅ Hiển thị tất cả NV matching - OK
+  - ✅ Hiển thị cả PHÒNG BAN của họ - OK
+  - ✅ Cấu trúc phân cấp được giữ - OK
 
 #### ✅ Test 10.2: Lọc Theo Phòng Ban
 
-- [ ] Chọn 1 phòng ban từ dropdown
+- [ ] Chọn 1 phòng ban từ dropdown - OK
 - [ ] **Expected:**
-  - ✅ Hiển thị node phòng ban
-  - ✅ Hiển thị TẤT CẢ nhân viên trong phòng
-  - ✅ Ẩn các phòng khác
+  - ✅ Hiển thị node phòng ban - OK
+  - ✅ Hiển thị TẤT CẢ nhân viên trong phòng - OK
+  - ✅ Ẩn các phòng khác - OK
 
 ---
 
