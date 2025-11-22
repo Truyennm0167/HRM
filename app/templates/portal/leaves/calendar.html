@@ -1,0 +1,177 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}Lịch nghỉ phép{% endblock %}
+
+{% block extra_css %}
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/main.min.css" rel="stylesheet">
+<style>
+    #calendar {
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    .fc-event {
+        cursor: pointer;
+        border-radius: 3px;
+        padding: 2px 5px;
+    }
+    .fc-event:hover {
+        opacity: 0.8;
+    }
+    .legend {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 20px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 5px;
+    }
+    .legend-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+    .legend-color {
+        width: 20px;
+        height: 20px;
+        border-radius: 3px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2><i class="fas fa-calendar-alt mr-2"></i>Lịch nghỉ phép nhóm</h2>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'portal_dashboard' %}">Portal</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'portal_leaves' %}">Nghỉ phép</a></li>
+                    <li class="breadcrumb-item active">Lịch nhóm</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Legend -->
+    <div class="legend">
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #28a745;"></div>
+            <span>Đã duyệt</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #ffc107;"></div>
+            <span>Chờ duyệt</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #dc3545;"></div>
+            <span>Đã từ chối</span>
+        </div>
+        <div class="legend-item">
+            <div class="legend-color" style="background-color: #6c757d;"></div>
+            <span>Đã hủy</span>
+        </div>
+        <div class="legend-item">
+            <i class="fas fa-border-all mr-1" style="color: #333;"></i>
+            <span>Viền đậm = Nghỉ phép của bạn</span>
+        </div>
+    </div>
+
+    <!-- Calendar -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div id="calendar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/main.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var calendarEl = document.getElementById('calendar');
+    
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,listMonth'
+        },
+        buttonText: {
+            today: 'Hôm nay',
+            month: 'Tháng',
+            week: 'Tuần',
+            list: 'Danh sách'
+        },
+        locale: 'vi',
+        firstDay: 1, // Monday
+        height: 'auto',
+        
+        // Load events from API
+        events: {
+            url: "{% url 'portal_leave_calendar_data' %}",
+            failure: function() {
+                alert('Không thể tải dữ liệu nghỉ phép!');
+            }
+        },
+        
+        // Event click handler
+        eventClick: function(info) {
+            var props = info.event.extendedProps;
+            
+            var statusBadge;
+            if (props.status === 'Approved') {
+                statusBadge = '<span class="badge badge-success">Đã duyệt</span>';
+            } else if (props.status === 'Pending') {
+                statusBadge = '<span class="badge badge-warning">Chờ duyệt</span>';
+            } else if (props.status === 'Rejected') {
+                statusBadge = '<span class="badge badge-danger">Đã từ chối</span>';
+            } else {
+                statusBadge = '<span class="badge badge-secondary">Đã hủy</span>';
+            }
+            
+            var isMine = props.is_mine ? '<br><strong class="text-primary">(Nghỉ phép của bạn)</strong>' : '';
+            
+            Swal.fire({
+                title: props.leave_type,
+                html: `
+                    <div class="text-left" style="font-size: 14px;">
+                        <p><strong>Nhân viên:</strong> ${props.employee} (${props.employee_code})${isMine}</p>
+                        <p><strong>Loại nghỉ:</strong> ${props.leave_type}</p>
+                        <p><strong>Từ ngày:</strong> ${info.event.start.toLocaleDateString('vi-VN')}</p>
+                        <p><strong>Đến ngày:</strong> ${info.event.end ? new Date(info.event.end.getTime() - 86400000).toLocaleDateString('vi-VN') : 'N/A'}</p>
+                        <p><strong>Số ngày:</strong> ${props.total_days} ngày</p>
+                        <p><strong>Trạng thái:</strong> ${statusBadge}</p>
+                        ${props.reason ? `<p><strong>Lý do:</strong> ${props.reason}</p>` : ''}
+                    </div>
+                `,
+                icon: 'info',
+                confirmButtonText: 'Đóng',
+                width: 500
+            });
+        },
+        
+        // Loading indicator
+        loading: function(isLoading) {
+            if (isLoading) {
+                // Show loading
+                $('#calendar').addClass('loading');
+            } else {
+                // Hide loading
+                $('#calendar').removeClass('loading');
+            }
+        }
+    });
+    
+    calendar.render();
+});
+</script>
+{% endblock %}

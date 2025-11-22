@@ -22663,3 +22663,44 @@ INFO 2025-11-22 17:25:05,867 management_views Admin home accessed by hangpt
 INFO 2025-11-22 17:25:05,932 basehttp "GET /management/ HTTP/1.1" 200 42377
 INFO 2025-11-22 17:25:12,799 management_views Admin home accessed by hangpt
 INFO 2025-11-22 17:25:12,870 basehttp "GET /management/ HTTP/1.1" 200 42377
+INFO 2025-11-22 18:58:04,063 basehttp "POST /login/?next=/portal/attendance/ HTTP/1.1" 302 0
+INFO 2025-11-22 18:58:04,138 basehttp "GET /portal/attendance/ HTTP/1.1" 200 34748
+INFO 2025-11-22 18:58:09,657 basehttp "GET /portal/ HTTP/1.1" 200 18027
+INFO 2025-11-22 19:00:47,595 basehttp "GET /portal/leaves/create/ HTTP/1.1" 200 17543
+INFO 2025-11-22 19:00:49,876 basehttp "GET /portal/expenses/create/ HTTP/1.1" 200 16182
+INFO 2025-11-22 19:00:51,294 basehttp "GET /portal/payroll/ HTTP/1.1" 200 17483
+INFO 2025-11-22 19:00:52,964 basehttp "GET /portal/payroll/127/ HTTP/1.1" 200 14618
+INFO 2025-11-22 19:00:56,008 basehttp "GET /portal/attendance/ HTTP/1.1" 200 34748
+INFO 2025-11-22 19:27:19,991 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-22 19:27:26,368 autoreload Watching for file changes with StatReloader
+INFO 2025-11-22 19:27:32,239 autoreload D:\Study\CT201\Project\hrm\app\urls_portal.py changed, reloading.
+INFO 2025-11-22 19:27:33,754 autoreload Watching for file changes with StatReloader
+INFO 2025-11-22 19:30:26,533 basehttp "GET /portal/leaves/ HTTP/1.1" 200 15220
+INFO 2025-11-22 19:30:27,854 basehttp "GET /portal/payroll/ HTTP/1.1" 200 17483
+INFO 2025-11-22 19:30:28,487 basehttp "GET /portal/ HTTP/1.1" 200 18027
+INFO 2025-11-22 19:32:34,401 basehttp "GET /portal/ HTTP/1.1" 200 18027
+INFO 2025-11-22 19:32:35,347 basehttp "GET /portal/ HTTP/1.1" 200 18027
+INFO 2025-11-22 19:32:36,410 basehttp "GET /portal/attendance/ HTTP/1.1" 200 44924
+INFO 2025-11-22 19:32:36,556 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-22 19:32:38,366 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-22 19:32:40,034 autoreload Watching for file changes with StatReloader
+INFO 2025-11-22 19:33:31,319 basehttp "GET /portal/expenses/ HTTP/1.1" 200 27478
+INFO 2025-11-22 19:33:33,652 basehttp "GET /portal/ HTTP/1.1" 200 18027
+INFO 2025-11-22 19:33:37,215 basehttp "GET /portal/attendance/ HTTP/1.1" 200 44924
+INFO 2025-11-22 19:33:37,321 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+ERROR 2025-11-22 19:33:40,046 log Internal Server Error: /portal/attendance/check-in/
+ERROR 2025-11-22 19:33:40,047 basehttp "POST /portal/attendance/check-in/ HTTP/1.1" 500 89
+INFO 2025-11-22 19:33:40,765 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-22 19:33:42,206 autoreload Watching for file changes with StatReloader
+ERROR 2025-11-22 19:33:45,834 log Internal Server Error: /portal/attendance/check-in/
+ERROR 2025-11-22 19:33:45,835 basehttp "POST /portal/attendance/check-in/ HTTP/1.1" 500 89
+ERROR 2025-11-22 19:33:47,677 log Internal Server Error: /portal/attendance/check-in/
+ERROR 2025-11-22 19:33:47,678 basehttp "POST /portal/attendance/check-in/ HTTP/1.1" 500 89
+INFO 2025-11-22 19:33:50,251 basehttp "GET /portal/attendance/ HTTP/1.1" 200 44924
+INFO 2025-11-22 19:33:50,347 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-22 19:34:48,644 autoreload D:\Study\CT201\Project\hrm\app\urls_portal.py changed, reloading.
+INFO 2025-11-22 19:34:50,669 autoreload Watching for file changes with StatReloader
+INFO 2025-11-22 19:35:13,746 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-22 19:35:15,174 autoreload Watching for file changes with StatReloader
+INFO 2025-11-22 19:38:24,126 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-22 19:38:25,239 autoreload Watching for file changes with StatReloader

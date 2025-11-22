@@ -230,7 +230,7 @@ function approveExpense(expenseId) {
                     'X-CSRFToken': '{{ csrf_token }}'
                 },
                 success: function(data) {
-                    if (data.status === 'success') {
+                    if (data.success) {
                         Swal.fire('Thành công!', data.message, 'success').then(() => {
                             location.reload();
                         });
@@ -238,8 +238,12 @@ function approveExpense(expenseId) {
                         Swal.fire('Lỗi!', data.message, 'error');
                     }
                 },
-                error: function() {
-                    Swal.fire('Lỗi!', 'Không thể duyệt đơn', 'error');
+                error: function(xhr) {
+                    var errorMsg = 'Không thể duyệt đơn';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMsg = xhr.responseJSON.message;
+                    }
+                    Swal.fire('Lỗi!', errorMsg, 'error');
                 }
             });
         }
@@ -269,14 +273,15 @@ function rejectExpense(expenseId) {
             $.ajax({
                 url: `/portal/team/expenses/${expenseId}/reject/`,
                 type: 'POST',
-                data: {
+                data: JSON.stringify({
                     'reason': result.value
-                },
+                }),
+                contentType: 'application/json',
                 headers: {
                     'X-CSRFToken': '{{ csrf_token }}'
                 },
                 success: function(data) {
-                    if (data.status === 'success') {
+                    if (data.success) {
                         Swal.fire('Thành công!', data.message, 'success').then(() => {
                             location.reload();
                         });
@@ -284,8 +289,12 @@ function rejectExpense(expenseId) {
                         Swal.fire('Lỗi!', data.message, 'error');
                     }
                 },
-                error: function() {
-                    Swal.fire('Lỗi!', 'Không thể từ chối đơn', 'error');
+                error: function(xhr) {
+                    var errorMsg = 'Không thể từ chối đơn';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMsg = xhr.responseJSON.message;
+                    }
+                    Swal.fire('Lỗi!', errorMsg, 'error');
                 }
             });
         }

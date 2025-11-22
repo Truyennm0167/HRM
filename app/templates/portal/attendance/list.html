@@ -13,6 +13,62 @@
         </div>
     </div>
 
+    <!-- Check-in/Check-out Card -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card card-primary">
+                <div class="card-header">
+                    <h3 class="card-title"><i class="fas fa-user-clock"></i> Chấm công hôm nay</h3>
+                    <div class="card-tools">
+                        <span id="current-time" class="badge badge-light">
+                            <i class="fas fa-clock"></i> <span id="time-display"></span>
+                        </span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="info-box bg-light">
+                                <span class="info-box-icon bg-info"><i class="fas fa-sign-in-alt"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Check In</span>
+                                    <span class="info-box-number" id="check-in-display">--:--</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="info-box bg-light">
+                                <span class="info-box-icon bg-success"><i class="fas fa-sign-out-alt"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Check Out</span>
+                                    <span class="info-box-number" id="check-out-display">--:--</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="info-box bg-light">
+                                <span class="info-box-icon bg-warning"><i class="fas fa-hourglass-half"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Giờ làm</span>
+                                    <span class="info-box-number" id="hours-display">0h</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3 text-center">
+                            <button id="check-in-btn" class="btn btn-lg btn-primary mb-2" style="display:none;">
+                                <i class="fas fa-sign-in-alt"></i> Check In
+                            </button>
+                            <button id="check-out-btn" class="btn btn-lg btn-success mb-2" style="display:none;">
+                                <i class="fas fa-sign-out-alt"></i> Check Out
+                            </button>
+                            <div id="status-message" class="alert alert-info mt-2" style="display:none;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Stats Cards -->
     <div class="row mb-4">
         <div class="col-md-3">
@@ -174,4 +230,169 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Update current time every second
+    function updateTime() {
+        const now = new Date();
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        $('#time-display').text(`${hours}:${minutes}:${seconds}`);
+    }
+    updateTime();
+    setInterval(updateTime, 1000);
+
+    // Load today's attendance status
+    function loadTodayStatus() {
+        $.ajax({
+            url: "{% url 'portal_today_attendance' %}",
+            type: 'GET',
+            success: function(response) {
+                if (response.status === 'success') {
+                    if (response.has_checked_in) {
+                        $('#check-in-display').text(response.check_in_time);
+                        $('#check-in-btn').hide();
+                        
+                        if (response.is_late) {
+                            $('#check-in-display').parent().append('<br><small class="text-danger">Đi muộn</small>');
+                        }
+                    } else {
+                        $('#check-in-btn').show();
+                    }
+                    
+                    if (response.has_checked_out) {
+                        $('#check-out-display').text(response.check_out_time);
+                        $('#check-out-btn').hide();
+                        
+                        if (response.is_early_leave) {
+                            $('#check-out-display').parent().append('<br><small class="text-warning">Về sớm</small>');
+                        }
+                    } else if (response.has_checked_in) {
+                        $('#check-out-btn').show();
+                    }
+                    
+                    if (response.working_hours) {
+                        $('#hours-display').text(response.working_hours + 'h');
+                    }
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error('Error loading today status:', error);
+            }
+        });
+    }
+    
+    loadTodayStatus();
+
+    // Check-in button click
+    $('#check-in-btn').click(function() {
+        if (!confirm('Bạn có chắc muốn check-in không?')) return;
+        
+        $(this).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Đang xử lý...');
+        
+        $.ajax({
+            url: "{% url 'portal_check_in' %}",
+            type: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    $('#status-message')
+                        .removeClass('alert-danger alert-info')
+                        .addClass('alert-success')
+                        .html('<i class="fas fa-check-circle"></i> ' + response.message)
+                        .show();
+                    
+                    // Update display
+                    $('#check-in-display').text(response.check_in_time);
+                    $('#check-in-btn').hide();
+                    $('#check-out-btn').show();
+                    
+                    if (response.is_late) {
+                        $('#check-in-display').parent().append('<br><small class="text-danger">Đi muộn</small>');
+                    }
+                    
+                    // Reload page after 2 seconds
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    $('#status-message')
+                        .removeClass('alert-success alert-info')
+                        .addClass('alert-danger')
+                        .html('<i class="fas fa-exclamation-circle"></i> ' + response.message)
+                        .show();
+                    $('#check-in-btn').prop('disabled', false).html('<i class="fas fa-sign-in-alt"></i> Check In');
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#status-message')
+                    .removeClass('alert-success alert-info')
+                    .addClass('alert-danger')
+                    .html('<i class="fas fa-exclamation-circle"></i> Lỗi kết nối: ' + error)
+                    .show();
+                $('#check-in-btn').prop('disabled', false).html('<i class="fas fa-sign-in-alt"></i> Check In');
+            }
+        });
+    });
+
+    // Check-out button click
+    $('#check-out-btn').click(function() {
+        if (!confirm('Bạn có chắc muốn check-out không?')) return;
+        
+        $(this).prop('disabled', true).html('<i class="fas fa-spinner fa-spin"></i> Đang xử lý...');
+        
+        $.ajax({
+            url: "{% url 'portal_check_out' %}",
+            type: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    $('#status-message')
+                        .removeClass('alert-danger alert-info')
+                        .addClass('alert-success')
+                        .html('<i class="fas fa-check-circle"></i> ' + response.message)
+                        .show();
+                    
+                    // Update display
+                    $('#check-out-display').text(response.check_out_time);
+                    $('#hours-display').text(response.working_hours + 'h');
+                    $('#check-out-btn').hide();
+                    
+                    if (response.is_early) {
+                        $('#check-out-display').parent().append('<br><small class="text-warning">Về sớm</small>');
+                    }
+                    
+                    // Reload page after 2 seconds
+                    setTimeout(function() {
+                        location.reload();
+                    }, 2000);
+                } else {
+                    $('#status-message')
+                        .removeClass('alert-success alert-info')
+                        .addClass('alert-danger')
+                        .html('<i class="fas fa-exclamation-circle"></i> ' + response.message)
+                        .show();
+                    $('#check-out-btn').prop('disabled', false).html('<i class="fas fa-sign-out-alt"></i> Check Out');
+                }
+            },
+            error: function(xhr, status, error) {
+                $('#status-message')
+                    .removeClass('alert-success alert-info')
+                    .addClass('alert-danger')
+                    .html('<i class="fas fa-exclamation-circle"></i> Lỗi kết nối: ' + error)
+                    .show();
+                $('#check-out-btn').prop('disabled', false).html('<i class="fas fa-sign-out-alt"></i> Check Out');
+            }
+        });
+    });
+});
+</script>
 {% endblock %}

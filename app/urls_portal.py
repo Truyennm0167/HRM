@@ -15,6 +15,8 @@ urlpatterns = [
     path('leaves/create/', portal_views.leave_create, name='portal_leave_create'),
     path('leaves/<int:leave_id>/', portal_views.leave_detail, name='portal_leave_detail'),
     path('leaves/<int:leave_id>/cancel/', portal_views.leave_cancel, name='portal_leave_cancel'),
+    path('leaves/calendar/', portal_views.leave_calendar, name='portal_leave_calendar'),
+    path('leaves/calendar/data/', portal_views.leave_calendar_data, name='portal_leave_calendar_data'),
     
     # Payroll
     path('payroll/', portal_views.payroll_list, name='portal_payroll'),
@@ -24,6 +26,9 @@ urlpatterns = [
     # Attendance
     path('attendance/', portal_views.attendance_list, name='portal_attendance'),
     path('attendance/calendar/', portal_views.attendance_calendar, name='portal_attendance_calendar'),
+    path('attendance/check-in/', portal_views.check_in, name='portal_check_in'),
+    path('attendance/check-out/', portal_views.check_out, name='portal_check_out'),
+    path('attendance/today/', portal_views.today_attendance, name='portal_today_attendance'),
     
     # Expenses
     path('expenses/', portal_views.expenses_list, name='portal_expenses'),

@@ -268,6 +268,71 @@ def leave_cancel(request, leave_id):
     return redirect('portal_leaves')
 
 
+@login_required
+def leave_calendar(request):
+    """Xem calendar nghỉ phép"""
+    employee = get_user_employee(request.user)
+    if not employee:
+        messages.error(request, 'Không tìm thấy thông tin nhân viên.')
+        return redirect('login')
+    
+    context = {
+        'employee': employee,
+    }
+    
+    return render(request, 'portal/leaves/calendar.html', context)
+
+
+@login_required
+def leave_calendar_data(request):
+    """JSON data for FullCalendar"""
+    employee = get_user_employee(request.user)
+    if not employee:
+        return JsonResponse({'error': 'Không tìm thấy thông tin nhân viên'}, status=403)
+    
+    # Get all leaves from same department (team visibility)
+    leave_requests = LeaveRequest.objects.filter(
+        employee__department=employee.department
+    ).select_related('employee', 'leave_type').order_by('-created_at')
+    
+    # Format for FullCalendar
+    events = []
+    for leave in leave_requests:
+        # Color by status
+        if leave.status == 'Approved':
+            color = '#28a745'  # Green
+        elif leave.status == 'Pending':
+            color = '#ffc107'  # Yellow
+        elif leave.status == 'Rejected':
+            color = '#dc3545'  # Red
+        else:
+            color = '#6c757d'  # Grey
+        
+        # Add border for own leaves
+        border_width = '3px' if leave.employee == employee else '1px'
+        
+        events.append({
+            'id': leave.id,
+            'title': f"{leave.employee.name} - {leave.leave_type.name}",
+            'start': leave.start_date.isoformat(),
+            'end': (leave.end_date + timezone.timedelta(days=1)).isoformat(),  # FullCalendar exclusive end
+            'backgroundColor': color,
+            'borderColor': color,
+            'borderWidth': border_width,
+            'extendedProps': {
+                'employee': leave.employee.name,
+                'employee_code': leave.employee.employee_code,
+                'leave_type': leave.leave_type.name,
+                'total_days': leave.total_days,
+                'status': leave.status,
+                'reason': leave.reason,
+                'is_mine': leave.employee == employee
+            }
+        })
+    
+    return JsonResponse(events, safe=False)
+
+
 # ======================== PAYROLL ========================
 
 @login_required
@@ -307,12 +372,151 @@ def payroll_detail(request, payroll_id):
 @login_required
 def payroll_download(request, payroll_id):
     """Download payslip PDF"""
+    from io import BytesIO
+    from reportlab.lib import colors
+    from reportlab.lib.pagesizes import A4
+    from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
+    from reportlab.lib.units import cm
+    from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, Image
+    from reportlab.pdfbase import pdfmetrics
+    from reportlab.pdfbase.ttfonts import TTFont
+    from django.http import HttpResponse
+    
     employee = get_user_employee(request.user)
     payroll = get_object_or_404(Payroll, id=payroll_id, employee=employee)
     
-    # TODO: Implement PDF generation
-    messages.info(request, 'Tính năng download PDF sẽ được cập nhật sau.')
-    return redirect('portal_payroll_detail', payroll_id=payroll_id)
+    # Create PDF buffer
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=A4, topMargin=1.5*cm, bottomMargin=1.5*cm)
+    elements = []
+    styles = getSampleStyleSheet()
+    
+    # Custom style
+    title_style = ParagraphStyle(
+        'CustomTitle',
+        parent=styles['Heading1'],
+        fontSize=20,
+        textColor=colors.HexColor('#1a237e'),
+        spaceAfter=12,
+        alignment=1  # Center
+    )
+    
+    heading_style = ParagraphStyle(
+        'CustomHeading',
+        parent=styles['Heading2'],
+        fontSize=14,
+        textColor=colors.HexColor('#283593'),
+        spaceAfter=8
+    )
+    
+    # Title
+    elements.append(Paragraph("PHIẾU LƯƠNG", title_style))
+    elements.append(Spacer(1, 0.5*cm))
+    
+    # Employee info
+    elements.append(Paragraph("Thông tin nhân viên", heading_style))
+    emp_data = [
+        ['Mã NV:', payroll.employee.employee_code or 'N/A', 'Tháng:', f"{payroll.month}/{payroll.year}"],
+        ['Họ tên:', payroll.employee.name, 'Phòng ban:', payroll.employee.department.name if payroll.employee.department else 'N/A'],
+        ['Chức vụ:', payroll.employee.position or 'N/A', 'Hệ số lương:', f"{payroll.salary_coefficient:.2f}"],
+    ]
+    emp_table = Table(emp_data, colWidths=[3*cm, 6*cm, 3*cm, 6*cm])
+    emp_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (0, -1), colors.HexColor('#e3f2fd')),
+        ('BACKGROUND', (2, 0), (2, -1), colors.HexColor('#e3f2fd')),
+        ('TEXTCOLOR', (0, 0), (-1, -1), colors.black),
+        ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+        ('FONTNAME', (0, 0), (0, -1), 'Helvetica-Bold'),
+        ('FONTNAME', (2, 0), (2, -1), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, -1), 10),
+        ('GRID', (0, 0), (-1, -1), 0.5, colors.grey),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('LEFTPADDING', (0, 0), (-1, -1), 8),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 8),
+        ('TOPPADDING', (0, 0), (-1, -1), 6),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+    ]))
+    elements.append(emp_table)
+    elements.append(Spacer(1, 0.7*cm))
+    
+    # Salary breakdown
+    elements.append(Paragraph("Chi tiết lương", heading_style))
+    salary_data = [
+        ['Khoản mục', 'Số lượng', 'Đơn giá', 'Thành tiền'],
+        ['Lương cơ bản', f"{payroll.standard_working_days} ngày", f"{payroll.base_salary:,.0f} đ", f"{payroll.base_salary:,.0f} đ"],
+        ['Tổng giờ làm việc', f"{payroll.total_working_hours:.1f}h", f"{payroll.hourly_rate:,.0f} đ/h", f"{payroll.total_working_hours * payroll.hourly_rate:,.0f} đ"],
+        ['Thưởng', '', '', f"{payroll.bonus:,.0f} đ"],
+        ['Phạt', '', '', f"-{payroll.penalty:,.0f} đ"],
+    ]
+    salary_table = Table(salary_data, colWidths=[6*cm, 3*cm, 4*cm, 5*cm])
+    salary_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#1a237e')),
+        ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+        ('ALIGN', (0, 0), (0, -1), 'LEFT'),
+        ('ALIGN', (1, 0), (-1, -1), 'RIGHT'),
+        ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, 0), 11),
+        ('FONTSIZE', (0, 1), (-1, -1), 10),
+        ('GRID', (0, 0), (-1, -1), 0.5, colors.grey),
+        ('VALIGN', (0, 0), (-1, -1), 'MIDDLE'),
+        ('LEFTPADDING', (0, 0), (-1, -1), 8),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 8),
+        ('TOPPADDING', (0, 0), (-1, -1), 6),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 6),
+        ('BACKGROUND', (0, 1), (-1, -1), colors.white),
+    ]))
+    elements.append(salary_table)
+    elements.append(Spacer(1, 0.5*cm))
+    
+    # Total salary
+    total_data = [
+        ['TỔNG LƯƠNG', f"{payroll.total_salary:,.0f} đ"]
+    ]
+    total_table = Table(total_data, colWidths=[12*cm, 6*cm])
+    total_table.setStyle(TableStyle([
+        ('BACKGROUND', (0, 0), (-1, -1), colors.HexColor('#4caf50')),
+        ('TEXTCOLOR', (0, 0), (-1, -1), colors.white),
+        ('ALIGN', (0, 0), (0, -1), 'LEFT'),
+        ('ALIGN', (1, 0), (1, -1), 'RIGHT'),
+        ('FONTNAME', (0, 0), (-1, -1), 'Helvetica-Bold'),
+        ('FONTSIZE', (0, 0), (-1, -1), 14),
+        ('LEFTPADDING', (0, 0), (-1, -1), 8),
+        ('RIGHTPADDING', (0, 0), (-1, -1), 8),
+        ('TOPPADDING', (0, 0), (-1, -1), 10),
+        ('BOTTOMPADDING', (0, 0), (-1, -1), 10),
+    ]))
+    elements.append(total_table)
+    elements.append(Spacer(1, 1*cm))
+    
+    # Notes
+    if payroll.notes:
+        elements.append(Paragraph("Ghi chú", heading_style))
+        elements.append(Paragraph(payroll.notes, styles['Normal']))
+        elements.append(Spacer(1, 0.5*cm))
+    
+    # Footer
+    footer_style = ParagraphStyle(
+        'Footer',
+        parent=styles['Normal'],
+        fontSize=9,
+        textColor=colors.grey,
+        alignment=1
+    )
+    elements.append(Spacer(1, 1*cm))
+    elements.append(Paragraph(
+        f"Phiếu lương được tạo tự động vào {timezone.now().strftime('%d/%m/%Y %H:%M')}<br/>Trạng thái: {payroll.get_status_display()}",
+        footer_style
+    ))
+    
+    # Build PDF
+    doc.build(elements)
+    buffer.seek(0)
+    
+    # Return response
+    response = HttpResponse(buffer, content_type='application/pdf')
+    filename = f"Phieu_luong_{payroll.employee.employee_code}_{payroll.month}_{payroll.year}.pdf"
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+    return response
 
 
 # ======================== ATTENDANCE ========================
@@ -370,6 +574,150 @@ def attendance_calendar(request):
     # TODO: Implement calendar view
     messages.info(request, 'Tính năng calendar view sẽ được cập nhật sau.')
     return redirect('portal_attendance')
+
+
+@login_required
+def check_in(request):
+    """Check-in chấm công"""
+    if request.method != 'POST':
+        return JsonResponse({'status': 'error', 'message': 'Method not allowed'}, status=405)
+    
+    employee = get_user_employee(request.user)
+    if not employee:
+        return JsonResponse({'status': 'error', 'message': 'Không tìm thấy thông tin nhân viên'}, status=403)
+    
+    today = timezone.now().date()
+    
+    # Check if already checked in today
+    existing = Attendance.objects.filter(employee=employee, date=today).first()
+    if existing and existing.check_in:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Bạn đã check-in rồi!',
+            'check_in_time': existing.check_in.strftime('%H:%M')
+        })
+    
+    try:
+        # Create or update attendance record
+        attendance, created = Attendance.objects.get_or_create(
+            employee=employee,
+            date=today,
+            defaults={
+                'check_in': timezone.now(),
+                'status': 'present'
+            }
+        )
+        
+        if not created:
+            attendance.check_in = timezone.now()
+            attendance.status = 'present'
+            attendance.save()
+        
+        # Check if late (after 8:30 AM)
+        check_in_time = attendance.check_in.time()
+        from datetime import time
+        standard_time = time(8, 30)  # 8:30 AM
+        is_late = check_in_time > standard_time
+        
+        if is_late:
+            attendance.is_late = True
+            attendance.status = 'late'
+            attendance.save()
+        
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Check-in thành công!' + (' (Đi muộn)' if is_late else ''),
+            'check_in_time': attendance.check_in.strftime('%H:%M:%S'),
+            'is_late': is_late
+        })
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+
+
+@login_required
+def check_out(request):
+    """Check-out chấm công"""
+    if request.method != 'POST':
+        return JsonResponse({'status': 'error', 'message': 'Method not allowed'}, status=405)
+    
+    employee = get_user_employee(request.user)
+    if not employee:
+        return JsonResponse({'status': 'error', 'message': 'Không tìm thấy thông tin nhân viên'}, status=403)
+    
+    today = timezone.now().date()
+    
+    # Find today's attendance
+    attendance = Attendance.objects.filter(employee=employee, date=today).first()
+    if not attendance or not attendance.check_in:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Bạn chưa check-in!'
+        })
+    
+    if attendance.check_out:
+        return JsonResponse({
+            'status': 'error',
+            'message': 'Bạn đã check-out rồi!',
+            'check_out_time': attendance.check_out.strftime('%H:%M')
+        })
+    
+    try:
+        attendance.check_out = timezone.now()
+        
+        # Calculate working hours
+        delta = attendance.check_out - attendance.check_in
+        hours = delta.total_seconds() / 3600
+        attendance.working_hours = round(hours, 2)
+        
+        # Check if early leave (before 5:30 PM)
+        from datetime import time
+        check_out_time = attendance.check_out.time()
+        standard_time = time(17, 30)  # 5:30 PM
+        is_early = check_out_time < standard_time
+        
+        if is_early:
+            attendance.is_early_leave = True
+        
+        attendance.save()
+        
+        return JsonResponse({
+            'status': 'success',
+            'message': 'Check-out thành công!' + (' (Về sớm)' if is_early else ''),
+            'check_out_time': attendance.check_out.strftime('%H:%M:%S'),
+            'working_hours': attendance.working_hours,
+            'is_early': is_early
+        })
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)}, status=500)
+
+
+@login_required
+def today_attendance(request):
+    """Get today's attendance status"""
+    employee = get_user_employee(request.user)
+    if not employee:
+        return JsonResponse({'status': 'error', 'message': 'Không tìm thấy thông tin nhân viên'}, status=403)
+    
+    today = timezone.now().date()
+    attendance = Attendance.objects.filter(employee=employee, date=today).first()
+    
+    if not attendance:
+        return JsonResponse({
+            'status': 'success',
+            'has_checked_in': False,
+            'has_checked_out': False
+        })
+    
+    return JsonResponse({
+        'status': 'success',
+        'has_checked_in': bool(attendance.check_in),
+        'has_checked_out': bool(attendance.check_out),
+        'check_in_time': attendance.check_in.strftime('%H:%M:%S') if attendance.check_in else None,
+        'check_out_time': attendance.check_out.strftime('%H:%M:%S') if attendance.check_out else None,
+        'working_hours': attendance.working_hours,
+        'is_late': attendance.is_late,
+        'is_early_leave': attendance.is_early_leave
+    })
 
 
 # ======================== EXPENSES ========================
@@ -712,9 +1060,29 @@ def team_leaves(request):
         employee__department=employee.department
     ).select_related('employee', 'leave_type', 'approved_by').order_by('-created_at')
     
+    # Calculate stats
+    from datetime import date
+    today = date.today()
+    pending_count = leave_requests.filter(status='Pending').count()
+    approved_count = leave_requests.filter(
+        status='Approved', 
+        created_at__year=today.year,
+        created_at__month=today.month
+    ).count()
+    rejected_count = leave_requests.filter(
+        status='Rejected',
+        created_at__year=today.year,
+        created_at__month=today.month
+    ).count()
+    team_size = Employee.objects.filter(department=employee.department).count()
+    
     context = {
         'employee': employee,
         'leave_requests': leave_requests,
+        'pending_count': pending_count,
+        'approved_count': approved_count,
+        'rejected_count': rejected_count,
+        'team_size': team_size,
     }
     
     return render(request, 'portal/approvals/team_leaves.html', context)
@@ -817,13 +1185,35 @@ def team_expenses(request):
     """Danh sách đơn hoàn tiền của team"""
     employee = get_user_employee(request.user)
     
-    expenses = Expense.objects.filter(
+    expense_requests = Expense.objects.filter(
         employee__department=employee.department
     ).select_related('employee', 'category', 'approved_by', 'paid_by').order_by('-date')
     
+    # Calculate stats
+    from datetime import date
+    from django.db.models import Sum
+    today = date.today()
+    pending_expenses = expense_requests.filter(status='pending')
+    pending_count = pending_expenses.count()
+    total_amount = pending_expenses.aggregate(Sum('amount'))['amount__sum'] or 0
+    approved_count = expense_requests.filter(
+        status='approved',
+        created_at__year=today.year,
+        created_at__month=today.month
+    ).count()
+    rejected_count = expense_requests.filter(
+        status='rejected',
+        created_at__year=today.year,
+        created_at__month=today.month
+    ).count()
+    
     context = {
         'employee': employee,
-        'expenses': expenses,
+        'expense_requests': expense_requests,
+        'pending_count': pending_count,
+        'approved_count': approved_count,
+        'rejected_count': rejected_count,
+        'total_amount': total_amount,
     }
     
     return render(request, 'portal/approvals/team_expenses.html', context)
