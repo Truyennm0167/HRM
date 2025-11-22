@@ -44,7 +44,11 @@
                             </label>
                             {{ form.category }}
                             {% if form.category.errors %}
-                                <div class="text-danger">{{ form.category.errors }}</div>
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.category.errors %}
+                                        <i class="fas fa-exclamation-circle mr-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
                             {% endif %}
                         </div>
 
@@ -55,7 +59,11 @@
                             </label>
                             {{ form.date }}
                             {% if form.date.errors %}
-                                <div class="text-danger">{{ form.date.errors }}</div>
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.date.errors %}
+                                        <i class="fas fa-exclamation-circle mr-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
                             {% endif %}
                         </div>
 
@@ -66,7 +74,11 @@
                             </label>
                             {{ form.amount }}
                             {% if form.amount.errors %}
-                                <div class="text-danger">{{ form.amount.errors }}</div>
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.amount.errors %}
+                                        <i class="fas fa-exclamation-circle mr-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
                             {% endif %}
                             <small class="form-text text-muted">Nhập số tiền cần hoàn</small>
                         </div>
@@ -78,7 +90,11 @@
                             </label>
                             {{ form.description }}
                             {% if form.description.errors %}
-                                <div class="text-danger">{{ form.description.errors }}</div>
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.description.errors %}
+                                        <i class="fas fa-exclamation-circle mr-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
                             {% endif %}
                             <small class="form-text text-muted">Mô tả chi tiết về khoản chi phí này</small>
                         </div>
@@ -90,7 +106,11 @@
                             </label>
                             {{ form.receipt }}
                             {% if form.receipt.errors %}
-                                <div class="text-danger">{{ form.receipt.errors }}</div>
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.receipt.errors %}
+                                        <i class="fas fa-exclamation-circle mr-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
                             {% endif %}
                             <small class="form-text text-muted">
                                 Upload hóa đơn, biên lai hoặc chứng từ liên quan (PDF, JPG, PNG)

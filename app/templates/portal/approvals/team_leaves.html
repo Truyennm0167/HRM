@@ -67,9 +67,9 @@
         </div>
     </div>
 
-    <!-- Filter Buttons -->
+    <!-- Filter and Bulk Actions -->
     <div class="row mb-3">
-        <div class="col-12">
+        <div class="col-md-6">
             <div class="btn-group" role="group">
                 <button type="button" class="btn btn-outline-primary active" onclick="filterLeaves('all')">
                     <i class="fas fa-list mr-1"></i>Tất cả
@@ -85,6 +85,14 @@
                 </button>
             </div>
         </div>
+        <div class="col-md-6 text-right">
+            <button type="button" class="btn btn-success" id="bulkApproveBtn" onclick="bulkApproveLeaves()" disabled>
+                <i class="fas fa-check-double mr-1"></i>Duyệt đã chọn (<span id="selectedCount">0</span>)
+            </button>
+            <button type="button" class="btn btn-danger" id="bulkRejectBtn" onclick="bulkRejectLeaves()" disabled>
+                <i class="fas fa-times-circle mr-1"></i>Từ chối đã chọn
+            </button>
+        </div>
     </div>
 
     <!-- Leave Requests Table -->
@@ -98,6 +106,9 @@
                     <table id="leaveRequestsTable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
+                                <th style="width: 40px;">
+                                    <input type="checkbox" id="selectAll" onchange="toggleSelectAll(this)">
+                                </th>
                                 <th>Nhân viên</th>
                                 <th>Loại nghỉ</th>
                                 <th>Từ ngày</th>
@@ -112,6 +123,11 @@
                         <tbody>
                             {% for leave in leave_requests %}
                             <tr data-status="{{ leave.status }}">
+                                <td class="text-center">
+                                    {% if leave.status == 'Pending' %}
+                                    <input type="checkbox" class="leave-checkbox" value="{{ leave.id }}" onchange="updateBulkButtons()">
+                                    {% endif %}
+                                </td>
                                 <td>
                                     <strong>{{ leave.employee.admin.first_name }} {{ leave.employee.admin.last_name }}</strong><br>
                                     <small class="text-muted">{{ leave.employee.employee_code }}</small>
@@ -184,6 +200,144 @@ $(document).ready(function() {
         }
     });
 });
+
+// Toggle select all checkboxes
+function toggleSelectAll(checkbox) {
+    const checkboxes = document.querySelectorAll('.leave-checkbox');
+    checkboxes.forEach(cb => cb.checked = checkbox.checked);
+    updateBulkButtons();
+}
+
+// Update bulk action button states
+function updateBulkButtons() {
+    const checkboxes = document.querySelectorAll('.leave-checkbox:checked');
+    const count = checkboxes.length;
+    document.getElementById('selectedCount').textContent = count;
+    document.getElementById('bulkApproveBtn').disabled = count === 0;
+    document.getElementById('bulkRejectBtn').disabled = count === 0;
+    
+    // Update select all checkbox state
+    const allCheckboxes = document.querySelectorAll('.leave-checkbox');
+    const selectAllCheckbox = document.getElementById('selectAll');
+    if (selectAllCheckbox) {
+        selectAllCheckbox.checked = allCheckboxes.length > 0 && count === allCheckboxes.length;
+        selectAllCheckbox.indeterminate = count > 0 && count < allCheckboxes.length;
+    }
+}
+
+// Bulk approve leaves
+function bulkApproveLeaves() {
+    const checkboxes = document.querySelectorAll('.leave-checkbox:checked');
+    const leaveIds = Array.from(checkboxes).map(cb => cb.value);
+    
+    if (leaveIds.length === 0) {
+        Swal.fire('Lưu ý', 'Vui lòng chọn ít nhất 1 đơn để duyệt', 'warning');
+        return;
+    }
+    
+    Swal.fire({
+        title: `Duyệt ${leaveIds.length} đơn nghỉ phép?`,
+        text: "Bạn có chắc chắn muốn duyệt tất cả các đơn đã chọn không?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Duyệt tất cả',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/portal/team/leaves/bulk-action/',
+                type: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    action: 'approve',
+                    leave_ids: leaveIds
+                }),
+                success: function(data) {
+                    if (data.success) {
+                        Swal.fire('Thành công!', data.message, 'success').then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Lỗi!', data.message, 'error');
+                    }
+                },
+                error: function(xhr) {
+                    var errorMsg = 'Không thể duyệt các đơn';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMsg = xhr.responseJSON.message;
+                    }
+                    Swal.fire('Lỗi!', errorMsg, 'error');
+                }
+            });
+        }
+    });
+}
+
+// Bulk reject leaves
+function bulkRejectLeaves() {
+    const checkboxes = document.querySelectorAll('.leave-checkbox:checked');
+    const leaveIds = Array.from(checkboxes).map(cb => cb.value);
+    
+    if (leaveIds.length === 0) {
+        Swal.fire('Lưu ý', 'Vui lòng chọn ít nhất 1 đơn để từ chối', 'warning');
+        return;
+    }
+    
+    Swal.fire({
+        title: `Từ chối ${leaveIds.length} đơn nghỉ phép?`,
+        text: "Vui lòng nhập lý do từ chối:",
+        input: 'textarea',
+        inputPlaceholder: 'Nhập lý do từ chối...',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Từ chối tất cả',
+        cancelButtonText: 'Hủy',
+        inputValidator: (value) => {
+            if (!value) {
+                return 'Bạn cần nhập lý do từ chối!'
+            }
+        }
+    }).then((result) => {
+        if (result.isConfirmed && result.value) {
+            $.ajax({
+                url: '/portal/team/leaves/bulk-action/',
+                type: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    action: 'reject',
+                    leave_ids: leaveIds,
+                    reason: result.value
+                }),
+                success: function(data) {
+                    if (data.success) {
+                        Swal.fire('Thành công!', data.message, 'success').then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Lỗi!', data.message, 'error');
+                    }
+                },
+                error: function(xhr) {
+                    var errorMsg = 'Không thể từ chối các đơn';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMsg = xhr.responseJSON.message;
+                    }
+                    Swal.fire('Lỗi!', errorMsg, 'error');
+                }
+            });
+        }
+    });
+}
 
 // Filter leaves by status
 function filterLeaves(status) {

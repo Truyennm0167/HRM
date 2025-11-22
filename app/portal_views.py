@@ -2,6 +2,7 @@
 Employee Portal Views
 Self-service portal for all employees to manage their own data
 """
+import json
 from functools import wraps
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
@@ -125,6 +126,8 @@ def dashboard(request):
 @login_required
 def leaves_list(request):
     """Danh sách đơn nghỉ phép của nhân viên"""
+    from django.core.paginator import Paginator
+    
     employee = get_user_employee(request.user)
     if not employee:
         messages.error(request, 'Không tìm thấy thông tin nhân viên.')
@@ -138,16 +141,68 @@ def leaves_list(request):
         year=current_year
     ).select_related('leave_type')
     
-    # Leave requests
+    # Leave requests with filters
     leave_requests = LeaveRequest.objects.filter(
         employee=employee
-    ).select_related('leave_type', 'approved_by').order_by('-created_at')
+    ).select_related('leave_type', 'approved_by')
+    
+    # Apply filters
+    status_filter = request.GET.get('status')
+    if status_filter:
+        leave_requests = leave_requests.filter(status=status_filter)
+    
+    leave_type_filter = request.GET.get('leave_type')
+    if leave_type_filter:
+        leave_requests = leave_requests.filter(leave_type_id=leave_type_filter)
+    
+    year_filter = request.GET.get('year')
+    if year_filter:
+        leave_requests = leave_requests.filter(start_date__year=year_filter)
+    
+    search_query = request.GET.get('q')
+    if search_query:
+        leave_requests = leave_requests.filter(
+            models.Q(reason__icontains=search_query) |
+            models.Q(leave_type__name__icontains=search_query)
+        )
+    
+    leave_requests = leave_requests.order_by('-created_at')
+    
+    # Pagination
+    paginator = Paginator(leave_requests, 25)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+    
+    # Get all leave types for filter dropdown
+    leave_types = LeaveType.objects.filter(is_active=True)
+    
+    # Calculate stats
+    used_leaves = LeaveRequest.objects.filter(
+        employee=employee,
+        status='Approved',
+        start_date__year=current_year
+    ).aggregate(models.Sum('total_days'))['total_days__sum'] or 0
+    
+    pending_leaves = LeaveRequest.objects.filter(
+        employee=employee,
+        status='Pending'
+    ).aggregate(models.Sum('total_days'))['total_days__sum'] or 0
+    
+    remaining_leaves = employee.annual_leave_balance - used_leaves
     
     context = {
         'employee': employee,
         'leave_balances': leave_balances,
-        'leave_requests': leave_requests,
+        'page_obj': page_obj,
+        'leave_types': leave_types,
         'current_year': current_year,
+        'used_leaves': used_leaves,
+        'pending_leaves': pending_leaves,
+        'remaining_leaves': remaining_leaves,
+        'status_filter': status_filter,
+        'leave_type_filter': leave_type_filter,
+        'year_filter': year_filter,
+        'search_query': search_query,
     }
     
     return render(request, 'portal/leaves/list.html', context)
@@ -339,18 +394,42 @@ def leave_calendar_data(request):
 @login_required
 def payroll_list(request):
     """Danh sách bảng lương"""
+    from django.core.paginator import Paginator
+    
     employee = get_user_employee(request.user)
     if not employee:
         messages.error(request, 'Không tìm thấy thông tin nhân viên.')
         return redirect('login')
     
+    # Get filter parameters
+    year_filter = request.GET.get('year')
+    month_filter = request.GET.get('month')
+    status_filter = request.GET.get('status')
+    page_number = request.GET.get('page', 1)
+    
+    # Base queryset
     payrolls = Payroll.objects.filter(
         employee=employee
     ).order_by('-year', '-month')
     
+    # Apply filters
+    if year_filter:
+        payrolls = payrolls.filter(year=year_filter)
+    if month_filter:
+        payrolls = payrolls.filter(month=month_filter)
+    if status_filter:
+        payrolls = payrolls.filter(status=status_filter)
+    
+    # Pagination
+    paginator = Paginator(payrolls, 25)
+    page_obj = paginator.get_page(page_number)
+    
     context = {
         'employee': employee,
-        'payrolls': payrolls,
+        'page_obj': page_obj,
+        'year_filter': year_filter,
+        'month_filter': month_filter,
+        'status_filter': status_filter,
     }
     
     return render(request, 'portal/payroll/list.html', context)
@@ -726,18 +805,71 @@ def today_attendance(request):
 @login_required
 def expenses_list(request):
     """Danh sách đơn hoàn tiền"""
+    from django.core.paginator import Paginator
+    from django.db.models import Q, Sum
+    
     employee = get_user_employee(request.user)
     if not employee:
         messages.error(request, 'Không tìm thấy thông tin nhân viên.')
         return redirect('login')
     
+    # Get filter parameters
+    status_filter = request.GET.get('status')
+    category_filter = request.GET.get('category')
+    year_filter = request.GET.get('year')
+    search_query = request.GET.get('q')
+    page_number = request.GET.get('page', 1)
+    
+    # Base queryset
     expenses = Expense.objects.filter(
         employee=employee
     ).select_related('category', 'approved_by', 'paid_by').order_by('-date')
     
+    # Apply filters
+    if status_filter:
+        expenses = expenses.filter(status=status_filter)
+    if category_filter:
+        expenses = expenses.filter(category_id=category_filter)
+    if year_filter:
+        expenses = expenses.filter(date__year=year_filter)
+    if search_query:
+        expenses = expenses.filter(
+            Q(description__icontains=search_query) |
+            Q(category__name__icontains=search_query)
+        )
+    
+    # Pagination
+    paginator = Paginator(expenses, 25)
+    page_obj = paginator.get_page(page_number)
+    
+    # Get expense categories for filter dropdown
+    expense_categories = ExpenseCategory.objects.filter(is_active=True).order_by('name')
+    
+    # Calculate stats
+    current_year = datetime.now().year
+    pending_amount = Expense.objects.filter(
+        employee=employee, status='Pending', date__year=current_year
+    ).aggregate(Sum('amount'))['amount__sum'] or 0
+    
+    approved_amount = Expense.objects.filter(
+        employee=employee, status='Approved', date__year=current_year
+    ).aggregate(Sum('amount'))['amount__sum'] or 0
+    
+    total_expenses = Expense.objects.filter(
+        employee=employee, date__year=current_year
+    ).aggregate(Sum('amount'))['amount__sum'] or 0
+    
     context = {
         'employee': employee,
-        'expenses': expenses,
+        'page_obj': page_obj,
+        'expense_categories': expense_categories,
+        'pending_amount': pending_amount,
+        'approved_amount': approved_amount,
+        'total_expenses': total_expenses,
+        'status_filter': status_filter,
+        'category_filter': category_filter,
+        'year_filter': year_filter,
+        'search_query': search_query,
     }
     
     return render(request, 'portal/expenses/list.html', context)
@@ -1366,6 +1498,101 @@ def team_leave_reject(request, leave_id):
 
 @login_required
 @require_manager_permission
+def team_leaves_bulk_action(request):
+    """Bulk approve/reject leave requests"""
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'message': 'Method not allowed'}, status=405)
+    
+    try:
+        data = json.loads(request.body)
+        action = data.get('action')
+        leave_ids = data.get('leave_ids', [])
+        reason = data.get('reason', '')
+        
+        if not action or not leave_ids:
+            return JsonResponse({'success': False, 'message': 'Missing action or leave_ids'}, status=400)
+        
+        if action not in ['approve', 'reject']:
+            return JsonResponse({'success': False, 'message': 'Invalid action'}, status=400)
+        
+        employee = get_user_employee(request.user)
+        if not employee or not employee.is_manager:
+            return JsonResponse({'success': False, 'message': 'Không có quyền thực hiện'}, status=403)
+        
+        # Get leave requests
+        leave_requests = LeaveRequest.objects.filter(
+            id__in=leave_ids,
+            employee__department=employee.department,
+            status='Pending'
+        )
+        
+        if not leave_requests.exists():
+            return JsonResponse({'success': False, 'message': 'Không tìm thấy đơn hợp lệ'}, status=404)
+        
+        # Perform bulk action
+        success_count = 0
+        failed_items = []
+        
+        for leave in leave_requests:
+            try:
+                if action == 'approve':
+                    # Check leave balance
+                    has_balance, balance_msg, leave_balance = check_leave_balance(
+                        employee=leave.employee,
+                        leave_type=leave.leave_type,
+                        requested_days=leave.total_days,
+                        year=leave.start_date.year
+                    )
+                    
+                    if has_balance:
+                        leave.status = 'Approved'
+                        leave.approved_by = employee
+                        leave.approved_date = timezone.now()
+                        leave.save()
+                        
+                        # Update leave balance
+                        if leave_balance:
+                            leave_balance.used_days += leave.total_days
+                            leave_balance.remaining_days -= leave.total_days
+                            leave_balance.save()
+                        
+                        success_count += 1
+                    else:
+                        failed_items.append(f"{leave.employee.admin.get_full_name()}: {balance_msg}")
+                
+                elif action == 'reject':
+                    if not reason:
+                        failed_items.append(f"{leave.employee.admin.get_full_name()}: Cần lý do từ chối")
+                        continue
+                    
+                    leave.status = 'Rejected'
+                    leave.approved_by = employee
+                    leave.approved_date = timezone.now()
+                    leave.admin_comment = reason
+                    leave.save()
+                    success_count += 1
+                    
+            except Exception as e:
+                failed_items.append(f"{leave.employee.admin.get_full_name()}: {str(e)}")
+        
+        # Prepare response message
+        if success_count > 0:
+            action_text = 'duyệt' if action == 'approve' else 'từ chối'
+            message = f'Đã {action_text} thành công {success_count} đơn'
+            if failed_items:
+                message += f'. Thất bại: {len(failed_items)} đơn'
+            return JsonResponse({'success': True, 'message': message, 'failed_items': failed_items})
+        else:
+            return JsonResponse({'success': False, 'message': 'Không thể xử lý đơn nào', 'failed_items': failed_items}, status=400)
+            
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'message': 'Invalid JSON data'}, status=400)
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': f'Lỗi: {str(e)}'}, status=500)
+
+
+@login_required
+@require_manager_permission
 def team_expenses(request):
     """Danh sách đơn hoàn tiền của team"""
     employee = get_user_employee(request.user)
@@ -1402,6 +1629,83 @@ def team_expenses(request):
     }
     
     return render(request, 'portal/approvals/team_expenses.html', context)
+
+
+@login_required
+@require_manager_permission
+def team_expenses_bulk_action(request):
+    """Bulk approve/reject expense requests"""
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'message': 'Method not allowed'}, status=405)
+    
+    try:
+        data = json.loads(request.body)
+        action = data.get('action')
+        expense_ids = data.get('expense_ids', [])
+        reason = data.get('reason', '')
+        
+        if not action or not expense_ids:
+            return JsonResponse({'success': False, 'message': 'Missing action or expense_ids'}, status=400)
+        
+        if action not in ['approve', 'reject']:
+            return JsonResponse({'success': False, 'message': 'Invalid action'}, status=400)
+        
+        employee = get_user_employee(request.user)
+        if not employee or not employee.is_manager:
+            return JsonResponse({'success': False, 'message': 'Không có quyền thực hiện'}, status=403)
+        
+        # Get expense requests (handle both 'pending' and 'Pending' statuses)
+        from django.db.models import Q
+        expense_requests = Expense.objects.filter(
+            id__in=expense_ids,
+            employee__department=employee.department
+        ).filter(Q(status='pending') | Q(status='Pending'))
+        
+        if not expense_requests.exists():
+            return JsonResponse({'success': False, 'message': 'Không tìm thấy đơn hợp lệ'}, status=404)
+        
+        # Perform bulk action
+        success_count = 0
+        failed_items = []
+        
+        for expense in expense_requests:
+            try:
+                if action == 'approve':
+                    expense.status = 'approved'
+                    expense.approved_by = employee
+                    expense.approved_at = timezone.now()
+                    expense.save()
+                    success_count += 1
+                
+                elif action == 'reject':
+                    if not reason:
+                        failed_items.append(f"{expense.employee.admin.get_full_name()}: Cần lý do từ chối")
+                        continue
+                    
+                    expense.status = 'rejected'
+                    expense.approved_by = employee
+                    expense.approved_at = timezone.now()
+                    expense.comment = reason
+                    expense.save()
+                    success_count += 1
+                    
+            except Exception as e:
+                failed_items.append(f"{expense.employee.admin.get_full_name()}: {str(e)}")
+        
+        # Prepare response message
+        if success_count > 0:
+            action_text = 'duyệt' if action == 'approve' else 'từ chối'
+            message = f'Đã {action_text} thành công {success_count} đơn'
+            if failed_items:
+                message += f'. Thất bại: {len(failed_items)} đơn'
+            return JsonResponse({'success': True, 'message': message, 'failed_items': failed_items})
+        else:
+            return JsonResponse({'success': False, 'message': 'Không thể xử lý đơn nào', 'failed_items': failed_items}, status=400)
+            
+    except json.JSONDecodeError:
+        return JsonResponse({'success': False, 'message': 'Invalid JSON data'}, status=400)
+    except Exception as e:
+        return JsonResponse({'success': False, 'message': f'Lỗi: {str(e)}'}, status=500)
 
 
 @login_required

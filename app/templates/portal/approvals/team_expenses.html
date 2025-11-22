@@ -67,9 +67,9 @@
         </div>
     </div>
 
-    <!-- Filter Buttons -->
+    <!-- Filter and Bulk Actions -->
     <div class="row mb-3">
-        <div class="col-12">
+        <div class="col-md-6">
             <div class="btn-group" role="group">
                 <button type="button" class="btn btn-outline-primary active" onclick="filterExpenses('all')">
                     <i class="fas fa-list mr-1"></i>Tất cả
@@ -85,6 +85,14 @@
                 </button>
             </div>
         </div>
+        <div class="col-md-6 text-right">
+            <button type="button" class="btn btn-success" id="bulkApproveBtn" onclick="bulkApproveExpenses()" disabled>
+                <i class="fas fa-check-double mr-1"></i>Duyệt đã chọn (<span id="selectedCount">0</span>)
+            </button>
+            <button type="button" class="btn btn-danger" id="bulkRejectBtn" onclick="bulkRejectExpenses()" disabled>
+                <i class="fas fa-times-circle mr-1"></i>Từ chối đã chọn
+            </button>
+        </div>
     </div>
 
     <!-- Expense Requests Table -->
@@ -98,6 +106,9 @@
                     <table id="expenseRequestsTable" class="table table-bordered table-striped">
                         <thead>
                             <tr>
+                                <th style="width: 40px;">
+                                    <input type="checkbox" id="selectAll" onchange="toggleSelectAll(this)">
+                                </th>
                                 <th>Nhân viên</th>
                                 <th>Loại chi phí</th>
                                 <th>Số tiền</th>
@@ -111,6 +122,11 @@
                         <tbody>
                             {% for expense in expense_requests %}
                             <tr data-status="{{ expense.status }}">
+                                <td class="text-center">
+                                    {% if expense.status == 'Pending' or expense.status == 'pending' %}
+                                    <input type="checkbox" class="expense-checkbox" value="{{ expense.id }}" onchange="updateBulkButtons()">
+                                    {% endif %}
+                                </td>
                                 <td>
                                     <strong>{{ expense.employee.admin.first_name }} {{ expense.employee.admin.last_name }}</strong><br>
                                     <small class="text-muted">{{ expense.employee.employee_code }}</small>
@@ -184,6 +200,143 @@ $(document).ready(function() {
         }
     });
 });
+
+// Toggle select all checkboxes
+function toggleSelectAll(checkbox) {
+    const checkboxes = document.querySelectorAll('.expense-checkbox');
+    checkboxes.forEach(cb => cb.checked = checkbox.checked);
+    updateBulkButtons();
+}
+
+// Update bulk action button states
+function updateBulkButtons() {
+    const checkboxes = document.querySelectorAll('.expense-checkbox:checked');
+    const count = checkboxes.length;
+    document.getElementById('selectedCount').textContent = count;
+    document.getElementById('bulkApproveBtn').disabled = count === 0;
+    document.getElementById('bulkRejectBtn').disabled = count === 0;
+    
+    const allCheckboxes = document.querySelectorAll('.expense-checkbox');
+    const selectAllCheckbox = document.getElementById('selectAll');
+    if (selectAllCheckbox) {
+        selectAllCheckbox.checked = allCheckboxes.length > 0 && count === allCheckboxes.length;
+        selectAllCheckbox.indeterminate = count > 0 && count < allCheckboxes.length;
+    }
+}
+
+// Bulk approve expenses
+function bulkApproveExpenses() {
+    const checkboxes = document.querySelectorAll('.expense-checkbox:checked');
+    const expenseIds = Array.from(checkboxes).map(cb => cb.value);
+    
+    if (expenseIds.length === 0) {
+        Swal.fire('Lưu ý', 'Vui lòng chọn ít nhất 1 đơn để duyệt', 'warning');
+        return;
+    }
+    
+    Swal.fire({
+        title: `Duyệt ${expenseIds.length} đơn hoàn tiền?`,
+        text: "Bạn có chắc chắn muốn duyệt tất cả các đơn đã chọn không?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Duyệt tất cả',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: '/portal/team/expenses/bulk-action/',
+                type: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    action: 'approve',
+                    expense_ids: expenseIds
+                }),
+                success: function(data) {
+                    if (data.success) {
+                        Swal.fire('Thành công!', data.message, 'success').then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Lỗi!', data.message, 'error');
+                    }
+                },
+                error: function(xhr) {
+                    var errorMsg = 'Không thể duyệt các đơn';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMsg = xhr.responseJSON.message;
+                    }
+                    Swal.fire('Lỗi!', errorMsg, 'error');
+                }
+            });
+        }
+    });
+}
+
+// Bulk reject expenses
+function bulkRejectExpenses() {
+    const checkboxes = document.querySelectorAll('.expense-checkbox:checked');
+    const expenseIds = Array.from(checkboxes).map(cb => cb.value);
+    
+    if (expenseIds.length === 0) {
+        Swal.fire('Lưu ý', 'Vui lòng chọn ít nhất 1 đơn để từ chối', 'warning');
+        return;
+    }
+    
+    Swal.fire({
+        title: `Từ chối ${expenseIds.length} đơn hoàn tiền?`,
+        text: "Vui lòng nhập lý do từ chối:",
+        input: 'textarea',
+        inputPlaceholder: 'Nhập lý do từ chối...',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Từ chối tất cả',
+        cancelButtonText: 'Hủy',
+        inputValidator: (value) => {
+            if (!value) {
+                return 'Bạn cần nhập lý do từ chối!'
+            }
+        }
+    }).then((result) => {
+        if (result.isConfirmed && result.value) {
+            $.ajax({
+                url: '/portal/team/expenses/bulk-action/',
+                type: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    action: 'reject',
+                    expense_ids: expenseIds,
+                    reason: result.value
+                }),
+                success: function(data) {
+                    if (data.success) {
+                        Swal.fire('Thành công!', data.message, 'success').then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Lỗi!', data.message, 'error');
+                    }
+                },
+                error: function(xhr) {
+                    var errorMsg = 'Không thể từ chối các đơn';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMsg = xhr.responseJSON.message;
+                    }
+                    Swal.fire('Lỗi!', errorMsg, 'error');
+                }
+            });
+        }
+    });
+}
 
 // Filter expenses by status
 function filterExpenses(status) {

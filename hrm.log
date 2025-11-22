@@ -22724,3 +22724,21 @@ INFO 2025-11-22 19:46:34,060 autoreload D:\Study\CT201\Project\hrm\app\admin.py 
 INFO 2025-11-22 19:46:35,186 autoreload Watching for file changes with StatReloader
 INFO 2025-11-22 19:52:27,947 autoreload D:\Study\CT201\Project\hrm\app\models.py changed, reloading.
 INFO 2025-11-22 19:52:29,464 autoreload Watching for file changes with StatReloader
+INFO 2025-11-22 19:52:58,325 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-22 19:52:59,558 autoreload Watching for file changes with StatReloader
+INFO 2025-11-22 19:57:17,562 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-22 19:57:18,568 autoreload Watching for file changes with StatReloader
+INFO 2025-11-22 19:58:34,289 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-22 19:58:35,339 autoreload Watching for file changes with StatReloader
+INFO 2025-11-22 20:02:00,398 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-22 20:02:01,455 autoreload Watching for file changes with StatReloader
+INFO 2025-11-22 20:02:15,813 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-22 20:02:16,844 autoreload Watching for file changes with StatReloader
+INFO 2025-11-22 20:02:33,313 autoreload D:\Study\CT201\Project\hrm\app\urls_portal.py changed, reloading.
+INFO 2025-11-22 20:02:34,467 autoreload Watching for file changes with StatReloader
+INFO 2025-11-22 20:04:08,535 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-22 20:04:09,626 autoreload Watching for file changes with StatReloader
+INFO 2025-11-22 20:04:19,904 autoreload D:\Study\CT201\Project\hrm\app\urls_portal.py changed, reloading.
+INFO 2025-11-22 20:04:21,240 autoreload Watching for file changes with StatReloader
+INFO 2025-11-22 20:16:01,845 autoreload D:\Study\CT201\Project\hrm\app\urls_portal.py changed, reloading.
+INFO 2025-11-22 20:16:03,126 autoreload Watching for file changes with StatReloader

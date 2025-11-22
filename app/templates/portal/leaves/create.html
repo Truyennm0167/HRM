@@ -44,7 +44,11 @@
                             </label>
                             {{ form.leave_type }}
                             {% if form.leave_type.errors %}
-                                <div class="text-danger">{{ form.leave_type.errors }}</div>
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.leave_type.errors %}
+                                        <i class="fas fa-exclamation-circle mr-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
                             {% endif %}
                             <small class="form-text text-muted">Chọn loại nghỉ phép phù hợp</small>
                         </div>
@@ -58,7 +62,11 @@
                                     </label>
                                     {{ form.start_date }}
                                     {% if form.start_date.errors %}
-                                        <div class="text-danger">{{ form.start_date.errors }}</div>
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.start_date.errors %}
+                                                <i class="fas fa-exclamation-circle mr-1"></i>{{ error }}
+                                            {% endfor %}
+                                        </div>
                                     {% endif %}
                                 </div>
                             </div>
@@ -69,7 +77,11 @@
                                     </label>
                                     {{ form.end_date }}
                                     {% if form.end_date.errors %}
-                                        <div class="text-danger">{{ form.end_date.errors }}</div>
+                                        <div class="invalid-feedback d-block">
+                                            {% for error in form.end_date.errors %}
+                                                <i class="fas fa-exclamation-circle mr-1"></i>{{ error }}
+                                            {% endfor %}
+                                        </div>
                                     {% endif %}
                                 </div>
                             </div>
@@ -90,7 +102,11 @@
                             </label>
                             {{ form.reason }}
                             {% if form.reason.errors %}
-                                <div class="text-danger">{{ form.reason.errors }}</div>
+                                <div class="invalid-feedback d-block">
+                                    {% for error in form.reason.errors %}
+                                        <i class="fas fa-exclamation-circle mr-1"></i>{{ error }}
+                                    {% endfor %}
+                                </div>
                             {% endif %}
                             <small class="form-text text-muted">Vui lòng nêu rõ lý do xin nghỉ phép</small>
                         </div>
