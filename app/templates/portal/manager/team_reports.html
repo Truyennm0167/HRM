@@ -1,0 +1,297 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}Báo cáo nhóm{% endblock %}
+
+{% block extra_css %}
+<style>
+    .stat-card {
+        transition: transform 0.2s;
+    }
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+    .chart-container {
+        position: relative;
+        height: 300px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2><i class="fas fa-chart-line mr-2"></i>Báo cáo nhóm</h2>
+            <p class="text-muted">Thống kê và phân tích hiệu suất làm việc của nhóm</p>
+        </div>
+        <div class="col-md-4">
+            <form method="GET" class="form-inline float-right">
+                <select name="month" class="form-control mr-2">
+                    {% for m in "123456789101112"|make_list %}
+                    <option value="{{ forloop.counter }}" {% if forloop.counter == month %}selected{% endif %}>
+                        Tháng {{ forloop.counter }}
+                    </option>
+                    {% endfor %}
+                </select>
+                <select name="year" class="form-control mr-2">
+                    {% for y in "2023,2024,2025,2026"|split:"," %}
+                    <option value="{{ y }}" {% if y == year|stringformat:"s" %}selected{% endif %}>{{ y }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary"><i class="fas fa-filter"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card small-box bg-info">
+                <div class="inner">
+                    <h3>{{ team_size }}</h3>
+                    <p>Thành viên nhóm</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-users"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card small-box bg-success">
+                <div class="inner">
+                    <h3>{{ attendance_stats.avg_working_hours|default:0|floatformat:1 }}h</h3>
+                    <p>Giờ làm trung bình/ngày</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card small-box bg-warning">
+                <div class="inner">
+                    <h3>{{ leave_stats.pending_requests|default:0 }}</h3>
+                    <p>Đơn nghỉ chờ duyệt</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-3 col-md-6">
+            <div class="stat-card small-box bg-danger">
+                <div class="inner">
+                    <h3>{{ expense_stats.pending_expenses|default:0 }}</h3>
+                    <p>Chi phí chờ duyệt</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-dollar-sign"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Attendance Stats -->
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-calendar-check mr-2"></i>Thống kê chấm công</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tr>
+                            <td><i class="fas fa-clock text-warning"></i> Đi muộn</td>
+                            <td class="text-right"><strong>{{ attendance_stats.total_late|default:0 }}</strong> lần</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-running text-info"></i> Về sớm</td>
+                            <td class="text-right"><strong>{{ attendance_stats.total_early_leave|default:0 }}</strong> lần</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-times-circle text-danger"></i> Vắng mặt</td>
+                            <td class="text-right"><strong>{{ attendance_stats.total_absent|default:0 }}</strong> ngày</td>
+                        </tr>
+                        <tr class="bg-light">
+                            <td><strong><i class="fas fa-business-time"></i> Giờ làm TB</strong></td>
+                            <td class="text-right"><strong class="text-success">{{ attendance_stats.avg_working_hours|default:0|floatformat:2 }}h</strong></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Leave Stats -->
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-umbrella-beach mr-2"></i>Thống kê nghỉ phép</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tr>
+                            <td><i class="fas fa-file-alt text-secondary"></i> Tổng đơn</td>
+                            <td class="text-right"><strong>{{ leave_stats.total_requests|default:0 }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-hourglass-half text-warning"></i> Chờ duyệt</td>
+                            <td class="text-right"><strong>{{ leave_stats.pending_requests|default:0 }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-check-circle text-success"></i> Đã duyệt</td>
+                            <td class="text-right"><strong>{{ leave_stats.approved_requests|default:0 }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-times-circle text-danger"></i> Từ chối</td>
+                            <td class="text-right"><strong>{{ leave_stats.rejected_requests|default:0 }}</strong></td>
+                        </tr>
+                        <tr class="bg-light">
+                            <td><strong><i class="fas fa-calendar-day"></i> Tổng ngày nghỉ</strong></td>
+                            <td class="text-right"><strong class="text-primary">{{ leave_stats.total_leave_days|default:0 }}</strong> ngày</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Expense Stats -->
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-warning text-white">
+                    <h5 class="mb-0"><i class="fas fa-money-bill-wave mr-2"></i>Thống kê chi phí</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-striped">
+                        <tr>
+                            <td><i class="fas fa-file-invoice text-secondary"></i> Tổng đơn</td>
+                            <td class="text-right"><strong>{{ expense_stats.total_expenses|default:0 }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-hourglass-half text-warning"></i> Chờ duyệt</td>
+                            <td class="text-right"><strong>{{ expense_stats.pending_expenses|default:0 }}</strong></td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-check-circle text-success"></i> Đã duyệt</td>
+                            <td class="text-right"><strong>{{ expense_stats.approved_expenses|default:0 }}</strong></td>
+                        </tr>
+                        <tr class="bg-light">
+                            <td><strong><i class="fas fa-dollar-sign"></i> Tổng chi phí</strong></td>
+                            <td class="text-right"><strong class="text-danger">{{ expense_stats.total_amount|default:0|floatformat:0 }} VNĐ</strong></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Top Performers -->
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-trophy mr-2"></i>Top nhân viên chăm chỉ</h5>
+                </div>
+                <div class="card-body">
+                    {% if top_attendance %}
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nhân viên</th>
+                                <th class="text-right">Giờ làm</th>
+                                <th class="text-right">Đi muộn</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in top_attendance %}
+                            <tr>
+                                <td>
+                                    {% if forloop.counter == 1 %}
+                                    <i class="fas fa-medal text-warning"></i>
+                                    {% elif forloop.counter == 2 %}
+                                    <i class="fas fa-medal text-secondary"></i>
+                                    {% elif forloop.counter == 3 %}
+                                    <i class="fas fa-medal" style="color: #cd7f32;"></i>
+                                    {% else %}
+                                    {{ forloop.counter }}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <strong>{{ item.employee__name }}</strong><br>
+                                    <small class="text-muted">{{ item.employee__employee_code }}</small>
+                                </td>
+                                <td class="text-right"><span class="badge badge-success">{{ item.total_hours|floatformat:1 }}h</span></td>
+                                <td class="text-right">
+                                    {% if item.late_count > 0 %}
+                                    <span class="badge badge-warning">{{ item.late_count }}</span>
+                                    {% else %}
+                                    <span class="text-muted">—</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% else %}
+                    <p class="text-muted text-center">Chưa có dữ liệu chấm công</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Actions -->
+    <div class="row">
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-tasks mr-2"></i>Đơn nghỉ chờ duyệt</h5>
+                </div>
+                <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                    {% for leave in recent_leaves %}
+                    <div class="border-bottom pb-2 mb-2">
+                        <strong>{{ leave.employee.name }}</strong>
+                        <span class="badge badge-secondary float-right">{{ leave.leave_type.name }}</span>
+                        <br>
+                        <small class="text-muted">
+                            {{ leave.start_date|date:"d/m" }} - {{ leave.end_date|date:"d/m" }} ({{ leave.total_days }} ngày)
+                        </small>
+                        <br>
+                        <a href="{% url 'portal_team_leaves' %}" class="btn btn-sm btn-outline-primary mt-1">Xem chi tiết</a>
+                    </div>
+                    {% empty %}
+                    <p class="text-muted text-center">Không có đơn nghỉ chờ duyệt</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><i class="fas fa-receipt mr-2"></i>Chi phí chờ duyệt</h5>
+                </div>
+                <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                    {% for expense in recent_expenses %}
+                    <div class="border-bottom pb-2 mb-2">
+                        <strong>{{ expense.employee.name }}</strong>
+                        <span class="badge badge-warning float-right">{{ expense.amount|floatformat:0 }} VNĐ</span>
+                        <br>
+                        <small class="text-muted">
+                            {{ expense.category.name }} - {{ expense.date|date:"d/m/Y" }}
+                        </small>
+                        <br>
+                        <a href="{% url 'portal_team_expenses' %}" class="btn btn-sm btn-outline-primary mt-1">Xem chi tiết</a>
+                    </div>
+                    {% empty %}
+                    <p class="text-muted text-center">Không có chi phí chờ duyệt</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

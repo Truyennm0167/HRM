@@ -1,0 +1,94 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}Đánh giá của tôi{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2><i class="fas fa-star mr-2"></i>Đánh giá hiệu suất</h2>
+            <p class="text-muted">Xem và tự đánh giá hiệu suất làm việc của bạn</p>
+        </div>
+    </div>
+
+    <!-- Appraisals List -->
+    <div class="row">
+        {% for appraisal in appraisals %}
+        <div class="col-lg-6 mb-4">
+            <div class="card {% if appraisal.status == 'pending' or appraisal.status == 'in_progress' %}border-warning{% endif %}">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">{{ appraisal.period.name }}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <strong>Trạng thái:</strong><br>
+                            {% if appraisal.status == 'pending' %}
+                                <span class="badge badge-warning">Chờ tự đánh giá</span>
+                            {% elif appraisal.status == 'in_progress' %}
+                                <span class="badge badge-info">Đang tự đánh giá</span>
+                            {% elif appraisal.status == 'self_assessed' %}
+                                <span class="badge badge-primary">Chờ quản lý đánh giá</span>
+                            {% elif appraisal.status == 'manager_reviewed' %}
+                                <span class="badge badge-secondary">Chờ HR duyệt</span>
+                            {% elif appraisal.status == 'completed' %}
+                                <span class="badge badge-success">Đã hoàn thành</span>
+                            {% endif %}
+                        </div>
+                        <div class="col-6">
+                            <strong>Quản lý:</strong><br>
+                            {{ appraisal.manager.name }}
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col-6">
+                            <strong>Thời gian:</strong><br>
+                            {{ appraisal.period.start_date|date:"d/m/Y" }} - {{ appraisal.period.end_date|date:"d/m/Y" }}
+                        </div>
+                        <div class="col-6">
+                            {% if appraisal.final_score %}
+                            <strong>Điểm cuối:</strong><br>
+                            <span class="h4 text-success">{{ appraisal.final_score }}/100</span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% if appraisal.overall_rating %}
+                    <div class="mb-3">
+                        <strong>Xếp loại:</strong>
+                        <span class="badge badge-lg badge-{% if appraisal.overall_rating == 'excellent' %}success{% elif appraisal.overall_rating == 'good' %}primary{% elif appraisal.overall_rating == 'average' %}warning{% else %}danger{% endif %}">
+                            {{ appraisal.get_overall_rating_display }}
+                        </span>
+                    </div>
+                    {% endif %}
+
+                    <div class="text-center mt-3">
+                        {% if appraisal.status in 'pending,in_progress' %}
+                        <a href="{% url 'portal_self_assessment' appraisal.id %}" class="btn btn-warning btn-block">
+                            <i class="fas fa-edit"></i> 
+                            {% if appraisal.status == 'pending' %}Bắt đầu tự đánh giá{% else %}Tiếp tục tự đánh giá{% endif %}
+                        </a>
+                        {% else %}
+                        <a href="{% url 'portal_appraisal_detail' appraisal.id %}" class="btn btn-info btn-block">
+                            <i class="fas fa-eye"></i> Xem chi tiết
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                <i class="fas fa-info-circle fa-3x mb-3"></i>
+                <h5>Chưa có đánh giá</h5>
+                <p class="mb-0">Hiện tại bạn chưa có đợt đánh giá nào.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}{{ announcement.title }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Breadcrumb -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'portal_dashboard' %}">Portal</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'portal_announcements' %}">Thông báo</a></li>
+                    <li class="breadcrumb-item active">{{ announcement.title }}</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Announcement Detail -->
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">
+                        {% if announcement.is_pinned %}
+                        <i class="fas fa-thumbtack mr-2"></i>
+                        {% endif %}
+                        {{ announcement.title }}
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <!-- Meta Info -->
+                    <div class="mb-4 pb-3 border-bottom">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <span class="badge {{ announcement.get_priority_badge }} mr-2">
+                                    {{ announcement.get_priority_display }}
+                                </span>
+                                <span class="badge badge-secondary">
+                                    <i class="fas {{ announcement.get_category_icon }}"></i>
+                                    {{ announcement.get_category_display }}
+                                </span>
+                            </div>
+                            <div class="text-right">
+                                <small class="text-muted d-block">
+                                    <i class="fas fa-user"></i> {{ announcement.created_by.name }}
+                                </small>
+                                <small class="text-muted d-block">
+                                    <i class="fas fa-calendar"></i> {{ announcement.publish_at|date:"d/m/Y H:i" }}
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Content -->
+                    <div class="announcement-content" style="font-size: 16px; line-height: 1.8;">
+                        {{ announcement.content|linebreaksbr }}
+                    </div>
+                    
+                    <!-- Attachment -->
+                    {% if announcement.attachment %}
+                    <div class="mt-4 pt-3 border-top">
+                        <h5><i class="fas fa-paperclip"></i> Tệp đính kèm</h5>
+                        <a href="{{ announcement.attachment.url }}" class="btn btn-outline-primary" download>
+                            <i class="fas fa-download"></i> Tải xuống tệp đính kèm
+                        </a>
+                    </div>
+                    {% endif %}
+                    
+                    <!-- Expiry Info -->
+                    {% if announcement.expire_at %}
+                    <div class="mt-4">
+                        <small class="text-warning">
+                            <i class="fas fa-clock"></i> Thông báo này sẽ hết hạn vào {{ announcement.expire_at|date:"d/m/Y H:i" }}
+                        </small>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'portal_announcements' %}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Quay lại
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

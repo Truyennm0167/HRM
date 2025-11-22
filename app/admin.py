@@ -3,7 +3,8 @@ from .models import (
     JobTitle, Department, Employee, Attendance, Reward, Discipline, 
     Payroll, Evaluation, LeaveType, LeaveRequest, LeaveBalance,
     ExpenseCategory, Expense, PermissionAuditLog,
-    AppraisalPeriod, AppraisalCriteria, Appraisal, AppraisalScore, AppraisalComment
+    AppraisalPeriod, AppraisalCriteria, Appraisal, AppraisalScore, AppraisalComment,
+    DocumentCategory, Document, DocumentDownload, Announcement, AnnouncementRead
 )
 
 # Register your models here.
@@ -177,5 +178,50 @@ class AppraisalCommentAdmin(admin.ModelAdmin):
     list_filter = ['created_at']
     search_fields = ['appraisal__employee__name', 'author__name', 'comment']
     date_hierarchy = 'created_at'
-    ordering = ['-created_at']
-    readonly_fields = ['created_at']
+
+
+@admin.register(DocumentCategory)
+class DocumentCategoryAdmin(admin.ModelAdmin):
+    list_display = ['name', 'order', 'is_active']
+    list_filter = ['is_active']
+    search_fields = ['name']
+    ordering = ['order', 'name']
+
+
+@admin.register(Document)
+class DocumentAdmin(admin.ModelAdmin):
+    list_display = ['title', 'category', 'visibility', 'uploaded_by', 'downloads_count', 'created_at', 'is_active']
+    list_filter = ['visibility', 'category', 'is_active', 'created_at']
+    search_fields = ['title', 'description']
+    date_hierarchy = 'created_at'
+    filter_horizontal = ['departments', 'specific_employees']
+    readonly_fields = ['downloads_count', 'file_size', 'file_type', 'created_at', 'updated_at']
+
+
+@admin.register(DocumentDownload)
+class DocumentDownloadAdmin(admin.ModelAdmin):
+    list_display = ['document', 'employee', 'downloaded_at', 'ip_address']
+    list_filter = ['downloaded_at']
+    search_fields = ['document__title', 'employee__name']
+    date_hierarchy = 'downloaded_at'
+    readonly_fields = ['downloaded_at']
+
+
+@admin.register(Announcement)
+class AnnouncementAdmin(admin.ModelAdmin):
+    list_display = ['title', 'category', 'priority', 'is_pinned', 'is_active', 'publish_at', 'created_by']
+    list_filter = ['category', 'priority', 'is_pinned', 'is_active', 'publish_at']
+    search_fields = ['title', 'content']
+    date_hierarchy = 'publish_at'
+    filter_horizontal = ['target_departments', 'target_employees']
+    readonly_fields = ['created_at', 'updated_at']
+
+
+@admin.register(AnnouncementRead)
+class AnnouncementReadAdmin(admin.ModelAdmin):
+    list_display = ['announcement', 'employee', 'read_at']
+    list_filter = ['read_at']
+    search_fields = ['announcement__title', 'employee__name']
+    date_hierarchy = 'read_at'
+    readonly_fields = ['read_at']
+    ordering = ['-read_at']

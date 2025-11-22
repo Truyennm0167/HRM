@@ -1299,3 +1299,204 @@ class AppraisalComment(models.Model):
     
     def __str__(self):
         return f"{self.author.name} ({self.get_author_type_display()}) - {self.created_at.strftime('%Y-%m-%d')}"
+
+
+# ======================== DOCUMENTS & ANNOUNCEMENTS ========================
+
+class DocumentCategory(models.Model):
+    """Danh mục tài liệu: Hợp đồng, Chính sách, Biểu mẫu, v.v."""
+    name = models.CharField(max_length=100, unique=True)
+    description = models.TextField(blank=True)
+    icon = models.CharField(max_length=50, default='fa-folder', help_text="Font Awesome icon class")
+    color = models.CharField(max_length=20, default='primary', help_text="Bootstrap color: primary, success, info, etc.")
+    order = models.IntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+    
+    class Meta:
+        ordering = ['order', 'name']
+        verbose_name_plural = 'Document Categories'
+    
+    def __str__(self):
+        return self.name
+
+
+class Document(models.Model):
+    """Tài liệu công ty: Chính sách, biểu mẫu, hướng dẫn"""
+    VISIBILITY_CHOICES = [
+        ('all', 'Tất cả nhân viên'),
+        ('department', 'Chỉ phòng ban'),
+        ('manager', 'Chỉ quản lý'),
+        ('specific', 'Nhân viên cụ thể'),
+    ]
+    
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    category = models.ForeignKey(DocumentCategory, on_delete=models.SET_NULL, null=True, related_name='documents')
+    file = models.FileField(upload_to='documents/%Y/%m/')
+    file_size = models.IntegerField(help_text="Size in bytes", default=0)
+    file_type = models.CharField(max_length=50, blank=True)
+    
+    visibility = models.CharField(max_length=20, choices=VISIBILITY_CHOICES, default='all')
+    departments = models.ManyToManyField(Department, blank=True, help_text="Nếu visibility=department")
+    specific_employees = models.ManyToManyField(Employee, blank=True, related_name='accessible_documents', help_text="Nếu visibility=specific")
+    
+    uploaded_by = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True, related_name='uploaded_documents')
+    is_active = models.BooleanField(default=True)
+    version = models.CharField(max_length=20, default='1.0')
+    
+    downloads_count = models.IntegerField(default=0)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['-created_at']
+    
+    def __str__(self):
+        return self.title
+    
+    def get_file_extension(self):
+        import os
+        return os.path.splitext(self.file.name)[1].lower()
+    
+    def get_icon_class(self):
+        """Return icon class based on file type"""
+        ext = self.get_file_extension()
+        icon_map = {
+            '.pdf': 'fa-file-pdf text-danger',
+            '.doc': 'fa-file-word text-primary',
+            '.docx': 'fa-file-word text-primary',
+            '.xls': 'fa-file-excel text-success',
+            '.xlsx': 'fa-file-excel text-success',
+            '.ppt': 'fa-file-powerpoint text-warning',
+            '.pptx': 'fa-file-powerpoint text-warning',
+            '.zip': 'fa-file-archive text-secondary',
+            '.rar': 'fa-file-archive text-secondary',
+            '.jpg': 'fa-file-image text-info',
+            '.jpeg': 'fa-file-image text-info',
+            '.png': 'fa-file-image text-info',
+            '.txt': 'fa-file-alt',
+        }
+        return icon_map.get(ext, 'fa-file')
+    
+    def format_file_size(self):
+        """Format file size to human readable"""
+        size = self.file_size
+        for unit in ['B', 'KB', 'MB', 'GB']:
+            if size < 1024.0:
+                return f"{size:.1f} {unit}"
+            size /= 1024.0
+        return f"{size:.1f} TB"
+
+
+class DocumentDownload(models.Model):
+    """Track document downloads for analytics"""
+    document = models.ForeignKey(Document, on_delete=models.CASCADE, related_name='download_logs')
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    downloaded_at = models.DateTimeField(auto_now_add=True)
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    
+    class Meta:
+        ordering = ['-downloaded_at']
+    
+    def __str__(self):
+        return f"{self.employee.name} - {self.document.title} - {self.downloaded_at.strftime('%Y-%m-%d %H:%M')}"
+
+
+class Announcement(models.Model):
+    """Thông báo công ty"""
+    PRIORITY_CHOICES = [
+        ('low', 'Thấp'),
+        ('normal', 'Bình thường'),
+        ('high', 'Cao'),
+        ('urgent', 'Khẩn cấp'),
+    ]
+    
+    CATEGORY_CHOICES = [
+        ('general', 'Thông báo chung'),
+        ('event', 'Sự kiện'),
+        ('policy', 'Chính sách'),
+        ('holiday', 'Ngày nghỉ'),
+        ('training', 'Đào tạo'),
+        ('reward', 'Khen thưởng'),
+        ('other', 'Khác'),
+    ]
+    
+    title = models.CharField(max_length=200)
+    content = models.TextField()
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default='general')
+    priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='normal')
+    
+    # Targeting
+    target_all = models.BooleanField(default=True, help_text="Gửi cho tất cả nhân viên")
+    target_departments = models.ManyToManyField(Department, blank=True)
+    target_employees = models.ManyToManyField(Employee, blank=True, related_name='targeted_announcements')
+    
+    # Attachments
+    attachment = models.FileField(upload_to='announcements/%Y/%m/', blank=True, null=True)
+    
+    # Metadata
+    created_by = models.ForeignKey(Employee, on_delete=models.SET_NULL, null=True, related_name='created_announcements')
+    is_active = models.BooleanField(default=True)
+    is_pinned = models.BooleanField(default=False, help_text="Ghim lên đầu")
+    
+    # Schedule
+    publish_at = models.DateTimeField(help_text="Thời gian xuất bản")
+    expire_at = models.DateTimeField(null=True, blank=True, help_text="Hết hạn (optional)")
+    
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    
+    class Meta:
+        ordering = ['-is_pinned', '-publish_at']
+    
+    def __str__(self):
+        return self.title
+    
+    def is_visible(self):
+        """Check if announcement should be visible now"""
+        from django.utils import timezone
+        now = timezone.now()
+        if not self.is_active:
+            return False
+        if self.publish_at > now:
+            return False
+        if self.expire_at and self.expire_at < now:
+            return False
+        return True
+    
+    def get_priority_badge(self):
+        """Return Bootstrap badge class for priority"""
+        badge_map = {
+            'low': 'badge-secondary',
+            'normal': 'badge-info',
+            'high': 'badge-warning',
+            'urgent': 'badge-danger',
+        }
+        return badge_map.get(self.priority, 'badge-secondary')
+    
+    def get_category_icon(self):
+        """Return icon for category"""
+        icon_map = {
+            'general': 'fa-bullhorn',
+            'event': 'fa-calendar-alt',
+            'policy': 'fa-gavel',
+            'holiday': 'fa-umbrella-beach',
+            'training': 'fa-graduation-cap',
+            'reward': 'fa-trophy',
+            'other': 'fa-info-circle',
+        }
+        return icon_map.get(self.category, 'fa-bell')
+
+
+class AnnouncementRead(models.Model):
+    """Track who read which announcement"""
+    announcement = models.ForeignKey(Announcement, on_delete=models.CASCADE, related_name='read_logs')
+    employee = models.ForeignKey(Employee, on_delete=models.CASCADE)
+    read_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        unique_together = ('announcement', 'employee')
+        ordering = ['-read_at']
+    
+    def __str__(self):
+        return f"{self.employee.name} - {self.announcement.title}"

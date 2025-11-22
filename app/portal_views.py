@@ -9,6 +9,7 @@ from django.contrib import messages
 from django.http import HttpResponse, JsonResponse
 from django.utils import timezone
 from datetime import datetime, timedelta
+from django.db import models
 
 from .models import (
     Employee, LeaveType, LeaveRequest, LeaveBalance, 
@@ -993,17 +994,201 @@ def password_change(request):
 @login_required
 def documents_list(request):
     """Danh sách tài liệu công ty"""
-    # TODO: Implement when Document model is created
-    messages.info(request, 'Tính năng tài liệu sẽ được cập nhật sau.')
-    return redirect('portal_dashboard')
+    from .models import Document, DocumentCategory
+    
+    employee = get_user_employee(request.user)
+    if not employee:
+        messages.error(request, 'Không tìm thấy thông tin nhân viên.')
+        return redirect('login')
+    
+    # Get filter parameters
+    category_id = request.GET.get('category')
+    search_query = request.GET.get('q', '')
+    
+    # Base queryset - filter by visibility
+    documents = Document.objects.filter(is_active=True)
+    
+    # Apply visibility filters
+    visible_docs = documents.filter(visibility='all')
+    
+    # Department visibility
+    if employee.department:
+        dept_docs = documents.filter(visibility='department', departments=employee.department)
+        visible_docs = visible_docs | dept_docs
+    
+    # Manager visibility
+    if employee.is_manager:
+        manager_docs = documents.filter(visibility='manager')
+        visible_docs = visible_docs | manager_docs
+    
+    # Specific employee visibility
+    specific_docs = documents.filter(visibility='specific', specific_employees=employee)
+    visible_docs = visible_docs | specific_docs
+    
+    # Apply filters
+    if category_id:
+        visible_docs = visible_docs.filter(category_id=category_id)
+    
+    if search_query:
+        visible_docs = visible_docs.filter(
+            models.Q(title__icontains=search_query) | 
+            models.Q(description__icontains=search_query)
+        )
+    
+    visible_docs = visible_docs.distinct().select_related('category', 'uploaded_by').order_by('-created_at')
+    
+    # Get categories
+    categories = DocumentCategory.objects.filter(is_active=True)
+    
+    context = {
+        'employee': employee,
+        'documents': visible_docs,
+        'categories': categories,
+        'selected_category': category_id,
+        'search_query': search_query,
+    }
+    
+    return render(request, 'portal/documents/list.html', context)
+
+
+@login_required
+def document_download(request, document_id):
+    """Download document and track"""
+    from .models import Document, DocumentDownload
+    
+    employee = get_user_employee(request.user)
+    if not employee:
+        return JsonResponse({'error': 'Không tìm thấy thông tin nhân viên'}, status=403)
+    
+    # Check visibility
+    document = get_object_or_404(Document, id=document_id, is_active=True)
+    
+    # Verify access
+    has_access = False
+    if document.visibility == 'all':
+        has_access = True
+    elif document.visibility == 'department' and employee.department in document.departments.all():
+        has_access = True
+    elif document.visibility == 'manager' and employee.is_manager:
+        has_access = True
+    elif document.visibility == 'specific' and employee in document.specific_employees.all():
+        has_access = True
+    
+    if not has_access:
+        messages.error(request, 'Bạn không có quyền tải tài liệu này.')
+        return redirect('portal_documents')
+    
+    # Track download
+    DocumentDownload.objects.create(
+        document=document,
+        employee=employee,
+        ip_address=request.META.get('REMOTE_ADDR')
+    )
+    
+    # Increment counter
+    document.downloads_count += 1
+    document.save(update_fields=['downloads_count'])
+    
+    # Serve file
+    from django.http import FileResponse
+    import os
+    
+    if os.path.exists(document.file.path):
+        response = FileResponse(document.file.open('rb'), as_attachment=True)
+        response['Content-Disposition'] = f'attachment; filename="{os.path.basename(document.file.name)}"'
+        return response
+    else:
+        messages.error(request, 'Tệp không tồn tại.')
+        return redirect('portal_documents')
 
 
 @login_required
 def announcements_list(request):
     """Danh sách thông báo"""
-    # TODO: Implement when Announcement model is created
-    messages.info(request, 'Tính năng thông báo sẽ được cập nhật sau.')
-    return redirect('portal_dashboard')
+    from .models import Announcement, AnnouncementRead
+    from django.db.models import Exists, OuterRef
+    
+    employee = get_user_employee(request.user)
+    if not employee:
+        messages.error(request, 'Không tìm thấy thông tin nhân viên.')
+        return redirect('login')
+    
+    # Get announcements visible to this employee
+    now = timezone.now()
+    announcements = Announcement.objects.filter(
+        is_active=True,
+        publish_at__lte=now
+    ).filter(
+        models.Q(expire_at__isnull=True) | models.Q(expire_at__gte=now)
+    )
+    
+    # Filter by target
+    visible_announcements = announcements.filter(target_all=True)
+    
+    if employee.department:
+        dept_announcements = announcements.filter(target_departments=employee.department)
+        visible_announcements = visible_announcements | dept_announcements
+    
+    specific_announcements = announcements.filter(target_employees=employee)
+    visible_announcements = visible_announcements | specific_announcements
+    
+    # Annotate with read status
+    visible_announcements = visible_announcements.annotate(
+        is_read=Exists(AnnouncementRead.objects.filter(
+            announcement=OuterRef('pk'),
+            employee=employee
+        ))
+    ).distinct().select_related('created_by').order_by('-is_pinned', '-publish_at')
+    
+    # Filter by category
+    category = request.GET.get('category')
+    if category:
+        visible_announcements = visible_announcements.filter(category=category)
+    
+    # Unread count
+    unread_count = visible_announcements.filter(is_read=False).count()
+    
+    context = {
+        'employee': employee,
+        'announcements': visible_announcements,
+        'unread_count': unread_count,
+        'selected_category': category,
+    }
+    
+    return render(request, 'portal/announcements/list.html', context)
+
+
+@login_required
+def announcement_detail(request, announcement_id):
+    """Chi tiết thông báo và mark as read"""
+    from .models import Announcement, AnnouncementRead
+    
+    employee = get_user_employee(request.user)
+    announcement = get_object_or_404(Announcement, id=announcement_id, is_active=True)
+    
+    # Verify access
+    has_access = announcement.target_all
+    if not has_access and employee.department:
+        has_access = announcement.target_departments.filter(id=employee.department.id).exists()
+    if not has_access:
+        has_access = announcement.target_employees.filter(id=employee.id).exists()
+    
+    if not has_access:
+        messages.error(request, 'Bạn không có quyền xem thông báo này.')
+        return redirect('portal_announcements')
+    
+    # Mark as read
+    AnnouncementRead.objects.get_or_create(
+        announcement=announcement,
+        employee=employee
+    )
+    
+    context = {
+        'employee': employee,
+        'announcement': announcement,
+    }
+    
+    return render(request, 'portal/announcements/detail.html', context)
 
 
 # ======================== MANAGER FEATURES ========================
@@ -1327,10 +1512,102 @@ def team_expense_reject(request, expense_id):
 @login_required
 @require_manager_permission
 def team_reports(request):
-    """Báo cáo team"""
-    # TODO: Implement team reports
-    messages.info(request, 'Tính năng báo cáo team sẽ được cập nhật sau.')
-    return redirect('portal_approvals')
+    """Báo cáo team cho Manager"""
+    from django.db.models import Count, Sum, Avg, Q
+    from datetime import date, timedelta
+    
+    employee = get_user_employee(request.user)
+    if not employee or not employee.is_manager:
+        messages.error(request, 'Bạn không có quyền truy cập.')
+        return redirect('portal_dashboard')
+    
+    # Get date range filter
+    year = int(request.GET.get('year', timezone.now().year))
+    month = int(request.GET.get('month', timezone.now().month))
+    
+    # Team members
+    team_members = Employee.objects.filter(department=employee.department)
+    team_size = team_members.count()
+    
+    # Attendance Statistics
+    attendance_stats = Attendance.objects.filter(
+        employee__department=employee.department,
+        date__year=year,
+        date__month=month
+    ).aggregate(
+        total_late=Count('id', filter=Q(is_late=True)),
+        total_early_leave=Count('id', filter=Q(is_early_leave=True)),
+        total_absent=Count('id', filter=Q(status='absent')),
+        avg_working_hours=Avg('working_hours')
+    )
+    
+    # Leave Statistics
+    leave_stats = LeaveRequest.objects.filter(
+        employee__department=employee.department,
+        created_at__year=year,
+        created_at__month=month
+    ).aggregate(
+        total_requests=Count('id'),
+        pending_requests=Count('id', filter=Q(status='Pending')),
+        approved_requests=Count('id', filter=Q(status='Approved')),
+        rejected_requests=Count('id', filter=Q(status='Rejected')),
+        total_leave_days=Sum('total_days', filter=Q(status='Approved'))
+    )
+    
+    # Expense Statistics  
+    expense_stats = Expense.objects.filter(
+        employee__department=employee.department,
+        created_at__year=year,
+        created_at__month=month
+    ).aggregate(
+        total_expenses=Count('id'),
+        pending_expenses=Count('id', filter=Q(status='pending')),
+        approved_expenses=Count('id', filter=Q(status='approved')),
+        total_amount=Sum('amount', filter=Q(status='approved'))
+    )
+    
+    # Top performers (by attendance)
+    top_attendance = Attendance.objects.filter(
+        employee__department=employee.department,
+        date__year=year,
+        date__month=month
+    ).values('employee__name', 'employee__employee_code').annotate(
+        total_hours=Sum('working_hours'),
+        late_count=Count('id', filter=Q(is_late=True))
+    ).order_by('-total_hours')[:5]
+    
+    # Recent activities
+    recent_leaves = LeaveRequest.objects.filter(
+        employee__department=employee.department,
+        status='Pending'
+    ).select_related('employee', 'leave_type').order_by('-created_at')[:5]
+    
+    recent_expenses = Expense.objects.filter(
+        employee__department=employee.department,
+        status='pending'
+    ).select_related('employee', 'category').order_by('-created_at')[:5]
+    
+    # Appraisal progress (if any)
+    appraisal_progress = Appraisal.objects.filter(
+        employee__department=employee.department,
+        period__end_date__gte=date.today()
+    ).values('status').annotate(count=Count('id'))
+    
+    context = {
+        'employee': employee,
+        'year': year,
+        'month': month,
+        'team_size': team_size,
+        'attendance_stats': attendance_stats,
+        'leave_stats': leave_stats,
+        'expense_stats': expense_stats,
+        'top_attendance': top_attendance,
+        'recent_leaves': recent_leaves,
+        'recent_expenses': recent_expenses,
+        'appraisal_progress': appraisal_progress,
+    }
+    
+    return render(request, 'portal/manager/team_reports.html', context)
 
 
 # ======================== APPRAISAL ========================
@@ -1372,9 +1649,105 @@ def appraisal_detail(request, appraisal_id):
 @login_required
 def self_assessment(request, appraisal_id):
     """Tự đánh giá"""
+    from .models import AppraisalCriteria
+    
     employee = get_user_employee(request.user)
     appraisal = get_object_or_404(Appraisal, id=appraisal_id, employee=employee)
     
-    # TODO: Implement self assessment form
-    messages.info(request, 'Tính năng tự đánh giá sẽ được cập nhật sau.')
-    return redirect('portal_appraisal_detail', appraisal_id=appraisal_id)
+    # Only allow if status is pending or in_progress
+    if appraisal.status not in ['pending', 'in_progress']:
+        messages.error(request, 'Không thể chỉnh sửa đánh giá đã hoàn thành.')
+        return redirect('portal_appraisal_detail', appraisal_id=appraisal_id)
+    
+    # Get all criteria for this period
+    criteria_list = AppraisalCriteria.objects.filter(
+        period=appraisal.period
+    ).order_by('category', 'order', 'name')
+    
+    if request.method == 'POST':
+        # Update status
+        appraisal.status = 'in_progress'
+        appraisal.self_assessment = request.POST.get('self_assessment', '')
+        appraisal.self_achievements = request.POST.get('self_achievements', '')
+        appraisal.self_challenges = request.POST.get('self_challenges', '')
+        appraisal.self_goals = request.POST.get('self_goals', '')
+        
+        # Calculate self overall score
+        total_score = 0
+        total_weight = 0
+        
+        for criteria in criteria_list:
+            score_key = f'score_{criteria.id}'
+            comment_key = f'comment_{criteria.id}'
+            
+            if score_key in request.POST and request.POST[score_key]:
+                score_value = int(request.POST[score_key])
+                comment_value = request.POST.get(comment_key, '')
+                
+                # Get or create AppraisalScore
+                appraisal_score, created = AppraisalScore.objects.get_or_create(
+                    appraisal=appraisal,
+                    criteria=criteria,
+                    defaults={
+                        'self_score': score_value,
+                        'self_comment': comment_value
+                    }
+                )
+                
+                if not created:
+                    appraisal_score.self_score = score_value
+                    appraisal_score.self_comment = comment_value
+                    appraisal_score.save()
+                
+                total_score += score_value * criteria.weight
+                total_weight += criteria.weight
+        
+        # Calculate weighted average
+        if total_weight > 0:
+            appraisal.self_overall_score = round(total_score / total_weight, 2)
+        
+        # Check if should mark as completed self-assessment
+        if 'submit_final' in request.POST:
+            appraisal.self_assessment_date = timezone.now()
+            appraisal.status = 'self_assessed'
+            messages.success(request, 'Đã hoàn thành tự đánh giá! Quản lý sẽ xem xét đánh giá của bạn.')
+        else:
+            messages.success(request, 'Đã lưu bản nháp tự đánh giá.')
+        
+        appraisal.save()
+        return redirect('portal_appraisal_detail', appraisal_id=appraisal_id)
+    
+    # GET request - prepare form data
+    # Get existing scores
+    existing_scores = {}
+    for score in appraisal.scores.select_related('criteria'):
+        existing_scores[score.criteria.id] = {
+            'score': score.self_score,
+            'comment': score.self_comment
+        }
+    
+    # Group criteria by category
+    criteria_by_category = {}
+    for criteria in criteria_list:
+        if criteria.category not in criteria_by_category:
+            criteria_by_category[criteria.category] = []
+        
+        criteria_data = {
+            'id': criteria.id,
+            'name': criteria.name,
+            'description': criteria.description,
+            'weight': criteria.weight,
+            'max_score': criteria.max_score,
+            'existing_score': existing_scores.get(criteria.id, {}).get('score'),
+            'existing_comment': existing_scores.get(criteria.id, {}).get('comment', '')
+        }
+        criteria_by_category[criteria.category].append(criteria_data)
+    
+    context = {
+        'employee': employee,
+        'appraisal': appraisal,
+        'criteria_by_category': criteria_by_category,
+        'can_edit': appraisal.status in ['pending', 'in_progress'],
+    }
+    
+    return render(request, 'portal/appraisal/self_assessment.html', context)

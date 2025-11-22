@@ -43,7 +43,9 @@ urlpatterns = [
     
     # Documents & Announcements (Future implementation)
     path('documents/', portal_views.documents_list, name='portal_documents'),
+    path('documents/<int:document_id>/download/', portal_views.document_download, name='portal_document_download'),
     path('announcements/', portal_views.announcements_list, name='portal_announcements'),
+    path('announcements/<int:announcement_id>/', portal_views.announcement_detail, name='portal_announcement_detail'),
     
     # Manager Features (Only for managers)
     path('approvals/', portal_views.approvals_dashboard, name='portal_approvals'),

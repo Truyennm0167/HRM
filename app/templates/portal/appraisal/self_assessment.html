@@ -1,0 +1,168 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}Tự đánh giá - {{ appraisal.period.name }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Breadcrumb -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'portal_dashboard' %}">Portal</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'portal_my_appraisals' %}">Đánh giá</a></li>
+                    <li class="breadcrumb-item active">Tự đánh giá</li>
+                </ol>
+            </nav>
+            <h2><i class="fas fa-edit mr-2"></i>Tự đánh giá - {{ appraisal.period.name }}</h2>
+        </div>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+        
+        <div class="row">
+            <!-- Main Form -->
+            <div class="col-lg-8">
+                <!-- General Comments -->
+                <div class="card mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="fas fa-comment-alt mr-2"></i>Nhận xét tổng quan</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label><strong>Đánh giá chung về công việc:</strong></label>
+                            <textarea name="self_assessment" class="form-control" rows="4" {% if not can_edit %}disabled{% endif %}>{{ appraisal.self_assessment }}</textarea>
+                            <small class="form-text text-muted">Mô tả tổng quan về công việc của bạn trong kỳ đánh giá</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label><strong>Thành tích nổi bật:</strong></label>
+                            <textarea name="self_achievements" class="form-control" rows="4" {% if not can_edit %}disabled{% endif %}>{{ appraisal.self_achievements }}</textarea>
+                            <small class="form-text text-muted">Những thành tích, dự án hoặc đóng góp quan trọng</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label><strong>Khó khăn gặp phải:</strong></label>
+                            <textarea name="self_challenges" class="form-control" rows="4" {% if not can_edit %}disabled{% endif %}>{{ appraisal.self_challenges }}</textarea>
+                            <small class="form-text text-muted">Những thách thức và cách bạn giải quyết</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label><strong>Mục tiêu cho kỳ tiếp theo:</strong></label>
+                            <textarea name="self_goals" class="form-control" rows="4" {% if not can_edit %}disabled{% endif %}>{{ appraisal.self_goals }}</textarea>
+                            <small class="form-text text-muted">Mục tiêu phát triển cá nhân và nghề nghiệp</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Criteria Scoring -->
+                {% for category, criteria in criteria_by_category.items %}
+                <div class="card mb-4">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="fas fa-tasks mr-2"></i>{{ category }}</h5>
+                    </div>
+                    <div class="card-body">
+                        {% for item in criteria %}
+                        <div class="border-bottom pb-3 mb-3">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <div>
+                                    <strong>{{ item.name }}</strong>
+                                    <span class="badge badge-secondary ml-2">Trọng số: {{ item.weight }}%</span>
+                                    <span class="badge badge-info ml-1">Tối đa: {{ item.max_score }} điểm</span>
+                                </div>
+                            </div>
+                            
+                            {% if item.description %}
+                            <p class="text-muted small mb-2">{{ item.description }}</p>
+                            {% endif %}
+
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label>Điểm tự đánh giá:</label>
+                                    <input type="number" 
+                                           name="score_{{ item.id }}" 
+                                           class="form-control" 
+                                           min="0" 
+                                           max="{{ item.max_score }}" 
+                                           value="{{ item.existing_score|default:'' }}"
+                                           {% if not can_edit %}disabled{% endif %}
+                                           required>
+                                </div>
+                                <div class="col-md-9">
+                                    <label>Giải thích:</label>
+                                    <textarea name="comment_{{ item.id }}" 
+                                              class="form-control" 
+                                              rows="2"
+                                              {% if not can_edit %}disabled{% endif %}
+                                              placeholder="Giải thích điểm tự đánh giá của bạn...">{{ item.existing_comment }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endfor %}
+
+                <!-- Submit Buttons -->
+                {% if can_edit %}
+                <div class="card">
+                    <div class="card-body">
+                        <div class="text-center">
+                            <button type="submit" name="save_draft" class="btn btn-secondary btn-lg mr-2">
+                                <i class="fas fa-save"></i> Lưu bản nháp
+                            </button>
+                            <button type="submit" name="submit_final" class="btn btn-success btn-lg" 
+                                    onclick="return confirm('Bạn chắc chắn muốn gửi đánh giá? Sau khi gửi bạn sẽ không thể chỉnh sửa.')">
+                                <i class="fas fa-paper-plane"></i> Gửi đánh giá
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Sidebar Info -->
+            <div class="col-lg-4">
+                <div class="card mb-4 sticky-top" style="top: 20px;">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="mb-0"><i class="fas fa-info-circle mr-2"></i>Thông tin đánh giá</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Kỳ đánh giá:</strong><br>{{ appraisal.period.name }}</p>
+                        <p><strong>Thời gian:</strong><br>{{ appraisal.period.start_date|date:"d/m/Y" }} - {{ appraisal.period.end_date|date:"d/m/Y" }}</p>
+                        <p><strong>Quản lý đánh giá:</strong><br>{{ appraisal.manager.name }}</p>
+                        <p><strong>Trạng thái:</strong><br>
+                            {% if appraisal.status == 'pending' %}
+                                <span class="badge badge-warning">Chưa bắt đầu</span>
+                            {% elif appraisal.status == 'in_progress' %}
+                                <span class="badge badge-info">Đang tiến hành</span>
+                            {% elif appraisal.status == 'self_assessed' %}
+                                <span class="badge badge-success">Đã hoàn thành</span>
+                            {% endif %}
+                        </p>
+
+                        {% if appraisal.self_overall_score %}
+                        <p><strong>Điểm tự đánh giá:</strong><br>
+                            <span class="h4 text-primary">{{ appraisal.self_overall_score }}/100</span>
+                        </p>
+                        {% endif %}
+
+                        <hr>
+                        <div class="alert alert-info">
+                            <h6><i class="fas fa-lightbulb"></i> Hướng dẫn</h6>
+                            <ul class="mb-0 pl-3">
+                                <li>Đánh giá trung thực và khách quan</li>
+                                <li>Cung cấp ví dụ cụ thể</li>
+                                <li>Tập trung vào kết quả đạt được</li>
+                                <li>Đề xuất hướng phát triển</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

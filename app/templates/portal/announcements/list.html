@@ -1,0 +1,106 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}Thông báo{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2><i class="fas fa-bullhorn mr-2"></i>Thông báo công ty</h2>
+            <p class="text-muted">
+                Xem các thông báo, sự kiện và cập nhật quan trọng
+                {% if unread_count > 0 %}
+                <span class="badge badge-danger ml-2">{{ unread_count }} chưa đọc</span>
+                {% endif %}
+            </p>
+        </div>
+    </div>
+
+    <!-- Category Filter -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="btn-group flex-wrap" role="group">
+                <a href="{% url 'portal_announcements' %}" class="btn btn-outline-secondary {% if not selected_category %}active{% endif %}">
+                    <i class="fas fa-th-large"></i> Tất cả
+                </a>
+                <a href="?category=general" class="btn btn-outline-info {% if selected_category == 'general' %}active{% endif %}">
+                    <i class="fas fa-bullhorn"></i> Thông báo chung
+                </a>
+                <a href="?category=event" class="btn btn-outline-success {% if selected_category == 'event' %}active{% endif %}">
+                    <i class="fas fa-calendar-alt"></i> Sự kiện
+                </a>
+                <a href="?category=policy" class="btn btn-outline-warning {% if selected_category == 'policy' %}active{% endif %}">
+                    <i class="fas fa-gavel"></i> Chính sách
+                </a>
+                <a href="?category=holiday" class="btn btn-outline-primary {% if selected_category == 'holiday' %}active{% endif %}">
+                    <i class="fas fa-umbrella-beach"></i> Ngày nghỉ
+                </a>
+                <a href="?category=training" class="btn btn-outline-secondary {% if selected_category == 'training' %}active{% endif %}">
+                    <i class="fas fa-graduation-cap"></i> Đào tạo
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Announcements List -->
+    <div class="row">
+        <div class="col-12">
+            {% for announcement in announcements %}
+            <div class="card mb-3 {% if not announcement.is_read %}border-primary{% endif %}">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div class="flex-grow-1">
+                            <h5 class="card-title">
+                                {% if announcement.is_pinned %}
+                                <i class="fas fa-thumbtack text-danger mr-1"></i>
+                                {% endif %}
+                                {% if not announcement.is_read %}
+                                <span class="badge badge-primary mr-2">Mới</span>
+                                {% endif %}
+                                {{ announcement.title }}
+                            </h5>
+                            
+                            <div class="mb-2">
+                                <span class="badge {{ announcement.get_priority_badge }}">
+                                    {{ announcement.get_priority_display }}
+                                </span>
+                                <span class="badge badge-secondary">
+                                    <i class="fas {{ announcement.get_category_icon }}"></i>
+                                    {{ announcement.get_category_display }}
+                                </span>
+                            </div>
+                            
+                            <p class="card-text text-muted">
+                                {{ announcement.content|truncatewords:30 }}
+                            </p>
+                            
+                            <small class="text-muted">
+                                <i class="fas fa-user"></i> {{ announcement.created_by.name }}
+                                <i class="fas fa-calendar ml-3"></i> {{ announcement.publish_at|date:"d/m/Y H:i" }}
+                                {% if announcement.attachment %}
+                                <i class="fas fa-paperclip ml-3"></i> Có tệp đính kèm
+                                {% endif %}
+                            </small>
+                        </div>
+                        
+                        <div class="ml-3">
+                            <a href="{% url 'portal_announcement_detail' announcement.id %}" class="btn btn-outline-primary">
+                                <i class="fas fa-eye"></i> Xem chi tiết
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="alert alert-info text-center">
+                <i class="fas fa-info-circle fa-3x mb-3"></i>
+                <h5>Không có thông báo</h5>
+                <p class="mb-0">Hiện tại không có thông báo nào.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

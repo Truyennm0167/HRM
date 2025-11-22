@@ -1,0 +1,103 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}Tài liệu công ty{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Page Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2><i class="fas fa-folder-open mr-2"></i>Tài liệu công ty</h2>
+            <p class="text-muted">Tải xuống các tài liệu, chính sách và biểu mẫu</p>
+        </div>
+    </div>
+
+    <!-- Search and Filter -->
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <form method="GET" class="form-inline">
+                <div class="input-group" style="width: 100%;">
+                    <input type="text" name="q" class="form-control" placeholder="Tìm kiếm tài liệu..." value="{{ search_query }}">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search"></i> Tìm
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-4 text-right">
+            <span class="text-muted">Tổng: <strong>{{ documents.count }}</strong> tài liệu</span>
+        </div>
+    </div>
+
+    <!-- Categories Filter -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="btn-group-toggle d-flex flex-wrap" data-toggle="buttons">
+                <a href="{% url 'portal_documents' %}" class="btn btn-outline-secondary m-1 {% if not selected_category %}active{% endif %}">
+                    <i class="fas fa-th-large"></i> Tất cả
+                </a>
+                {% for cat in categories %}
+                <a href="?category={{ cat.id }}" class="btn btn-outline-{{ cat.color }} m-1 {% if selected_category == cat.id|stringformat:'s' %}active{% endif %}">
+                    <i class="fas {{ cat.icon }}"></i> {{ cat.name }}
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Documents Grid -->
+    <div class="row">
+        {% for doc in documents %}
+        <div class="col-lg-4 col-md-6 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="d-flex align-items-start mb-3">
+                        <div class="mr-3">
+                            <i class="fas {{ doc.get_icon_class }} fa-3x"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h5 class="card-title mb-1">{{ doc.title }}</h5>
+                            {% if doc.category %}
+                            <span class="badge badge-{{ doc.category.color }}">{{ doc.category.name }}</span>
+                            {% endif %}
+                            <span class="badge badge-secondary">v{{ doc.version }}</span>
+                        </div>
+                    </div>
+                    
+                    {% if doc.description %}
+                    <p class="card-text text-muted small">{{ doc.description|truncatewords:20 }}</p>
+                    {% endif %}
+                    
+                    <div class="mt-3">
+                        <small class="text-muted d-block">
+                            <i class="fas fa-file-alt"></i> {{ doc.get_file_extension|upper }}
+                            <i class="fas fa-hdd ml-2"></i> {{ doc.format_file_size }}
+                        </small>
+                        <small class="text-muted d-block mt-1">
+                            <i class="fas fa-download"></i> {{ doc.downloads_count }} lượt tải
+                            <i class="fas fa-calendar ml-2"></i> {{ doc.created_at|date:"d/m/Y" }}
+                        </small>
+                    </div>
+                </div>
+                <div class="card-footer bg-transparent">
+                    <a href="{% url 'portal_document_download' doc.id %}" class="btn btn-primary btn-block">
+                        <i class="fas fa-download"></i> Tải xuống
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                <i class="fas fa-info-circle fa-3x mb-3"></i>
+                <h5>Không có tài liệu</h5>
+                <p class="mb-0">Không tìm thấy tài liệu nào phù hợp với bộ lọc của bạn.</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
