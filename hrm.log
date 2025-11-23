@@ -22742,3 +22742,1426 @@ INFO 2025-11-22 20:04:19,904 autoreload D:\Study\CT201\Project\hrm\app\urls_port
 INFO 2025-11-22 20:04:21,240 autoreload Watching for file changes with StatReloader
 INFO 2025-11-22 20:16:01,845 autoreload D:\Study\CT201\Project\hrm\app\urls_portal.py changed, reloading.
 INFO 2025-11-22 20:16:03,126 autoreload Watching for file changes with StatReloader
+INFO 2025-11-22 20:19:05,898 autoreload Watching for file changes with StatReloader
+WARNING 2025-11-22 20:20:49,323 log Not Found: /
+WARNING 2025-11-22 20:20:49,325 basehttp "GET /?id=c468af12-d613-41a9-a54c-1055924751b7&vscodeBrowserReqId=1763817649018 HTTP/1.1" 404 7102
+INFO 2025-11-22 20:26:02,812 basehttp "GET /portal/attendance/ HTTP/1.1" 200 44924
+INFO 2025-11-22 20:26:03,039 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-22 20:26:03,779 basehttp "GET /portal/ HTTP/1.1" 200 18027
+ERROR 2025-11-22 20:26:12,761 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 20:26:12,767 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83452
+INFO 2025-11-22 20:26:15,392 basehttp "GET /portal/payroll/ HTTP/1.1" 200 21322
+INFO 2025-11-22 20:26:21,556 basehttp "GET /portal/attendance/ HTTP/1.1" 200 44924
+INFO 2025-11-22 20:26:21,652 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-22 20:26:25,961 basehttp "GET /portal/expenses/ HTTP/1.1" 200 30341
+INFO 2025-11-22 20:26:29,651 basehttp "GET /portal/profile/ HTTP/1.1" 200 20141
+INFO 2025-11-22 20:26:34,054 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-22 20:26:34,074 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-22 20:26:38,407 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-22 20:26:38,452 basehttp "GET /portal/ HTTP/1.1" 200 20207
+INFO 2025-11-22 20:26:40,229 basehttp "GET /portal/approvals/ HTTP/1.1" 200 17696
+INFO 2025-11-22 20:26:43,544 basehttp "GET /portal/ HTTP/1.1" 200 20207
+ERROR 2025-11-22 20:26:44,954 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 20:26:44,957 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83684
+ERROR 2025-11-22 20:26:47,653 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 20:26:47,655 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83684
+INFO 2025-11-22 20:26:52,047 basehttp "GET /portal/attendance/ HTTP/1.1" 200 45710
+INFO 2025-11-22 20:26:52,142 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-22 20:26:53,957 basehttp "GET /portal/expenses/ HTTP/1.1" 200 25114
+INFO 2025-11-22 20:26:57,975 basehttp "GET /media/receipts/sontung.jpg HTTP/1.1" 200 576065
+INFO 2025-11-22 20:27:00,960 basehttp "GET /portal/profile/ HTTP/1.1" 200 21088
+INFO 2025-11-22 20:34:11,825 basehttp "GET /portal/ HTTP/1.1" 200 20207
+INFO 2025-11-22 20:34:13,420 management_views Admin home accessed by hangpt
+INFO 2025-11-22 20:34:13,678 basehttp "GET /management/ HTTP/1.1" 200 42377
+INFO 2025-11-22 20:34:15,787 basehttp "GET /management/appraisal/ HTTP/1.1" 200 34152
+INFO 2025-11-22 20:34:19,922 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-22 20:34:19,935 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-22 20:34:26,726 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-22 20:34:26,767 basehttp "GET /portal/ HTTP/1.1" 200 20207
+INFO 2025-11-22 20:34:36,285 basehttp "GET /portal/approvals/ HTTP/1.1" 200 17696
+INFO 2025-11-22 20:34:41,614 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 35731
+INFO 2025-11-22 20:34:53,244 basehttp "GET /portal/approvals/ HTTP/1.1" 200 17696
+INFO 2025-11-22 20:34:56,122 basehttp "GET /portal/ HTTP/1.1" 200 20207
+INFO 2025-11-22 20:34:59,250 basehttp "GET /portal/attendance/ HTTP/1.1" 200 45710
+INFO 2025-11-22 20:34:59,336 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-22 20:35:00,733 basehttp "GET /portal/payroll/ HTTP/1.1" 200 25372
+ERROR 2025-11-22 20:35:01,343 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 20:35:01,346 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83692
+INFO 2025-11-22 20:35:09,463 basehttp "GET /portal/ HTTP/1.1" 200 20207
+WARNING 2025-11-22 20:35:55,199 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-22 20:35:55,200 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 7187
+INFO 2025-11-22 20:35:55,215 basehttp "GET /static/dist/js/adminlte.min.js.map HTTP/1.1" 200 78868
+INFO 2025-11-22 20:35:55,253 basehttp "GET /static/plugins/bootstrap/js/bootstrap.bundle.min.js.map HTTP/1.1" 200 311949
+INFO 2025-11-22 20:35:55,265 basehttp "GET /static/dist/css/adminlte.min.css.map HTTP/1.1" 200 2061805
+INFO 2025-11-22 20:36:23,535 basehttp "GET /portal/expenses/create/ HTTP/1.1" 200 16981
+INFO 2025-11-22 20:36:25,623 basehttp "GET /portal/attendance/ HTTP/1.1" 200 45710
+INFO 2025-11-22 20:36:25,719 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-22 20:36:26,161 basehttp "GET /portal/expenses/ HTTP/1.1" 200 25114
+INFO 2025-11-22 20:36:28,758 basehttp "GET /portal/ HTTP/1.1" 200 20207
+INFO 2025-11-22 20:36:38,201 management_views Admin home accessed by hangpt
+INFO 2025-11-22 20:36:38,230 basehttp "GET /management/ HTTP/1.1" 200 42377
+INFO 2025-11-22 20:36:54,772 basehttp "GET /portal/attendance/ HTTP/1.1" 200 45710
+INFO 2025-11-22 20:36:54,867 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-22 20:36:57,384 basehttp "GET /portal/profile/ HTTP/1.1" 200 21088
+INFO 2025-11-22 20:37:04,275 basehttp "GET /portal/attendance/ HTTP/1.1" 200 45710
+INFO 2025-11-22 20:37:04,371 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+ERROR 2025-11-22 20:41:06,027 log Internal Server Error: /portal/attendance/check-in/
+ERROR 2025-11-22 20:41:06,030 basehttp "POST /portal/attendance/check-in/ HTTP/1.1" 500 89
+INFO 2025-11-22 20:41:47,791 basehttp "GET /portal/approvals/ HTTP/1.1" 200 17696
+INFO 2025-11-22 20:41:51,528 basehttp "GET /portal/ HTTP/1.1" 200 20207
+INFO 2025-11-22 20:41:59,449 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-22 20:41:59,464 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-22 20:42:10,000 basehttp "GET /management/org-chart/ HTTP/1.1" 302 0
+INFO 2025-11-22 20:42:10,024 basehttp "GET /login/?next=/management/org-chart/ HTTP/1.1" 200 2905
+INFO 2025-11-22 20:42:21,450 basehttp "GET /management/org-chart/ HTTP/1.1" 302 0
+INFO 2025-11-22 20:42:21,464 basehttp "GET /login/?next=/management/org-chart/ HTTP/1.1" 200 2905
+INFO 2025-11-22 20:42:35,355 basehttp "POST /login/?next=/management/org-chart/ HTTP/1.1" 302 0
+INFO 2025-11-22 20:42:35,571 basehttp "GET /management/org-chart/ HTTP/1.1" 200 66340
+INFO 2025-11-22 20:42:50,264 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-22 20:42:50,278 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-22 20:42:54,932 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-22 20:42:54,980 basehttp "GET /portal/ HTTP/1.1" 200 19911
+INFO 2025-11-22 20:43:04,527 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-22 20:43:04,576 basehttp "GET /portal/ HTTP/1.1" 200 18027
+ERROR 2025-11-22 20:43:11,955 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 20:43:11,957 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83452
+ERROR 2025-11-22 20:43:16,297 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 20:43:16,299 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83215
+INFO 2025-11-22 20:43:22,565 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 43759
+WARNING 2025-11-22 20:43:35,904 log Not Found: /portal/leaves/97/
+WARNING 2025-11-22 20:43:35,905 basehttp "GET /portal/leaves/97/ HTTP/1.1" 404 3772
+INFO 2025-11-22 20:43:47,145 basehttp "GET /portal/ HTTP/1.1" 200 19911
+ERROR 2025-11-22 20:43:47,976 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 20:43:47,980 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83215
+INFO 2025-11-22 20:43:49,728 basehttp "GET /portal/approvals/ HTTP/1.1" 200 40736
+INFO 2025-11-22 20:43:57,225 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 43759
+INFO 2025-11-22 20:44:01,760 basehttp "GET /portal/ HTTP/1.1" 200 19911
+ERROR 2025-11-22 20:44:02,424 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 20:44:02,426 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83215
+INFO 2025-11-22 20:44:04,650 basehttp "GET /portal/approvals/ HTTP/1.1" 200 40736
+INFO 2025-11-22 20:44:10,516 basehttp "GET /portal/ HTTP/1.1" 200 19911
+ERROR 2025-11-22 20:44:19,789 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 20:44:19,791 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83215
+INFO 2025-11-22 20:44:22,430 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22262
+INFO 2025-11-22 20:44:23,708 basehttp "GET /portal/approvals/ HTTP/1.1" 200 40736
+INFO 2025-11-22 20:44:25,473 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 58232
+WARNING 2025-11-22 20:44:42,326 log Not Found: /portal/expenses/126/
+WARNING 2025-11-22 20:44:42,327 basehttp "GET /portal/expenses/126/ HTTP/1.1" 404 6635
+INFO 2025-11-22 20:44:50,361 basehttp "GET /portal/payroll/ HTTP/1.1" 200 21322
+INFO 2025-11-22 20:44:52,754 basehttp "GET /portal/payroll/146/ HTTP/1.1" 200 14959
+INFO 2025-11-22 20:44:55,839 basehttp "GET /portal/payroll/165/ HTTP/1.1" 200 14848
+INFO 2025-11-22 20:45:01,317 basehttp "GET /portal/payroll/?year=2024&month=&status= HTTP/1.1" 200 15552
+INFO 2025-11-22 20:45:06,188 basehttp "GET /portal/payroll/?year=&month=&status= HTTP/1.1" 200 21322
+INFO 2025-11-22 20:45:11,346 basehttp "GET /portal/payroll/?year=&month=11&status= HTTP/1.1" 200 17928
+INFO 2025-11-22 20:45:15,491 basehttp "GET /portal/payroll/?year=&month=&status= HTTP/1.1" 200 21322
+INFO 2025-11-22 20:45:19,000 basehttp "GET /portal/payroll/?year=&month=&status=pending HTTP/1.1" 200 18084
+INFO 2025-11-22 20:45:22,883 basehttp "GET /portal/payroll/?year=&month=&status=approved HTTP/1.1" 200 15552
+INFO 2025-11-22 20:45:26,185 basehttp "GET /portal/payroll/?year=&month=&status=paid HTTP/1.1" 200 15552
+INFO 2025-11-22 20:45:29,874 basehttp "GET /portal/payroll/?year=&month=&status= HTTP/1.1" 200 21322
+INFO 2025-11-22 20:45:35,808 basehttp "GET /portal/attendance/ HTTP/1.1" 200 44924
+INFO 2025-11-22 20:45:35,894 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+ERROR 2025-11-22 20:45:42,273 log Internal Server Error: /portal/attendance/check-in/
+ERROR 2025-11-22 20:45:42,274 basehttp "POST /portal/attendance/check-in/ HTTP/1.1" 500 89
+INFO 2025-11-22 20:46:16,550 autoreload Watching for file changes with StatReloader
+INFO 2025-11-22 20:46:22,058 basehttp "GET /portal/attendance/ HTTP/1.1" 200 44924
+INFO 2025-11-22 20:46:22,176 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+ERROR 2025-11-22 20:46:24,650 log Internal Server Error: /portal/attendance/check-in/
+ERROR 2025-11-22 20:46:24,651 basehttp "POST /portal/attendance/check-in/ HTTP/1.1" 500 89
+ERROR 2025-11-22 20:47:11,938 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 20:47:11,943 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83463
+INFO 2025-11-22 20:47:55,809 basehttp "GET /portal/payroll/ HTTP/1.1" 200 21322
+INFO 2025-11-22 20:47:58,054 basehttp "GET /portal/expenses/ HTTP/1.1" 200 30341
+INFO 2025-11-22 20:48:30,765 basehttp "GET /portal/expenses/?q=None&category=23&status=&year= HTTP/1.1" 200 17860
+INFO 2025-11-22 20:48:36,100 basehttp "GET /portal/expenses/?q=None&category=19&status=&year= HTTP/1.1" 200 17860
+INFO 2025-11-22 20:48:41,062 basehttp "GET /portal/expenses/?q=None&category=&status=&year= HTTP/1.1" 200 17852
+INFO 2025-11-22 20:48:44,396 basehttp "GET /portal/expenses/ HTTP/1.1" 200 30341
+INFO 2025-11-22 20:49:56,475 basehttp "GET /portal/expenses/109/ HTTP/1.1" 200 16060
+INFO 2025-11-22 20:49:58,901 basehttp "GET /portal/expenses/84/ HTTP/1.1" 200 16060
+INFO 2025-11-22 20:50:37,439 basehttp "GET /portal/expenses/create/ HTTP/1.1" 200 16182
+INFO 2025-11-22 20:51:03,266 basehttp "POST /portal/expenses/create/ HTTP/1.1" 302 0
+INFO 2025-11-22 20:51:03,315 basehttp "GET /portal/expenses/ HTTP/1.1" 200 33304
+INFO 2025-11-22 20:51:13,303 basehttp "GET /portal/expenses/ HTTP/1.1" 200 32771
+INFO 2025-11-22 20:51:22,413 basehttp "GET /portal/expenses/129/ HTTP/1.1" 200 16058
+INFO 2025-11-22 20:51:27,227 basehttp "GET /portal/expenses/ HTTP/1.1" 200 24740
+INFO 2025-11-22 20:51:29,156 basehttp "GET /portal/approvals/ HTTP/1.1" 200 42854
+INFO 2025-11-22 20:51:31,087 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 59959
+WARNING 2025-11-22 20:51:35,978 log Not Found: /portal/expenses/129/
+WARNING 2025-11-22 20:51:35,979 basehttp "GET /portal/expenses/129/ HTTP/1.1" 404 6635
+INFO 2025-11-22 20:51:56,098 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22262
+INFO 2025-11-22 20:52:50,752 basehttp "GET /portal/payroll/?year=2023&month=&status= HTTP/1.1" 200 16351
+INFO 2025-11-22 20:52:56,877 basehttp "GET /portal/payroll/?year=&month=10&status= HTTP/1.1" 200 18876
+INFO 2025-11-22 20:53:09,071 basehttp "GET /portal/payroll/?year=2024&month=11&status= HTTP/1.1" 200 16359
+INFO 2025-11-22 20:53:12,822 basehttp "GET /portal/payroll/?year=&month=11&status= HTTP/1.1" 200 18727
+INFO 2025-11-22 20:53:16,863 basehttp "GET /portal/payroll/?year=&month=&status= HTTP/1.1" 200 22262
+INFO 2025-11-22 20:53:20,196 basehttp "GET /portal/payroll/?year=&month=&status=pending HTTP/1.1" 200 20650
+INFO 2025-11-22 20:53:24,292 basehttp "GET /portal/payroll/?year=&month=&status=approved HTTP/1.1" 200 16351
+INFO 2025-11-22 20:53:27,168 basehttp "GET /portal/payroll/?year=&month=&status=paid HTTP/1.1" 200 16351
+INFO 2025-11-22 20:53:30,399 basehttp "GET /portal/payroll/?year=&month=&status= HTTP/1.1" 200 22262
+INFO 2025-11-22 20:54:11,670 basehttp "GET /portal/payroll/125/ HTTP/1.1" 200 15417
+INFO 2025-11-22 20:54:14,140 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22262
+INFO 2025-11-22 20:55:20,449 basehttp "GET /portal/payroll/125/ HTTP/1.1" 200 15417
+INFO 2025-11-22 20:55:52,513 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-11-22 20:55:52,525 basehttp "GET /login/?next=/portal/ HTTP/1.1" 200 2905
+INFO 2025-11-22 20:57:16,353 basehttp "GET /portal/approvals/ HTTP/1.1" 200 42854
+INFO 2025-11-22 20:57:18,908 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 43759
+WARNING 2025-11-22 20:58:39,613 log Not Found: /portal/leaves/97/
+WARNING 2025-11-22 20:58:39,614 basehttp "GET /portal/leaves/97/ HTTP/1.1" 404 3772
+WARNING 2025-11-22 21:02:20,781 log Not Found: /portal/leaves/97/
+WARNING 2025-11-22 21:02:20,782 basehttp "GET /portal/leaves/97/ HTTP/1.1" 404 3772
+INFO 2025-11-22 21:03:14,289 basehttp "GET /portal/approvals/ HTTP/1.1" 200 42854
+INFO 2025-11-22 21:03:15,663 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 59959
+WARNING 2025-11-22 21:04:59,716 log Not Found: /portal/expenses/126/
+WARNING 2025-11-22 21:04:59,717 basehttp "GET /portal/expenses/126/ HTTP/1.1" 404 6635
+ERROR 2025-11-22 21:06:36,419 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 21:06:36,424 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83229
+ERROR 2025-11-22 21:06:38,781 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 21:06:38,785 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83229
+INFO 2025-11-22 21:06:47,806 basehttp "GET /portal/leaves/create HTTP/1.1" 301 0
+INFO 2025-11-22 21:06:47,954 basehttp "GET /portal/leaves/create/ HTTP/1.1" 200 18342
+ERROR 2025-11-22 21:07:03,385 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 21:07:03,387 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83229
+INFO 2025-11-22 21:08:09,565 basehttp "POST /portal/leaves/create/ HTTP/1.1" 302 0
+ERROR 2025-11-22 21:08:09,652 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 21:08:09,654 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83811
+INFO 2025-11-22 21:08:17,822 basehttp "GET /portal/leaves/create/ HTTP/1.1" 200 19318
+INFO 2025-11-22 21:08:20,250 basehttp "POST /portal/leaves/create/ HTTP/1.1" 302 0
+ERROR 2025-11-22 21:08:20,335 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 21:08:20,338 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83889
+INFO 2025-11-22 21:08:39,628 basehttp "GET /portal/approvals/ HTTP/1.1" 200 47497
+INFO 2025-11-22 21:08:43,357 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 46948
+ERROR 2025-11-22 21:08:59,056 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 21:08:59,060 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83465
+INFO 2025-11-22 21:09:01,581 basehttp "GET /portal/leaves/create/ HTTP/1.1" 200 17543
+INFO 2025-11-22 21:09:30,290 basehttp "POST /portal/leaves/create/ HTTP/1.1" 200 18448
+INFO 2025-11-22 21:09:58,239 basehttp "POST /portal/leaves/create/ HTTP/1.1" 200 18448
+INFO 2025-11-22 21:10:06,769 basehttp "POST /portal/leaves/create/ HTTP/1.1" 200 18448
+INFO 2025-11-22 21:10:12,220 basehttp "GET /portal/approvals/ HTTP/1.1" 200 46968
+INFO 2025-11-22 21:10:19,525 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 46948
+INFO 2025-11-22 21:12:22,605 basehttp "POST /portal/leaves/create/ HTTP/1.1" 200 18448
+ERROR 2025-11-22 21:13:13,620 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 21:13:13,622 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83466
+ERROR 2025-11-22 21:13:19,163 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 21:13:19,167 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83466
+INFO 2025-11-22 21:14:06,177 basehttp "GET /portal/payroll/ HTTP/1.1" 200 21322
+INFO 2025-11-22 21:14:07,209 basehttp "GET /portal/expenses/ HTTP/1.1" 200 32771
+INFO 2025-11-22 21:14:20,222 basehttp "GET /portal/expenses/create/ HTTP/1.1" 200 16182
+INFO 2025-11-22 21:16:56,812 basehttp "POST /portal/expenses/create/ HTTP/1.1" 302 0
+INFO 2025-11-22 21:16:56,855 basehttp "GET /portal/expenses/ HTTP/1.1" 200 35763
+INFO 2025-11-22 21:17:01,764 basehttp "GET /portal/expenses/130/ HTTP/1.1" 200 16073
+INFO 2025-11-22 21:17:04,605 basehttp "GET /portal/expenses/ HTTP/1.1" 200 35234
+INFO 2025-11-22 21:17:05,639 basehttp "GET /portal/expenses/create/ HTTP/1.1" 200 16182
+INFO 2025-11-22 21:18:08,385 basehttp "GET /portal/expenses/ HTTP/1.1" 200 35234
+INFO 2025-11-22 21:18:10,662 basehttp "GET /portal/profile/ HTTP/1.1" 200 20141
+INFO 2025-11-22 21:18:52,029 basehttp "GET /portal/profile/edit/ HTTP/1.1" 200 17307
+INFO 2025-11-22 21:20:11,344 basehttp "POST /portal/profile/edit/ HTTP/1.1" 200 18306
+WARNING 2025-11-22 21:20:11,447 log Not Found: /media/2bd3e2f0-4869-4d01-a5f8-5272b54acc2c.jpg
+WARNING 2025-11-22 21:20:11,450 basehttp "GET /media/2bd3e2f0-4869-4d01-a5f8-5272b54acc2c.jpg HTTP/1.1" 404 7277
+INFO 2025-11-22 21:20:23,704 basehttp "POST /portal/profile/edit/ HTTP/1.1" 302 0
+INFO 2025-11-22 21:20:23,757 basehttp "GET /portal/profile/ HTTP/1.1" 200 20683
+INFO 2025-11-22 21:20:23,991 basehttp "GET /media/avatars/0d83f6eb2ddb44cb9d446a9af58be3fb_426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_k9bNr6A.jpg HTTP/1.1" 200 411816
+INFO 2025-11-22 23:36:17,738 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-11-22 23:36:17,830 basehttp "GET /login/?next=/portal/ HTTP/1.1" 200 2905
+INFO 2025-11-22 23:36:27,500 basehttp "POST /login/?next=/portal/ HTTP/1.1" 302 0
+INFO 2025-11-22 23:36:27,636 basehttp "GET /portal/ HTTP/1.1" 200 18027
+INFO 2025-11-22 23:36:30,352 basehttp "GET /portal/profile/ HTTP/1.1" 200 20202
+INFO 2025-11-22 23:36:30,439 basehttp "GET /media/avatars/0d83f6eb2ddb44cb9d446a9af58be3fb_426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_k9bNr6A.jpg HTTP/1.1" 200 411816
+INFO 2025-11-22 23:36:31,447 basehttp "GET /portal/ HTTP/1.1" 200 18027
+INFO 2025-11-22 23:36:40,312 basehttp "GET /portal/leaves/create/ HTTP/1.1" 200 17543
+INFO 2025-11-22 23:36:43,495 basehttp "GET /portal/expenses/create/ HTTP/1.1" 200 16182
+INFO 2025-11-22 23:36:47,557 basehttp "GET /portal/payroll/ HTTP/1.1" 200 21322
+INFO 2025-11-22 23:36:51,030 basehttp "GET /portal/attendance/ HTTP/1.1" 200 44924
+INFO 2025-11-22 23:36:51,149 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+ERROR 2025-11-22 23:36:54,278 log Internal Server Error: /portal/attendance/check-in/
+ERROR 2025-11-22 23:36:54,279 basehttp "POST /portal/attendance/check-in/ HTTP/1.1" 500 89
+INFO 2025-11-22 23:38:03,942 basehttp "GET /portal/attendance/ HTTP/1.1" 200 44924
+INFO 2025-11-22 23:38:04,041 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+ERROR 2025-11-22 23:38:12,009 log Internal Server Error: /portal/attendance/check-in/
+ERROR 2025-11-22 23:38:12,012 basehttp "POST /portal/attendance/check-in/ HTTP/1.1" 500 89
+INFO 2025-11-22 23:39:05,576 basehttp "GET /portal/expenses/ HTTP/1.1" 200 35234
+ERROR 2025-11-22 23:39:08,270 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 23:39:08,294 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83461
+ERROR 2025-11-22 23:39:11,004 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 23:39:11,012 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83461
+INFO 2025-11-22 23:39:31,763 basehttp "GET /portal/payroll/ HTTP/1.1" 200 21322
+ERROR 2025-11-22 23:39:32,796 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 23:39:32,803 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83460
+INFO 2025-11-22 23:39:34,316 basehttp "GET /portal/attendance/ HTTP/1.1" 200 44924
+INFO 2025-11-22 23:39:34,418 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-22 23:39:35,211 basehttp "GET /portal/ HTTP/1.1" 200 18027
+INFO 2025-11-22 23:39:36,298 basehttp "GET /portal/payroll/ HTTP/1.1" 200 21322
+INFO 2025-11-22 23:39:43,195 basehttp "GET /portal/attendance/ HTTP/1.1" 200 44924
+INFO 2025-11-22 23:39:43,309 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-22 23:39:51,601 basehttp "GET /portal/expenses/ HTTP/1.1" 200 35234
+INFO 2025-11-22 23:39:59,354 basehttp "GET /portal/profile/ HTTP/1.1" 200 20202
+INFO 2025-11-22 23:40:27,142 basehttp "GET /portal/profile/edit/ HTTP/1.1" 200 17279
+INFO 2025-11-22 23:40:30,315 basehttp "GET /portal/profile/ HTTP/1.1" 200 20202
+INFO 2025-11-22 23:40:40,986 basehttp "GET /portal/profile/edit/ HTTP/1.1" 200 17279
+INFO 2025-11-22 23:41:43,949 basehttp "GET /portal/profile/password/ HTTP/1.1" 200 20236
+INFO 2025-11-22 23:41:48,324 basehttp "GET /portal/profile/ HTTP/1.1" 200 20202
+INFO 2025-11-22 23:41:59,260 basehttp "GET /portal/ HTTP/1.1" 200 18027
+ERROR 2025-11-22 23:42:00,323 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 23:42:00,328 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83452
+INFO 2025-11-22 23:42:02,284 basehttp "GET /portal/payroll/ HTTP/1.1" 200 21322
+INFO 2025-11-22 23:42:04,771 basehttp "GET /portal/attendance/ HTTP/1.1" 200 44924
+INFO 2025-11-22 23:42:04,881 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-22 23:42:05,634 basehttp "GET /portal/expenses/ HTTP/1.1" 200 35234
+INFO 2025-11-22 23:42:08,326 basehttp "GET /portal/profile/ HTTP/1.1" 200 20202
+INFO 2025-11-22 23:42:16,085 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-11-22 23:42:16,108 basehttp "GET /login/?next=/portal/ HTTP/1.1" 200 2905
+INFO 2025-11-22 23:42:22,659 basehttp "POST /login/?next=/portal/ HTTP/1.1" 302 0
+INFO 2025-11-22 23:42:22,763 basehttp "GET /portal/ HTTP/1.1" 200 19913
+ERROR 2025-11-22 23:42:29,452 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 23:42:29,458 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83372
+INFO 2025-11-22 23:42:30,918 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22262
+INFO 2025-11-22 23:42:33,153 basehttp "GET /portal/approvals/ HTTP/1.1" 200 49305
+INFO 2025-11-22 23:42:33,280 basehttp "GET /media/avatars/0d83f6eb2ddb44cb9d446a9af58be3fb_426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_k9bNr6A.jpg HTTP/1.1" 200 411816
+INFO 2025-11-22 23:43:35,460 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 46948
+WARNING 2025-11-22 23:47:20,798 log Method Not Allowed: /portal/team/leaves/100/approve/
+WARNING 2025-11-22 23:47:20,801 basehttp "GET /portal/team/leaves/100/approve/ HTTP/1.1" 405 51
+WARNING 2025-11-22 23:47:24,936 log Method Not Allowed: /portal/team/leaves/100/reject/
+WARNING 2025-11-22 23:47:24,938 basehttp "GET /portal/team/leaves/100/reject/ HTTP/1.1" 405 51
+WARNING 2025-11-22 23:48:03,523 log Method Not Allowed: /portal/team/expenses/130/approve/
+WARNING 2025-11-22 23:48:03,525 basehttp "GET /portal/team/expenses/130/approve/ HTTP/1.1" 405 51
+INFO 2025-11-22 23:49:59,322 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 46948
+INFO 2025-11-22 23:50:00,805 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 61701
+INFO 2025-11-22 23:50:12,886 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 61701
+INFO 2025-11-22 23:50:34,829 basehttp "GET /portal/ HTTP/1.1" 200 19913
+INFO 2025-11-22 23:51:10,531 management_views Admin home accessed by hungvv
+INFO 2025-11-22 23:51:10,658 basehttp "GET /management/ HTTP/1.1" 200 42377
+INFO 2025-11-22 23:51:45,436 basehttp "GET /management/org-chart/ HTTP/1.1" 200 66464
+INFO 2025-11-22 23:53:02,448 basehttp "GET /portal/ HTTP/1.1" 200 19913
+INFO 2025-11-22 23:53:07,894 basehttp "GET /portal/profile/ HTTP/1.1" 200 21095
+INFO 2025-11-22 23:53:08,036 basehttp "GET /static/dist/img/avatar.png HTTP/1.1" 200 8543
+INFO 2025-11-22 23:53:15,470 basehttp "GET /portal/approvals/ HTTP/1.1" 200 49305
+INFO 2025-11-22 23:53:18,542 basehttp "GET /portal/ HTTP/1.1" 200 19913
+INFO 2025-11-22 23:55:29,196 basehttp "GET /portal/ HTTP/1.1" 200 19914
+INFO 2025-11-22 23:55:53,200 basehttp "GET /portal/ HTTP/1.1" 200 18028
+ERROR 2025-11-22 23:56:36,679 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 191, in leaves_list
+    remaining_leaves = employee.annual_leave_balance - used_leaves
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'annual_leave_balance'
+ERROR 2025-11-22 23:56:36,687 basehttp "GET /portal/leaves/ HTTP/1.1" 500 83372
+INFO 2025-11-22 23:59:40,840 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-22 23:59:43,108 autoreload Watching for file changes with StatReloader
+INFO 2025-11-23 00:01:43,658 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-23 00:01:44,655 autoreload Watching for file changes with StatReloader
+INFO 2025-11-23 00:01:53,864 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-23 00:01:54,935 autoreload Watching for file changes with StatReloader
+INFO 2025-11-23 00:08:04,852 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-23 00:08:06,082 autoreload Watching for file changes with StatReloader
+INFO 2025-11-23 14:37:28,288 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-23 14:37:33,405 autoreload Watching for file changes with StatReloader
+INFO 2025-11-23 14:37:49,456 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-11-23 14:37:49,557 basehttp "GET /login/?next=/portal/ HTTP/1.1" 200 2905
+INFO 2025-11-23 14:37:54,978 basehttp "POST /login/?next=/portal/ HTTP/1.1" 302 0
+INFO 2025-11-23 14:37:55,127 basehttp "GET /portal/ HTTP/1.1" 200 18045
+ERROR 2025-11-23 14:37:57,438 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 215, in leaves_list
+    return render(request, 'portal/leaves/list.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 852, in do_for
+    sequence = parser.compile_filter(bits[in_index + 1])
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 698, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 606, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'split'
+ERROR 2025-11-23 14:37:57,451 basehttp "GET /portal/leaves/ HTTP/1.1" 500 304490
+INFO 2025-11-23 14:38:11,026 basehttp "GET /portal/leaves/ HTTP/1.1" 302 0
+INFO 2025-11-23 14:38:11,053 basehttp "GET /login/?next=/portal/leaves/ HTTP/1.1" 200 2905
+INFO 2025-11-23 14:38:31,262 basehttp "POST /login/?next=/portal/leaves/ HTTP/1.1" 302 0
+ERROR 2025-11-23 14:38:31,461 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 215, in leaves_list
+    return render(request, 'portal/leaves/list.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 852, in do_for
+    sequence = parser.compile_filter(bits[in_index + 1])
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 698, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 606, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'split'
+ERROR 2025-11-23 14:38:31,468 basehttp "GET /portal/leaves/ HTTP/1.1" 500 304546
+INFO 2025-11-23 14:38:37,093 basehttp "GET /portal HTTP/1.1" 301 0
+INFO 2025-11-23 14:38:37,137 basehttp "GET /portal/ HTTP/1.1" 200 19928
+ERROR 2025-11-23 14:38:50,698 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 215, in leaves_list
+    return render(request, 'portal/leaves/list.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 852, in do_for
+    sequence = parser.compile_filter(bits[in_index + 1])
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 698, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 606, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'split'
+ERROR 2025-11-23 14:38:50,704 basehttp "GET /portal/leaves/ HTTP/1.1" 500 304490
+INFO 2025-11-23 14:38:53,173 basehttp "GET /portal/expenses/ HTTP/1.1" 200 35519
+INFO 2025-11-23 14:39:21,927 basehttp "GET /portal/approvals/ HTTP/1.1" 200 49305
+INFO 2025-11-23 14:39:22,218 basehttp "GET /media/avatars/0d83f6eb2ddb44cb9d446a9af58be3fb_426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_k9bNr6A.jpg HTTP/1.1" 200 411816
+INFO 2025-11-23 14:39:23,694 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22439
+INFO 2025-11-23 14:40:28,653 basehttp "GET /portal/payroll/125/ HTTP/1.1" 200 15421
+INFO 2025-11-23 14:40:31,865 basehttp "GET /portal/attendance/ HTTP/1.1" 200 45724
+INFO 2025-11-23 14:40:32,010 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-23 14:40:33,134 basehttp "GET /portal/expenses/ HTTP/1.1" 200 24858
+ERROR 2025-11-23 14:40:35,896 log Internal Server Error: /portal/profile/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 1041, in profile_view
+    if employee.joining_date:
+       ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'joining_date'
+ERROR 2025-11-23 14:40:35,902 basehttp "GET /portal/profile/ HTTP/1.1" 500 80041
+INFO 2025-11-23 14:40:40,888 basehttp "GET /portal/approvals/ HTTP/1.1" 200 49305
+INFO 2025-11-23 14:40:49,883 basehttp "GET /portal/ HTTP/1.1" 200 19928
+INFO 2025-11-23 14:40:52,223 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22439
+INFO 2025-11-23 14:40:57,883 basehttp "GET /portal/ HTTP/1.1" 200 19928
+INFO 2025-11-23 14:41:19,430 management_views Admin home accessed by hungvv
+INFO 2025-11-23 14:41:19,699 basehttp "GET /management/ HTTP/1.1" 200 42377
+INFO 2025-11-23 14:41:26,727 management_views Admin home accessed by hungvv
+INFO 2025-11-23 14:41:26,775 basehttp "GET /management/ HTTP/1.1" 200 42377
+INFO 2025-11-23 14:41:29,457 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22439
+INFO 2025-11-23 14:41:30,740 basehttp "GET /portal/attendance/ HTTP/1.1" 200 45724
+INFO 2025-11-23 14:41:30,841 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-23 14:41:32,333 basehttp "GET /portal/expenses/ HTTP/1.1" 200 24858
+ERROR 2025-11-23 14:41:33,359 log Internal Server Error: /portal/profile/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 1041, in profile_view
+    if employee.joining_date:
+       ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'joining_date'
+ERROR 2025-11-23 14:41:33,362 basehttp "GET /portal/profile/ HTTP/1.1" 500 80041
+ERROR 2025-11-23 14:41:36,075 log Internal Server Error: /portal/profile/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 1041, in profile_view
+    if employee.joining_date:
+       ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'joining_date'
+ERROR 2025-11-23 14:41:36,077 basehttp "GET /portal/profile/ HTTP/1.1" 500 80041
+INFO 2025-11-23 14:41:41,685 basehttp "GET /portal/ HTTP/1.1" 200 19928
+INFO 2025-11-23 14:45:39,266 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-23 14:45:41,155 autoreload Watching for file changes with StatReloader
+INFO 2025-11-23 14:46:23,155 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-23 14:46:24,610 autoreload Watching for file changes with StatReloader
+ERROR 2025-11-23 14:52:33,467 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 215, in leaves_list
+    return render(request, 'portal/leaves/list.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 852, in do_for
+    sequence = parser.compile_filter(bits[in_index + 1])
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 698, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 606, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'split'
+ERROR 2025-11-23 14:52:33,479 basehttp "GET /portal/leaves/ HTTP/1.1" 500 304389
+INFO 2025-11-23 14:52:36,283 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22439
+INFO 2025-11-23 14:52:37,937 basehttp "GET /portal/attendance/ HTTP/1.1" 200 45724
+INFO 2025-11-23 14:52:38,038 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-23 14:52:41,402 basehttp "POST /portal/attendance/check-in/ HTTP/1.1" 200 113
+INFO 2025-11-23 14:52:43,488 basehttp "GET /portal/attendance/ HTTP/1.1" 200 47294
+INFO 2025-11-23 14:52:43,588 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 189
+INFO 2025-11-23 14:52:46,836 basehttp "POST /portal/attendance/check-out/ HTTP/1.1" 200 156
+INFO 2025-11-23 14:52:48,909 basehttp "GET /portal/attendance/ HTTP/1.1" 200 47298
+INFO 2025-11-23 14:52:49,003 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 188
+INFO 2025-11-23 14:52:52,728 basehttp "POST /portal/attendance/check-out/ HTTP/1.1" 200 156
+INFO 2025-11-23 14:52:54,808 basehttp "GET /portal/attendance/ HTTP/1.1" 200 47321
+INFO 2025-11-23 14:52:54,904 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 188
+ERROR 2025-11-23 14:53:38,151 log Internal Server Error: /portal/profile/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 1041, in profile_view
+    if employee.joining_date:
+       ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'joining_date'
+ERROR 2025-11-23 14:53:38,154 basehttp "GET /portal/profile/ HTTP/1.1" 500 80043
+INFO 2025-11-23 14:53:39,835 basehttp "GET /portal/approvals/ HTTP/1.1" 200 49305
+WARNING 2025-11-23 14:53:42,185 log Method Not Allowed: /portal/team/leaves/100/approve/
+WARNING 2025-11-23 14:53:42,186 basehttp "GET /portal/team/leaves/100/approve/ HTTP/1.1" 405 51
+INFO 2025-11-23 14:54:03,585 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-23 14:54:04,920 autoreload Watching for file changes with StatReloader
+INFO 2025-11-23 14:55:04,991 basehttp "GET /portal/ HTTP/1.1" 200 19928
+INFO 2025-11-23 14:55:15,204 basehttp "GET /portal/leaves/create/ HTTP/1.1" 200 18348
+INFO 2025-11-23 14:56:57,673 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 53137
+INFO 2025-11-23 14:57:10,977 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 68966
+ERROR 2025-11-23 14:57:53,124 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 215, in leaves_list
+    return render(request, 'portal/leaves/list.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 852, in do_for
+    sequence = parser.compile_filter(bits[in_index + 1])
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 698, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 606, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'split'
+ERROR 2025-11-23 14:57:53,139 basehttp "GET /portal/leaves/ HTTP/1.1" 500 304389
+INFO 2025-11-23 14:57:54,916 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22439
+INFO 2025-11-23 14:57:56,095 basehttp "GET /portal/attendance/ HTTP/1.1" 200 47321
+INFO 2025-11-23 14:57:56,192 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 188
+INFO 2025-11-23 14:57:58,952 basehttp "GET /portal/expenses/ HTTP/1.1" 200 24858
+ERROR 2025-11-23 14:58:01,609 log Internal Server Error: /portal/profile/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 1041, in profile_view
+    if employee.joining_date:
+       ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'joining_date'
+ERROR 2025-11-23 14:58:01,611 basehttp "GET /portal/profile/ HTTP/1.1" 500 80041
+INFO 2025-11-23 14:58:05,386 basehttp "GET /portal/approvals/ HTTP/1.1" 200 49305
+INFO 2025-11-23 14:59:09,716 basehttp "GET /portal/ HTTP/1.1" 200 19928
+ERROR 2025-11-23 14:59:20,785 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 215, in leaves_list
+    return render(request, 'portal/leaves/list.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 852, in do_for
+    sequence = parser.compile_filter(bits[in_index + 1])
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 698, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 606, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'split'
+ERROR 2025-11-23 14:59:20,792 basehttp "GET /portal/leaves/ HTTP/1.1" 500 304389
+ERROR 2025-11-23 14:59:23,072 log Internal Server Error: /portal/leaves/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 215, in leaves_list
+    return render(request, 'portal/leaves/list.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 852, in do_for
+    sequence = parser.compile_filter(bits[in_index + 1])
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 698, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 606, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'split'
+ERROR 2025-11-23 14:59:23,079 basehttp "GET /portal/leaves/ HTTP/1.1" 500 304389
+INFO 2025-11-23 15:00:10,378 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22439
+INFO 2025-11-23 15:00:15,146 basehttp "GET /portal/payroll/?year=2023&month=&status= HTTP/1.1" 200 16351
+INFO 2025-11-23 15:00:19,741 basehttp "GET /portal/payroll/?year=2025&month=&status= HTTP/1.1" 200 22447
+INFO 2025-11-23 15:00:32,148 basehttp "GET /portal/payroll/?year=2025&month=10&status= HTTP/1.1" 200 18891
+INFO 2025-11-23 15:00:41,427 basehttp "GET /portal/payroll/?year=&month=10&status=pending HTTP/1.1" 200 18891
+INFO 2025-11-23 15:00:45,117 basehttp "GET /portal/payroll/?year=&month=10&status=approved HTTP/1.1" 200 16359
+INFO 2025-11-23 15:00:49,245 basehttp "GET /portal/payroll/?year=&month=10&status=paid HTTP/1.1" 200 16359
+INFO 2025-11-23 15:00:52,415 basehttp "GET /portal/payroll/?year=&month=10&status= HTTP/1.1" 200 18883
+INFO 2025-11-23 15:00:58,058 basehttp "GET /portal/payroll/?year=&month=10&status=confirmed HTTP/1.1" 200 16351
+INFO 2025-11-23 15:01:03,882 basehttp "GET /portal/payroll/?year=&month=10&status=pending HTTP/1.1" 200 18891
+INFO 2025-11-23 15:01:08,185 basehttp "GET /portal/payroll/?year=&month=10&status= HTTP/1.1" 200 18883
+INFO 2025-11-23 15:01:14,584 basehttp "GET /portal/payroll/?year=&month=&status= HTTP/1.1" 200 22439
+INFO 2025-11-23 15:01:22,143 basehttp "GET /portal/payroll/?year=&month=&status=confirmed HTTP/1.1" 200 18874
+INFO 2025-11-23 15:03:10,811 basehttp "GET /portal/payroll/125/ HTTP/1.1" 200 15421
+INFO 2025-11-23 15:04:42,016 basehttp "GET /portal/ HTTP/1.1" 200 19928
+INFO 2025-11-23 15:04:49,765 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22439
+INFO 2025-11-23 15:04:51,619 basehttp "GET /portal/payroll/125/ HTTP/1.1" 200 15421
+INFO 2025-11-23 15:05:52,015 basehttp "GET /portal/payroll/125/ HTTP/1.1" 200 15435
+INFO 2025-11-23 15:06:37,518 basehttp "GET /portal/payroll/125/ HTTP/1.1" 200 15451
+INFO 2025-11-23 15:07:43,884 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22439
+INFO 2025-11-23 15:07:45,733 basehttp "GET /portal/payroll/125/ HTTP/1.1" 200 15451
+INFO 2025-11-23 15:07:54,093 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22439
+INFO 2025-11-23 15:07:56,130 basehttp "GET /portal/payroll/144/ HTTP/1.1" 200 15560
+INFO 2025-11-23 15:07:59,337 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22439
+INFO 2025-11-23 15:08:04,770 basehttp "GET /portal/attendance/ HTTP/1.1" 200 47321
+INFO 2025-11-23 15:08:04,879 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 188
+INFO 2025-11-23 15:09:20,516 basehttp "GET /portal/expenses/ HTTP/1.1" 200 24858
+INFO 2025-11-23 15:11:28,387 basehttp "GET /portal/expenses/86/ HTTP/1.1" 200 16853
+INFO 2025-11-23 15:15:31,423 basehttp "GET /portal/expenses/ HTTP/1.1" 200 24858
+INFO 2025-11-23 15:15:37,697 basehttp "GET /portal/expenses/110/ HTTP/1.1" 200 16721
+INFO 2025-11-23 15:15:44,168 basehttp "GET /portal/expenses/ HTTP/1.1" 200 24858
+INFO 2025-11-23 15:15:56,131 basehttp "GET /portal/expenses/ HTTP/1.1" 200 24858
+INFO 2025-11-23 15:16:08,629 basehttp "GET /portal/expenses/?q=None&category=17&status=&year= HTTP/1.1" 200 18660
+INFO 2025-11-23 15:16:18,735 basehttp "GET /portal/expenses/?q=&category=17&status=&year= HTTP/1.1" 200 21091
+INFO 2025-11-23 15:16:23,051 basehttp "GET /portal/expenses/ HTTP/1.1" 200 24858
+INFO 2025-11-23 15:16:41,521 basehttp "GET /portal/expenses/?q=s%E1%BB%ADa+ch%E1%BB%ADa&category=&status=&year= HTTP/1.1" 200 18660
+INFO 2025-11-23 15:16:54,549 basehttp "GET /portal/expenses/?q=&category=17&status=&year= HTTP/1.1" 200 21091
+INFO 2025-11-23 15:17:00,936 basehttp "GET /portal/expenses/?q=&category=&status=Pending&year= HTTP/1.1" 200 18656
+INFO 2025-11-23 15:17:05,762 basehttp "GET /portal/expenses/?q=&category=&status=Approved&year= HTTP/1.1" 200 18656
+INFO 2025-11-23 15:17:08,699 basehttp "GET /portal/expenses/?q=&category=&status=Rejected&year= HTTP/1.1" 200 18656
+INFO 2025-11-23 15:17:17,446 basehttp "GET /portal/expenses/?q=&category=&status=&year=2025 HTTP/1.1" 200 24862
+INFO 2025-11-23 15:20:01,450 basehttp "GET /portal/expenses/?q=&category=&status=Rejected&year= HTTP/1.1" 200 18656
+INFO 2025-11-23 15:20:28,486 basehttp "GET /portal/expenses/ HTTP/1.1" 200 24858
+INFO 2025-11-23 15:21:24,613 basehttp "GET /portal/expenses/86/ HTTP/1.1" 200 16853
+ERROR 2025-11-23 15:21:34,713 log Internal Server Error: /portal/profile/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 1041, in profile_view
+    if employee.joining_date:
+       ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'joining_date'
+ERROR 2025-11-23 15:21:34,721 basehttp "GET /portal/profile/ HTTP/1.1" 500 80041
+ERROR 2025-11-23 15:21:54,019 log Internal Server Error: /portal/profile/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 1041, in profile_view
+    if employee.joining_date:
+       ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'joining_date'
+ERROR 2025-11-23 15:21:54,021 basehttp "GET /portal/profile/ HTTP/1.1" 500 80041
+INFO 2025-11-23 15:22:24,568 basehttp "GET /portal/ HTTP/1.1" 200 19928
+INFO 2025-11-23 15:22:31,741 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22439
+INFO 2025-11-23 15:22:50,249 basehttp "GET /portal/attendance/ HTTP/1.1" 200 47321
+INFO 2025-11-23 15:22:50,387 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 188
+INFO 2025-11-23 15:22:55,018 basehttp "POST /portal/attendance/check-out/ HTTP/1.1" 200 156
+INFO 2025-11-23 15:22:57,093 basehttp "GET /portal/attendance/ HTTP/1.1" 200 47344
+INFO 2025-11-23 15:22:57,195 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 194
+INFO 2025-11-23 15:23:29,633 basehttp "GET /portal/expenses/ HTTP/1.1" 200 24858
+ERROR 2025-11-23 15:23:30,795 log Internal Server Error: /portal/profile/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 1041, in profile_view
+    if employee.joining_date:
+       ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'joining_date'
+ERROR 2025-11-23 15:23:30,797 basehttp "GET /portal/profile/ HTTP/1.1" 500 80041
+INFO 2025-11-23 15:23:32,243 basehttp "GET /portal/approvals/ HTTP/1.1" 200 49305
+ERROR 2025-11-23 15:24:40,142 log Internal Server Error: /portal/profile/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 1041, in profile_view
+    if employee.joining_date:
+       ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'joining_date'
+ERROR 2025-11-23 15:24:40,145 basehttp "GET /portal/profile/ HTTP/1.1" 500 80042
+INFO 2025-11-23 15:24:42,032 basehttp "GET /portal/ HTTP/1.1" 200 19928
+INFO 2025-11-23 15:25:17,407 basehttp "GET /portal/ HTTP/1.1" 200 19928
+INFO 2025-11-23 15:25:20,061 basehttp "GET /portal/approvals/ HTTP/1.1" 200 49415
+INFO 2025-11-23 15:26:33,025 basehttp "GET /portal/approvals/ HTTP/1.1" 200 49799
+INFO 2025-11-23 15:27:06,612 basehttp "GET /portal/approvals/ HTTP/1.1" 200 49743
+INFO 2025-11-23 15:27:19,495 basehttp "GET /portal/approvals/ HTTP/1.1" 200 49799
+WARNING 2025-11-23 15:27:57,748 log Method Not Allowed: /portal/team/leaves/100/approve/
+WARNING 2025-11-23 15:27:57,749 basehttp "GET /portal/team/leaves/100/approve/ HTTP/1.1" 405 51
+WARNING 2025-11-23 15:27:59,684 log Method Not Allowed: /portal/team/leaves/100/approve/
+WARNING 2025-11-23 15:27:59,685 basehttp "GET /portal/team/leaves/100/approve/ HTTP/1.1" 405 51
+WARNING 2025-11-23 15:28:22,344 log Method Not Allowed: /portal/team/expenses/130/approve/
+WARNING 2025-11-23 15:28:22,345 basehttp "GET /portal/team/expenses/130/approve/ HTTP/1.1" 405 51
+INFO 2025-11-23 15:28:27,188 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 53137
+WARNING 2025-11-23 15:29:25,636 log Not Found: /portal/leaves/84/
+WARNING 2025-11-23 15:29:25,637 basehttp "GET /portal/leaves/84/ HTTP/1.1" 404 3772
+WARNING 2025-11-23 15:29:44,303 log Not Found: /portal/leaves/84/
+WARNING 2025-11-23 15:29:44,304 basehttp "GET /portal/leaves/84/ HTTP/1.1" 404 3772
+INFO 2025-11-23 15:30:29,537 basehttp "GET /portal/ HTTP/1.1" 200 19928
+ERROR 2025-11-23 15:30:33,768 log Internal Server Error: /portal/profile/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 1041, in profile_view
+    if employee.joining_date:
+       ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'joining_date'
+ERROR 2025-11-23 15:30:33,771 basehttp "GET /portal/profile/ HTTP/1.1" 500 80032
+INFO 2025-11-23 15:30:37,790 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22439
+INFO 2025-11-23 15:30:39,568 basehttp "GET /portal/payroll/125/ HTTP/1.1" 200 15451
+INFO 2025-11-23 15:30:46,713 basehttp "GET /portal/attendance/ HTTP/1.1" 200 47344
+INFO 2025-11-23 15:30:46,811 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 194
+INFO 2025-11-23 15:31:02,094 basehttp "GET /portal/expenses/ HTTP/1.1" 200 24858
+INFO 2025-11-23 15:31:04,304 basehttp "GET /portal/expenses/86/ HTTP/1.1" 200 16853
+INFO 2025-11-23 15:31:07,692 basehttp "GET /portal/expenses/86/ HTTP/1.1" 200 16853
+ERROR 2025-11-23 15:31:12,415 log Internal Server Error: /portal/profile/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 1041, in profile_view
+    if employee.joining_date:
+       ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'joining_date'
+ERROR 2025-11-23 15:31:12,419 basehttp "GET /portal/profile/ HTTP/1.1" 500 80041
+INFO 2025-11-23 15:31:13,804 basehttp "GET /portal/approvals/ HTTP/1.1" 200 49799
+INFO 2025-11-23 15:31:25,326 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 53137
+WARNING 2025-11-23 15:32:47,442 log Not Found: /portal/leaves/81/
+WARNING 2025-11-23 15:32:47,443 basehttp "GET /portal/leaves/81/ HTTP/1.1" 404 3772
+WARNING 2025-11-23 15:33:30,555 log Not Found: /portal/leaves/84/
+WARNING 2025-11-23 15:33:30,556 basehttp "GET /portal/leaves/84/ HTTP/1.1" 404 3772
+INFO 2025-11-23 15:33:51,998 basehttp "GET /portal/approvals/ HTTP/1.1" 200 49799
+INFO 2025-11-23 15:33:53,716 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 68966
+WARNING 2025-11-23 15:33:56,030 log Not Found: /portal/expenses/130/
+WARNING 2025-11-23 15:33:56,031 basehttp "GET /portal/expenses/130/ HTTP/1.1" 404 6635
+WARNING 2025-11-23 15:34:30,863 log Not Found: /portal/expenses/130/
+WARNING 2025-11-23 15:34:30,864 basehttp "GET /portal/expenses/130/ HTTP/1.1" 404 6635
+INFO 2025-11-23 15:39:38,019 basehttp "GET /portal/attendance/ HTTP/1.1" 200 47344
+INFO 2025-11-23 15:39:38,158 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 194
+INFO 2025-11-23 15:40:00,341 basehttp "GET /portal/approvals/ HTTP/1.1" 200 49799
+ERROR 2025-11-23 15:40:04,453 log Internal Server Error: /portal/profile/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 1041, in profile_view
+    if employee.joining_date:
+       ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'Employee' object has no attribute 'joining_date'
+ERROR 2025-11-23 15:40:04,455 basehttp "GET /portal/profile/ HTTP/1.1" 500 80042
+INFO 2025-11-23 15:40:07,639 basehttp "GET /portal/profile/password/ HTTP/1.1" 200 21035
+INFO 2025-11-23 15:40:35,736 basehttp "GET /portal/ HTTP/1.1" 200 19928

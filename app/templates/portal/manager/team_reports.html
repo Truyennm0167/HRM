@@ -1,5 +1,6 @@
 {% extends 'portal/portal_base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}Báo cáo nhóm{% endblock %}
 
@@ -181,7 +182,7 @@
                         </tr>
                         <tr class="bg-light">
                             <td><strong><i class="fas fa-dollar-sign"></i> Tổng chi phí</strong></td>
-                            <td class="text-right"><strong class="text-danger">{{ expense_stats.total_amount|default:0|floatformat:0 }} VNĐ</strong></td>
+                            <td class="text-right"><strong class="text-danger">{{ expense_stats.total_amount|default:0|floatformat:0|intcomma }} VNĐ</strong></td>
                         </tr>
                     </table>
                 </div>
@@ -278,7 +279,7 @@
                     {% for expense in recent_expenses %}
                     <div class="border-bottom pb-2 mb-2">
                         <strong>{{ expense.employee.name }}</strong>
-                        <span class="badge badge-warning float-right">{{ expense.amount|floatformat:0 }} VNĐ</span>
+                        <span class="badge badge-warning float-right">{{ expense.amount|floatformat:0|intcomma }} VNĐ</span>
                         <br>
                         <small class="text-muted">
                             {{ expense.category.name }} - {{ expense.date|date:"d/m/Y" }}

@@ -1,5 +1,6 @@
 {% extends 'portal/portal_base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}Bảng lương của tôi{% endblock %}
 
@@ -104,31 +105,31 @@
                                         <td>
                                             <strong>{{ payroll.month }}/{{ payroll.year }}</strong>
                                         </td>
-                                        <td>{{ payroll.base_salary|floatformat:0 }}đ</td>
+                                        <td>{{ payroll.base_salary|floatformat:0|intcomma }}đ</td>
                                         <td class="text-success">
                                             {% if payroll.bonus %}
-                                                +{{ payroll.bonus|floatformat:0 }}đ
+                                                +{{ payroll.bonus|floatformat:0|intcomma }}đ
                                             {% else %}
                                                 0đ
                                             {% endif %}
                                         </td>
                                         <td class="text-danger">
-                                            {% if payroll.overtime_pay %}
-                                                -{{ payroll.overtime_pay|floatformat:0 }}đ
+                                            {% if payroll.penalty %}
+                                                -{{ payroll.penalty|floatformat:0|intcomma }}đ
                                             {% else %}
                                                 0đ
                                             {% endif %}
                                         </td>
                                         <td>
-                                            <strong class="text-primary">{{ payroll.total_salary|floatformat:0 }}đ</strong>
+                                            <strong class="text-primary">{{ payroll.total_salary|floatformat:0|intcomma }}đ</strong>
                                         </td>
                                         <td>
                                             {% if payroll.status == 'pending' %}
-                                                <span class="badge badge-warning">Đang xử lý</span>
-                                            {% elif payroll.status == 'approved' %}
-                                                <span class="badge badge-success">Đã duyệt</span>
-                                            {% elif payroll.status == 'paid' %}
-                                                <span class="badge badge-info">Đã thanh toán</span>
+                                                <span class="badge badge-warning">Chưa xác nhận</span>
+                                            {% elif payroll.status == 'confirmed' %}
+                                                <span class="badge badge-success">Đã xác nhận</span>
+                                            {% else %}
+                                                <span class="badge badge-secondary">{{ payroll.get_status_display }}</span>
                                             {% endif %}
                                         </td>
                                         <td>

@@ -1,5 +1,6 @@
 {% extends 'portal/portal_base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}Chi tiết đơn hoàn tiền{% endblock %}
 
@@ -49,7 +50,7 @@
                         </tr>
                         <tr>
                             <th><i class="fas fa-money-bill-wave mr-2"></i>Số tiền</th>
-                            <td><strong class="text-primary">{{ expense.amount|floatformat:0 }}đ</strong></td>
+                            <td><strong class="text-primary">{{ expense.amount|floatformat:0|intcomma }}đ</strong></td>
                         </tr>
                         <tr>
                             <th><i class="fas fa-comment-alt mr-2"></i>Mô tả</th>

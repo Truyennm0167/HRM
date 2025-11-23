@@ -1,5 +1,6 @@
 {% extends 'portal/portal_base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}Duyệt nghỉ phép - Nhóm của tôi{% endblock %}
 
@@ -124,16 +125,16 @@
                             {% for leave in leave_requests %}
                             <tr data-status="{{ leave.status }}">
                                 <td class="text-center">
-                                    {% if leave.status == 'Pending' %}
+                                    {% if leave.status == 'pending' %}
                                     <input type="checkbox" class="leave-checkbox" value="{{ leave.id }}" onchange="updateBulkButtons()">
                                     {% endif %}
                                 </td>
                                 <td>
-                                    <strong>{{ leave.employee.admin.first_name }} {{ leave.employee.admin.last_name }}</strong><br>
+                                    <strong>{{ leave.employee.name }}</strong><br>
                                     <small class="text-muted">{{ leave.employee.employee_code }}</small>
                                 </td>
                                 <td>
-                                    <span class="badge badge-secondary">{{ leave.leave_type }}</span>
+                                    <span class="badge badge-info">{{ leave.leave_type.name }}</span>
                                 </td>
                                 <td>{{ leave.start_date|date:"d/m/Y" }}</td>
                                 <td>{{ leave.end_date|date:"d/m/Y" }}</td>
@@ -144,17 +145,17 @@
                                     <small>{{ leave.reason|truncatewords:10 }}</small>
                                 </td>
                                 <td>
-                                    {% if leave.status == 'Pending' %}
+                                    {% if leave.status == 'pending' %}
                                         <span class="badge badge-warning"><i class="fas fa-clock"></i> Chờ duyệt</span>
-                                    {% elif leave.status == 'Approved' %}
+                                    {% elif leave.status == 'approved' %}
                                         <span class="badge badge-success"><i class="fas fa-check"></i> Đã duyệt</span>
-                                    {% elif leave.status == 'Rejected' %}
+                                    {% elif leave.status == 'rejected' %}
                                         <span class="badge badge-danger"><i class="fas fa-times"></i> Đã từ chối</span>
                                     {% endif %}
                                 </td>
                                 <td>{{ leave.created_at|date:"d/m/Y H:i" }}</td>
                                 <td class="text-center">
-                                    {% if leave.status == 'Pending' %}
+                                    {% if leave.status == 'pending' %}
                                     <div class="btn-group">
                                         <button type="button" class="btn btn-sm btn-success" onclick="approveLeave({{ leave.id }})">
                                             <i class="fas fa-check"></i> Duyệt

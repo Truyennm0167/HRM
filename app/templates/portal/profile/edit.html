@@ -1,5 +1,6 @@
 {% extends 'portal/portal_base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}Chỉnh sửa hồ sơ{% endblock %}
 
@@ -158,7 +159,7 @@
                                 <li><strong>Mã nhân viên:</strong> {{ employee.employee_code }}</li>
                                 <li><strong>Phòng ban:</strong> {{ employee.department.name }}</li>
                                 <li><strong>Chức vụ:</strong> {{ employee.job_position }}</li>
-                                <li><strong>Lương:</strong> {{ employee.salary|floatformat:0 }} VNĐ</li>
+                                <li><strong>Lương:</strong> {{ employee.salary|floatformat:0|intcomma }} VNĐ</li>
                             </ul>
                             <small class="text-muted">Để thay đổi thông tin này, vui lòng liên hệ phòng Nhân sự.</small>
                         </div>

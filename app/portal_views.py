@@ -188,9 +188,16 @@ def leaves_list(request):
         status='Pending'
     ).aggregate(models.Sum('total_days'))['total_days__sum'] or 0
     
-    remaining_leaves = employee.annual_leave_balance - used_leaves
+    # Calculate total annual leave balance from all leave types
+    total_annual_balance = LeaveBalance.objects.filter(
+        employee=employee,
+        year=current_year
+    ).aggregate(models.Sum('total_days'))['total_days__sum'] or 0
+    
+    remaining_leaves = total_annual_balance - used_leaves
     
     context = {
+        'annual_leave_balance': total_annual_balance,
         'employee': employee,
         'leave_balances': leave_balances,
         'page_obj': page_obj,
@@ -247,10 +254,23 @@ def leave_create(request):
                     year=current_year
                 ).select_related('leave_type')
                 
+                # Calculate total annual leave balance
+                total_annual_balance = leave_balances.aggregate(
+                    models.Sum('total_days')
+                )['total_days__sum'] or 0
+                
+                # Calculate pending leaves
+                pending_leaves_count = LeaveRequest.objects.filter(
+                    employee=employee,
+                    status='Pending'
+                ).aggregate(models.Sum('total_days'))['total_days__sum'] or 0
+                
                 context = {
                     'employee': employee,
                     'form': form,
                     'leave_balances': leave_balances,
+                    'annual_leave_balance': total_annual_balance,
+                    'pending_leaves': pending_leaves_count,
                 }
                 return render(request, 'portal/leaves/create.html', context)
             
@@ -285,10 +305,23 @@ def leave_create(request):
         year=current_year
     ).select_related('leave_type')
     
+    # Calculate total annual leave balance
+    total_annual_balance = leave_balances.aggregate(
+        models.Sum('total_days')
+    )['total_days__sum'] or 0
+    
+    # Calculate pending leaves
+    pending_leaves = LeaveRequest.objects.filter(
+        employee=employee,
+        status='Pending'
+    ).aggregate(models.Sum('total_days'))['total_days__sum'] or 0
+    
     context = {
         'employee': employee,
         'form': form,
         'leave_balances': leave_balances,
+        'annual_leave_balance': total_annual_balance,
+        'pending_leaves': pending_leaves,
     }
     
     return render(request, 'portal/leaves/create.html', context)
@@ -666,48 +699,44 @@ def check_in(request):
     if not employee:
         return JsonResponse({'status': 'error', 'message': 'Không tìm thấy thông tin nhân viên'}, status=403)
     
-    today = timezone.now().date()
+    today = timezone.now()
+    today_date = today.date()
     
     # Check if already checked in today
-    existing = Attendance.objects.filter(employee=employee, date=today).first()
-    if existing and existing.check_in:
+    existing = Attendance.objects.filter(employee=employee, date__date=today_date).first()
+    if existing:
         return JsonResponse({
             'status': 'error',
             'message': 'Bạn đã check-in rồi!',
-            'check_in_time': existing.check_in.strftime('%H:%M')
+            'check_in_time': existing.date.strftime('%H:%M')
         })
     
     try:
-        # Create or update attendance record
-        attendance, created = Attendance.objects.get_or_create(
+        # Check if late (after 8:30 AM)
+        from datetime import time
+        current_time = today.time()
+        standard_time = time(8, 30)  # 8:30 AM
+        is_late = current_time > standard_time
+        
+        # Determine status
+        status = 'Có làm việc'
+        notes = ''
+        if is_late:
+            notes = f'Đi muộn {(today.hour * 60 + today.minute) - (8 * 60 + 30)} phút'
+        
+        # Create attendance record
+        attendance = Attendance.objects.create(
             employee=employee,
             date=today,
-            defaults={
-                'check_in': timezone.now(),
-                'status': 'present'
-            }
+            status=status,
+            working_hours=0,  # Will be updated on check-out
+            notes=notes
         )
-        
-        if not created:
-            attendance.check_in = timezone.now()
-            attendance.status = 'present'
-            attendance.save()
-        
-        # Check if late (after 8:30 AM)
-        check_in_time = attendance.check_in.time()
-        from datetime import time
-        standard_time = time(8, 30)  # 8:30 AM
-        is_late = check_in_time > standard_time
-        
-        if is_late:
-            attendance.is_late = True
-            attendance.status = 'late'
-            attendance.save()
         
         return JsonResponse({
             'status': 'success',
             'message': 'Check-in thành công!' + (' (Đi muộn)' if is_late else ''),
-            'check_in_time': attendance.check_in.strftime('%H:%M:%S'),
+            'check_in_time': today.strftime('%H:%M:%S'),
             'is_late': is_late
         })
     except Exception as e:
@@ -724,46 +753,48 @@ def check_out(request):
     if not employee:
         return JsonResponse({'status': 'error', 'message': 'Không tìm thấy thông tin nhân viên'}, status=403)
     
-    today = timezone.now().date()
+    today = timezone.now()
+    today_date = today.date()
     
     # Find today's attendance
-    attendance = Attendance.objects.filter(employee=employee, date=today).first()
-    if not attendance or not attendance.check_in:
+    attendance = Attendance.objects.filter(employee=employee, date__date=today_date).first()
+    if not attendance:
         return JsonResponse({
             'status': 'error',
             'message': 'Bạn chưa check-in!'
         })
     
-    if attendance.check_out:
+    # Check if already recorded working hours (check-out done)
+    if attendance.working_hours > 0:
         return JsonResponse({
             'status': 'error',
-            'message': 'Bạn đã check-out rồi!',
-            'check_out_time': attendance.check_out.strftime('%H:%M')
+            'message': 'Bạn đã check-out rồi!'
         })
     
     try:
-        attendance.check_out = timezone.now()
-        
-        # Calculate working hours
-        delta = attendance.check_out - attendance.check_in
+        # Calculate working hours from check-in time to now
+        check_in_time = attendance.date
+        check_out_time = today
+        delta = check_out_time - check_in_time
         hours = delta.total_seconds() / 3600
         attendance.working_hours = round(hours, 2)
         
         # Check if early leave (before 5:30 PM)
         from datetime import time
-        check_out_time = attendance.check_out.time()
+        current_time = today.time()
         standard_time = time(17, 30)  # 5:30 PM
-        is_early = check_out_time < standard_time
+        is_early = current_time < standard_time
         
         if is_early:
-            attendance.is_early_leave = True
+            early_minutes = (17 * 60 + 30) - (today.hour * 60 + today.minute)
+            attendance.notes += f' | Về sớm {early_minutes} phút'
         
         attendance.save()
         
         return JsonResponse({
             'status': 'success',
             'message': 'Check-out thành công!' + (' (Về sớm)' if is_early else ''),
-            'check_out_time': attendance.check_out.strftime('%H:%M:%S'),
+            'check_out_time': check_out_time.strftime('%H:%M:%S'),
             'working_hours': attendance.working_hours,
             'is_early': is_early
         })
@@ -778,8 +809,8 @@ def today_attendance(request):
     if not employee:
         return JsonResponse({'status': 'error', 'message': 'Không tìm thấy thông tin nhân viên'}, status=403)
     
-    today = timezone.now().date()
-    attendance = Attendance.objects.filter(employee=employee, date=today).first()
+    today_date = timezone.now().date()
+    attendance = Attendance.objects.filter(employee=employee, date__date=today_date).first()
     
     if not attendance:
         return JsonResponse({
@@ -788,15 +819,17 @@ def today_attendance(request):
             'has_checked_out': False
         })
     
+    has_checked_out = attendance.working_hours > 0
+    
     return JsonResponse({
         'status': 'success',
-        'has_checked_in': bool(attendance.check_in),
-        'has_checked_out': bool(attendance.check_out),
-        'check_in_time': attendance.check_in.strftime('%H:%M:%S') if attendance.check_in else None,
-        'check_out_time': attendance.check_out.strftime('%H:%M:%S') if attendance.check_out else None,
+        'has_checked_in': True,
+        'has_checked_out': has_checked_out,
+        'check_in_time': attendance.date.strftime('%H:%M:%S'),
+        'check_out_time': None if not has_checked_out else 'Completed',
         'working_hours': attendance.working_hours,
-        'is_late': attendance.is_late,
-        'is_early_leave': attendance.is_early_leave
+        'is_late': 'Đi muộn' in attendance.notes,
+        'is_early_leave': 'Về sớm' in attendance.notes
     })
 
 
@@ -1003,8 +1036,55 @@ def profile_view(request):
         messages.error(request, 'Không tìm thấy thông tin nhân viên.')
         return redirect('login')
     
+    # Calculate work duration
+    from datetime import date
+    if employee.joining_date:
+        duration = date.today() - employee.joining_date
+        years = duration.days // 365
+        months = (duration.days % 365) // 30
+        work_duration = f"{years} năm {months} tháng" if years > 0 else f"{months} tháng"
+    else:
+        work_duration = "N/A"
+    
+    # Calculate annual leave balance
+    current_year = date.today().year
+    total_annual_balance = LeaveBalance.objects.filter(
+        employee=employee,
+        year=current_year
+    ).aggregate(models.Sum('total_days'))['total_days__sum'] or 0
+    
+    # Calculate statistics for current year
+    stats = {
+        'leaves_taken': LeaveRequest.objects.filter(
+            employee=employee,
+            status='approved',
+            start_date__year=current_year
+        ).aggregate(models.Sum('total_days'))['total_days__sum'] or 0,
+        
+        'attendance_days': Attendance.objects.filter(
+            employee=employee,
+            check_in__year=current_year,
+            status='present'
+        ).count(),
+        
+        'late_count': Attendance.objects.filter(
+            employee=employee,
+            check_in__year=current_year,
+            is_late=True
+        ).count(),
+        
+        'expenses_count': Expense.objects.filter(
+            employee=employee,
+            date__year=current_year
+        ).count(),
+    }
+    
     context = {
         'employee': employee,
+        'work_duration': work_duration,
+        'annual_leave_balance': total_annual_balance,
+        'current_year': current_year,
+        'stats': stats,
     }
     
     return render(request, 'portal/profile/view.html', context)

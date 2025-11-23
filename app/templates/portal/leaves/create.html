@@ -1,5 +1,6 @@
 {% extends 'portal/portal_base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}Tạo đơn xin nghỉ phép{% endblock %}
 
@@ -116,7 +117,7 @@
                             <h5><i class="fas fa-info-circle mr-1"></i>Thông tin số dư phép</h5>
                             <div class="row text-center">
                                 <div class="col-md-4">
-                                    <strong class="text-primary">{{ employee.annual_leave_balance }}</strong>
+                                    <strong class="text-primary">{{ annual_leave_balance|default:0 }}</strong>
                                     <br><small>Tổng phép năm</small>
                                 </div>
                                 <div class="col-md-4">
@@ -133,7 +134,7 @@
 
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">
-                            <i class="fas fa-paper-plane mr-1"></i> Gữi đơn
+                            <i class="fas fa-paper-plane mr-1"></i> Gửi đơn
                         </button>
                         <a href="{% url 'portal_leaves' %}" class="btn btn-secondary">
                             <i class="fas fa-times mr-1"></i> Hủy

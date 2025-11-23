@@ -1,5 +1,6 @@
 {% extends 'portal/portal_base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}Dashboard - Employee Portal{% endblock %}
 
@@ -71,6 +72,38 @@
     </div>
 </div>
 
+<!-- Manager Notifications -->
+{% if manager_notifications %}
+<div class="portal-card" style="border-left: 4px solid #e74c3c;">
+    <div class="portal-card-header">
+        <h4 class="portal-card-title">
+            <i class="fas fa-bell"></i> Thông báo Manager
+            <span class="badge badge-manager">Manager</span>
+        </h4>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="alert alert-warning">
+                <h5><i class="fas fa-umbrella-beach"></i> {{ manager_notifications.pending_leaves }}</h5>
+                <p class="mb-0">Đơn nghỉ phép team chờ duyệt</p>
+                <a href="{% url 'portal_team_leaves' %}" class="btn btn-sm btn-warning mt-2">
+                    Xem ngay
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="alert alert-info">
+                <h5><i class="fas fa-file-invoice-dollar"></i> {{ manager_notifications.pending_expenses }}</h5>
+                <p class="mb-0">Đơn chi phí team chờ duyệt</p>
+                <a href="{% url 'portal_team_expenses' %}" class="btn btn-sm btn-info mt-2">
+                    Xem ngay
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
 <!-- Leave Balance -->
 {% if leave_balances %}
 <div class="portal-card">
@@ -129,10 +162,10 @@
                 {% for payroll in recent_payrolls %}
                 <tr>
                     <td>{{ payroll.month }}/{{ payroll.year }}</td>
-                    <td>{{ payroll.base_salary|floatformat:0 }} đ</td>
-                    <td class="text-success">+{{ payroll.bonus|floatformat:0 }} đ</td>
-                    <td class="text-danger">-{{ payroll.penalty|floatformat:0 }} đ</td>
-                    <td><strong>{{ payroll.total_salary|floatformat:0 }} đ</strong></td>
+                    <td>{{ payroll.base_salary|floatformat:0|intcomma }} đ</td>
+                    <td class="text-success">+{{ payroll.bonus|floatformat:0|intcomma }} đ</td>
+                    <td class="text-danger">-{{ payroll.penalty|floatformat:0|intcomma }} đ</td>
+                    <td><strong>{{ payroll.total_salary|floatformat:0|intcomma }} đ</strong></td>
                     <td>
                         <a href="{% url 'portal_payroll_detail' payroll.id %}" class="btn btn-sm btn-info">
                             <i class="fas fa-eye"></i> Chi tiết
@@ -146,35 +179,4 @@
 </div>
 {% endif %}
 
-<!-- Manager Notifications -->
-{% if manager_notifications %}
-<div class="portal-card" style="border-left: 4px solid #e74c3c;">
-    <div class="portal-card-header">
-        <h4 class="portal-card-title">
-            <i class="fas fa-bell"></i> Thông báo Manager
-            <span class="badge badge-manager">Manager</span>
-        </h4>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="alert alert-warning">
-                <h5><i class="fas fa-umbrella-beach"></i> {{ manager_notifications.pending_leaves }}</h5>
-                <p class="mb-0">Đơn nghỉ phép team chờ duyệt</p>
-                <a href="{% url 'portal_team_leaves' %}" class="btn btn-sm btn-warning mt-2">
-                    Xem ngay
-                </a>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="alert alert-info">
-                <h5><i class="fas fa-file-invoice-dollar"></i> {{ manager_notifications.pending_expenses }}</h5>
-                <p class="mb-0">Đơn chi phí team chờ duyệt</p>
-                <a href="{% url 'portal_team_expenses' %}" class="btn btn-sm btn-info mt-2">
-                    Xem ngay
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-{% endif %}
 {% endblock %}

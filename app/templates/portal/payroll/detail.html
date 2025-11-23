@@ -1,5 +1,6 @@
 {% extends 'portal/portal_base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}Chi tiết bảng lương{% endblock %}
 
@@ -50,7 +51,7 @@
                         <tbody>
                             <tr>
                                 <th width="40%">Nhân viên:</th>
-                                <td><strong>{{ payroll.employee.full_name }}</strong></td>
+                                <td><strong>{{ payroll.employee.name }}</strong></td>
                             </tr>
                             <tr>
                                 <th>Mã NV:</th>
@@ -62,25 +63,25 @@
                             </tr>
                             <tr>
                                 <th>Chức vụ:</th>
-                                <td>{{ payroll.employee.position }}</td>
+                                <td>{{ payroll.employee.job_title }}</td>
                             </tr>
                             <tr>
                                 <th colspan="2" class="bg-light"><strong>THU NHẬP</strong></th>
                             </tr>
                             <tr>
                                 <th>Lương cơ bản:</th>
-                                <td class="text-right"><strong>{{ payroll.base_salary|floatformat:0 }}đ</strong></td>
+                                <td class="text-right"><strong>{{ payroll.base_salary|floatformat:0|intcomma }}đ</strong></td>
                             </tr>
                             {% if payroll.bonus %}
                             <tr>
                                 <th>Thưởng:</th>
-                                <td class="text-right text-success">+{{ payroll.bonus|floatformat:0 }}đ</td>
+                                <td class="text-right text-success">+{{ payroll.bonus|floatformat:0|intcomma }}đ</td>
                             </tr>
                             {% endif %}
-                            {% if payroll.overtime_pay %}
+                            {% if payroll.penalty %}
                             <tr>
-                                <th>Lương làm thêm:</th>
-                                <td class="text-right text-success">+{{ payroll.overtime_pay|floatformat:0 }}đ</td>
+                                <th>Khấu trừ:</th>
+                                <td class="text-right text-danger">-{{ payroll.penalty|floatformat:0|intcomma }}đ</td>
                             </tr>
                             {% endif %}
                             <tr>
@@ -89,20 +90,20 @@
                             {% if payroll.insurance %}
                             <tr>
                                 <th>Bảo hiểm:</th>
-                                <td class="text-right text-danger">-{{ payroll.insurance|floatformat:0 }}đ</td>
+                                <td class="text-right text-danger">-{{ payroll.insurance|floatformat:0|intcomma }}đ</td>
                             </tr>
                             {% endif %}
                             {% if payroll.tax %}
                             <tr>
                                 <th>Thuế TNCN:</th>
-                                <td class="text-right text-danger">-{{ payroll.tax|floatformat:0 }}đ</td>
+                                <td class="text-right text-danger">-{{ payroll.tax|floatformat:0|intcomma }}đ</td>
                             </tr>
                             {% endif %}
                             <tr class="table-primary">
                                 <th><h5>TỔNG LƯƠNG THỰC NHẬN:</h5></th>
                                 <td class="text-right">
                                     <h4 class="text-primary mb-0">
-                                        <strong>{{ payroll.total_salary|floatformat:0 }}đ</strong>
+                                        <strong>{{ payroll.total_salary|floatformat:0|intcomma }}đ</strong>
                                     </h4>
                                 </td>
                             </tr>
