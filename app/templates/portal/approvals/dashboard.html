@@ -1,5 +1,6 @@
 {% extends 'portal/portal_base.html' %}
 {% load static %}
+{% load humanize %}
 
 {% block title %}Phê duyệt - Manager{% endblock %}
 
@@ -114,7 +115,7 @@
                                         {% endif %}
                                     </td>
                                     <td>
-                                        <strong>{{ leave.employee.full_name }}</strong>
+                                        <strong>{{ leave.employee.name }}</strong>
                                         <br>
                                         <small class="text-muted">
                                             {{ leave.start_date|date:"d/m" }} - {{ leave.end_date|date:"d/m" }}
@@ -122,21 +123,21 @@
                                         </small>
                                     </td>
                                     <td>
-                                        <span class="badge badge-{{ leave.get_leave_type_display }}">
-                                            {{ leave.get_leave_type_display }}
+                                        <span class="badge badge-info">
+                                            {{ leave.leave_type.name }}
                                         </span>
                                     </td>
                                     <td class="text-right">
-                                        <a href="{% url 'portal_team_leave_approve' leave.id %}" 
-                                           class="btn btn-xs btn-success"
-                                           title="Duyệt">
+                                        <button type="button" class="btn btn-xs btn-success" 
+                                                onclick="approveLeave({{ leave.id }})"
+                                                title="Duyệt">
                                             <i class="fas fa-check"></i>
-                                        </a>
-                                        <a href="{% url 'portal_team_leave_reject' leave.id %}" 
-                                           class="btn btn-xs btn-danger"
-                                           title="Từ chối">
+                                        </button>
+                                        <button type="button" class="btn btn-xs btn-danger" 
+                                                onclick="rejectLeave({{ leave.id }})"
+                                                title="Từ chối">
                                             <i class="fas fa-times"></i>
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -175,16 +176,16 @@
                                         {% else %}
                                             <div class="img-circle bg-primary d-flex align-items-center justify-content-center" 
                                                  style="width: 35px; height: 35px;">
-                                                <strong>{{ expense.employee.full_name|slice:":1" }}</strong>
+                                                <strong>{{ expense.employee.name|slice:":1" }}</strong>
                                             </div>
                                         {% endif %}
                                     </td>
                                     <td>
-                                        <strong>{{ expense.employee.full_name }}</strong>
+                                        <strong>{{ expense.employee.name }}</strong>
                                         <br>
                                         <small class="text-muted">
                                             {{ expense.date|date:"d/m/Y" }} - 
-                                            <strong class="text-primary">{{ expense.amount|floatformat:0 }}đ</strong>
+                                            <strong class="text-primary">{{ expense.amount|floatformat:0|intcomma }}đ</strong>
                                         </small>
                                     </td>
                                     <td>
@@ -193,16 +194,16 @@
                                         </span>
                                     </td>
                                     <td class="text-right">
-                                        <a href="{% url 'portal_team_expense_approve' expense.id %}" 
-                                           class="btn btn-xs btn-success"
-                                           title="Duyệt">
+                                        <button type="button" class="btn btn-xs btn-success" 
+                                                onclick="approveExpense({{ expense.id }})"
+                                                title="Duyệt">
                                             <i class="fas fa-check"></i>
-                                        </a>
-                                        <a href="{% url 'portal_team_expense_reject' expense.id %}" 
-                                           class="btn btn-xs btn-danger"
-                                           title="Từ chối">
+                                        </button>
+                                        <button type="button" class="btn btn-xs btn-danger" 
+                                                onclick="rejectExpense({{ expense.id }})"
+                                                title="Từ chối">
                                             <i class="fas fa-times"></i>
-                                        </a>
+                                        </button>
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -261,4 +262,188 @@
         </div>
     </div>
 </div>
+
+<script>
+// Approve leave request
+function approveLeave(leaveId) {
+    Swal.fire({
+        title: 'Duyệt đơn nghỉ phép?',
+        text: "Bạn có chắc chắn muốn duyệt đơn này không?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Duyệt',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `/portal/team/leaves/${leaveId}/approve/`,
+                type: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                success: function(data) {
+                    if (data.success) {
+                        Swal.fire('Thành công!', data.message, 'success').then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Lỗi!', data.message, 'error');
+                    }
+                },
+                error: function(xhr) {
+                    var errorMsg = 'Không thể duyệt đơn';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMsg = xhr.responseJSON.message;
+                    }
+                    Swal.fire('Lỗi!', errorMsg, 'error');
+                }
+            });
+        }
+    });
+}
+
+// Reject leave request
+function rejectLeave(leaveId) {
+    Swal.fire({
+        title: 'Từ chối đơn nghỉ phép?',
+        text: "Vui lòng nhập lý do từ chối:",
+        input: 'textarea',
+        inputPlaceholder: 'Nhập lý do từ chối...',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Từ chối',
+        cancelButtonText: 'Hủy',
+        inputValidator: (value) => {
+            if (!value) {
+                return 'Bạn cần nhập lý do từ chối!'
+            }
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `/portal/team/leaves/${leaveId}/reject/`,
+                type: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    reason: result.value
+                }),
+                success: function(data) {
+                    if (data.success) {
+                        Swal.fire('Thành công!', data.message, 'success').then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Lỗi!', data.message, 'error');
+                    }
+                },
+                error: function(xhr) {
+                    var errorMsg = 'Không thể từ chối đơn';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMsg = xhr.responseJSON.message;
+                    }
+                    Swal.fire('Lỗi!', errorMsg, 'error');
+                }
+            });
+        }
+    });
+}
+
+// Approve expense request
+function approveExpense(expenseId) {
+    Swal.fire({
+        title: 'Duyệt đơn hoàn tiền?',
+        text: "Bạn có chắc chắn muốn duyệt đơn này không?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Duyệt',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `/portal/team/expenses/${expenseId}/approve/`,
+                type: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                success: function(data) {
+                    if (data.success) {
+                        Swal.fire('Thành công!', data.message, 'success').then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Lỗi!', data.message, 'error');
+                    }
+                },
+                error: function(xhr) {
+                    var errorMsg = 'Không thể duyệt đơn';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMsg = xhr.responseJSON.message;
+                    }
+                    Swal.fire('Lỗi!', errorMsg, 'error');
+                }
+            });
+        }
+    });
+}
+
+// Reject expense request
+function rejectExpense(expenseId) {
+    Swal.fire({
+        title: 'Từ chối đơn hoàn tiền?',
+        text: "Vui lòng nhập lý do từ chối:",
+        input: 'textarea',
+        inputPlaceholder: 'Nhập lý do từ chối...',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Từ chối',
+        cancelButtonText: 'Hủy',
+        inputValidator: (value) => {
+            if (!value) {
+                return 'Bạn cần nhập lý do từ chối!'
+            }
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: `/portal/team/expenses/${expenseId}/reject/`,
+                type: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                contentType: 'application/json',
+                data: JSON.stringify({
+                    reason: result.value
+                }),
+                success: function(data) {
+                    if (data.success) {
+                        Swal.fire('Thành công!', data.message, 'success').then(() => {
+                            location.reload();
+                        });
+                    } else {
+                        Swal.fire('Lỗi!', data.message, 'error');
+                    }
+                },
+                error: function(xhr) {
+                    var errorMsg = 'Không thể từ chối đơn';
+                    if (xhr.responseJSON && xhr.responseJSON.message) {
+                        errorMsg = xhr.responseJSON.message;
+                    }
+                    Swal.fire('Lỗi!', errorMsg, 'error');
+                }
+            });
+        }
+    });
+}
+</script>
 {% endblock %}

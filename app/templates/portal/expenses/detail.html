@@ -42,11 +42,11 @@
                     <table class="table table-bordered">
                         <tr>
                             <th width="30%"><i class="fas fa-tag mr-2"></i>Loại chi phí</th>
-                            <td><span class="badge badge-info">{{ expense.get_expense_type_display }}</span></td>
+                            <td><span class="badge badge-info">{{ expense.category.name }}</span></td>
                         </tr>
                         <tr>
                             <th><i class="fas fa-calendar-day mr-2"></i>Ngày phát sinh</th>
-                            <td><strong>{{ expense.expense_date|date:"d/m/Y" }}</strong></td>
+                            <td><strong>{{ expense.date|date:"d/m/Y" }}</strong></td>
                         </tr>
                         <tr>
                             <th><i class="fas fa-money-bill-wave mr-2"></i>Số tiền</th>
@@ -81,7 +81,7 @@
                         {% if expense.approved_by %}
                         <tr>
                             <th><i class="fas fa-user-check mr-2"></i>Người phê duyệt</th>
-                            <td>{{ expense.approved_by.get_full_name }}</td>
+                            <td>{{ expense.approved_by.name }}</td>
                         </tr>
                         {% endif %}
                         {% if expense.notes %}

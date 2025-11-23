@@ -50,10 +50,12 @@ urlpatterns = [
     # Manager Features (Only for managers)
     path('approvals/', portal_views.approvals_dashboard, name='portal_approvals'),
     path('team/leaves/', portal_views.team_leaves, name='portal_team_leaves'),
+    path('team/leaves/<int:leave_id>/', portal_views.team_leave_detail, name='portal_team_leave_detail'),
     path('team/leaves/bulk-action/', portal_views.team_leaves_bulk_action, name='portal_team_leaves_bulk_action'),
     path('team/leaves/<int:leave_id>/approve/', portal_views.team_leave_approve, name='portal_team_leave_approve'),
     path('team/leaves/<int:leave_id>/reject/', portal_views.team_leave_reject, name='portal_team_leave_reject'),
     path('team/expenses/', portal_views.team_expenses, name='portal_team_expenses'),
+    path('team/expenses/<int:expense_id>/', portal_views.team_expense_detail, name='portal_team_expense_detail'),
     path('team/expenses/bulk-action/', portal_views.team_expenses_bulk_action, name='portal_team_expenses_bulk_action'),
     path('team/expenses/<int:expense_id>/approve/', portal_views.team_expense_approve, name='portal_team_expense_approve'),
     path('team/expenses/<int:expense_id>/reject/', portal_views.team_expense_reject, name='portal_team_expense_reject'),

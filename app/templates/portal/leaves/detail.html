@@ -26,13 +26,13 @@
                 <div class="card-header">
                     <h3 class="card-title"><i class="fas fa-info-circle mr-2"></i>Thông tin đơn</h3>
                     <div class="card-tools">
-                        {% if leave.status == 'pending' %}
+                        {% if leave_request.status == 'pending' %}
                             <span class="badge badge-warning"><i class="fas fa-clock"></i> Chờ duyệt</span>
-                        {% elif leave.status == 'approved' %}
+                        {% elif leave_request.status == 'approved' %}
                             <span class="badge badge-success"><i class="fas fa-check"></i> Đã duyệt</span>
-                        {% elif leave.status == 'rejected' %}
+                        {% elif leave_request.status == 'rejected' %}
                             <span class="badge badge-danger"><i class="fas fa-times"></i> Bị từ chối</span>
-                        {% elif leave.status == 'cancelled' %}
+                        {% elif leave_request.status == 'cancelled' %}
                             <span class="badge badge-secondary"><i class="fas fa-ban"></i> Đã hủy</span>
                         {% endif %}
                     </div>
@@ -41,40 +41,40 @@
                     <table class="table table-bordered">
                         <tr>
                             <th width="30%"><i class="fas fa-tag mr-2"></i>Loại phép</th>
-                            <td><span class="badge badge-info">{{ leave.get_leave_type_display }}</span></td>
+                            <td><span class="badge badge-info">{{ leave_request.leave_type.name }}</span></td>
                         </tr>
                         <tr>
                             <th><i class="fas fa-calendar-day mr-2"></i>Từ ngày</th>
-                            <td><strong>{{ leave.start_date|date:"d/m/Y" }}</strong></td>
+                            <td><strong>{{ leave_request.start_date|date:"d/m/Y" }}</strong></td>
                         </tr>
                         <tr>
                             <th><i class="fas fa-calendar-day mr-2"></i>Đến ngày</th>
-                            <td><strong>{{ leave.end_date|date:"d/m/Y" }}</strong></td>
+                            <td><strong>{{ leave_request.end_date|date:"d/m/Y" }}</strong></td>
                         </tr>
                         <tr>
                             <th><i class="fas fa-calculator mr-2"></i>Tổng số ngày</th>
-                            <td><span class="badge badge-primary">{{ leave.total_days }} ngày</span></td>
+                            <td><span class="badge badge-primary">{{ leave_request.total_days }} ngày</span></td>
                         </tr>
                         <tr>
                             <th><i class="fas fa-comment-alt mr-2"></i>Lý do</th>
-                            <td>{{ leave.reason }}</td>
+                            <td>{{ leave_request.reason }}</td>
                         </tr>
                         <tr>
                             <th><i class="fas fa-clock mr-2"></i>Ngày tạo</th>
-                            <td>{{ leave.created_at|date:"d/m/Y H:i" }}</td>
+                            <td>{{ leave_request.created_at|date:"d/m/Y H:i" }}</td>
                         </tr>
-                        {% if leave.response_date %}
+                        {% if leave_request.response_date %}
                         <tr>
                             <th><i class="fas fa-clock mr-2"></i>Ngày phản hồi</th>
-                            <td>{{ leave.response_date|date:"d/m/Y H:i" }}</td>
+                            <td>{{ leave_request.response_date|date:"d/m/Y H:i" }}</td>
                         </tr>
                         {% endif %}
-                        {% if leave.response_message %}
+                        {% if leave_request.response_message %}
                         <tr>
                             <th><i class="fas fa-comment-dots mr-2"></i>Phản hồi</th>
                             <td>
-                                <div class="alert alert-{% if leave.status == 'approved' %}success{% elif leave.status == 'rejected' %}danger{% else %}info{% endif %}">
-                                    {{ leave.response_message }}
+                                <div class="alert alert-{% if leave_request.status == 'approved' %}success{% elif leave_request.status == 'rejected' %}danger{% else %}info{% endif %}">
+                                    {{ leave_request.response_message }}
                                 </div>
                             </td>
                         </tr>
@@ -83,12 +83,12 @@
 
                     <!-- Actions -->
                     <div class="mt-3">
-                        {% if leave.status == 'pending' %}
+                        {% if leave_request.status == 'pending' %}
                         <button type="button" class="btn btn-danger" onclick="cancelLeave()">
                             <i class="fas fa-times mr-1"></i> Hủy đơn
                         </button>
                         {% endif %}
-                        <a href="{% url 'portal_leaves_list' %}" class="btn btn-secondary">
+                        <a href="{% url 'portal_leaves' %}" class="btn btn-secondary">
                             <i class="fas fa-arrow-left mr-1"></i> Quay lại
                         </a>
                     </div>
@@ -106,42 +106,42 @@
                     <div class="timeline">
                         <!-- Created -->
                         <div class="time-label">
-                            <span class="bg-primary">{{ leave.created_at|date:"d/m/Y" }}</span>
+                            <span class="bg-primary">{{ leave_request.created_at|date:"d/m/Y" }}</span>
                         </div>
                         <div>
                             <i class="fas fa-file bg-info"></i>
                             <div class="timeline-item">
-                                <span class="time"><i class="fas fa-clock"></i> {{ leave.created_at|date:"H:i" }}</span>
+                                <span class="time"><i class="fas fa-clock"></i> {{ leave_request.created_at|date:"H:i" }}</span>
                                 <h3 class="timeline-header">Đơn được tạo</h3>
                                 <div class="timeline-body">
-                                    Bạn đã tạo đơn xin nghỉ phép {{ leave.get_leave_type_display }}
+                                    Bạn đã tạo đơn xin nghỉ phép {{ leave_request.leave_type.name }}
                                 </div>
                             </div>
                         </div>
 
                         <!-- Response -->
-                        {% if leave.response_date %}
+                        {% if leave_request.response_date %}
                         <div class="time-label">
-                            <span class="bg-{% if leave.status == 'approved' %}success{% elif leave.status == 'rejected' %}danger{% else %}secondary{% endif %}">
-                                {{ leave.response_date|date:"d/m/Y" }}
+                            <span class="bg-{% if leave_request.status == 'approved' %}success{% elif leave_request.status == 'rejected' %}danger{% else %}secondary{% endif %}">
+                                {{ leave_request.response_date|date:"d/m/Y" }}
                             </span>
                         </div>
                         <div>
-                            <i class="fas {% if leave.status == 'approved' %}fa-check bg-success{% elif leave.status == 'rejected' %}fa-times bg-danger{% else %}fa-ban bg-secondary{% endif %}"></i>
+                            <i class="fas {% if leave_request.status == 'approved' %}fa-check bg-success{% elif leave_request.status == 'rejected' %}fa-times bg-danger{% else %}fa-ban bg-secondary{% endif %}"></i>
                             <div class="timeline-item">
-                                <span class="time"><i class="fas fa-clock"></i> {{ leave.response_date|date:"H:i" }}</span>
+                                <span class="time"><i class="fas fa-clock"></i> {{ leave_request.response_date|date:"H:i" }}</span>
                                 <h3 class="timeline-header">
-                                    {% if leave.status == 'approved' %}
+                                    {% if leave_request.status == 'approved' %}
                                         Đơn đã được duyệt
-                                    {% elif leave.status == 'rejected' %}
+                                    {% elif leave_request.status == 'rejected' %}
                                         Đơn bị từ chối
-                                    {% elif leave.status == 'cancelled' %}
+                                    {% elif leave_request.status == 'cancelled' %}
                                         Đơn đã bị hủy
                                     {% endif %}
                                 </h3>
-                                {% if leave.response_message %}
+                                {% if leave_request.response_message %}
                                 <div class="timeline-body">
-                                    {{ leave.response_message }}
+                                    {{ leave_request.response_message }}
                                 </div>
                                 {% endif %}
                             </div>
@@ -161,17 +161,19 @@
 <script>
 function cancelLeave() {
     if (confirm('Bạn có chắc muốn hủy đơn nghỉ phép này?')) {
-        fetch(`/portal/leaves/{{ leave.id }}/cancel/`, {
+        fetch(`/portal/leaves/{{ leave_request.id }}/cancel/`, {
             method: 'POST',
             headers: {
                 'X-CSRFToken': '{{ csrf_token }}',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
             }
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                window.location.href = "{% url 'portal_leaves_list' %}";
+                alert(data.message || 'Đã hủy đơn thành công!');
+                window.location.href = "{% url 'portal_leaves' %}";
             } else {
                 alert('Lỗi: ' + (data.message || 'Không thể hủy đơn'));
             }

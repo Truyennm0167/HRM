@@ -16,20 +16,11 @@
     <!-- Leave Balance Cards -->
     <div class="row mb-4">
         <div class="col-md-3 col-sm-6">
-            <div class="info-box bg-info">
-                <span class="info-box-icon"><i class="fas fa-calendar-check"></i></span>
+            <div class="info-box bg-primary">
+                <span class="info-box-icon"><i class="fas fa-gift"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Tổng phép năm</span>
-                    <span class="info-box-number">{{ annual_leave_balance }} ngày</span>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="info-box bg-success">
-                <span class="info-box-icon"><i class="fas fa-check-circle"></i></span>
-                <div class="info-box-content">
-                    <span class="info-box-text">Đã dùng</span>
-                    <span class="info-box-number">{{ used_leaves }} ngày</span>
+                    <span class="info-box-text">Phép năm còn lại</span>
+                    <span class="info-box-number">{{ remaining_leaves }} ngày</span>
                 </div>
             </div>
         </div>
@@ -43,11 +34,20 @@
             </div>
         </div>
         <div class="col-md-3 col-sm-6">
-            <div class="info-box bg-primary">
-                <span class="info-box-icon"><i class="fas fa-gift"></i></span>
+            <div class="info-box bg-info">
+                <span class="info-box-icon"><i class="fas fa-calendar-day"></i></span>
                 <div class="info-box-content">
-                    <span class="info-box-text">Còn lại</span>
-                    <span class="info-box-number">{{ remaining_leaves }} ngày</span>
+                    <span class="info-box-text">Số ngày nghỉ tháng {{ current_month }}</span>
+                    <span class="info-box-number">{{ leaves_this_month }} ngày</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="info-box bg-success">
+                <span class="info-box-icon"><i class="fas fa-calendar-check"></i></span>
+                <div class="info-box-content">
+                    <span class="info-box-text">Số ngày nghỉ năm {{ current_year }}</span>
+                    <span class="info-box-number">{{ used_leaves }} ngày</span>
                 </div>
             </div>
         </div>
@@ -61,7 +61,7 @@
                     <form method="GET" class="form-inline">
                         <div class="form-group mr-2 mb-2">
                             <label class="mr-2">Tìm kiếm:</label>
-                            <input type="text" name="q" class="form-control" placeholder="Lý do..." value="{{ search_query }}">
+                            <input type="text" name="q" class="form-control" placeholder="Lý do..." value="{% if search_query %}{{ search_query }}{% endif %}">
                         </div>
                         
                         <div class="form-group mr-2 mb-2">
@@ -80,10 +80,10 @@
                             <label class="mr-2">Trạng thái:</label>
                             <select name="status" class="form-control">
                                 <option value="">Tất cả</option>
-                                <option value="Pending" {% if status_filter == 'Pending' %}selected{% endif %}>Chờ duyệt</option>
-                                <option value="Approved" {% if status_filter == 'Approved' %}selected{% endif %}>Đã duyệt</option>
-                                <option value="Rejected" {% if status_filter == 'Rejected' %}selected{% endif %}>Từ chối</option>
-                                <option value="Cancelled" {% if status_filter == 'Cancelled' %}selected{% endif %}>Đã hủy</option>
+                                <option value="pending" {% if status_filter == 'pending' %}selected{% endif %}>Chờ duyệt</option>
+                                <option value="approved" {% if status_filter == 'approved' %}selected{% endif %}>Đã duyệt</option>
+                                <option value="rejected" {% if status_filter == 'rejected' %}selected{% endif %}>Từ chối</option>
+                                <option value="cancelled" {% if status_filter == 'cancelled' %}selected{% endif %}>Đã hủy</option>
                             </select>
                         </div>
                         
@@ -91,9 +91,10 @@
                             <label class="mr-2">Năm:</label>
                             <select name="year" class="form-control">
                                 <option value="">Tất cả</option>
-                                {% for y in "2023,2024,2025,2026"|split:"," %}
-                                <option value="{{ y }}" {% if year_filter == y %}selected{% endif %}>{{ y }}</option>
-                                {% endfor %}
+                                <option value="2023" {% if year_filter == "2023" %}selected{% endif %}>2023</option>
+                                <option value="2024" {% if year_filter == "2024" %}selected{% endif %}>2024</option>
+                                <option value="2025" {% if year_filter == "2025" %}selected{% endif %}>2025</option>
+                                <option value="2026" {% if year_filter == "2026" %}selected{% endif %}>2026</option>
                             </select>
                         </div>
                         
@@ -154,7 +155,7 @@
                                     {% for leave in page_obj %}
                                     <tr>
                                         <td>
-                                            <span class="badge badge-info">{{ leave.get_leave_type_display }}</span>
+                                            <span class="badge badge-info">{{ leave.leave_type.name }}</span>
                                         </td>
                                         <td>{{ leave.start_date|date:"d/m/Y" }}</td>
                                         <td>{{ leave.end_date|date:"d/m/Y" }}</td>
@@ -264,12 +265,14 @@ function cancelLeave(leaveId) {
             method: 'POST',
             headers: {
                 'X-CSRFToken': '{{ csrf_token }}',
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
             }
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                alert(data.message || 'Đã hủy đơn thành công!');
                 location.reload();
             } else {
                 alert('Lỗi: ' + (data.message || 'Không thể hủy đơn'));

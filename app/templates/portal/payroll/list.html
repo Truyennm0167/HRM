@@ -51,9 +51,8 @@
                             <label class="mr-2">Trạng thái:</label>
                             <select name="status" class="form-control">
                                 <option value="">Tất cả</option>
-                                <option value="pending" {% if status_filter == "pending" %}selected{% endif %}>Đang xử lý</option>
-                                <option value="approved" {% if status_filter == "approved" %}selected{% endif %}>Đã duyệt</option>
-                                <option value="paid" {% if status_filter == "paid" %}selected{% endif %}>Đã thanh toán</option>
+                                <option value="pending" {% if status_filter == "pending" %}selected{% endif %}>Chưa xác nhận</option>
+                                <option value="confirmed" {% if status_filter == "confirmed" %}selected{% endif %}>Đã xác nhận</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-primary mr-2 mb-2">

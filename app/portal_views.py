@@ -161,6 +161,7 @@ def leaves_list(request):
     
     search_query = request.GET.get('q')
     if search_query:
+        # Case-insensitive search
         leave_requests = leave_requests.filter(
             models.Q(reason__icontains=search_query) |
             models.Q(leave_type__name__icontains=search_query)
@@ -177,15 +178,24 @@ def leaves_list(request):
     leave_types = LeaveType.objects.filter(is_active=True)
     
     # Calculate stats
+    current_month = datetime.now().month
     used_leaves = LeaveRequest.objects.filter(
         employee=employee,
-        status='Approved',
+        status='approved',
         start_date__year=current_year
     ).aggregate(models.Sum('total_days'))['total_days__sum'] or 0
     
     pending_leaves = LeaveRequest.objects.filter(
         employee=employee,
-        status='Pending'
+        status='pending'
+    ).aggregate(models.Sum('total_days'))['total_days__sum'] or 0
+    
+    # Calculate leaves taken this month
+    leaves_this_month = LeaveRequest.objects.filter(
+        employee=employee,
+        status='approved',
+        start_date__year=current_year,
+        start_date__month=current_month
     ).aggregate(models.Sum('total_days'))['total_days__sum'] or 0
     
     # Calculate total annual leave balance from all leave types
@@ -203,9 +213,11 @@ def leaves_list(request):
         'page_obj': page_obj,
         'leave_types': leave_types,
         'current_year': current_year,
+        'current_month': current_month,
         'used_leaves': used_leaves,
         'pending_leaves': pending_leaves,
         'remaining_leaves': remaining_leaves,
+        'leaves_this_month': leaves_this_month,
         'status_filter': status_filter,
         'leave_type_filter': leave_type_filter,
         'year_filter': year_filter,
@@ -331,7 +343,16 @@ def leave_create(request):
 def leave_detail(request, leave_id):
     """Chi tiết đơn nghỉ phép"""
     employee = get_user_employee(request.user)
-    leave_request = get_object_or_404(LeaveRequest, id=leave_id, employee=employee)
+    
+    # Allow viewing own leaves OR department leaves (for managers)
+    from django.db.models import Q
+    leave_request = get_object_or_404(
+        LeaveRequest,
+        Q(id=leave_id) & (
+            Q(employee=employee) |  # Own leave
+            Q(employee__department=employee.department)  # Department leave
+        )
+    )
     
     context = {
         'employee': employee,
@@ -350,8 +371,16 @@ def leave_cancel(request, leave_id):
     if leave_request.status == 'pending':
         leave_request.status = 'cancelled'
         leave_request.save()
+        
+        # Return JSON for AJAX requests
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'success': True, 'message': 'Đã hủy đơn xin nghỉ phép.'})
+        
         messages.success(request, 'Đã hủy đơn xin nghỉ phép.')
     else:
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'message': 'Không thể hủy đơn đã được duyệt/từ chối.'}, status=400)
+        
         messages.error(request, 'Không thể hủy đơn đã được duyệt/từ chối.')
     
     return redirect('portal_leaves')
@@ -881,11 +910,11 @@ def expenses_list(request):
     # Calculate stats
     current_year = datetime.now().year
     pending_amount = Expense.objects.filter(
-        employee=employee, status='Pending', date__year=current_year
+        employee=employee, status='pending', date__year=current_year
     ).aggregate(Sum('amount'))['amount__sum'] or 0
     
     approved_amount = Expense.objects.filter(
-        employee=employee, status='Approved', date__year=current_year
+        employee=employee, status='approved', date__year=current_year
     ).aggregate(Sum('amount'))['amount__sum'] or 0
     
     total_expenses = Expense.objects.filter(
@@ -1000,7 +1029,16 @@ def expense_create(request):
 def expense_detail(request, expense_id):
     """Chi tiết đơn hoàn tiền"""
     employee = get_user_employee(request.user)
-    expense = get_object_or_404(Expense, id=expense_id, employee=employee)
+    
+    # Allow viewing own expenses OR department expenses (for managers)
+    from django.db.models import Q
+    expense = get_object_or_404(
+        Expense,
+        Q(id=expense_id) & (
+            Q(employee=employee) |  # Own expense
+            Q(employee__department=employee.department)  # Department expense
+        )
+    )
     
     context = {
         'employee': employee,
@@ -1019,8 +1057,16 @@ def expense_cancel(request, expense_id):
     if expense.status == 'pending':
         expense.status = 'cancelled'
         expense.save()
+        
+        # Return JSON for AJAX requests
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'success': True, 'message': 'Đã hủy đơn hoàn tiền.'})
+        
         messages.success(request, 'Đã hủy đơn hoàn tiền.')
     else:
+        if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+            return JsonResponse({'success': False, 'message': 'Không thể hủy đơn đã được duyệt/từ chối.'}, status=400)
+        
         messages.error(request, 'Không thể hủy đơn đã được duyệt/từ chối.')
     
     return redirect('portal_expenses')
@@ -1038,8 +1084,8 @@ def profile_view(request):
     
     # Calculate work duration
     from datetime import date
-    if employee.joining_date:
-        duration = date.today() - employee.joining_date
+    if employee.contract_start_date:
+        duration = date.today() - employee.contract_start_date
         years = duration.days // 365
         months = (duration.days % 365) // 30
         work_duration = f"{years} năm {months} tháng" if years > 0 else f"{months} tháng"
@@ -1063,15 +1109,14 @@ def profile_view(request):
         
         'attendance_days': Attendance.objects.filter(
             employee=employee,
-            check_in__year=current_year,
+            date__year=current_year,
             status='present'
         ).count(),
         
         'late_count': Attendance.objects.filter(
             employee=employee,
-            check_in__year=current_year,
-            is_late=True
-        ).count(),
+            date__year=current_year
+        ).exclude(status='present').count(),
         
         'expenses_count': Expense.objects.filter(
             employee=employee,
@@ -1685,27 +1730,36 @@ def team_expenses(request):
     from datetime import date
     from django.db.models import Sum
     today = date.today()
+    
+    # Pending expenses (all time)
     pending_expenses = expense_requests.filter(status='pending')
     pending_count = pending_expenses.count()
-    total_amount = pending_expenses.aggregate(Sum('amount'))['amount__sum'] or 0
-    approved_count = expense_requests.filter(
+    total_pending_amount = pending_expenses.aggregate(Sum('amount'))['amount__sum'] or 0
+    
+    # Approved this month
+    approved_this_month = expense_requests.filter(
         status='approved',
-        created_at__year=today.year,
-        created_at__month=today.month
-    ).count()
-    rejected_count = expense_requests.filter(
+        approved_at__year=today.year,
+        approved_at__month=today.month
+    )
+    approved_amount_this_month = approved_this_month.aggregate(Sum('amount'))['amount__sum'] or 0
+    
+    # Rejected this month
+    rejected_this_month = expense_requests.filter(
         status='rejected',
-        created_at__year=today.year,
-        created_at__month=today.month
-    ).count()
+        approved_at__year=today.year,
+        approved_at__month=today.month
+    )
+    rejected_count = rejected_this_month.count()
     
     context = {
         'employee': employee,
         'expense_requests': expense_requests,
         'pending_count': pending_count,
-        'approved_count': approved_count,
+        'approved_amount_this_month': approved_amount_this_month,
         'rejected_count': rejected_count,
-        'total_amount': total_amount,
+        'total_pending_amount': total_pending_amount,
+        'current_month': today.month,
     }
     
     return render(request, 'portal/approvals/team_expenses.html', context)
@@ -1891,6 +1945,54 @@ def team_expense_reject(request, expense_id):
         return JsonResponse({'success': False, 'message': 'Invalid JSON data'}, status=400)
     except Exception as e:
         return JsonResponse({'success': False, 'message': f'Lỗi: {str(e)}'}, status=500)
+
+
+@login_required
+def team_leave_detail(request, leave_id):
+    """Chi tiết đơn nghỉ phép của team member (for managers) OR own leave"""
+    employee = get_user_employee(request.user)
+    
+    # Allow viewing own leaves OR team leaves if manager
+    from django.db.models import Q
+    leave_request = get_object_or_404(
+        LeaveRequest, 
+        Q(id=leave_id) & (
+            Q(employee=employee) |  # Own leave
+            Q(employee__department=employee.department)  # Department leave (for managers)
+        )
+    )
+    
+    context = {
+        'employee': employee,
+        'leave_request': leave_request,
+        'is_manager_view': employee.is_manager and leave_request.employee != employee,
+    }
+    
+    return render(request, 'portal/leaves/detail.html', context)
+
+
+@login_required
+def team_expense_detail(request, expense_id):
+    """Chi tiết đơn hoàn tiền của team member (for managers) OR own expense"""
+    employee = get_user_employee(request.user)
+    
+    # Allow viewing own expenses OR team expenses if manager
+    from django.db.models import Q
+    expense = get_object_or_404(
+        Expense, 
+        Q(id=expense_id) & (
+            Q(employee=employee) |  # Own expense
+            Q(employee__department=employee.department)  # Department expense (for managers)
+        )
+    )
+    
+    context = {
+        'employee': employee,
+        'expense': expense,
+        'is_manager_view': employee.is_manager and expense.employee != employee,
+    }
+    
+    return render(request, 'portal/expenses/detail.html', context)
 
 
 @login_required
