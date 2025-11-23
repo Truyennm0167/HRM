@@ -25323,3 +25323,179 @@ INFO 2025-11-23 18:00:58,059 basehttp "POST /login/ HTTP/1.1" 302 0
 INFO 2025-11-23 18:00:58,096 basehttp "GET /portal/ HTTP/1.1" 200 18045
 INFO 2025-11-23 18:01:17,408 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
 INFO 2025-11-23 18:01:18,900 autoreload Watching for file changes with StatReloader
+INFO 2025-11-23 18:06:08,099 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-23 18:06:09,708 autoreload Watching for file changes with StatReloader
+INFO 2025-11-23 18:06:24,762 autoreload D:\Study\CT201\Project\hrm\app\urls_portal.py changed, reloading.
+INFO 2025-11-23 18:06:26,201 autoreload Watching for file changes with StatReloader
+INFO 2025-11-23 18:10:51,706 autoreload Watching for file changes with StatReloader
+INFO 2025-11-23 18:10:55,140 basehttp "GET /portal/leaves/101/ HTTP/1.1" 200 16888
+ERROR 2025-11-23 18:10:58,574 log Internal Server Error: /portal/organization-chart/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 2354, in organization_chart
+    return render(request, 'portal/organization/chart.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 232, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 853, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 1491, in do_with
+    nodelist = parser.parse(("endwith",))
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 953, in do_if
+    nodelist = parser.parse(("elif", "else", "endif"))
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 1482, in do_with
+    extra_context = token_kwargs(remaining_bits, parser, support_legacy=True)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1116, in token_kwargs
+    kwargs[key] = parser.compile_filter(value)
+                  ~~~~~~~~~~~~~~~~~~~~~^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 600, in compile_filter
+    return FilterExpression(token, self)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 698, in __init__
+    filter_func = parser.find_filter(filter_name)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 606, in find_filter
+    raise TemplateSyntaxError("Invalid filter: '%s'" % filter_name)
+django.template.exceptions.TemplateSyntaxError: Invalid filter: 'reverse'
+ERROR 2025-11-23 18:10:58,589 basehttp "GET /portal/organization-chart/ HTTP/1.1" 500 362038
+INFO 2025-11-23 18:13:26,681 autoreload Watching for file changes with StatReloader
+INFO 2025-11-23 18:13:30,840 basehttp "GET /portal/leaves/101/ HTTP/1.1" 200 16888
+INFO 2025-11-23 18:13:31,824 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 65030
+INFO 2025-11-23 18:13:32,069 basehttp "GET /media/avatars/1c8b2e64f4c243668b33e55d9dd322bb_c4ea2ccaa7624c07abff82c8f8ee9d60_tuongsan.jpg HTTP/1.1" 200 128583
+INFO 2025-11-23 18:13:32,092 basehttp "GET /media/avatars/426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_HTkvHCf.jpg HTTP/1.1" 200 411816
+INFO 2025-11-23 18:15:48,263 basehttp "GET /portal/ HTTP/1.1" 200 18392
+INFO 2025-11-23 18:15:49,234 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 64231
+INFO 2025-11-23 18:15:49,310 basehttp "GET /media/avatars/0d83f6eb2ddb44cb9d446a9af58be3fb_426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_k9bNr6A.jpg HTTP/1.1" 200 411816
+INFO 2025-11-23 18:15:49,314 basehttp "GET /media/avatars/1c8b2e64f4c243668b33e55d9dd322bb_c4ea2ccaa7624c07abff82c8f8ee9d60_tuongsan.jpg HTTP/1.1" 200 128583
+INFO 2025-11-23 18:15:49,331 basehttp "GET /media/avatars/426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_HTkvHCf.jpg HTTP/1.1" 200 411816
+INFO 2025-11-23 18:16:44,849 basehttp "GET /portal/organization-chart/?id=9be4b7e5-c3e8-4db8-a371-715539ed5355&vscodeBrowserReqId=1763896604834 HTTP/1.1" 302 0
+INFO 2025-11-23 18:16:44,868 basehttp "GET /login/?next=/portal/organization-chart/%3Fid%3D9be4b7e5-c3e8-4db8-a371-715539ed5355%26vscodeBrowserReqId%3D1763896604834 HTTP/1.1" 200 2905
+ERROR 2025-11-23 18:17:07,703 log Internal Server Error: /portal/organization-chart/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 2354, in organization_chart
+    return render(request, 'portal/organization/chart.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 175, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\engine.py", line 157, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 200, in compile_nodelist
+    return parser.parse()
+           ~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 293, in do_extends
+    nodelist = parser.parse()
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 513, in parse
+    raise self.error(token, e)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 511, in parse
+    compiled_result = compile_func(self, token)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 226, in do_block
+    raise TemplateSyntaxError(
+        "'%s' tag with name '%s' appears more than once" % (bits[0], block_name)
+    )
+django.template.exceptions.TemplateSyntaxError: 'block' tag with name 'content' appears more than once
+ERROR 2025-11-23 18:17:07,715 basehttp "GET /portal/organization-chart/ HTTP/1.1" 500 239978
+INFO 2025-11-23 18:19:16,462 basehttp "GET /portal/organization-chart/?id=a1685800-69dd-446f-a51e-afff80a3df71&vscodeBrowserReqId=1763896756453 HTTP/1.1" 302 0
+INFO 2025-11-23 18:19:16,470 basehttp "GET /login/?next=/portal/organization-chart/%3Fid%3Da1685800-69dd-446f-a51e-afff80a3df71%26vscodeBrowserReqId%3D1763896756453 HTTP/1.1" 200 2905
+INFO 2025-11-23 18:19:31,986 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 48329
+INFO 2025-11-23 18:25:19,570 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 49128
+INFO 2025-11-23 18:25:23,800 basehttp "GET /portal/profile/ HTTP/1.1" 200 21562
+INFO 2025-11-23 18:25:25,265 basehttp "GET /portal/expenses/ HTTP/1.1" 200 25327
+INFO 2025-11-23 18:25:27,178 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 49128
+INFO 2025-11-23 18:25:39,478 autoreload D:\Study\CT201\Project\hrm\app\urls_portal.py changed, reloading.
+INFO 2025-11-23 18:25:40,882 autoreload Watching for file changes with StatReloader

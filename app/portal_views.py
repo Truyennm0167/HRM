@@ -2237,3 +2237,118 @@ def self_assessment(request, appraisal_id):
     }
     
     return render(request, 'portal/appraisal/self_assessment.html', context)
+
+
+# ======================== ORGANIZATION CHART ========================
+
+@login_required
+def organization_chart(request):
+    """
+    Employee Portal - Organization Chart
+    Hiển thị biểu đồ tổ chức công ty
+    """
+    from .models import Department
+    
+    try:
+        employee = Employee.objects.get(email=request.user.email)
+    except Employee.DoesNotExist:
+        messages.error(request, 'Không tìm thấy thông tin nhân viên.')
+        return redirect('login')
+    
+    # Get all departments
+    departments = Department.objects.all().order_by('name')
+    
+    # Build org chart data
+    org_data = []
+    
+    # Top level managers (no department)
+    top_managers = Employee.objects.filter(
+        department__isnull=True,
+        is_manager=True
+    ).select_related('department')
+    
+    for manager in top_managers:
+        org_data.append({
+            'id': f'emp_{manager.id}',
+            'name': manager.name,
+            'title': manager.job_position or 'Manager',
+            'employee_code': manager.employee_code,
+            'avatar': manager.avatar.url if manager.avatar else None,
+            'is_manager': True,
+            'is_department': False,
+            'parent': None,
+            'department': None
+        })
+    
+    # Departments and their employees
+    for dept in departments:
+        # Department node
+        dept_id = f'dept_{dept.id}'
+        org_data.append({
+            'id': dept_id,
+            'name': dept.name,
+            'title': dept.description or 'Phòng ban',
+            'is_department': True,
+            'is_manager': False,
+            'parent': None,
+            'department': dept.id
+        })
+        
+        # Department managers
+        dept_managers = Employee.objects.filter(
+            department=dept,
+            is_manager=True
+        )
+        
+        for manager in dept_managers:
+            org_data.append({
+                'id': f'emp_{manager.id}',
+                'name': manager.name,
+                'title': manager.job_position or 'Manager',
+                'employee_code': manager.employee_code,
+                'avatar': manager.avatar.url if manager.avatar else None,
+                'is_manager': True,
+                'is_department': False,
+                'parent': dept_id,
+                'department': dept.id
+            })
+        
+        # Department staff
+        dept_staff = Employee.objects.filter(
+            department=dept,
+            is_manager=False
+        )
+        
+        for staff in dept_staff:
+            # Staff reports to department manager if exists, otherwise to department
+            parent_id = dept_id
+            if dept_managers.exists():
+                parent_id = f'emp_{dept_managers.first().id}'
+            
+            org_data.append({
+                'id': f'emp_{staff.id}',
+                'name': staff.name,
+                'title': staff.job_position or 'Nhân viên',
+                'employee_code': staff.employee_code,
+                'avatar': staff.avatar.url if staff.avatar else None,
+                'is_manager': False,
+                'is_department': False,
+                'parent': parent_id,
+                'department': dept.id
+            })
+    
+    # Statistics
+    total_employees = Employee.objects.count()
+    total_departments = departments.count()
+    total_managers = Employee.objects.filter(is_manager=True).count()
+    
+    context = {
+        'employee': employee,
+        'departments': departments,
+        'org_data_json': json.dumps(org_data),
+        'total_employees': total_employees,
+        'total_departments': total_departments,
+        'total_managers': total_managers,
+    }
+    
+    return render(request, 'portal/organization/chart.html', context)

@@ -293,6 +293,12 @@
                                 Hồ sơ
                             </a>
                         </li>
+                        <li class="portal-menu-item">
+                            <a href="{% url 'portal_organization_chart' %}" class="portal-menu-link {% if 'organization-chart' in request.path %}active{% endif %}">
+                                <i class="fas fa-sitemap portal-menu-icon"></i>
+                                Biểu đồ tổ chức
+                            </a>
+                        </li>
                         
                         {% if user|is_manager %}
                         <li class="portal-menu-item" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #dee2e6;">

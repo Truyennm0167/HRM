@@ -1,0 +1,439 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}Biểu đồ Cơ cấu Tổ chức{% endblock %}
+
+{% block extra_css %}
+<style>
+    /* Override AdminLTE styles */
+    .portal-content {
+        padding: 15px !important;
+    }
+    
+    .org-chart-wrapper {
+        background: #fff !important;
+        border-radius: 10px;
+        padding: 20px !important;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .org-chart-controls {
+        margin-bottom: 20px;
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    
+    .org-chart-search {
+        flex: 1;
+        max-width: 400px;
+    }
+    
+    .org-chart-stats {
+        display: flex !important;
+        gap: 20px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+    }
+    
+    .stat-box {
+        flex: 1;
+        min-width: 150px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        color: white !important;
+        padding: 20px !important;
+        border-radius: 10px;
+        text-align: center;
+    }
+    
+    .stat-box.blue {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+    }
+    
+    .stat-box.green {
+        background: linear-gradient(135deg, #48c6ef 0%, #6f86d6 100%) !important;
+    }
+    
+    .stat-box.orange {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%) !important;
+    }
+    
+    .stat-box h3 {
+        margin: 0 !important;
+        font-size: 2rem;
+        font-weight: bold;
+        color: white !important;
+    }
+    
+    .stat-box p {
+        margin: 5px 0 0 0 !important;
+        opacity: 0.9;
+        color: white !important;
+    }
+    
+    #org-chart-container {
+        width: 100%;
+        min-height: 600px;
+        background: #f8f9fa !important;
+        border-radius: 10px;
+        overflow: auto;
+        position: relative;
+    }
+    
+    /* Custom OrgChart styles */
+    .orgchart {
+        background: transparent !important;
+        padding: 20px;
+    }
+    
+    .orgchart .node {
+        background: white !important;
+        border: 2px solid #007bff !important;
+        border-radius: 8px;
+        padding: 15px !important;
+        min-width: 200px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.1) !important;
+        transition: all 0.3s;
+    }
+    
+    .orgchart .node:hover {
+        box-shadow: 0 5px 20px rgba(0,0,0,0.2) !important;
+        transform: translateY(-2px);
+        border-color: #0056b3 !important;
+    }
+    
+    .orgchart .node.is-manager {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        color: white !important;
+        border-color: #667eea !important;
+    }
+    
+    .orgchart .node.is-department {
+        background: linear-gradient(135deg, #48c6ef 0%, #6f86d6 100%) !important;
+        color: white !important;
+        border-color: #48c6ef !important;
+        font-weight: bold;
+    }
+    
+    .orgchart .node .title {
+        font-weight: bold;
+        font-size: 1rem;
+        margin-bottom: 5px;
+    }
+    
+    .orgchart .node .content {
+        font-size: 0.85rem;
+        opacity: 0.9;
+    }
+    
+    .orgchart .lines .downLine {
+        background-color: #007bff !important;
+    }
+    
+    .orgchart .lines .leftLine,
+    .orgchart .lines .rightLine,
+    .orgchart .lines .topLine {
+        border-color: #007bff !important;
+    }
+    
+    /* Simple tree layout for fallback */
+    .simple-tree {
+        padding: 20px !important;
+    }
+    
+    .tree-node {
+        background: white !important;
+        border: 2px solid #007bff !important;
+        border-radius: 8px;
+        padding: 15px !important;
+        margin: 10px;
+        display: inline-block;
+        min-width: 200px;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1) !important;
+    }
+    
+    .tree-node.manager {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        color: white !important;
+        border-color: #667eea !important;
+    }
+    
+    .tree-node.department {
+        background: linear-gradient(135deg, #48c6ef 0%, #6f86d6 100%) !important;
+        color: white !important;
+        border-color: #48c6ef !important;
+        font-weight: bold;
+        font-size: 1.1rem;
+    }
+    
+    .tree-node h4 {
+        margin: 0 0 5px 0 !important;
+        font-size: 1rem;
+        color: inherit !important;
+    }
+    
+    .tree-node p {
+        margin: 3px 0 !important;
+        font-size: 0.85rem;
+        color: inherit !important;
+    }
+    
+    .tree-children {
+        margin-left: 40px;
+        padding-left: 20px;
+        border-left: 2px solid #007bff;
+    }
+    
+    .zoom-controls {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 100;
+    }
+    
+    .zoom-controls button {
+        width: 40px;
+        height: 40px;
+        margin: 5px;
+        border-radius: 50% !important;
+        border: none !important;
+        background: white !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15) !important;
+        cursor: pointer;
+        font-size: 1.2rem;
+        transition: all 0.3s;
+    }
+    
+    .zoom-controls button:hover {
+        background: #007bff !important;
+        color: white !important;
+        transform: scale(1.1);
+    }
+</style>
+{% endblock extra_css %}
+
+{% block content %}
+<div class="container-fluid">
+    
+    <!-- Statistics -->
+    <div class="org-chart-stats">
+        <div class="stat-box blue">
+            <h3>{{ total_employees }}</h3>
+            <p><i class="fas fa-users"></i> Tổng nhân viên</p>
+        </div>
+        <div class="stat-box green">
+            <h3>{{ total_departments }}</h3>
+            <p><i class="fas fa-building"></i> Phòng ban</p>
+        </div>
+        <div class="stat-box orange">
+            <h3>{{ total_managers }}</h3>
+            <p><i class="fas fa-user-tie"></i> Quản lý</p>
+        </div>
+    </div>
+    
+    <!-- Org Chart Card -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><i class="fas fa-sitemap"></i> Cơ cấu tổ chức</h3>
+            <div class="card-tools">
+                <button type="button" class="btn btn-sm btn-primary" id="exportBtn">
+                    <i class="fas fa-download"></i> Export PNG
+                </button>
+                <button type="button" class="btn btn-sm btn-secondary" id="fullscreenBtn">
+                    <i class="fas fa-expand"></i> Toàn màn hình
+                </button>
+            </div>
+        </div>
+        <div class="card-body">
+            <!-- Controls -->
+            <div class="org-chart-controls">
+                <div class="org-chart-search">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="searchEmployee" placeholder="Tìm kiếm nhân viên...">
+                        <div class="input-group-append">
+                            <button class="btn btn-primary" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-primary" id="expandAll">
+                        <i class="fas fa-plus-circle"></i> Mở rộng
+                    </button>
+                    <button type="button" class="btn btn-outline-primary" id="collapseAll">
+                        <i class="fas fa-minus-circle"></i> Thu gọn
+                    </button>
+                </div>
+                
+                <div class="form-group mb-0">
+                    <select class="form-control" id="filterDepartment">
+                        <option value="">Tất cả phòng ban</option>
+                        {% for dept in departments %}
+                        <option value="{{ dept.id }}">{{ dept.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            
+            <!-- Org Chart Container -->
+            <div class="org-chart-wrapper">
+                <div id="org-chart-container">
+                    <!-- Zoom controls -->
+                    <div class="zoom-controls">
+                        <button id="zoomIn" title="Phóng to"><i class="fas fa-plus"></i></button>
+                        <button id="zoomOut" title="Thu nhỏ"><i class="fas fa-minus"></i></button>
+                        <button id="resetZoom" title="Đặt lại"><i class="fas fa-redo"></i></button>
+                    </div>
+                    
+                    <!-- Simple tree fallback -->
+                    <div class="simple-tree">
+                        {% for dept in departments %}
+                        <div class="tree-node department">
+                            <h4><i class="fas fa-building"></i> {{ dept.name }}</h4>
+                            <p>{{ dept.employee_set.count }} nhân viên</p>
+                        </div>
+                        <div class="tree-children">
+                            {% for emp in dept.employee_set.all %}
+                            <div class="tree-node {% if emp.is_manager %}manager{% endif %}">
+                                <h4>
+                                    {% if emp.is_manager %}<i class="fas fa-crown"></i>{% else %}<i class="fas fa-user"></i>{% endif %}
+                                    {{ emp.name }}
+                                </h4>
+                                <p><strong>{{ emp.employee_code }}</strong></p>
+                                <p>{{ emp.job_position }}</p>
+                                <p><i class="fas fa-envelope"></i> {{ emp.email }}</p>
+                                <p><i class="fas fa-phone"></i> {{ emp.phone }}</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+{% endblock content %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Org chart data from Django
+    const orgData = JSON.parse('{{ org_data_json|escapejs }}');
+    
+    console.log('Org Data:', orgData);
+    
+    // Initialize org chart if library is available
+    if (typeof OrgChart !== 'undefined') {
+        initOrgChart(orgData);
+    } else {
+        console.warn('OrgChart library not loaded, showing simple tree view');
+    }
+    
+    // Search functionality
+    $('#searchEmployee').on('keyup', function() {
+        const searchTerm = $(this).val().toLowerCase();
+        
+        if (searchTerm === '') {
+            // Reset: show all nodes
+            $('.tree-node, .tree-children').show();
+            return;
+        }
+        
+        // Hide all first
+        $('.tree-node').hide();
+        $('.tree-children').hide();
+        
+        // Find and show matching nodes + their parents
+        $('.tree-node').each(function() {
+            const text = $(this).text().toLowerCase();
+            if (text.includes(searchTerm)) {
+                // Show the matching node
+                $(this).show();
+                
+                // Show parent department (if this is an employee node)
+                $(this).closest('.tree-children').show().prev('.tree-node.department').show();
+            }
+        });
+    });
+    
+    // Department filter
+    $('#filterDepartment').on('change', function() {
+        const deptId = $(this).val();
+        const deptName = $(this).find('option:selected').text().toLowerCase();
+        
+        if (deptId === '') {
+            $('.tree-node, .tree-children').show();
+        } else {
+            // Hide all first
+            $('.tree-node').hide();
+            $('.tree-children').hide();
+            
+            // Show the selected department and its employees
+            $('.tree-node.department').each(function() {
+                if ($(this).text().toLowerCase().includes(deptName)) {
+                    $(this).show();
+                    $(this).next('.tree-children').show().find('.tree-node').show();
+                }
+            });
+        }
+    });
+    
+    // Export functionality
+    $('#exportBtn').on('click', function() {
+        alert('Export feature coming soon!');
+    });
+    
+    // Fullscreen
+    $('#fullscreenBtn').on('click', function() {
+        const elem = document.getElementById('org-chart-container');
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+        } else if (elem.webkitRequestFullscreen) {
+            elem.webkitRequestFullscreen();
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        }
+    });
+    
+    // Zoom controls
+    let zoomLevel = 1;
+    $('#zoomIn').on('click', function() {
+        zoomLevel += 0.1;
+        $('.simple-tree').css('transform', 'scale(' + zoomLevel + ')');
+    });
+    
+    $('#zoomOut').on('click', function() {
+        if (zoomLevel > 0.5) {
+            zoomLevel -= 0.1;
+            $('.simple-tree').css('transform', 'scale(' + zoomLevel + ')');
+        }
+    });
+    
+    $('#resetZoom').on('click', function() {
+        zoomLevel = 1;
+        $('.simple-tree').css('transform', 'scale(1)');
+    });
+    
+    // Expand/Collapse (for simple tree)
+    $('#expandAll').on('click', function() {
+        $('.tree-children').slideDown();
+    });
+    
+    $('#collapseAll').on('click', function() {
+        $('.tree-children').slideUp();
+    });
+});
+
+function initOrgChart(data) {
+    // OrgChart.js initialization
+    // This would be implemented if using a specific library
+    console.log('OrgChart initialization with data:', data);
+}
+</script>
+{% endblock extra_js %}
