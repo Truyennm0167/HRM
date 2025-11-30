@@ -22,7 +22,8 @@ from .models import (
 )
 from .forms import (
     EmployeeForm, LeaveTypeForm, LeaveRequestForm, ExpenseCategoryForm, ExpenseForm, ContractForm,
-    AppraisalPeriodForm, AppraisalCriteriaForm, SelfAssessmentForm, ManagerReviewForm, HRFinalReviewForm
+    AppraisalPeriodForm, AppraisalCriteriaForm, SelfAssessmentForm, ManagerReviewForm, HRFinalReviewForm,
+    RewardForm, DisciplineForm
 )
 from .permissions import require_hr, require_hr_or_manager, can_manage_contract
 from .validators import (
@@ -35,7 +36,8 @@ from .validators import (
 # Import security decorators
 from .decorators import (
     hr_required, manager_or_hr_required, check_employee_access, 
-    check_salary_access, check_appraisal_access, group_required
+    check_salary_access, check_appraisal_access, group_required,
+    hr_only, is_hr_staff
 )
 
 from django.http import JsonResponse
@@ -4372,3 +4374,287 @@ def delete_user(request, user_id):
             "status": "error",
             "message": str(e)
         }, status=500)
+
+
+# ======================== REWARD MANAGEMENT ========================
+
+@login_required
+@hr_only
+def reward_list(request):
+    """Danh sách khen thưởng"""
+    from django.db import models as db_models
+    
+    rewards = Reward.objects.all().select_related('employee', 'employee__department').order_by('-date')
+    
+    # Search
+    search_query = request.GET.get('search', '')
+    if search_query:
+        rewards = rewards.filter(
+            db_models.Q(employee__name__icontains=search_query) |
+            db_models.Q(description__icontains=search_query) |
+            db_models.Q(number__icontains=search_query)
+        )
+    
+    # Filter by year
+    year_filter = request.GET.get('year')
+    if year_filter:
+        rewards = rewards.filter(date__year=year_filter)
+    
+    # Filter by department
+    dept_filter = request.GET.get('department')
+    if dept_filter:
+        rewards = rewards.filter(employee__department_id=dept_filter)
+    
+    # Pagination
+    paginator = Paginator(rewards, 20)
+    page = request.GET.get('page', 1)
+    try:
+        rewards = paginator.page(page)
+    except (PageNotAnInteger, EmptyPage):
+        rewards = paginator.page(1)
+    
+    # Stats
+    total_rewards = Reward.objects.count()
+    total_amount = Reward.objects.aggregate(total=Sum('amount'))['total'] or 0
+    this_year = timezone.localtime(timezone.now()).year
+    year_rewards = Reward.objects.filter(date__year=this_year).count()
+    year_amount = Reward.objects.filter(date__year=this_year).aggregate(total=Sum('amount'))['total'] or 0
+    
+    # Get years for filter
+    years = Reward.objects.dates('date', 'year', order='DESC')
+    departments = Department.objects.all()
+    
+    context = {
+        'rewards': rewards,
+        'search_query': search_query,
+        'year_filter': year_filter,
+        'dept_filter': dept_filter,
+        'years': [y.year for y in years],
+        'departments': departments,
+        'total_rewards': total_rewards,
+        'total_amount': total_amount,
+        'year_rewards': year_rewards,
+        'year_amount': year_amount,
+        'current_year': this_year,
+    }
+    return render(request, 'hod_template/rewards/list.html', context)
+
+
+@login_required
+@hr_only
+def reward_create(request):
+    """Tạo khen thưởng mới"""
+    if request.method == 'POST':
+        form = RewardForm(request.POST)
+        if form.is_valid():
+            reward = form.save()
+            messages.success(request, f'Đã tạo khen thưởng #{reward.number} cho {reward.employee.name}')
+            return redirect('reward_list')
+        else:
+            messages.error(request, 'Có lỗi xảy ra. Vui lòng kiểm tra lại.')
+    else:
+        # Auto generate next number
+        last_reward = Reward.objects.order_by('-number').first()
+        next_number = (last_reward.number + 1) if last_reward else 1
+        form = RewardForm(initial={'number': next_number, 'date': timezone.localtime(timezone.now())})
+    
+    return render(request, 'hod_template/rewards/form.html', {
+        'form': form,
+        'title': 'Tạo khen thưởng mới',
+        'action': 'create'
+    })
+
+
+@login_required
+@hr_only
+def reward_edit(request, pk):
+    """Sửa khen thưởng"""
+    reward = get_object_or_404(Reward, pk=pk)
+    
+    if request.method == 'POST':
+        form = RewardForm(request.POST, instance=reward)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Đã cập nhật khen thưởng #{reward.number}')
+            return redirect('reward_list')
+        else:
+            messages.error(request, 'Có lỗi xảy ra. Vui lòng kiểm tra lại.')
+    else:
+        form = RewardForm(instance=reward)
+    
+    return render(request, 'hod_template/rewards/form.html', {
+        'form': form,
+        'reward': reward,
+        'title': f'Sửa khen thưởng #{reward.number}',
+        'action': 'edit'
+    })
+
+
+@login_required
+@hr_only
+def reward_delete(request, pk):
+    """Xóa khen thưởng"""
+    reward = get_object_or_404(Reward, pk=pk)
+    
+    if request.method == 'POST':
+        number = reward.number
+        employee_name = reward.employee.name
+        reward.delete()
+        messages.success(request, f'Đã xóa khen thưởng #{number} của {employee_name}')
+        return redirect('reward_list')
+    
+    return render(request, 'hod_template/rewards/confirm_delete.html', {
+        'reward': reward
+    })
+
+
+@login_required
+@hr_only
+def reward_detail(request, pk):
+    """Chi tiết khen thưởng"""
+    reward = get_object_or_404(Reward, pk=pk)
+    return render(request, 'hod_template/rewards/detail.html', {
+        'reward': reward
+    })
+
+
+# ======================== DISCIPLINE MANAGEMENT ========================
+
+@login_required
+@hr_only
+def discipline_list(request):
+    """Danh sách kỷ luật"""
+    from django.db import models as db_models
+    
+    disciplines = Discipline.objects.all().select_related('employee', 'employee__department').order_by('-date')
+    
+    # Search
+    search_query = request.GET.get('search', '')
+    if search_query:
+        disciplines = disciplines.filter(
+            db_models.Q(employee__name__icontains=search_query) |
+            db_models.Q(description__icontains=search_query) |
+            db_models.Q(number__icontains=search_query)
+        )
+    
+    # Filter by year
+    year_filter = request.GET.get('year')
+    if year_filter:
+        disciplines = disciplines.filter(date__year=year_filter)
+    
+    # Filter by department
+    dept_filter = request.GET.get('department')
+    if dept_filter:
+        disciplines = disciplines.filter(employee__department_id=dept_filter)
+    
+    # Pagination
+    paginator = Paginator(disciplines, 20)
+    page = request.GET.get('page', 1)
+    try:
+        disciplines = paginator.page(page)
+    except (PageNotAnInteger, EmptyPage):
+        disciplines = paginator.page(1)
+    
+    # Stats
+    total_disciplines = Discipline.objects.count()
+    total_amount = Discipline.objects.aggregate(total=Sum('amount'))['total'] or 0
+    this_year = timezone.localtime(timezone.now()).year
+    year_disciplines = Discipline.objects.filter(date__year=this_year).count()
+    year_amount = Discipline.objects.filter(date__year=this_year).aggregate(total=Sum('amount'))['total'] or 0
+    
+    # Get years for filter
+    years = Discipline.objects.dates('date', 'year', order='DESC')
+    departments = Department.objects.all()
+    
+    context = {
+        'disciplines': disciplines,
+        'search_query': search_query,
+        'year_filter': year_filter,
+        'dept_filter': dept_filter,
+        'years': [y.year for y in years],
+        'departments': departments,
+        'total_disciplines': total_disciplines,
+        'total_amount': total_amount,
+        'year_disciplines': year_disciplines,
+        'year_amount': year_amount,
+        'current_year': this_year,
+    }
+    return render(request, 'hod_template/disciplines/list.html', context)
+
+
+@login_required
+@hr_only
+def discipline_create(request):
+    """Tạo kỷ luật mới"""
+    if request.method == 'POST':
+        form = DisciplineForm(request.POST)
+        if form.is_valid():
+            discipline = form.save()
+            messages.success(request, f'Đã tạo kỷ luật #{discipline.number} cho {discipline.employee.name}')
+            return redirect('discipline_list')
+        else:
+            messages.error(request, 'Có lỗi xảy ra. Vui lòng kiểm tra lại.')
+    else:
+        # Auto generate next number
+        last_discipline = Discipline.objects.order_by('-number').first()
+        next_number = (last_discipline.number + 1) if last_discipline else 1
+        form = DisciplineForm(initial={'number': next_number, 'date': timezone.localtime(timezone.now())})
+    
+    return render(request, 'hod_template/disciplines/form.html', {
+        'form': form,
+        'title': 'Tạo kỷ luật mới',
+        'action': 'create'
+    })
+
+
+@login_required
+@hr_only
+def discipline_edit(request, pk):
+    """Sửa kỷ luật"""
+    discipline = get_object_or_404(Discipline, pk=pk)
+    
+    if request.method == 'POST':
+        form = DisciplineForm(request.POST, instance=discipline)
+        if form.is_valid():
+            form.save()
+            messages.success(request, f'Đã cập nhật kỷ luật #{discipline.number}')
+            return redirect('discipline_list')
+        else:
+            messages.error(request, 'Có lỗi xảy ra. Vui lòng kiểm tra lại.')
+    else:
+        form = DisciplineForm(instance=discipline)
+    
+    return render(request, 'hod_template/disciplines/form.html', {
+        'form': form,
+        'discipline': discipline,
+        'title': f'Sửa kỷ luật #{discipline.number}',
+        'action': 'edit'
+    })
+
+
+@login_required
+@hr_only
+def discipline_delete(request, pk):
+    """Xóa kỷ luật"""
+    discipline = get_object_or_404(Discipline, pk=pk)
+    
+    if request.method == 'POST':
+        number = discipline.number
+        employee_name = discipline.employee.name
+        discipline.delete()
+        messages.success(request, f'Đã xóa kỷ luật #{number} của {employee_name}')
+        return redirect('discipline_list')
+    
+    return render(request, 'hod_template/disciplines/confirm_delete.html', {
+        'discipline': discipline
+    })
+
+
+@login_required
+@hr_only
+def discipline_detail(request, pk):
+    """Chi tiết kỷ luật"""
+    discipline = get_object_or_404(Discipline, pk=pk)
+    return render(request, 'hod_template/disciplines/detail.html', {
+        'discipline': discipline
+    })

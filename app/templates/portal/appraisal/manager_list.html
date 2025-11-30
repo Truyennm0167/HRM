@@ -1,0 +1,199 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}Đánh giá Team - Portal{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Breadcrumb -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'portal_dashboard' %}">Portal</a></li>
+                    <li class="breadcrumb-item active">Đánh giá Team</li>
+                </ol>
+            </nav>
+            <div class="d-flex justify-content-between align-items-center">
+                <h2><i class="fas fa-users-cog mr-2"></i>Đánh giá Team</h2>
+                {% if pending_count > 0 %}
+                <span class="badge badge-warning badge-lg p-2">
+                    <i class="fas fa-clock mr-1"></i> {{ pending_count }} đánh giá đang chờ
+                </span>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Pending Appraisals -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-warning">
+                    <h5 class="mb-0 text-dark">
+                        <i class="fas fa-hourglass-half mr-2"></i>
+                        Đang chờ đánh giá ({{ pending_count }})
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if pending_appraisals %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Nhân viên</th>
+                                    <th>Phòng ban</th>
+                                    <th>Kỳ đánh giá</th>
+                                    <th>Điểm tự đánh giá</th>
+                                    <th>Ngày tự đánh giá</th>
+                                    <th class="text-center">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for appraisal in pending_appraisals %}
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            {% if appraisal.employee.avatar %}
+                                            <img src="{{ appraisal.employee.avatar.url }}" alt="Avatar" 
+                                                 class="rounded-circle mr-2" style="width: 40px; height: 40px; object-fit: cover;">
+                                            {% else %}
+                                            <div class="bg-secondary rounded-circle mr-2 d-flex align-items-center justify-content-center" 
+                                                 style="width: 40px; height: 40px;">
+                                                <i class="fas fa-user text-white"></i>
+                                            </div>
+                                            {% endif %}
+                                            <div>
+                                                <strong>{{ appraisal.employee.name }}</strong>
+                                                <br>
+                                                <small class="text-muted">{{ appraisal.employee.job_title.name|default:"N/A" }}</small>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>{{ appraisal.employee.department.name|default:"N/A" }}</td>
+                                    <td>
+                                        <strong>{{ appraisal.period.name }}</strong>
+                                        <br>
+                                        <small class="text-muted">
+                                            {{ appraisal.period.start_date|date:"d/m/Y" }} - {{ appraisal.period.end_date|date:"d/m/Y" }}
+                                        </small>
+                                    </td>
+                                    <td>
+                                        {% if appraisal.self_overall_score %}
+                                        <span class="badge badge-info p-2">{{ appraisal.self_overall_score }}/100</span>
+                                        {% else %}
+                                        <span class="text-muted">Chưa có</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if appraisal.self_assessment_date %}
+                                        {{ appraisal.self_assessment_date|date:"d/m/Y H:i" }}
+                                        {% else %}
+                                        <span class="text-muted">-</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{% url 'portal_manager_review' appraisal.id %}" class="btn btn-success btn-sm">
+                                            <i class="fas fa-edit"></i> Đánh giá
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
+                        <h4 class="text-muted">Không có đánh giá nào đang chờ</h4>
+                        <p class="text-muted">Tất cả nhân viên trong team của bạn đã được đánh giá.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Completed Appraisals -->
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-check-circle mr-2"></i>
+                        Đã đánh giá gần đây
+                    </h5>
+                </div>
+                <div class="card-body">
+                    {% if completed_appraisals %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Nhân viên</th>
+                                    <th>Kỳ đánh giá</th>
+                                    <th>Điểm Manager</th>
+                                    <th>Điểm cuối cùng</th>
+                                    <th>Trạng thái</th>
+                                    <th>Ngày đánh giá</th>
+                                    <th class="text-center">Thao tác</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for appraisal in completed_appraisals %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ appraisal.employee.name }}</strong>
+                                        <br>
+                                        <small class="text-muted">{{ appraisal.employee.department.name|default:"N/A" }}</small>
+                                    </td>
+                                    <td>{{ appraisal.period.name }}</td>
+                                    <td>
+                                        {% if appraisal.manager_overall_score %}
+                                        <span class="badge badge-primary p-2">{{ appraisal.manager_overall_score }}/100</span>
+                                        {% else %}
+                                        <span class="text-muted">-</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if appraisal.final_score %}
+                                        <span class="badge badge-success p-2">{{ appraisal.final_score }}/100</span>
+                                        {% else %}
+                                        <span class="text-muted">Chờ HR</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if appraisal.status == 'pending_hr' %}
+                                        <span class="badge badge-info">Chờ HR duyệt</span>
+                                        {% elif appraisal.status == 'completed' %}
+                                        <span class="badge badge-success">Hoàn thành</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if appraisal.manager_review_date %}
+                                        {{ appraisal.manager_review_date|date:"d/m/Y" }}
+                                        {% else %}
+                                        <span class="text-muted">-</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center">
+                                        <a href="{% url 'portal_manager_appraisal_detail' appraisal.id %}" class="btn btn-outline-primary btn-sm">
+                                            <i class="fas fa-eye"></i> Xem
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4">
+                        <p class="text-muted mb-0">Chưa có đánh giá nào hoàn thành.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

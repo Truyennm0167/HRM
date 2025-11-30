@@ -25,10 +25,11 @@
 
 ---
 
-## 1️⃣ SỬA HỆ THỐNG PHÂN QUYỀN
+## 1️⃣ SỬA HỆ THỐNG PHÂN QUYỀN ✅ HOÀN THÀNH
 
 **Mức độ ưu tiên:** 🔴 CRITICAL  
 **Thời gian ước tính:** 0.5 ngày
+**Trạng thái:** ✅ ĐÃ HOÀN THÀNH (30/11/2025)
 
 ### 📌 Yêu cầu
 
@@ -117,18 +118,38 @@ MIDDLEWARE = [
 
 ### ✅ Checklist
 
-- [ ] Tạo `app/middleware.py`
-- [ ] Cập nhật `app/decorators.py` - thêm decorator `hr_only`
-- [ ] Cập nhật `hrm/settings.py` - thêm middleware
-- [ ] Review tất cả views trong `management_views.py`
-- [ ] Test với các role: HR, Manager, Employee
+- [x] Tạo `app/middleware.py` - Đã có sẵn trong `app/middleware/portal_redirect.py`
+- [x] Cập nhật `app/decorators.py` - thêm decorator `hr_only`
+- [x] Cập nhật `app/permissions.py` - thêm `is_hr_user`, `is_hr_department`, `user_can_access_management`
+- [x] Middleware đã có trong settings.py
+- [x] Test với các role: HR, Manager, Employee
+
+### 📋 Thay đổi đã thực hiện:
+
+**1. `app/permissions.py`:**
+
+- Thêm `is_hr_department(employee)` - kiểm tra nhân viên thuộc phòng HR
+- Thêm `is_hr_user(user)` - kiểm tra user có phải HR (superuser/group HR/phòng HR)
+- Cập nhật `user_can_access_management(user)` - CHỈ cho phép HR và superuser
+
+**2. `app/decorators.py`:**
+
+- Thêm `hr_only` decorator
+- Cập nhật `is_hr_staff()` để kiểm tra cả phòng ban HR
+- Thêm helper `_is_hr_department()` và `_get_employee_from_user()`
+
+**3. `app/middleware/portal_redirect.py`:**
+
+- Cập nhật `ManagementAccessMiddleware` với danh sách URLs đầy đủ
+- Cập nhật `PortalRedirectMiddleware` để HR mặc định vào Management
 
 ---
 
-## 2️⃣ HOÀN THIỆN PERFORMANCE APPRAISAL
+## 2️⃣ HOÀN THIỆN PERFORMANCE APPRAISAL ✅ HOÀN THÀNH
 
 **Mức độ ưu tiên:** 🔴 CRITICAL  
 **Thời gian ước tính:** 1-2 ngày
+**Trạng thái:** ✅ ĐÃ HOÀN THÀNH (30/11/2025)
 
 ### 📌 Yêu cầu chi tiết
 
@@ -254,20 +275,49 @@ CATEGORY_LABELS = {
 
 ### ✅ Checklist
 
-- [ ] Thêm field `company_feedback` vào model Appraisal
-- [ ] Chạy migration
-- [ ] Tạo view `portal_manager_appraisals`
-- [ ] Tạo view `portal_manager_review`
-- [ ] Cập nhật URLs
-- [ ] Tạo template `manager_list.html`
-- [ ] Tạo template `manager_review.html`
-- [ ] Cập nhật sidebar Portal để thêm menu "Đánh giá team"
-- [ ] Sửa Vietnamese labels cho categories
-- [ ] Cập nhật self-assessment form để thêm "Góp ý công ty"
+- [x] Thêm field `company_feedback` vào model Appraisal
+- [x] Chạy migration
+- [x] Tạo view `portal_manager_appraisals`
+- [x] Tạo view `portal_manager_review`
+- [x] Cập nhật URLs
+- [x] Tạo template `manager_list.html`
+- [x] Tạo template `manager_review.html`
+- [x] Cập nhật sidebar Portal để thêm menu "Đánh giá team"
+- [x] Sửa Vietnamese labels cho categories
+- [x] Cập nhật self-assessment form để thêm "Góp ý công ty"
+
+### 📋 Thay đổi đã thực hiện:
+
+**1. `app/models.py`:**
+
+- Thêm field `company_feedback` vào model Appraisal
+
+**2. `app/portal_views.py`:**
+
+- Thêm CATEGORY_LABELS dictionary cho Vietnamese labels
+- Thêm view `manager_appraisals` - danh sách nhân viên cần đánh giá
+- Thêm view `manager_review` - form đánh giá nhân viên
+- Thêm view `manager_appraisal_detail` - xem chi tiết đánh giá
+- Cập nhật `self_assessment` để lưu company_feedback và sử dụng Vietnamese labels
+
+**3. `app/urls_portal.py`:**
+
+- Thêm 3 URLs mới cho Manager Appraisal
+
+**4. `app/templates/portal/appraisal/`:**
+
+- Tạo `manager_list.html` - danh sách team cần đánh giá
+- Tạo `manager_review.html` - form đánh giá
+- Tạo `manager_detail.html` - xem chi tiết
+- Cập nhật `self_assessment.html` để thêm "Góp ý công ty"
+
+**5. `app/templates/portal/portal_base.html`:**
+
+- Thêm menu "Đánh giá team" cho Manager
 
 ---
 
-## 3️⃣ THÊM TẠO TÀI KHOẢN NHÂN VIÊN VÀO SIDEBAR
+## 3️⃣ THÊM TẠO TÀI KHOẢN NHÂN VIÊN VÀO SIDEBAR ✅ HOÀN THÀNH
 
 **Mức độ ưu tiên:** 🟢 EASY  
 **Thời gian ước tính:** 0.5 giờ

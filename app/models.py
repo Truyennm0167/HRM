@@ -1181,6 +1181,7 @@ class Appraisal(models.Model):
     self_achievements = models.TextField(blank=True, help_text="Thành tích nổi bật")
     self_challenges = models.TextField(blank=True, help_text="Khó khăn gặp phải")
     self_development_plan = models.TextField(blank=True, help_text="Kế hoạch phát triển")
+    company_feedback = models.TextField(blank=True, help_text="Góp ý của nhân viên cho công ty")
     
     # Manager Review
     manager_overall_score = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True,

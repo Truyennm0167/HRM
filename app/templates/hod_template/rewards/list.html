@@ -1,0 +1,221 @@
+{% extends "hod_template/base_template.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block page_title %}Quản lý Khen thưởng{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item active">Khen thưởng</li>
+{% endblock %}
+
+{% block main_content %}
+<div class="container-fluid">
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-success">
+                <div class="inner">
+                    <h3>{{ total_rewards }}</h3>
+                    <p>Tổng khen thưởng</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-info">
+                <div class="inner">
+                    <h3>{{ total_amount|intcomma }}</h3>
+                    <p>Tổng tiền thưởng (VNĐ)</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-warning">
+                <div class="inner">
+                    <h3>{{ year_rewards }}</h3>
+                    <p>Khen thưởng năm {{ current_year }}</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-6">
+            <div class="small-box bg-primary">
+                <div class="inner">
+                    <h3>{{ year_amount|intcomma }}</h3>
+                    <p>Tiền thưởng năm {{ current_year }}</p>
+                </div>
+                <div class="icon">
+                    <i class="fas fa-coins"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Card -->
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">
+                <i class="fas fa-trophy mr-2"></i>Danh sách Khen thưởng
+            </h3>
+            <div class="card-tools">
+                <a href="{% url 'reward_create' %}" class="btn btn-success btn-sm">
+                    <i class="fas fa-plus mr-1"></i> Tạo khen thưởng
+                </a>
+            </div>
+        </div>
+        <div class="card-body">
+            <!-- Filters -->
+            <form method="GET" class="mb-4">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="input-group">
+                            <input type="text" name="search" class="form-control" 
+                                   placeholder="Tìm kiếm nhân viên, mô tả..." 
+                                   value="{{ search_query }}">
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <select name="year" class="form-control" onchange="this.form.submit()">
+                            <option value="">-- Tất cả năm --</option>
+                            {% for year in years %}
+                            <option value="{{ year }}" {% if year_filter == year|stringformat:"d" %}selected{% endif %}>
+                                Năm {{ year }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select name="department" class="form-control" onchange="this.form.submit()">
+                            <option value="">-- Tất cả phòng ban --</option>
+                            {% for dept in departments %}
+                            <option value="{{ dept.id }}" {% if dept_filter == dept.id|stringformat:"d" %}selected{% endif %}>
+                                {{ dept.name }}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <a href="{% url 'reward_list' %}" class="btn btn-secondary btn-block">
+                            <i class="fas fa-redo"></i> Reset
+                        </a>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Table -->
+            {% if rewards %}
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th width="80">Số QĐ</th>
+                            <th>Nhân viên</th>
+                            <th>Phòng ban</th>
+                            <th>Ngày quyết định</th>
+                            <th>Lý do</th>
+                            <th class="text-right">Số tiền</th>
+                            <th class="text-center">Thanh toán</th>
+                            <th class="text-center" width="120">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for reward in rewards %}
+                        <tr>
+                            <td><strong>#{{ reward.number }}</strong></td>
+                            <td>
+                                <a href="{% url 'reward_detail' reward.pk %}">
+                                    {{ reward.employee.name }}
+                                </a>
+                            </td>
+                            <td>{{ reward.employee.department.name|default:"-" }}</td>
+                            <td>{{ reward.date|date:"d/m/Y" }}</td>
+                            <td>
+                                <span title="{{ reward.description }}">
+                                    {{ reward.description|truncatechars:50 }}
+                                </span>
+                            </td>
+                            <td class="text-right text-success font-weight-bold">
+                                {{ reward.amount|intcomma }} ₫
+                            </td>
+                            <td class="text-center">
+                                {% if reward.cash_payment %}
+                                <span class="badge badge-success">Tiền mặt</span>
+                                {% else %}
+                                <span class="badge badge-info">Chuyển khoản</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{% url 'reward_edit' reward.pk %}" class="btn btn-info" title="Sửa">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                    <a href="{% url 'reward_delete' reward.pk %}" class="btn btn-danger" title="Xóa">
+                                        <i class="fas fa-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            {% if rewards.has_other_pages %}
+            <nav aria-label="Page navigation" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    {% if rewards.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ rewards.previous_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if year_filter %}&year={{ year_filter }}{% endif %}{% if dept_filter %}&department={{ dept_filter }}{% endif %}">
+                            &laquo; Trước
+                        </a>
+                    </li>
+                    {% endif %}
+                    
+                    {% for num in rewards.paginator.page_range %}
+                        {% if rewards.number == num %}
+                        <li class="page-item active"><span class="page-link">{{ num }}</span></li>
+                        {% elif num > rewards.number|add:'-3' and num < rewards.number|add:'3' %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ num }}{% if search_query %}&search={{ search_query }}{% endif %}{% if year_filter %}&year={{ year_filter }}{% endif %}{% if dept_filter %}&department={{ dept_filter }}{% endif %}">{{ num }}</a>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    {% if rewards.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ rewards.next_page_number }}{% if search_query %}&search={{ search_query }}{% endif %}{% if year_filter %}&year={{ year_filter }}{% endif %}{% if dept_filter %}&department={{ dept_filter }}{% endif %}">
+                            Sau &raquo;
+                        </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+
+            {% else %}
+            <div class="alert alert-info text-center">
+                <i class="fas fa-info-circle fa-3x mb-3"></i>
+                <h5>Chưa có dữ liệu khen thưởng</h5>
+                <p class="mb-3">Bắt đầu tạo khen thưởng cho nhân viên ngay.</p>
+                <a href="{% url 'reward_create' %}" class="btn btn-success">
+                    <i class="fas fa-plus mr-1"></i> Tạo khen thưởng
+                </a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

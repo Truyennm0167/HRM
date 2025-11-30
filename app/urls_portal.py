@@ -66,6 +66,11 @@ urlpatterns = [
     path('appraisal/<int:appraisal_id>/', portal_views.appraisal_detail, name='portal_appraisal_detail'),
     path('appraisal/<int:appraisal_id>/self-assess/', portal_views.self_assessment, name='portal_self_assessment'),
     
+    # Manager Appraisal (for managers to review their team)
+    path('appraisal/team/', portal_views.manager_appraisals, name='portal_manager_appraisals'),
+    path('appraisal/team/<int:appraisal_id>/review/', portal_views.manager_review, name='portal_manager_review'),
+    path('appraisal/team/<int:appraisal_id>/', portal_views.manager_appraisal_detail, name='portal_manager_appraisal_detail'),
+    
     # Organization Chart
     path('organization-chart/', portal_views.organization_chart, name='portal_organization_chart'),
     

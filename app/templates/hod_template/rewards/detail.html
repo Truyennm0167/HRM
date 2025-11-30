@@ -1,0 +1,97 @@
+{% extends "hod_template/base_template.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block page_title %}Chi tiết Khen thưởng #{{ reward.number }}{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'reward_list' %}">Khen thưởng</a></li>
+<li class="breadcrumb-item active">Chi tiết #{{ reward.number }}</li>
+{% endblock %}
+
+{% block main_content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="card card-success">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-trophy mr-2"></i>Chi tiết Khen thưởng #{{ reward.number }}
+                    </h3>
+                    <div class="card-tools">
+                        <a href="{% url 'reward_edit' reward.pk %}" class="btn btn-sm btn-warning">
+                            <i class="fas fa-edit mr-1"></i> Sửa
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td class="text-muted" width="40%">Số quyết định:</td>
+                                    <td><strong>#{{ reward.number }}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">Nhân viên:</td>
+                                    <td>
+                                        <strong>{{ reward.employee.name }}</strong><br>
+                                        <small class="text-muted">{{ reward.employee.department.name|default:"-" }}</small>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">Ngày quyết định:</td>
+                                    <td>{{ reward.date|date:"d/m/Y H:i" }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td class="text-muted" width="40%">Số tiền thưởng:</td>
+                                    <td><span class="text-success font-weight-bold" style="font-size: 1.2em">{{ reward.amount|intcomma }} ₫</span></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">Hình thức thanh toán:</td>
+                                    <td>
+                                        {% if reward.cash_payment %}
+                                        <span class="badge badge-success badge-lg">Tiền mặt</span>
+                                        {% else %}
+                                        <span class="badge badge-info badge-lg">Chuyển khoản</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">Ngày tạo:</td>
+                                    <td>{{ reward.created_at|date:"d/m/Y H:i" }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <h5><i class="fas fa-file-alt mr-2"></i>Lý do khen thưởng</h5>
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    {{ reward.description|linebreaks }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'reward_list' %}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left mr-1"></i> Quay lại danh sách
+                    </a>
+                    <a href="{% url 'reward_delete' reward.pk %}" class="btn btn-danger float-right">
+                        <i class="fas fa-trash mr-1"></i> Xóa
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

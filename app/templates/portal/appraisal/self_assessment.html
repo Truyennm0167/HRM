@@ -54,6 +54,13 @@
                             <textarea name="self_goals" class="form-control" rows="4" {% if not can_edit %}disabled{% endif %}>{{ appraisal.self_goals }}</textarea>
                             <small class="form-text text-muted">Mục tiêu phát triển cá nhân và nghề nghiệp</small>
                         </div>
+                        
+                        <div class="form-group">
+                            <label><strong><i class="fas fa-lightbulb text-warning"></i> Góp ý cho công ty:</strong></label>
+                            <textarea name="company_feedback" class="form-control" rows="4" {% if not can_edit %}disabled{% endif %} 
+                                      placeholder="Những góp ý, đề xuất để cải thiện môi trường làm việc, quy trình, chính sách...">{{ appraisal.company_feedback }}</textarea>
+                            <small class="form-text text-muted">Góp ý mang tính xây dựng để giúp công ty ngày càng tốt hơn (tùy chọn)</small>
+                        </div>
                     </div>
                 </div>
 

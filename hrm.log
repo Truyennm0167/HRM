@@ -25975,3 +25975,823 @@ INFO 2025-11-30 16:38:14,348 basehttp "GET /portal/attendance/today/ HTTP/1.1" 2
 INFO 2025-11-30 16:58:46,049 management_views Admin home accessed by hungvv
 INFO 2025-11-30 16:58:46,093 basehttp "GET /management/ HTTP/1.1" 200 42962
 INFO 2025-11-30 17:02:58,138 basehttp "GET /portal/ HTTP/1.1" 200 18728
+INFO 2025-11-30 17:27:19,206 autoreload D:\Study\CT201\Project\hrm\app\permissions.py changed, reloading.
+INFO 2025-11-30 17:27:21,524 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 17:27:58,768 autoreload D:\Study\CT201\Project\hrm\app\middleware\portal_redirect.py changed, reloading.
+INFO 2025-11-30 17:28:00,159 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 17:28:32,192 autoreload D:\Study\CT201\Project\hrm\app\decorators.py changed, reloading.
+INFO 2025-11-30 17:28:33,407 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 17:29:01,919 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-11-30 17:29:03,240 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 17:37:45,871 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-11-30 17:37:48,075 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 18:17:22,021 autoreload D:\Study\CT201\Project\hrm\app\models.py changed, reloading.
+INFO 2025-11-30 18:17:23,860 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 18:18:52,573 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-30 18:18:53,638 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 18:22:12,176 autoreload D:\Study\CT201\Project\hrm\app\urls_portal.py changed, reloading.
+INFO 2025-11-30 18:22:13,501 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 18:23:34,118 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-30 18:23:35,444 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 18:23:51,963 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-30 18:23:53,263 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 18:44:16,577 autoreload D:\Study\CT201\Project\hrm\app\models.py changed, reloading.
+INFO 2025-11-30 18:44:17,922 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 18:46:14,116 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-30 18:46:15,533 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 18:48:27,817 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-30 18:48:29,101 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 18:51:49,841 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-30 18:51:51,006 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 18:52:44,763 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-11-30 18:52:44,789 basehttp "GET /login/?next=/portal/ HTTP/1.1" 200 2905
+INFO 2025-11-30 18:52:49,831 basehttp "POST /login/?next=/portal/ HTTP/1.1" 302 0
+INFO 2025-11-30 18:52:49,878 basehttp "GET /portal/ HTTP/1.1" 200 18728
+INFO 2025-11-30 18:52:51,574 basehttp "GET /portal/attendance/ HTTP/1.1" 200 52043
+INFO 2025-11-30 18:52:51,655 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 185
+INFO 2025-11-30 18:53:13,647 basehttp "POST /portal/attendance/check-out/ HTTP/1.1" 200 157
+INFO 2025-11-30 18:53:15,711 basehttp "GET /portal/attendance/ HTTP/1.1" 200 52314
+INFO 2025-11-30 18:53:15,775 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 193
+INFO 2025-11-30 18:53:37,368 basehttp "GET /portal/attendance/?month=10&year=2025 HTTP/1.1" 200 68083
+INFO 2025-11-30 18:53:37,444 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 193
+INFO 2025-11-30 18:53:44,707 basehttp "GET /portal/attendance/?month=11&year=2025 HTTP/1.1" 200 52314
+INFO 2025-11-30 18:53:44,795 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 193
+INFO 2025-11-30 18:56:24,997 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-11-30 18:56:25,014 basehttp "GET /login/?next=/portal/ HTTP/1.1" 200 2905
+INFO 2025-11-30 18:56:30,668 basehttp "POST /login/?next=/portal/ HTTP/1.1" 302 0
+INFO 2025-11-30 18:56:30,704 basehttp "GET /portal/ HTTP/1.1" 200 21112
+INFO 2025-11-30 18:56:32,495 basehttp "GET /portal/appraisal/team/ HTTP/1.1" 200 17582
+INFO 2025-11-30 18:56:32,660 basehttp "GET /media/avatars/0d83f6eb2ddb44cb9d446a9af58be3fb_426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_k9bNr6A.jpg HTTP/1.1" 200 411816
+INFO 2025-11-30 18:56:44,169 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-30 18:56:44,181 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-30 18:56:53,672 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-30 18:56:53,708 basehttp "GET /portal/ HTTP/1.1" 200 21311
+INFO 2025-11-30 18:56:55,678 management_views Admin home accessed by dungpd
+INFO 2025-11-30 18:56:55,725 basehttp "GET /management/ HTTP/1.1" 200 41086
+INFO 2025-11-30 18:57:02,109 basehttp "GET /portal/ HTTP/1.1" 200 21311
+INFO 2025-11-30 18:57:04,018 management_views Admin home accessed by dungpd
+INFO 2025-11-30 18:57:04,044 basehttp "GET /management/ HTTP/1.1" 200 41086
+INFO 2025-11-30 18:57:17,952 basehttp "GET /portal/ HTTP/1.1" 200 21311
+INFO 2025-11-30 18:57:27,686 basehttp "GET /portal/attendance/ HTTP/1.1" 200 51644
+INFO 2025-11-30 18:57:27,783 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-30 18:57:33,434 basehttp "GET /portal/appraisal/team/ HTTP/1.1" 200 14812
+INFO 2025-11-30 18:58:55,713 autoreload D:\Study\CT201\Project\hrm\hrm\settings.py changed, reloading.
+INFO 2025-11-30 18:58:57,207 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 18:59:48,238 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-30 18:59:49,539 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 19:00:09,820 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-30 19:00:11,233 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 19:05:40,509 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-30 19:05:40,529 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-30 19:05:44,933 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-30 19:05:45,013 basehttp "GET /portal/ HTTP/1.1" 200 18708
+INFO 2025-11-30 19:05:46,826 basehttp "GET /portal/attendance/ HTTP/1.1" 200 50044
+INFO 2025-11-30 19:05:46,902 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-30 19:05:50,131 basehttp "POST /portal/attendance/check-in/ HTTP/1.1" 200 132
+INFO 2025-11-30 19:05:52,206 basehttp "GET /portal/attendance/ HTTP/1.1" 200 51986
+INFO 2025-11-30 19:05:52,284 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 186
+INFO 2025-11-30 19:08:56,560 basehttp "POST /portal/attendance/check-out/ HTTP/1.1" 200 139
+INFO 2025-11-30 19:08:58,618 basehttp "GET /portal/attendance/ HTTP/1.1" 200 52038
+INFO 2025-11-30 19:08:58,708 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 194
+INFO 2025-11-30 19:12:08,102 autoreload D:\Study\CT201\Project\hrm\app\forms.py changed, reloading.
+INFO 2025-11-30 19:12:09,717 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 19:12:33,289 autoreload D:\Study\CT201\Project\hrm\app\forms.py changed, reloading.
+INFO 2025-11-30 19:12:34,537 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 19:13:02,507 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-11-30 19:13:03,876 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 19:13:29,467 basehttp "GET /portal/approvals/ HTTP/1.1" 200 34036
+INFO 2025-11-30 19:13:38,285 basehttp "GET /portal/ HTTP/1.1" 200 21292
+INFO 2025-11-30 19:13:38,883 basehttp "GET /portal/leaves/ HTTP/1.1" 200 21197
+INFO 2025-11-30 19:13:39,394 basehttp "GET /portal/payroll/ HTTP/1.1" 200 25510
+INFO 2025-11-30 19:13:40,313 basehttp "GET /portal/leaves/ HTTP/1.1" 200 21197
+INFO 2025-11-30 19:13:41,635 basehttp "GET /portal/ HTTP/1.1" 200 21292
+INFO 2025-11-30 19:13:43,457 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-30 19:13:43,470 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-30 19:13:44,626 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-11-30 19:13:45,902 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 19:13:51,291 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-30 19:13:51,351 basehttp "GET /portal/ HTTP/1.1" 200 21098
+INFO 2025-11-30 19:13:54,549 basehttp "GET /portal/appraisal/team/ HTTP/1.1" 200 17582
+INFO 2025-11-30 19:13:54,706 basehttp "GET /media/avatars/0d83f6eb2ddb44cb9d446a9af58be3fb_426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_k9bNr6A.jpg HTTP/1.1" 200 411816
+INFO 2025-11-30 19:14:00,402 basehttp "GET /portal/appraisal/team/13/review/ HTTP/1.1" 200 38562
+INFO 2025-11-30 19:14:38,587 basehttp "POST /portal/appraisal/team/13/review/ HTTP/1.1" 302 0
+INFO 2025-11-30 19:14:38,637 basehttp "GET /portal/appraisal/team/ HTTP/1.1" 200 18045
+INFO 2025-11-30 19:14:41,581 basehttp "GET /portal/appraisal/team/13/review/ HTTP/1.1" 200 38789
+INFO 2025-11-30 19:14:45,046 basehttp "POST /portal/appraisal/team/13/review/ HTTP/1.1" 302 0
+INFO 2025-11-30 19:14:45,112 basehttp "GET /portal/appraisal/team/ HTTP/1.1" 200 17660
+INFO 2025-11-30 19:14:48,881 basehttp "GET /portal/appraisal/team/13/ HTTP/1.1" 200 29711
+INFO 2025-11-30 19:15:25,630 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-30 19:15:25,649 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-30 19:15:34,278 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-30 19:15:34,339 basehttp "GET /portal/ HTTP/1.1" 200 21292
+INFO 2025-11-30 19:15:36,906 management_views Admin home accessed by dungpd
+INFO 2025-11-30 19:15:36,960 basehttp "GET /management/ HTTP/1.1" 200 41660
+WARNING 2025-11-30 19:15:40,687 log Forbidden (Permission denied): /management/appraisal/hr/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\decorators.py", line 31, in wrapped_view
+    raise PermissionDenied
+django.core.exceptions.PermissionDenied
+WARNING 2025-11-30 19:15:40,701 basehttp "GET /management/appraisal/hr/ HTTP/1.1" 403 135
+WARNING 2025-11-30 19:15:43,969 log Forbidden (Permission denied): /management/appraisal/hr/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\decorators.py", line 31, in wrapped_view
+    raise PermissionDenied
+django.core.exceptions.PermissionDenied
+WARNING 2025-11-30 19:15:43,979 basehttp "GET /management/appraisal/hr/ HTTP/1.1" 403 135
+INFO 2025-11-30 19:15:49,670 basehttp "GET /management/appraisal/manager/ HTTP/1.1" 200 39043
+WARNING 2025-11-30 19:15:56,631 log Forbidden (Permission denied): /management/appraisal/hr/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\decorators.py", line 31, in wrapped_view
+    raise PermissionDenied
+django.core.exceptions.PermissionDenied
+WARNING 2025-11-30 19:15:56,646 basehttp "GET /management/appraisal/hr/ HTTP/1.1" 403 135
+INFO 2025-11-30 19:16:01,705 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-30 19:16:01,751 basehttp "GET /login/ HTTP/1.1" 200 3054
+INFO 2025-11-30 19:16:10,485 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-30 19:16:10,523 basehttp "GET /portal/ HTTP/1.1" 200 21568
+INFO 2025-11-30 19:16:13,050 management_views Admin home accessed by hangpt
+INFO 2025-11-30 19:16:13,080 basehttp "GET /management/ HTTP/1.1" 200 41660
+ERROR 2025-11-30 19:16:18,822 log Internal Server Error: /management/appraisal/hr/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\decorators.py", line 24, in wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 4090, in hr_appraisals
+    return render(request, 'hod_template/hr_appraisals.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 321, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 238, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 321, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'hr_final_review' not found. 'hr_final_review' is not a valid view function or pattern name.
+ERROR 2025-11-30 19:16:18,836 basehttp "GET /management/appraisal/hr/ HTTP/1.1" 500 258866
+INFO 2025-11-30 19:17:51,156 autoreload D:\Study\CT201\Project\hrm\app\urls_management.py changed, reloading.
+INFO 2025-11-30 19:17:52,227 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 19:19:55,757 autoreload D:\Study\CT201\Project\hrm\app\forms.py changed, reloading.
+INFO 2025-11-30 19:19:56,859 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 19:20:54,186 management_views Admin home accessed by hangpt
+INFO 2025-11-30 19:20:54,290 basehttp "GET /management/ HTTP/1.1" 200 41702
+INFO 2025-11-30 19:20:57,328 basehttp "GET /management HTTP/1.1" 301 0
+INFO 2025-11-30 19:20:57,353 management_views Admin home accessed by hangpt
+INFO 2025-11-30 19:20:57,379 basehttp "GET /management/ HTTP/1.1" 200 41702
+INFO 2025-11-30 19:21:00,393 basehttp "GET /management/rewards/ HTTP/1.1" 200 56690
+INFO 2025-11-30 19:21:51,578 basehttp "GET /management/disciplines/ HTTP/1.1" 200 43004
+INFO 2025-11-30 19:22:20,352 basehttp "GET /portal/ HTTP/1.1" 200 21568
+INFO 2025-11-30 19:22:51,221 basehttp "GET /portal/attendance/ HTTP/1.1" 200 52038
+INFO 2025-11-30 19:22:51,417 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 194
+INFO 2025-11-30 19:22:57,623 basehttp "GET /portal/appraisal/team/ HTTP/1.1" 200 14812
+INFO 2025-11-30 19:22:58,430 basehttp "GET /portal/approvals/ HTTP/1.1" 200 25902
+INFO 2025-11-30 19:23:00,703 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 34341
+INFO 2025-11-30 19:23:08,126 management_views Admin home accessed by hangpt
+INFO 2025-11-30 19:23:08,160 basehttp "GET /management/ HTTP/1.1" 200 41702
+INFO 2025-11-30 19:23:11,807 basehttp "GET /management/payroll/calculate/ HTTP/1.1" 200 40050
+INFO 2025-11-30 19:23:13,661 basehttp "GET /management/payroll/manage/ HTTP/1.1" 200 113495
+INFO 2025-11-30 19:23:25,878 management_views Admin home accessed by hangpt
+INFO 2025-11-30 19:23:25,899 basehttp "GET /management/ HTTP/1.1" 200 41702
+INFO 2025-11-30 19:23:29,817 basehttp "GET /management/rewards/ HTTP/1.1" 200 56690
+ERROR 2025-11-30 19:23:32,386 log Internal Server Error: /management/rewards/create/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\fields\__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'Đang làm việc'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\decorators.py", line 272, in wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 4457, in reward_create
+    form = RewardForm(initial={'number': next_number, 'date': timezone.localtime(timezone.now())})
+  File "D:\Study\CT201\Project\hrm\app\forms.py", line 620, in __init__
+    self.fields['employee'].queryset = Employee.objects.filter(status='Đang làm việc').order_by('name')
+                                       ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1546, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1577, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<6 lines>...
+        summarize=summarize,
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1492, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1319, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+               ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\fields\__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+        "Field '%s' expected a number but got %r." % (self.name, value),
+    ) from e
+ValueError: Field 'status' expected a number but got 'Đang làm việc'.
+ERROR 2025-11-30 19:23:32,398 basehttp "GET /management/rewards/create/ HTTP/1.1" 500 158628
+INFO 2025-11-30 19:23:52,269 basehttp "GET /management/disciplines/ HTTP/1.1" 200 43004
+ERROR 2025-11-30 19:23:54,054 log Internal Server Error: /management/disciplines/create/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\fields\__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'Đang làm việc'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\decorators.py", line 272, in wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 4599, in discipline_create
+    form = DisciplineForm(initial={'number': next_number, 'date': timezone.localtime(timezone.now())})
+  File "D:\Study\CT201\Project\hrm\app\forms.py", line 672, in __init__
+    self.fields['employee'].queryset = Employee.objects.filter(status='Đang làm việc').order_by('name')
+                                       ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1546, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1577, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<6 lines>...
+        summarize=summarize,
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1492, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1319, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+               ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\fields\__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+        "Field '%s' expected a number but got %r." % (self.name, value),
+    ) from e
+ValueError: Field 'status' expected a number but got 'Đang làm việc'.
+ERROR 2025-11-30 19:23:54,062 basehttp "GET /management/disciplines/create/ HTTP/1.1" 500 157789
+INFO 2025-11-30 19:24:06,522 basehttp "GET /management/disciplines/?search=&year=2025&department= HTTP/1.1" 200 43012
+INFO 2025-11-30 19:24:07,900 basehttp "GET /management/disciplines/?search=&year=&department= HTTP/1.1" 200 43004
+INFO 2025-11-30 19:24:09,199 basehttp "GET /management/disciplines/?search=&year=&department=77 HTTP/1.1" 200 29889
+INFO 2025-11-30 19:24:12,123 basehttp "GET /management/disciplines/?search=&year=&department= HTTP/1.1" 200 43004
+INFO 2025-11-30 19:24:14,009 basehttp "GET /management/disciplines/?search=&year=&department=80 HTTP/1.1" 200 31856
+INFO 2025-11-30 19:24:16,728 basehttp "GET /management/disciplines/?search=&year=&department= HTTP/1.1" 200 43004
+INFO 2025-11-30 19:24:21,586 basehttp "GET /management/disciplines/?search=mu%E1%BB%99n&year=&department= HTTP/1.1" 200 35024
+INFO 2025-11-30 19:24:25,119 basehttp "GET /management/disciplines/?search=D%C5%A9ng&year=&department= HTTP/1.1" 200 33449
+INFO 2025-11-30 19:24:30,052 basehttp "GET /management/disciplines/18/ HTTP/1.1" 200 27993
+INFO 2025-11-30 19:24:31,732 basehttp "GET /management/disciplines/ HTTP/1.1" 200 43004
+ERROR 2025-11-30 19:24:36,161 log Internal Server Error: /management/disciplines/19/edit/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\fields\__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'Đang làm việc'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\decorators.py", line 272, in wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 4623, in discipline_edit
+    form = DisciplineForm(instance=discipline)
+  File "D:\Study\CT201\Project\hrm\app\forms.py", line 672, in __init__
+    self.fields['employee'].queryset = Employee.objects.filter(status='Đang làm việc').order_by('name')
+                                       ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1546, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1577, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<6 lines>...
+        summarize=summarize,
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1492, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1319, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+               ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\fields\__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+        "Field '%s' expected a number but got %r." % (self.name, value),
+    ) from e
+ValueError: Field 'status' expected a number but got 'Đang làm việc'.
+ERROR 2025-11-30 19:24:36,167 basehttp "GET /management/disciplines/19/edit/ HTTP/1.1" 500 157500
+INFO 2025-11-30 19:24:40,346 basehttp "GET /management/disciplines/19/ HTTP/1.1" 200 28003
+ERROR 2025-11-30 19:24:42,991 log Internal Server Error: /management/disciplines/19/edit/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\fields\__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'Đang làm việc'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\decorators.py", line 272, in wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 4623, in discipline_edit
+    form = DisciplineForm(instance=discipline)
+  File "D:\Study\CT201\Project\hrm\app\forms.py", line 672, in __init__
+    self.fields['employee'].queryset = Employee.objects.filter(status='Đang làm việc').order_by('name')
+                                       ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1546, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1577, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<6 lines>...
+        summarize=summarize,
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1492, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1319, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+               ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\fields\__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+        "Field '%s' expected a number but got %r." % (self.name, value),
+    ) from e
+ValueError: Field 'status' expected a number but got 'Đang làm việc'.
+ERROR 2025-11-30 19:24:42,999 basehttp "GET /management/disciplines/19/edit/ HTTP/1.1" 500 157503
+INFO 2025-11-30 19:24:56,881 basehttp "GET /management/disciplines/ HTTP/1.1" 200 43004
+INFO 2025-11-30 19:24:59,591 basehttp "GET /management/disciplines/19/delete/ HTTP/1.1" 200 27163
+INFO 2025-11-30 19:25:02,637 basehttp "POST /management/disciplines/19/delete/ HTTP/1.1" 302 0
+INFO 2025-11-30 19:25:02,673 basehttp "GET /management/disciplines/ HTTP/1.1" 200 41393
+ERROR 2025-11-30 19:25:07,892 log Internal Server Error: /management/disciplines/18/edit/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\fields\__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'Đang làm việc'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\decorators.py", line 272, in wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 4623, in discipline_edit
+    form = DisciplineForm(instance=discipline)
+  File "D:\Study\CT201\Project\hrm\app\forms.py", line 672, in __init__
+    self.fields['employee'].queryset = Employee.objects.filter(status='Đang làm việc').order_by('name')
+                                       ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1546, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1577, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<6 lines>...
+        summarize=summarize,
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1492, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1319, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+               ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\fields\__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+        "Field '%s' expected a number but got %r." % (self.name, value),
+    ) from e
+ValueError: Field 'status' expected a number but got 'Đang làm việc'.
+ERROR 2025-11-30 19:25:07,898 basehttp "GET /management/disciplines/18/edit/ HTTP/1.1" 500 157816
+INFO 2025-11-30 19:25:10,027 basehttp "GET /management/disciplines/18/ HTTP/1.1" 200 27993
+INFO 2025-11-30 19:25:11,508 basehttp "GET /management/disciplines/18/delete/ HTTP/1.1" 200 27164
+INFO 2025-11-30 19:25:12,459 basehttp "POST /management/disciplines/18/delete/ HTTP/1.1" 302 0
+INFO 2025-11-30 19:25:12,489 basehttp "GET /management/disciplines/ HTTP/1.1" 200 39804
+INFO 2025-11-30 19:25:20,153 basehttp "GET /management/disciplines/ HTTP/1.1" 200 39804
+INFO 2025-11-30 19:25:26,835 basehttp "GET /management/rewards/ HTTP/1.1" 200 56690
+ERROR 2025-11-30 19:25:29,795 log Internal Server Error: /management/rewards/35/edit/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\fields\__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: 'Đang làm việc'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\decorators.py", line 272, in wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 4481, in reward_edit
+    form = RewardForm(instance=reward)
+  File "D:\Study\CT201\Project\hrm\app\forms.py", line 620, in __init__
+    self.fields['employee'].queryset = Employee.objects.filter(status='Đang làm việc').order_by('name')
+                                       ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1546, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1577, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ~~~~~~~~~~~~~~~~~^
+        child,
+        ^^^^^^
+    ...<6 lines>...
+        summarize=summarize,
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1492, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\sql\query.py", line 1319, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+               ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+           ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\db\models\fields\__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+        "Field '%s' expected a number but got %r." % (self.name, value),
+    ) from e
+ValueError: Field 'status' expected a number but got 'Đang làm việc'.
+ERROR 2025-11-30 19:25:29,803 basehttp "GET /management/rewards/35/edit/ HTTP/1.1" 500 158668
+INFO 2025-11-30 19:25:31,461 basehttp "GET /management/rewards/35/ HTTP/1.1" 200 28268
+INFO 2025-11-30 19:25:35,429 basehttp "GET /management/rewards/ HTTP/1.1" 200 56690
+INFO 2025-11-30 19:25:39,632 basehttp "GET /management/rewards/35/delete/ HTTP/1.1" 200 27018
+INFO 2025-11-30 19:25:41,557 basehttp "POST /management/rewards/35/delete/ HTTP/1.1" 302 0
+INFO 2025-11-30 19:25:41,594 basehttp "GET /management/rewards/ HTTP/1.1" 200 54940
+ERROR 2025-11-30 19:25:49,084 log Internal Server Error: /management/rewards/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\decorators.py", line 272, in wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 4391, in reward_list
+    models.Q(employee__name__icontains=search_query) |
+    ^^^^^^
+NameError: name 'models' is not defined
+ERROR 2025-11-30 19:25:49,092 basehttp "GET /management/rewards/?search=nh%C3%A2n+vi%C3%AAn+c%E1%BB%A7a+th%C3%A1ng&year=&department= HTTP/1.1" 500 91369
+ERROR 2025-11-30 19:25:53,430 log Internal Server Error: /management/rewards/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\decorators.py", line 272, in wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 4391, in reward_list
+    models.Q(employee__name__icontains=search_query) |
+    ^^^^^^
+NameError: name 'models' is not defined
+ERROR 2025-11-30 19:25:53,434 basehttp "GET /management/rewards/?search=nh%C3%A2n+vi%C3%AAn+c%E1%BB%A7a+th%C3%A1ng&year=&department= HTTP/1.1" 500 91369
+ERROR 2025-11-30 19:26:20,608 log Internal Server Error: /management/rewards/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\decorators.py", line 272, in wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 4391, in reward_list
+    models.Q(employee__name__icontains=search_query) |
+    ^^^^^^
+NameError: name 'models' is not defined
+ERROR 2025-11-30 19:26:20,610 basehttp "GET /management/rewards/?search=linh&year=&department= HTTP/1.1" 500 90949
+INFO 2025-11-30 19:26:25,081 basehttp "GET /management/rewards/?search=&year=&department=77 HTTP/1.1" 200 33859
+INFO 2025-11-30 19:26:28,210 basehttp "GET /management/rewards/?search=&year=&department=80 HTTP/1.1" 200 33832
+INFO 2025-11-30 19:26:29,994 basehttp "GET /management/rewards/?search=&year=&department=82 HTTP/1.1" 200 29909
+INFO 2025-11-30 19:26:31,682 basehttp "GET /management/rewards/?search=&year=&department=77 HTTP/1.1" 200 33859
+INFO 2025-11-30 19:26:32,538 basehttp "GET /management/rewards/?search=&year=&department= HTTP/1.1" 200 54940
+INFO 2025-11-30 19:26:35,815 basehttp "GET /management/rewards/41/ HTTP/1.1" 200 28262
+INFO 2025-11-30 19:26:37,108 basehttp "GET /management/rewards/ HTTP/1.1" 200 54940
+ERROR 2025-11-30 19:26:48,282 log Internal Server Error: /management/rewards/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\decorators.py", line 272, in wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 4391, in reward_list
+    models.Q(employee__name__icontains=search_query) |
+    ^^^^^^
+NameError: name 'models' is not defined
+ERROR 2025-11-30 19:26:48,286 basehttp "GET /management/rewards/?search=kpi&year=&department= HTTP/1.1" 500 90937
+INFO 2025-11-30 19:28:27,531 autoreload D:\Study\CT201\Project\hrm\app\forms.py changed, reloading.
+INFO 2025-11-30 19:28:29,162 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 19:28:43,572 autoreload D:\Study\CT201\Project\hrm\app\forms.py changed, reloading.
+INFO 2025-11-30 19:28:44,875 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 19:34:16,315 basehttp "GET /management/rewards/ HTTP/1.1" 200 54972
+INFO 2025-11-30 19:34:20,279 basehttp "GET /management/rewards/41/edit/ HTTP/1.1" 200 30034
+INFO 2025-11-30 19:34:23,080 basehttp "GET /management/rewards/ HTTP/1.1" 200 54972
+INFO 2025-11-30 19:34:26,376 basehttp "GET /management/rewards/41/ HTTP/1.1" 200 28264
+INFO 2025-11-30 19:34:36,688 basehttp "GET /management/disciplines/ HTTP/1.1" 200 39820
+INFO 2025-11-30 19:35:05,784 management_views Admin home accessed by hangpt
+INFO 2025-11-30 19:35:05,858 basehttp "GET /management/ HTTP/1.1" 200 41702

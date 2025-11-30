@@ -1,0 +1,130 @@
+{% extends "hod_template/base_template.html" %}
+{% load static %}
+
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'reward_list' %}">Khen thưởng</a></li>
+<li class="breadcrumb-item active">{{ title }}</li>
+{% endblock %}
+
+{% block main_content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="card card-success">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-trophy mr-2"></i>{{ title }}
+                    </h3>
+                </div>
+                <form method="POST" novalidate>
+                    {% csrf_token %}
+                    <div class="card-body">
+                        {% if form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            {{ form.non_field_errors }}
+                        </div>
+                        {% endif %}
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="id_employee">
+                                        Nhân viên <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.employee }}
+                                    {% if form.employee.errors %}
+                                    <span class="text-danger">{{ form.employee.errors }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="id_number">
+                                        Số quyết định <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.number }}
+                                    {% if form.number.errors %}
+                                    <span class="text-danger">{{ form.number.errors }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="id_date">
+                                        Ngày quyết định <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.date }}
+                                    {% if form.date.errors %}
+                                    <span class="text-danger">{{ form.date.errors }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="id_amount">
+                                        Số tiền thưởng (VNĐ) <span class="text-danger">*</span>
+                                    </label>
+                                    {{ form.amount }}
+                                    {% if form.amount.errors %}
+                                    <span class="text-danger">{{ form.amount.errors }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_description">
+                                Lý do khen thưởng <span class="text-danger">*</span>
+                            </label>
+                            {{ form.description }}
+                            {% if form.description.errors %}
+                            <span class="text-danger">{{ form.description.errors }}</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                {{ form.cash_payment }}
+                                <label class="custom-control-label" for="id_cash_payment">
+                                    Thanh toán tiền mặt
+                                </label>
+                            </div>
+                            <small class="text-muted">Bỏ chọn nếu thanh toán qua chuyển khoản</small>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-save mr-1"></i>
+                            {% if action == 'create' %}Tạo khen thưởng{% else %}Cập nhật{% endif %}
+                        </button>
+                        <a href="{% url 'reward_list' %}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left mr-1"></i> Quay lại
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Initialize Select2 for employee dropdown
+    $('.select2').select2({
+        theme: 'bootstrap4',
+        placeholder: 'Chọn nhân viên...',
+        allowClear: true
+    });
+    
+    // Fix checkbox styling
+    $('#id_cash_payment').addClass('custom-control-input');
+});
+</script>
+{% endblock %}

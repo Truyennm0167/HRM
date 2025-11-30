@@ -423,14 +423,69 @@ def get_user_employee(user):
         return None
 
 
+def is_hr_department(employee):
+    """
+    Kiểm tra nhân viên có thuộc phòng HR không
+    
+    Args:
+        employee: Employee object
+    
+    Returns:
+        bool: True nếu thuộc phòng HR
+    """
+    if not employee or not employee.department:
+        return False
+    
+    hr_department_names = ['hr', 'nhân sự', 'human resources', 'phòng nhân sự', 'bộ phận nhân sự']
+    return employee.department.name.lower().strip() in hr_department_names
+
+
+def is_hr_user(user):
+    """
+    Kiểm tra user có phải HR không
+    
+    HR được xác định bởi:
+    1. superuser/admin
+    2. Thuộc group 'HR'
+    3. Thuộc phòng ban HR
+    
+    Returns:
+        bool: True nếu là HR
+    """
+    if not user.is_authenticated:
+        return False
+    
+    # Superuser luôn có quyền
+    if user.is_superuser:
+        return True
+    
+    # Kiểm tra group HR
+    if user.groups.filter(name='HR').exists():
+        return True
+    
+    # Kiểm tra phòng ban HR
+    employee = get_user_employee(user)
+    if employee and is_hr_department(employee):
+        return True
+    
+    return False
+
+
 def user_can_access_management(user):
     """
     Kiểm tra quyền truy cập Admin Management Portal
     
+    CHỈ HR và Admin mới được truy cập Management Portal.
+    Manager và Employee chỉ được truy cập Portal.
+    
     Returns:
-        bool: True nếu user là staff hoặc superuser
+        bool: True nếu user là HR hoặc superuser
     """
-    return user.is_authenticated and (user.is_staff or user.is_superuser)
+    if not user.is_authenticated:
+        return False
+    
+    # Chỉ HR và superuser mới được vào management
+    return is_hr_user(user)
 
 
 def user_is_manager(user):

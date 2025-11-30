@@ -1,0 +1,73 @@
+{% extends "hod_template/base_template.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block page_title %}Xóa Kỷ luật{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'discipline_list' %}">Kỷ luật</a></li>
+<li class="breadcrumb-item active">Xóa</li>
+{% endblock %}
+
+{% block main_content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-6 offset-lg-3">
+            <div class="card card-danger">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-exclamation-triangle mr-2"></i>Xác nhận xóa kỷ luật
+                    </h3>
+                </div>
+                <div class="card-body text-center">
+                    <i class="fas fa-trash fa-4x text-danger mb-4"></i>
+                    <h4>Bạn có chắc chắn muốn xóa kỷ luật này?</h4>
+                    
+                    <div class="alert alert-secondary mt-4">
+                        <table class="table table-borderless mb-0">
+                            <tr>
+                                <td class="text-muted text-right" width="40%">Số quyết định:</td>
+                                <td class="text-left"><strong>#{{ discipline.number }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted text-right">Nhân viên:</td>
+                                <td class="text-left"><strong>{{ discipline.employee.name }}</strong></td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted text-right">Số tiền phạt:</td>
+                                <td class="text-left text-danger">
+                                    {% if discipline.amount > 0 %}
+                                    <strong>{{ discipline.amount|intcomma }} ₫</strong>
+                                    {% else %}
+                                    <span class="text-muted">Không phạt</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-muted text-right">Ngày:</td>
+                                <td class="text-left">{{ discipline.date|date:"d/m/Y" }}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    
+                    <p class="text-danger mt-3">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Hành động này không thể hoàn tác!
+                    </p>
+                </div>
+                <div class="card-footer text-center">
+                    <form method="POST" style="display: inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-lg">
+                            <i class="fas fa-trash mr-1"></i> Xác nhận xóa
+                        </button>
+                    </form>
+                    <a href="{% url 'discipline_list' %}" class="btn btn-secondary btn-lg ml-2">
+                        <i class="fas fa-times mr-1"></i> Hủy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

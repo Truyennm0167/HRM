@@ -139,7 +139,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h3 class="card-title"><i class="fas fa-list mr-2"></i>Chi tiết chấm công</h3>
+                    <h3 class="card-title"><i class="fas fa-list mr-2"></i>Chi tiết chấm công tháng {{ selected_month }}/{{ selected_year }}</h3>
                 </div>
                 <div class="card-body">
                     {% if attendances %}
@@ -149,7 +149,6 @@
                                     <tr>
                                         <th>Ngày</th>
                                         <th>Check In</th>
-                                        <th>Check Out</th>
                                         <th>Giờ làm việc</th>
                                         <th>Ghi chú</th>
                                         <th>Trạng thái</th>
@@ -163,10 +162,10 @@
                                             <small class="text-muted">{{ att.date|date:"l" }}</small>
                                         </td>
                                         <td>
-                                            {% if att.check_in %}
+                                            {% if att.check_in_time %}
                                                 <span class="badge badge-success">
                                                     <i class="fas fa-sign-in-alt mr-1"></i>
-                                                    {{ att.check_in|time:"H:i" }}
+                                                    {{ att.check_in_time }}
                                                 </span>
                                                 {% if att.is_late %}
                                                     <br><small class="text-danger"><i class="fas fa-exclamation-triangle"></i> Đi muộn</small>
@@ -176,23 +175,13 @@
                                             {% endif %}
                                         </td>
                                         <td>
-                                            {% if att.check_out %}
-                                                <span class="badge badge-info">
-                                                    <i class="fas fa-sign-out-alt mr-1"></i>
-                                                    {{ att.check_out|time:"H:i" }}
-                                                </span>
+                                            {% if att.working_hours > 0 %}
+                                                <strong class="text-primary">{{ att.working_hours }} giờ</strong>
                                                 {% if att.is_early_leave %}
                                                     <br><small class="text-warning"><i class="fas fa-exclamation-triangle"></i> Về sớm</small>
                                                 {% endif %}
                                             {% else %}
-                                                <span class="text-muted">--:--</span>
-                                            {% endif %}
-                                        </td>
-                                        <td>
-                                            {% if att.total_hours %}
-                                                <strong class="text-primary">{{ att.total_hours }} giờ</strong>
-                                            {% else %}
-                                                <span class="text-muted">--</span>
+                                                <span class="text-muted">Chưa checkout</span>
                                             {% endif %}
                                         </td>
                                         <td>
@@ -203,14 +192,14 @@
                                             {% endif %}
                                         </td>
                                         <td>
-                                            {% if att.status == 'present' %}
+                                            {% if att.status == 'Có làm việc' %}
                                                 <span class="badge badge-success"><i class="fas fa-check"></i> Có mặt</span>
-                                            {% elif att.status == 'absent' %}
-                                                <span class="badge badge-danger"><i class="fas fa-times"></i> Vắng</span>
-                                            {% elif att.status == 'leave' %}
+                                            {% elif att.status == 'Nghỉ phép' %}
                                                 <span class="badge badge-warning"><i class="fas fa-calendar-alt"></i> Nghỉ phép</span>
-                                            {% elif att.status == 'late' %}
-                                                <span class="badge badge-warning"><i class="fas fa-clock"></i> Đi muộn</span>
+                                            {% elif att.status == 'Nghỉ không phép' %}
+                                                <span class="badge badge-danger"><i class="fas fa-times"></i> Nghỉ không phép</span>
+                                            {% else %}
+                                                <span class="badge badge-secondary">{{ att.status }}</span>
                                             {% endif %}
                                         </td>
                                     </tr>

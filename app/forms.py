@@ -2,7 +2,7 @@
 from django import forms
 from .models import (Employee, LeaveType, LeaveRequest, ExpenseCategory, Expense, 
                      Contract, JobPosting, Application, AppraisalPeriod, 
-                     AppraisalCriteria, Appraisal, AppraisalScore)
+                     AppraisalCriteria, Appraisal, AppraisalScore, Reward, Discipline)
 
 class EmployeeForm(forms.ModelForm):
     class Meta:
@@ -578,3 +578,97 @@ class HRFinalReviewForm(forms.ModelForm):
                 'placeholder': 'Điều chỉnh lương (VD: 1000000 = tăng 1 triệu)'
             }),
         }
+
+
+# ======================== REWARD & DISCIPLINE FORMS ========================
+
+class RewardForm(forms.ModelForm):
+    """Form để tạo/sửa khen thưởng"""
+    class Meta:
+        model = Reward
+        fields = ['employee', 'number', 'date', 'description', 'amount', 'cash_payment']
+        widgets = {
+            'employee': forms.Select(attrs={'class': 'form-control select2'}),
+            'number': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Số quyết định'}),
+            'date': forms.DateTimeInput(attrs={
+                'class': 'form-control',
+                'type': 'datetime-local'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Mô tả lý do khen thưởng...'
+            }),
+            'amount': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'step': '100000',
+                'placeholder': 'Số tiền thưởng (VNĐ)'
+            }),
+            'cash_payment': forms.CheckboxInput(attrs={'class': 'form-check-input'}),
+        }
+        labels = {
+            'employee': 'Nhân viên',
+            'number': 'Số quyết định',
+            'date': 'Ngày quyết định',
+            'description': 'Lý do khen thưởng',
+            'amount': 'Số tiền thưởng',
+            'cash_payment': 'Thanh toán tiền mặt',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # status=2 means 'Nhân viên chính thức', status=1 means 'Thử việc'
+        self.fields['employee'].queryset = Employee.objects.filter(status__in=[1, 2]).order_by('name')
+
+
+class DisciplineForm(forms.ModelForm):
+    """Form để tạo/sửa kỷ luật"""
+    
+    DISCIPLINE_TYPE_CHOICES = [
+        ('warning', 'Cảnh cáo'),
+        ('fine', 'Phạt tiền'),
+        ('demotion', 'Hạ bậc lương'),
+        ('suspension', 'Đình chỉ công tác'),
+        ('termination', 'Sa thải'),
+    ]
+    
+    discipline_type = forms.ChoiceField(
+        choices=DISCIPLINE_TYPE_CHOICES,
+        widget=forms.Select(attrs={'class': 'form-control'}),
+        label='Hình thức kỷ luật',
+        required=False
+    )
+    
+    class Meta:
+        model = Discipline
+        fields = ['employee', 'number', 'date', 'description', 'amount']
+        widgets = {
+            'employee': forms.Select(attrs={'class': 'form-control select2'}),
+            'number': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Số quyết định'}),
+            'date': forms.DateTimeInput(attrs={
+                'class': 'form-control',
+                'type': 'datetime-local'
+            }),
+            'description': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 4,
+                'placeholder': 'Mô tả lý do kỷ luật...'
+            }),
+            'amount': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'step': '100000',
+                'placeholder': 'Số tiền phạt (VNĐ) - Để 0 nếu không phạt tiền'
+            }),
+        }
+        labels = {
+            'employee': 'Nhân viên',
+            'number': 'Số quyết định',
+            'date': 'Ngày quyết định',
+            'description': 'Lý do kỷ luật',
+            'amount': 'Số tiền phạt',
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # status=2 means 'Nhân viên chính thức', status=1 means 'Thử việc'
+        self.fields['employee'].queryset = Employee.objects.filter(status__in=[1, 2]).order_by('name')

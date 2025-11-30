@@ -1,0 +1,286 @@
+{% extends 'portal/portal_base.html' %}
+{% load static %}
+
+{% block title %}Chi tiết đánh giá {{ appraisal.employee.name }} - {{ appraisal.period.name }}{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <!-- Breadcrumb -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'portal_dashboard' %}">Portal</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'portal_manager_appraisals' %}">Đánh giá Team</a></li>
+                    <li class="breadcrumb-item active">Chi tiết</li>
+                </ol>
+            </nav>
+            <h2><i class="fas fa-chart-line mr-2"></i>Chi tiết đánh giá - {{ appraisal.employee.name }}</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Main Content -->
+        <div class="col-lg-8">
+            <!-- Overall Scores Summary -->
+            <div class="card mb-4">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-chart-pie mr-2"></i>Tổng kết điểm</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-md-4">
+                            <div class="p-3 bg-light rounded">
+                                <h6 class="text-muted mb-2">Tự đánh giá</h6>
+                                {% if appraisal.self_overall_score %}
+                                <h2 class="text-info mb-0">{{ appraisal.self_overall_score }}</h2>
+                                <small class="text-muted">/100 điểm</small>
+                                {% else %}
+                                <h4 class="text-muted mb-0">-</h4>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 bg-light rounded">
+                                <h6 class="text-muted mb-2">Manager đánh giá</h6>
+                                {% if appraisal.manager_overall_score %}
+                                <h2 class="text-primary mb-0">{{ appraisal.manager_overall_score }}</h2>
+                                <small class="text-muted">/100 điểm</small>
+                                {% else %}
+                                <h4 class="text-muted mb-0">-</h4>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="p-3 {% if appraisal.final_score %}bg-success{% else %}bg-light{% endif %} rounded">
+                                <h6 class="{% if appraisal.final_score %}text-white{% else %}text-muted{% endif %} mb-2">Điểm cuối cùng</h6>
+                                {% if appraisal.final_score %}
+                                <h2 class="text-white mb-0">{{ appraisal.final_score }}</h2>
+                                <small class="text-white">/100 điểm</small>
+                                {% else %}
+                                <h4 class="text-muted mb-0">Chờ HR</h4>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    {% if appraisal.overall_rating %}
+                    <div class="text-center mt-3">
+                        <strong>Xếp loại:</strong>
+                        {% if appraisal.overall_rating == 'outstanding' %}
+                        <span class="badge badge-success p-2">Xuất sắc</span>
+                        {% elif appraisal.overall_rating == 'exceeds' %}
+                        <span class="badge badge-primary p-2">Vượt mong đợi</span>
+                        {% elif appraisal.overall_rating == 'meets' %}
+                        <span class="badge badge-info p-2">Đạt yêu cầu</span>
+                        {% elif appraisal.overall_rating == 'needs_improvement' %}
+                        <span class="badge badge-warning p-2">Cần cải thiện</span>
+                        {% elif appraisal.overall_rating == 'unsatisfactory' %}
+                        <span class="badge badge-danger p-2">Không đạt</span>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Self Assessment Summary -->
+            <div class="card mb-4">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-user mr-2"></i>Tự đánh giá của nhân viên</h5>
+                </div>
+                <div class="card-body">
+                    {% if appraisal.self_achievements %}
+                    <div class="mb-3">
+                        <strong><i class="fas fa-trophy text-warning"></i> Thành tích nổi bật:</strong>
+                        <p class="mb-0 mt-1">{{ appraisal.self_achievements }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if appraisal.self_challenges %}
+                    <div class="mb-3">
+                        <strong><i class="fas fa-mountain text-danger"></i> Khó khăn gặp phải:</strong>
+                        <p class="mb-0 mt-1">{{ appraisal.self_challenges }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if appraisal.self_development_plan %}
+                    <div class="mb-3">
+                        <strong><i class="fas fa-chart-line text-success"></i> Kế hoạch phát triển:</strong>
+                        <p class="mb-0 mt-1">{{ appraisal.self_development_plan }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if appraisal.company_feedback %}
+                    <div class="p-3 bg-light rounded">
+                        <strong><i class="fas fa-lightbulb text-warning"></i> Góp ý cho công ty:</strong>
+                        <p class="mb-0 mt-1">{{ appraisal.company_feedback }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if not appraisal.self_achievements and not appraisal.self_challenges and not appraisal.self_development_plan %}
+                    <p class="text-muted mb-0">Không có thông tin.</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Manager Review -->
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-user-tie mr-2"></i>Đánh giá của Manager</h5>
+                </div>
+                <div class="card-body">
+                    {% if appraisal.manager_comments %}
+                    <div class="mb-3">
+                        <strong>Nhận xét tổng quan:</strong>
+                        <p class="mb-0 mt-1">{{ appraisal.manager_comments }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if appraisal.manager_strengths %}
+                    <div class="mb-3">
+                        <strong><i class="fas fa-plus-circle text-success"></i> Điểm mạnh:</strong>
+                        <p class="mb-0 mt-1">{{ appraisal.manager_strengths }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if appraisal.manager_weaknesses %}
+                    <div class="mb-3">
+                        <strong><i class="fas fa-minus-circle text-warning"></i> Điểm cần cải thiện:</strong>
+                        <p class="mb-0 mt-1">{{ appraisal.manager_weaknesses }}</p>
+                    </div>
+                    {% endif %}
+                    
+                    {% if appraisal.manager_recommendations %}
+                    <div class="p-3 bg-light rounded">
+                        <strong><i class="fas fa-hand-point-right text-primary"></i> Đề xuất:</strong>
+                        <p class="mb-0 mt-1">{{ appraisal.manager_recommendations }}</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Criteria Scores -->
+            {% for category, criteria in criteria_by_category.items %}
+            <div class="card mb-4">
+                <div class="card-header bg-secondary text-white">
+                    <h5 class="mb-0"><i class="fas fa-tasks mr-2"></i>{{ category }}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th>Tiêu chí</th>
+                                    <th class="text-center" style="width: 100px;">Trọng số</th>
+                                    <th class="text-center" style="width: 100px;">Tự đánh giá</th>
+                                    <th class="text-center" style="width: 100px;">Manager</th>
+                                    <th class="text-center" style="width: 100px;">Cuối cùng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in criteria %}
+                                <tr>
+                                    <td>
+                                        <strong>{{ item.name }}</strong>
+                                        {% if item.description %}
+                                        <br><small class="text-muted">{{ item.description }}</small>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center">{{ item.weight }}%</td>
+                                    <td class="text-center">
+                                        {% if item.self_score %}
+                                        <span class="badge badge-info">{{ item.self_score }}/{{ item.max_score }}</span>
+                                        {% else %}
+                                        <span class="text-muted">-</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center">
+                                        {% if item.manager_score %}
+                                        <span class="badge badge-primary">{{ item.manager_score }}/{{ item.max_score }}</span>
+                                        {% else %}
+                                        <span class="text-muted">-</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="text-center">
+                                        {% if item.final_score %}
+                                        <span class="badge badge-success">{{ item.final_score }}/{{ item.max_score }}</span>
+                                        {% else %}
+                                        <span class="text-muted">-</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+            <!-- HR Review (if available) -->
+            {% if appraisal.hr_comments %}
+            <div class="card mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0"><i class="fas fa-user-shield mr-2"></i>Nhận xét của HR</h5>
+                </div>
+                <div class="card-body">
+                    <p class="mb-0">{{ appraisal.hr_comments }}</p>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Back Button -->
+            <div class="text-center mb-4">
+                <a href="{% url 'portal_manager_appraisals' %}" class="btn btn-outline-primary btn-lg">
+                    <i class="fas fa-arrow-left"></i> Quay lại danh sách
+                </a>
+            </div>
+        </div>
+
+        <!-- Sidebar Info -->
+        <div class="col-lg-4">
+            <div class="card mb-4 sticky-top" style="top: 20px;">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0"><i class="fas fa-user mr-2"></i>Thông tin nhân viên</h5>
+                </div>
+                <div class="card-body text-center">
+                    {% if appraisal.employee.avatar %}
+                    <img src="{{ appraisal.employee.avatar.url }}" alt="Avatar" 
+                         class="rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover;">
+                    {% else %}
+                    <div class="bg-secondary rounded-circle mx-auto mb-3 d-flex align-items-center justify-content-center" 
+                         style="width: 100px; height: 100px;">
+                        <i class="fas fa-user fa-3x text-white"></i>
+                    </div>
+                    {% endif %}
+                    
+                    <h4>{{ appraisal.employee.name }}</h4>
+                    <p class="text-muted mb-1">{{ appraisal.employee.job_title.name|default:"N/A" }}</p>
+                    <p class="text-muted">{{ appraisal.employee.department.name|default:"N/A" }}</p>
+                    
+                    <hr>
+                    
+                    <p><strong>Kỳ đánh giá:</strong><br>{{ appraisal.period.name }}</p>
+                    <p><strong>Trạng thái:</strong><br>
+                        {% if appraisal.status == 'pending_hr' %}
+                        <span class="badge badge-info">Chờ HR duyệt</span>
+                        {% elif appraisal.status == 'completed' %}
+                        <span class="badge badge-success">Hoàn thành</span>
+                        {% else %}
+                        <span class="badge badge-secondary">{{ appraisal.get_status_display }}</span>
+                        {% endif %}
+                    </p>
+                    
+                    {% if appraisal.manager_review_date %}
+                    <p><strong>Ngày đánh giá:</strong><br>{{ appraisal.manager_review_date|date:"d/m/Y H:i" }}</p>
+                    {% endif %}
+                    
+                    {% if appraisal.final_review_date %}
+                    <p><strong>Ngày hoàn thành:</strong><br>{{ appraisal.final_review_date|date:"d/m/Y H:i" }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

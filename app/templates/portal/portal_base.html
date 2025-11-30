@@ -307,10 +307,21 @@
                         </li>
                         
                         {% if user|is_manager %}
+                        <!-- Manager Section -->
                         <li class="portal-menu-item" style="margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #dee2e6;">
-                            <a href="{% url 'portal_approvals' %}" class="portal-menu-link {% if 'approvals' in request.path or 'team' in request.path %}active{% endif %}">
+                            <span class="text-muted small px-3"><i class="fas fa-user-tie"></i> QUẢN LÝ TEAM</span>
+                        </li>
+                        <li class="portal-menu-item">
+                            <a href="{% url 'portal_approvals' %}" class="portal-menu-link {% if 'approvals' in request.path %}active{% endif %}">
                                 <i class="fas fa-check-circle portal-menu-icon"></i>
                                 Phê duyệt
+                                <span class="badge badge-portal ml-auto">Manager</span>
+                            </a>
+                        </li>
+                        <li class="portal-menu-item">
+                            <a href="{% url 'portal_manager_appraisals' %}" class="portal-menu-link {% if 'team' in request.path and 'appraisal' in request.path %}active{% endif %}">
+                                <i class="fas fa-users-cog portal-menu-icon"></i>
+                                Đánh giá team
                                 <span class="badge badge-portal ml-auto">Manager</span>
                             </a>
                         </li>

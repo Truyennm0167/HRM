@@ -671,9 +671,12 @@ def attendance_list(request):
         messages.error(request, 'Không tìm thấy thông tin nhân viên.')
         return redirect('login')
     
-    # Get current month or filter by month/year
-    year = int(request.GET.get('year', timezone.now().year))
-    month = int(request.GET.get('month', timezone.now().month))
+    # Get current month or filter by month/year - use local time
+    local_now = timezone.localtime(timezone.now())
+    current_year = local_now.year
+    current_month = local_now.month
+    year = int(request.GET.get('year', current_year))
+    month = int(request.GET.get('month', current_month))
     
     attendances = Attendance.objects.filter(
         employee=employee,
@@ -681,24 +684,62 @@ def attendance_list(request):
         date__month=month
     ).order_by('-date')
     
+    # Process attendances for template
+    attendance_data = []
+    for att in attendances:
+        is_late = 'muộn' in att.notes.lower() if att.notes else False
+        is_early = 'sớm' in att.notes.lower() if att.notes else False
+        
+        # Convert to local time for display
+        local_date = timezone.localtime(att.date)
+        
+        attendance_data.append({
+            'date': local_date,
+            'check_in_time': local_date.strftime('%H:%M') if att.date else None,
+            'check_out_time': 'Đã checkout' if att.working_hours > 0 else None,
+            'working_hours': round(att.working_hours, 2) if att.working_hours else 0,
+            'status': att.status,
+            'notes': att.notes,
+            'is_late': is_late,
+            'is_early_leave': is_early,
+        })
+    
     # Statistics
     total_days = attendances.count()
-    working_days = attendances.filter(status='present').count()
-    late_days = attendances.filter(status='late').count()
-    absent_days = attendances.filter(status='absent').count()
+    working_days = attendances.filter(status='Có làm việc').count()
     total_hours = sum([a.working_hours or 0 for a in attendances])
+    
+    # Count late and early leave
+    late_count = 0
+    early_leave_count = 0
+    for att in attendances:
+        if att.notes:
+            if 'muộn' in att.notes.lower():
+                late_count += 1
+            if 'sớm' in att.notes.lower():
+                early_leave_count += 1
+    
+    # Generate months and years for filter
+    months = [
+        {'value': i, 'label': f'Tháng {i}'} for i in range(1, 13)
+    ]
+    years = list(range(current_year - 2, current_year + 1))
     
     context = {
         'employee': employee,
-        'attendances': attendances,
+        'attendances': attendance_data,
         'year': year,
         'month': month,
+        'selected_month': month,
+        'selected_year': year,
+        'months': months,
+        'years': years,
         'stats': {
             'total_days': total_days,
             'working_days': working_days,
-            'late_days': late_days,
-            'absent_days': absent_days,
-            'total_hours': total_hours,
+            'late_count': late_count,
+            'early_leave_count': early_leave_count,
+            'total_hours': round(total_hours, 2),
         }
     }
     
@@ -728,22 +769,24 @@ def check_in(request):
     if not employee:
         return JsonResponse({'status': 'error', 'message': 'Không tìm thấy thông tin nhân viên'}, status=403)
     
-    today = timezone.now()
-    today_date = today.date()
+    now = timezone.now()
+    local_now = timezone.localtime(now)
+    today_date = local_now.date()
     
     # Check if already checked in today
     existing = Attendance.objects.filter(employee=employee, date__date=today_date).first()
     if existing:
+        local_checkin = timezone.localtime(existing.date)
         return JsonResponse({
             'status': 'error',
             'message': 'Bạn đã check-in rồi!',
-            'check_in_time': existing.date.strftime('%H:%M')
+            'check_in_time': local_checkin.strftime('%H:%M')
         })
     
     try:
-        # Check if late (after 8:30 AM)
+        # Check if late (after 8:30 AM) - use local time
         from datetime import time
-        current_time = today.time()
+        current_time = local_now.time()
         standard_time = time(8, 30)  # 8:30 AM
         is_late = current_time > standard_time
         
@@ -751,12 +794,12 @@ def check_in(request):
         status = 'Có làm việc'
         notes = ''
         if is_late:
-            notes = f'Đi muộn {(today.hour * 60 + today.minute) - (8 * 60 + 30)} phút'
+            notes = f'Đi muộn {(local_now.hour * 60 + local_now.minute) - (8 * 60 + 30)} phút'
         
         # Create attendance record
         attendance = Attendance.objects.create(
             employee=employee,
-            date=today,
+            date=now,  # Store in UTC
             status=status,
             working_hours=0,  # Will be updated on check-out
             notes=notes
@@ -765,7 +808,7 @@ def check_in(request):
         return JsonResponse({
             'status': 'success',
             'message': 'Check-in thành công!' + (' (Đi muộn)' if is_late else ''),
-            'check_in_time': today.strftime('%H:%M:%S'),
+            'check_in_time': local_now.strftime('%H:%M:%S'),
             'is_late': is_late
         })
     except Exception as e:
@@ -782,8 +825,9 @@ def check_out(request):
     if not employee:
         return JsonResponse({'status': 'error', 'message': 'Không tìm thấy thông tin nhân viên'}, status=403)
     
-    today = timezone.now()
-    today_date = today.date()
+    now = timezone.now()
+    local_now = timezone.localtime(now)
+    today_date = local_now.date()
     
     # Find today's attendance
     attendance = Attendance.objects.filter(employee=employee, date__date=today_date).first()
@@ -803,19 +847,19 @@ def check_out(request):
     try:
         # Calculate working hours from check-in time to now
         check_in_time = attendance.date
-        check_out_time = today
+        check_out_time = now
         delta = check_out_time - check_in_time
         hours = delta.total_seconds() / 3600
         attendance.working_hours = round(hours, 2)
         
-        # Check if early leave (before 5:30 PM)
+        # Check if early leave (before 5:30 PM) - use local time
         from datetime import time
-        current_time = today.time()
+        current_time = local_now.time()
         standard_time = time(17, 30)  # 5:30 PM
         is_early = current_time < standard_time
         
         if is_early:
-            early_minutes = (17 * 60 + 30) - (today.hour * 60 + today.minute)
+            early_minutes = (17 * 60 + 30) - (local_now.hour * 60 + local_now.minute)
             attendance.notes += f' | Về sớm {early_minutes} phút'
         
         attendance.save()
@@ -823,7 +867,7 @@ def check_out(request):
         return JsonResponse({
             'status': 'success',
             'message': 'Check-out thành công!' + (' (Về sớm)' if is_early else ''),
-            'check_out_time': check_out_time.strftime('%H:%M:%S'),
+            'check_out_time': local_now.strftime('%H:%M:%S'),
             'working_hours': attendance.working_hours,
             'is_early': is_early
         })
@@ -838,7 +882,7 @@ def today_attendance(request):
     if not employee:
         return JsonResponse({'status': 'error', 'message': 'Không tìm thấy thông tin nhân viên'}, status=403)
     
-    today_date = timezone.now().date()
+    today_date = timezone.localtime(timezone.now()).date()
     attendance = Attendance.objects.filter(employee=employee, date__date=today_date).first()
     
     if not attendance:
@@ -850,15 +894,25 @@ def today_attendance(request):
     
     has_checked_out = attendance.working_hours > 0
     
+    # Convert to local time for display
+    local_check_in = timezone.localtime(attendance.date)
+    
+    # Calculate estimated check-out time based on check-in + working hours
+    check_out_time_display = None
+    if has_checked_out:
+        from datetime import timedelta
+        check_out_dt = local_check_in + timedelta(hours=attendance.working_hours)
+        check_out_time_display = check_out_dt.strftime('%H:%M:%S')
+    
     return JsonResponse({
         'status': 'success',
         'has_checked_in': True,
         'has_checked_out': has_checked_out,
-        'check_in_time': attendance.date.strftime('%H:%M:%S'),
-        'check_out_time': None if not has_checked_out else 'Completed',
-        'working_hours': attendance.working_hours,
-        'is_late': 'Đi muộn' in attendance.notes,
-        'is_early_leave': 'Về sớm' in attendance.notes
+        'check_in_time': local_check_in.strftime('%H:%M:%S'),
+        'check_out_time': check_out_time_display,
+        'working_hours': round(attendance.working_hours, 2) if attendance.working_hours else 0,
+        'is_late': 'muộn' in attendance.notes.lower() if attendance.notes else False,
+        'is_early_leave': 'sớm' in attendance.notes.lower() if attendance.notes else False
     })
 
 
@@ -2157,6 +2211,7 @@ def self_assessment(request, appraisal_id):
         appraisal.self_achievements = request.POST.get('self_achievements', '')
         appraisal.self_challenges = request.POST.get('self_challenges', '')
         appraisal.self_goals = request.POST.get('self_goals', '')
+        appraisal.company_feedback = request.POST.get('company_feedback', '')
         
         # Calculate self overall score
         total_score = 0
@@ -2213,11 +2268,12 @@ def self_assessment(request, appraisal_id):
             'comment': score.self_comment
         }
     
-    # Group criteria by category
+    # Group criteria by category with Vietnamese labels
     criteria_by_category = {}
     for criteria in criteria_list:
-        if criteria.category not in criteria_by_category:
-            criteria_by_category[criteria.category] = []
+        category_label = CATEGORY_LABELS.get(criteria.category, criteria.category)
+        if category_label not in criteria_by_category:
+            criteria_by_category[category_label] = []
         
         criteria_data = {
             'id': criteria.id,
@@ -2228,7 +2284,7 @@ def self_assessment(request, appraisal_id):
             'existing_score': existing_scores.get(criteria.id, {}).get('score'),
             'existing_comment': existing_scores.get(criteria.id, {}).get('comment', '')
         }
-        criteria_by_category[criteria.category].append(criteria_data)
+        criteria_by_category[category_label].append(criteria_data)
     
     context = {
         'employee': employee,
@@ -2238,6 +2294,239 @@ def self_assessment(request, appraisal_id):
     }
     
     return render(request, 'portal/appraisal/self_assessment.html', context)
+
+
+# ======================== MANAGER APPRAISAL ========================
+
+# Vietnamese labels for appraisal categories
+CATEGORY_LABELS = {
+    'performance': 'Hiệu suất công việc',
+    'behavior': 'Hành vi & Thái độ',
+    'skill': 'Kỹ năng chuyên môn',
+    'leadership': 'Năng lực lãnh đạo',
+    'development': 'Phát triển bản thân',
+    'communication': 'Kỹ năng giao tiếp',
+    'teamwork': 'Làm việc nhóm',
+    'innovation': 'Sáng tạo & Đổi mới',
+    'quality': 'Chất lượng công việc',
+    'responsibility': 'Tinh thần trách nhiệm',
+}
+
+
+@login_required
+@require_manager_permission
+def manager_appraisals(request):
+    """
+    Danh sách nhân viên cần manager đánh giá (trong Portal)
+    """
+    employee = get_user_employee(request.user)
+    if not employee:
+        messages.error(request, 'Không tìm thấy thông tin nhân viên.')
+        return redirect('login')
+    
+    # Lấy tất cả appraisals của team mà manager quản lý
+    pending_appraisals = Appraisal.objects.filter(
+        manager=employee,
+        status='pending_manager'
+    ).select_related('employee', 'period').order_by('-period__start_date')
+    
+    # Lấy appraisals đã đánh giá
+    completed_appraisals = Appraisal.objects.filter(
+        manager=employee,
+        status__in=['pending_hr', 'completed']
+    ).select_related('employee', 'period').order_by('-manager_review_date')[:20]
+    
+    context = {
+        'employee': employee,
+        'pending_appraisals': pending_appraisals,
+        'completed_appraisals': completed_appraisals,
+        'pending_count': pending_appraisals.count(),
+    }
+    
+    return render(request, 'portal/appraisal/manager_list.html', context)
+
+
+@login_required
+@require_manager_permission
+def manager_review(request, appraisal_id):
+    """
+    Form cho manager đánh giá nhân viên
+    """
+    from .models import AppraisalCriteria
+    
+    employee = get_user_employee(request.user)
+    if not employee:
+        messages.error(request, 'Không tìm thấy thông tin nhân viên.')
+        return redirect('login')
+    
+    appraisal = get_object_or_404(
+        Appraisal,
+        pk=appraisal_id,
+        manager=employee
+    )
+    
+    # Chỉ cho phép đánh giá nếu status là pending_manager
+    can_edit = appraisal.status == 'pending_manager'
+    
+    # Get all criteria for this period
+    criteria_list = AppraisalCriteria.objects.filter(
+        period=appraisal.period
+    ).order_by('category', 'order', 'name')
+    
+    if request.method == 'POST' and can_edit:
+        # Cập nhật thông tin đánh giá của manager
+        appraisal.manager_comments = request.POST.get('manager_comments', '')
+        appraisal.manager_strengths = request.POST.get('manager_strengths', '')
+        appraisal.manager_weaknesses = request.POST.get('manager_weaknesses', '')
+        appraisal.manager_recommendations = request.POST.get('manager_recommendations', '')
+        
+        # Calculate manager overall score
+        total_score = 0
+        total_weight = 0
+        
+        for criteria in criteria_list:
+            score_key = f'manager_score_{criteria.id}'
+            comment_key = f'manager_comment_{criteria.id}'
+            
+            if score_key in request.POST and request.POST[score_key]:
+                score_value = int(request.POST[score_key])
+                comment_value = request.POST.get(comment_key, '')
+                
+                # Get or update AppraisalScore
+                try:
+                    appraisal_score = AppraisalScore.objects.get(
+                        appraisal=appraisal,
+                        criteria=criteria
+                    )
+                    appraisal_score.manager_score = score_value
+                    appraisal_score.manager_comment = comment_value
+                    appraisal_score.save()
+                except AppraisalScore.DoesNotExist:
+                    AppraisalScore.objects.create(
+                        appraisal=appraisal,
+                        criteria=criteria,
+                        manager_score=score_value,
+                        manager_comment=comment_value
+                    )
+                
+                total_score += score_value * float(criteria.weight)
+                total_weight += float(criteria.weight)
+        
+        # Calculate weighted average
+        if total_weight > 0:
+            appraisal.manager_overall_score = round(total_score / total_weight, 2)
+        
+        # Check if should submit to HR
+        if 'submit_to_hr' in request.POST:
+            appraisal.manager_review_date = timezone.now()
+            appraisal.status = 'pending_hr'
+            messages.success(request, f'Đã hoàn thành đánh giá cho {appraisal.employee.name}! Đánh giá đã được chuyển cho HR xem xét.')
+        else:
+            messages.success(request, 'Đã lưu bản nháp đánh giá.')
+        
+        appraisal.save()
+        return redirect('portal_manager_appraisals')
+    
+    # GET request - prepare form data
+    # Get existing scores
+    existing_scores = {}
+    for score in appraisal.scores.select_related('criteria'):
+        existing_scores[score.criteria.id] = {
+            'self_score': score.self_score,
+            'self_comment': score.self_comment,
+            'manager_score': score.manager_score,
+            'manager_comment': score.manager_comment
+        }
+    
+    # Group criteria by category with Vietnamese labels
+    criteria_by_category = {}
+    for criteria in criteria_list:
+        category_label = CATEGORY_LABELS.get(criteria.category, criteria.category)
+        if category_label not in criteria_by_category:
+            criteria_by_category[category_label] = []
+        
+        criteria_data = {
+            'id': criteria.id,
+            'name': criteria.name,
+            'description': criteria.description,
+            'weight': criteria.weight,
+            'max_score': criteria.max_score,
+            'self_score': existing_scores.get(criteria.id, {}).get('self_score'),
+            'self_comment': existing_scores.get(criteria.id, {}).get('self_comment', ''),
+            'manager_score': existing_scores.get(criteria.id, {}).get('manager_score'),
+            'manager_comment': existing_scores.get(criteria.id, {}).get('manager_comment', '')
+        }
+        criteria_by_category[category_label].append(criteria_data)
+    
+    context = {
+        'employee': employee,
+        'appraisal': appraisal,
+        'criteria_by_category': criteria_by_category,
+        'can_edit': can_edit,
+    }
+    
+    return render(request, 'portal/appraisal/manager_review.html', context)
+
+
+@login_required
+@require_manager_permission
+def manager_appraisal_detail(request, appraisal_id):
+    """
+    Chi tiết đánh giá của nhân viên (Manager xem)
+    """
+    from .models import AppraisalCriteria
+    
+    employee = get_user_employee(request.user)
+    if not employee:
+        messages.error(request, 'Không tìm thấy thông tin nhân viên.')
+        return redirect('login')
+    
+    appraisal = get_object_or_404(
+        Appraisal,
+        pk=appraisal_id,
+        manager=employee
+    )
+    
+    # Get all criteria for this period
+    criteria_list = AppraisalCriteria.objects.filter(
+        period=appraisal.period
+    ).order_by('category', 'order', 'name')
+    
+    # Get existing scores
+    existing_scores = {}
+    for score in appraisal.scores.select_related('criteria'):
+        existing_scores[score.criteria.id] = {
+            'self_score': score.self_score,
+            'self_comment': score.self_comment,
+            'manager_score': score.manager_score,
+            'manager_comment': score.manager_comment,
+            'final_score': score.final_score
+        }
+    
+    # Group criteria by category with Vietnamese labels
+    criteria_by_category = {}
+    for criteria in criteria_list:
+        category_label = CATEGORY_LABELS.get(criteria.category, criteria.category)
+        if category_label not in criteria_by_category:
+            criteria_by_category[category_label] = []
+        
+        criteria_data = {
+            'id': criteria.id,
+            'name': criteria.name,
+            'description': criteria.description,
+            'weight': criteria.weight,
+            'max_score': criteria.max_score,
+            **existing_scores.get(criteria.id, {})
+        }
+        criteria_by_category[category_label].append(criteria_data)
+    
+    context = {
+        'employee': employee,
+        'appraisal': appraisal,
+        'criteria_by_category': criteria_by_category,
+    }
+    
+    return render(request, 'portal/appraisal/manager_detail.html', context)
 
 
 # ======================== ORGANIZATION CHART ========================

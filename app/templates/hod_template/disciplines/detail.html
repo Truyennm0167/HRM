@@ -1,0 +1,93 @@
+{% extends "hod_template/base_template.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block page_title %}Chi tiết Kỷ luật #{{ discipline.number }}{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'discipline_list' %}">Kỷ luật</a></li>
+<li class="breadcrumb-item active">Chi tiết #{{ discipline.number }}</li>
+{% endblock %}
+
+{% block main_content %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-8 offset-lg-2">
+            <div class="card card-danger">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-gavel mr-2"></i>Chi tiết Kỷ luật #{{ discipline.number }}
+                    </h3>
+                    <div class="card-tools">
+                        <a href="{% url 'discipline_edit' discipline.pk %}" class="btn btn-sm btn-warning">
+                            <i class="fas fa-edit mr-1"></i> Sửa
+                        </a>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td class="text-muted" width="40%">Số quyết định:</td>
+                                    <td><strong>#{{ discipline.number }}</strong></td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">Nhân viên:</td>
+                                    <td>
+                                        <strong>{{ discipline.employee.name }}</strong><br>
+                                        <small class="text-muted">{{ discipline.employee.department.name|default:"-" }}</small>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">Ngày quyết định:</td>
+                                    <td>{{ discipline.date|date:"d/m/Y H:i" }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="col-md-6">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td class="text-muted" width="40%">Số tiền phạt:</td>
+                                    <td>
+                                        {% if discipline.amount > 0 %}
+                                        <span class="text-danger font-weight-bold" style="font-size: 1.2em">{{ discipline.amount|intcomma }} ₫</span>
+                                        {% else %}
+                                        <span class="badge badge-secondary">Không phạt tiền</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted">Ngày tạo:</td>
+                                    <td>{{ discipline.created_at|date:"d/m/Y H:i" }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <hr>
+                    
+                    <div class="row">
+                        <div class="col-12">
+                            <h5><i class="fas fa-file-alt mr-2"></i>Lý do kỷ luật</h5>
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    {{ discipline.description|linebreaks }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <a href="{% url 'discipline_list' %}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left mr-1"></i> Quay lại danh sách
+                    </a>
+                    <a href="{% url 'discipline_delete' discipline.pk %}" class="btn btn-danger float-right">
+                        <i class="fas fa-trash mr-1"></i> Xóa
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

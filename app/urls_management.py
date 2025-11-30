@@ -238,4 +238,18 @@ urlpatterns = [
     path('appraisal/manager/', management_views.manager_appraisals, name='manager_appraisals'),
     path('appraisal/hr/', management_views.hr_appraisals, name='hr_appraisals'),
     path('appraisal/', management_views.manager_appraisals, name='my_appraisals'),  # Backward compatibility
+    
+    # Reward Management
+    path('rewards/', management_views.reward_list, name='reward_list'),
+    path('rewards/create/', management_views.reward_create, name='reward_create'),
+    path('rewards/<int:pk>/', management_views.reward_detail, name='reward_detail'),
+    path('rewards/<int:pk>/edit/', management_views.reward_edit, name='reward_edit'),
+    path('rewards/<int:pk>/delete/', management_views.reward_delete, name='reward_delete'),
+    
+    # Discipline Management
+    path('disciplines/', management_views.discipline_list, name='discipline_list'),
+    path('disciplines/create/', management_views.discipline_create, name='discipline_create'),
+    path('disciplines/<int:pk>/', management_views.discipline_detail, name='discipline_detail'),
+    path('disciplines/<int:pk>/edit/', management_views.discipline_edit, name='discipline_edit'),
+    path('disciplines/<int:pk>/delete/', management_views.discipline_delete, name='discipline_delete'),
 ]

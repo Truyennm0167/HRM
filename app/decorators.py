@@ -153,7 +153,7 @@ def check_appraisal_access(view_func):
             return view_func(request, *args, **kwargs)
         
         # HR has full access
-        if request.user.groups.filter(name='HR').exists():
+        if is_hr_staff(request.user):
             return view_func(request, *args, **kwargs)
         
         # Get appraisal_id if provided
@@ -190,9 +190,50 @@ def check_appraisal_access(view_func):
     return wrapped_view
 
 
+def _get_employee_from_user(user):
+    """Helper to get Employee object from User"""
+    try:
+        return Employee.objects.get(email=user.email)
+    except Employee.DoesNotExist:
+        return None
+
+
+def _is_hr_department(employee):
+    """
+    Kiểm tra nhân viên có thuộc phòng HR không
+    """
+    if not employee or not employee.department:
+        return False
+    
+    hr_department_names = ['hr', 'nhân sự', 'human resources', 'phòng nhân sự', 'bộ phận nhân sự']
+    return employee.department.name.lower().strip() in hr_department_names
+
+
 def is_hr_staff(user):
-    """Helper function to check if user is HR staff"""
-    return user.is_superuser or user.groups.filter(name='HR').exists()
+    """
+    Helper function to check if user is HR staff
+    
+    HR được xác định bởi:
+    1. superuser/admin
+    2. Thuộc group 'HR'
+    3. Thuộc phòng ban HR
+    """
+    if not user.is_authenticated:
+        return False
+        
+    if user.is_superuser:
+        return True
+    
+    # Check group HR
+    if user.groups.filter(name='HR').exists():
+        return True
+    
+    # Check HR department
+    employee = _get_employee_from_user(user)
+    if employee and _is_hr_department(employee):
+        return True
+    
+    return False
 
 
 def is_manager(user):
@@ -209,3 +250,31 @@ def is_manager(user):
 def is_manager_or_hr(user):
     """Helper function to check if user is manager or HR"""
     return is_manager(user) or is_hr_staff(user)
+
+
+def hr_only(view_func):
+    """
+    Decorator to restrict access to HR staff only
+    
+    CHỈ cho phép:
+    - superuser/admin
+    - User thuộc group 'HR'
+    - Nhân viên thuộc phòng HR
+    
+    Manager và Employee sẽ bị redirect về Portal
+    
+    Usage: @hr_only
+    """
+    @wraps(view_func)
+    @login_required
+    def wrapped_view(request, *args, **kwargs):
+        if is_hr_staff(request.user):
+            return view_func(request, *args, **kwargs)
+        
+        messages.warning(
+            request, 
+            'Tính năng này chỉ dành cho nhân viên Phòng Nhân sự.'
+        )
+        return redirect('portal_dashboard')
+    
+    return wrapped_view
