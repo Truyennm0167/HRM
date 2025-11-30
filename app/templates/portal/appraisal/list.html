@@ -25,13 +25,13 @@
                     <div class="row mb-3">
                         <div class="col-6">
                             <strong>Trạng thái:</strong><br>
-                            {% if appraisal.status == 'pending' %}
+                            {% if appraisal.status == 'pending_self' %}
                                 <span class="badge badge-warning">Chờ tự đánh giá</span>
                             {% elif appraisal.status == 'in_progress' %}
                                 <span class="badge badge-info">Đang tự đánh giá</span>
-                            {% elif appraisal.status == 'self_assessed' %}
+                            {% elif appraisal.status == 'pending_manager' %}
                                 <span class="badge badge-primary">Chờ quản lý đánh giá</span>
-                            {% elif appraisal.status == 'manager_reviewed' %}
+                            {% elif appraisal.status == 'pending_hr' %}
                                 <span class="badge badge-secondary">Chờ HR duyệt</span>
                             {% elif appraisal.status == 'completed' %}
                                 <span class="badge badge-success">Đã hoàn thành</span>
@@ -39,7 +39,7 @@
                         </div>
                         <div class="col-6">
                             <strong>Quản lý:</strong><br>
-                            {{ appraisal.manager.name }}
+                            {% if appraisal.manager %}{{ appraisal.manager.name }}{% else %}Chưa có{% endif %}
                         </div>
                     </div>
 
@@ -66,10 +66,10 @@
                     {% endif %}
 
                     <div class="text-center mt-3">
-                        {% if appraisal.status in 'pending,in_progress' %}
+                        {% if appraisal.status == 'pending_self' or appraisal.status == 'in_progress' %}
                         <a href="{% url 'portal_self_assessment' appraisal.id %}" class="btn btn-warning btn-block">
                             <i class="fas fa-edit"></i> 
-                            {% if appraisal.status == 'pending' %}Bắt đầu tự đánh giá{% else %}Tiếp tục tự đánh giá{% endif %}
+                            {% if appraisal.status == 'pending_self' %}Bắt đầu tự đánh giá{% else %}Tiếp tục tự đánh giá{% endif %}
                         </a>
                         {% else %}
                         <a href="{% url 'portal_appraisal_detail' appraisal.id %}" class="btn btn-info btn-block">

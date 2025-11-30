@@ -294,6 +294,12 @@
                             </a>
                         </li>
                         <li class="portal-menu-item">
+                            <a href="{% url 'portal_my_appraisals' %}" class="portal-menu-link {% if 'appraisal' in request.path %}active{% endif %}">
+                                <i class="fas fa-star portal-menu-icon"></i>
+                                Đánh giá hiệu suất
+                            </a>
+                        </li>
+                        <li class="portal-menu-item">
                             <a href="{% url 'portal_organization_chart' %}" class="portal-menu-link {% if 'organization-chart' in request.path %}active{% endif %}">
                                 <i class="fas fa-sitemap portal-menu-icon"></i>
                                 Biểu đồ tổ chức

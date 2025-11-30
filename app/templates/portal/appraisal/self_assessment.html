@@ -132,13 +132,15 @@
                     <div class="card-body">
                         <p><strong>Kỳ đánh giá:</strong><br>{{ appraisal.period.name }}</p>
                         <p><strong>Thời gian:</strong><br>{{ appraisal.period.start_date|date:"d/m/Y" }} - {{ appraisal.period.end_date|date:"d/m/Y" }}</p>
-                        <p><strong>Quản lý đánh giá:</strong><br>{{ appraisal.manager.name }}</p>
+                        <p><strong>Quản lý đánh giá:</strong><br>
+                            {% if appraisal.manager %}{{ appraisal.manager.name }}{% else %}Chưa có{% endif %}
+                        </p>
                         <p><strong>Trạng thái:</strong><br>
-                            {% if appraisal.status == 'pending' %}
+                            {% if appraisal.status == 'pending_self' %}
                                 <span class="badge badge-warning">Chưa bắt đầu</span>
                             {% elif appraisal.status == 'in_progress' %}
                                 <span class="badge badge-info">Đang tiến hành</span>
-                            {% elif appraisal.status == 'self_assessed' %}
+                            {% elif appraisal.status == 'pending_manager' %}
                                 <span class="badge badge-success">Đã hoàn thành</span>
                             {% endif %}
                         </p>

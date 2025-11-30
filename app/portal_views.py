@@ -2135,13 +2135,13 @@ def appraisal_detail(request, appraisal_id):
 @login_required
 def self_assessment(request, appraisal_id):
     """Tự đánh giá"""
-    from .models import AppraisalCriteria
+    from .models import AppraisalCriteria, AppraisalPeriod
     
     employee = get_user_employee(request.user)
     appraisal = get_object_or_404(Appraisal, id=appraisal_id, employee=employee)
     
-    # Only allow if status is pending or in_progress
-    if appraisal.status not in ['pending', 'in_progress']:
+    # Only allow if status is pending_self or in_progress
+    if appraisal.status not in ['pending_self', 'in_progress']:
         messages.error(request, 'Không thể chỉnh sửa đánh giá đã hoàn thành.')
         return redirect('portal_appraisal_detail', appraisal_id=appraisal_id)
     
@@ -2195,9 +2195,10 @@ def self_assessment(request, appraisal_id):
         # Check if should mark as completed self-assessment
         if 'submit_final' in request.POST:
             appraisal.self_assessment_date = timezone.now()
-            appraisal.status = 'self_assessed'
+            appraisal.status = 'pending_manager'
             messages.success(request, 'Đã hoàn thành tự đánh giá! Quản lý sẽ xem xét đánh giá của bạn.')
         else:
+            appraisal.status = 'in_progress'
             messages.success(request, 'Đã lưu bản nháp tự đánh giá.')
         
         appraisal.save()
@@ -2233,7 +2234,7 @@ def self_assessment(request, appraisal_id):
         'employee': employee,
         'appraisal': appraisal,
         'criteria_by_category': criteria_by_category,
-        'can_edit': appraisal.status in ['pending', 'in_progress'],
+        'can_edit': appraisal.status in ['pending_self', 'in_progress'],
     }
     
     return render(request, 'portal/appraisal/self_assessment.html', context)

@@ -25499,3 +25499,479 @@ INFO 2025-11-23 18:25:25,265 basehttp "GET /portal/expenses/ HTTP/1.1" 200 25327
 INFO 2025-11-23 18:25:27,178 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 49128
 INFO 2025-11-23 18:25:39,478 autoreload D:\Study\CT201\Project\hrm\app\urls_portal.py changed, reloading.
 INFO 2025-11-23 18:25:40,882 autoreload Watching for file changes with StatReloader
+INFO 2025-11-23 18:33:55,418 basehttp "GET /portal/appraisal/?id=72a490af-da33-4c89-ab28-45d65a69a84c&vscodeBrowserReqId=1763897635373 HTTP/1.1" 302 0
+INFO 2025-11-23 18:33:55,442 basehttp "GET /login/?next=/portal/appraisal/%3Fid%3D72a490af-da33-4c89-ab28-45d65a69a84c%26vscodeBrowserReqId%3D1763897635373 HTTP/1.1" 200 2905
+INFO 2025-11-23 18:34:52,818 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 48665
+INFO 2025-11-23 18:34:54,023 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 12924
+INFO 2025-11-23 18:34:58,664 basehttp "GET /portal/appraisal/13/ HTTP/1.1" 200 13700
+INFO 2025-11-23 18:35:02,522 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 12924
+INFO 2025-11-23 18:37:42,090 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-23 18:37:43,710 autoreload Watching for file changes with StatReloader
+INFO 2025-11-23 18:37:56,305 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-23 18:37:57,905 autoreload Watching for file changes with StatReloader
+INFO 2025-11-23 18:38:09,955 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-23 18:38:11,946 autoreload Watching for file changes with StatReloader
+INFO 2025-11-23 18:39:11,540 basehttp "GET /portal/appraisal/?id=72a490af-da33-4c89-ab28-45d65a69a84c&vscodeBrowserReqId=1763897951483 HTTP/1.1" 302 0
+INFO 2025-11-23 18:39:11,574 basehttp "GET /login/?next=/portal/appraisal/%3Fid%3D72a490af-da33-4c89-ab28-45d65a69a84c%26vscodeBrowserReqId%3D1763897951483 HTTP/1.1" 200 2905
+INFO 2025-11-23 19:17:04,560 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 13109
+INFO 2025-11-23 19:17:15,988 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 48665
+INFO 2025-11-23 19:17:17,488 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 13109
+INFO 2025-11-23 19:17:19,512 basehttp "GET /portal/appraisal/13/self-assess/ HTTP/1.1" 200 27745
+INFO 2025-11-23 19:17:28,153 basehttp "GET /portal/ HTTP/1.1" 200 18728
+INFO 2025-11-23 22:23:00,734 basehttp "GET /portal/leaves/ HTTP/1.1" 302 0
+INFO 2025-11-23 22:23:00,799 basehttp "GET /login/?next=/portal/leaves/ HTTP/1.1" 200 2905
+INFO 2025-11-23 22:23:02,176 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-11-23 22:23:02,194 basehttp "GET /login/?next=/portal/ HTTP/1.1" 200 2905
+INFO 2025-11-23 22:23:33,671 basehttp "POST /login/?next=/portal/ HTTP/1.1" 302 0
+INFO 2025-11-23 22:23:33,794 basehttp "GET /portal/ HTTP/1.1" 200 18728
+INFO 2025-11-23 22:23:41,248 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-11-23 22:23:41,282 basehttp "GET /login/?next=/portal/ HTTP/1.1" 200 2905
+INFO 2025-11-23 22:23:53,590 basehttp "POST /login/?next=/portal/ HTTP/1.1" 302 0
+INFO 2025-11-23 22:23:53,695 basehttp "GET /portal/ HTTP/1.1" 200 20611
+INFO 2025-11-24 16:35:03,028 basehttp "GET /portal/organization-chart/ HTTP/1.1" 302 0
+INFO 2025-11-24 16:35:03,054 basehttp "GET /login/?next=/portal/organization-chart/ HTTP/1.1" 200 2905
+INFO 2025-11-24 16:35:10,968 basehttp "POST /login/?next=/portal/organization-chart/ HTTP/1.1" 302 0
+INFO 2025-11-24 16:35:11,182 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 48665
+INFO 2025-11-30 15:34:08,913 autoreload Watching for file changes with StatReloader
+WARNING 2025-11-30 15:34:14,524 log Not Found: /
+WARNING 2025-11-30 15:34:14,526 basehttp "GET / HTTP/1.1" 404 7025
+WARNING 2025-11-30 15:34:14,731 log Not Found: /favicon.ico
+WARNING 2025-11-30 15:34:14,732 basehttp "GET /favicon.ico HTTP/1.1" 404 7076
+INFO 2025-11-30 15:34:17,868 basehttp "GET /portal HTTP/1.1" 301 0
+INFO 2025-11-30 15:34:17,912 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-11-30 15:34:17,933 basehttp "GET /login/?next=/portal/ HTTP/1.1" 200 2905
+INFO 2025-11-30 15:34:18,307 basehttp "GET /static/plugins/icheck-bootstrap/icheck-bootstrap.min.css HTTP/1.1" 200 12505
+INFO 2025-11-30 15:34:18,317 basehttp "GET /static/plugins/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 78635
+INFO 2025-11-30 15:34:18,322 basehttp "GET /static/dist/js/adminlte.min.js HTTP/1.1" 200 24244
+INFO 2025-11-30 15:34:18,327 basehttp "GET /static/plugins/fontawesome-free/css/all.min.css HTTP/1.1" 200 56842
+INFO 2025-11-30 15:34:18,329 basehttp "GET /static/dist/css/adminlte.min.css HTTP/1.1" 200 656504
+INFO 2025-11-30 15:34:18,331 basehttp "GET /static/plugins/jquery/jquery.min.js HTTP/1.1" 200 88145
+INFO 2025-11-30 15:34:18,385 basehttp "GET /static/plugins/fontawesome-free/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 75728
+INFO 2025-11-30 15:34:32,145 basehttp "POST /login/?next=/portal/ HTTP/1.1" 302 0
+INFO 2025-11-30 15:34:32,208 basehttp "GET /portal/ HTTP/1.1" 200 18728
+INFO 2025-11-30 15:34:38,403 basehttp "GET /portal/leaves/ HTTP/1.1" 200 30885
+INFO 2025-11-30 15:34:42,058 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22261
+INFO 2025-11-30 15:34:43,915 basehttp "GET /portal/attendance/ HTTP/1.1" 200 45607
+INFO 2025-11-30 15:34:44,003 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-30 15:34:48,087 basehttp "GET /portal/expenses/ HTTP/1.1" 200 34808
+INFO 2025-11-30 15:34:51,033 basehttp "GET /portal/profile/ HTTP/1.1" 200 20995
+INFO 2025-11-30 15:34:51,127 basehttp "GET /media/avatars/0d83f6eb2ddb44cb9d446a9af58be3fb_426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_k9bNr6A.jpg HTTP/1.1" 200 411816
+INFO 2025-11-30 15:35:00,248 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 13109
+INFO 2025-11-30 15:35:02,603 basehttp "GET /portal/appraisal/13/self-assess/ HTTP/1.1" 200 27745
+INFO 2025-11-30 15:35:08,056 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 48665
+INFO 2025-11-30 15:35:51,238 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 13109
+INFO 2025-11-30 15:35:52,728 basehttp "GET /portal/appraisal/13/self-assess/ HTTP/1.1" 200 27745
+INFO 2025-11-30 15:36:28,482 basehttp "POST /portal/appraisal/13/self-assess/ HTTP/1.1" 302 0
+INFO 2025-11-30 15:36:28,511 basehttp "GET /portal/appraisal/13/ HTTP/1.1" 200 17456
+INFO 2025-11-30 15:36:33,308 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 13120
+INFO 2025-11-30 15:36:34,459 basehttp "GET /portal/appraisal/13/self-assess/ HTTP/1.1" 200 27962
+INFO 2025-11-30 15:36:39,523 basehttp "POST /portal/appraisal/13/self-assess/ HTTP/1.1" 302 0
+INFO 2025-11-30 15:36:39,551 basehttp "GET /portal/appraisal/13/ HTTP/1.1" 200 17519
+INFO 2025-11-30 15:36:44,628 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 13055
+INFO 2025-11-30 15:36:45,984 basehttp "GET /portal/appraisal/13/ HTTP/1.1" 200 17005
+INFO 2025-11-30 15:37:04,462 basehttp "GET /portal HTTP/1.1" 301 0
+INFO 2025-11-30 15:37:04,474 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-11-30 15:37:04,485 basehttp "GET /login/?next=/portal/ HTTP/1.1" 200 2905
+INFO 2025-11-30 15:37:04,537 basehttp "GET /static/plugins/icheck-bootstrap/icheck-bootstrap.min.css HTTP/1.1" 200 12505
+INFO 2025-11-30 15:37:04,538 basehttp "GET /static/plugins/fontawesome-free/css/all.min.css HTTP/1.1" 200 56842
+INFO 2025-11-30 15:37:04,541 basehttp "GET /static/dist/js/adminlte.min.js HTTP/1.1" 200 24244
+INFO 2025-11-30 15:37:04,542 basehttp "GET /static/plugins/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 78635
+INFO 2025-11-30 15:37:04,543 basehttp "GET /static/plugins/jquery/jquery.min.js HTTP/1.1" 200 88145
+INFO 2025-11-30 15:37:04,549 basehttp "GET /static/dist/css/adminlte.min.css HTTP/1.1" 200 656504
+INFO 2025-11-30 15:37:04,854 basehttp "GET /static/plugins/fontawesome-free/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 75728
+INFO 2025-11-30 15:37:10,334 basehttp "POST /login/?next=/portal/ HTTP/1.1" 302 0
+INFO 2025-11-30 15:37:10,373 basehttp "GET /portal/ HTTP/1.1" 200 20611
+INFO 2025-11-30 15:37:13,394 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 13903
+INFO 2025-11-30 15:37:14,588 basehttp "GET /portal/approvals/ HTTP/1.1" 200 45251
+INFO 2025-11-30 15:37:14,641 basehttp "GET /media/avatars/0d83f6eb2ddb44cb9d446a9af58be3fb_426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_k9bNr6A.jpg HTTP/1.1" 200 411816
+INFO 2025-11-30 15:37:21,351 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 13903
+INFO 2025-11-30 15:38:48,545 management_views Admin home accessed by hungvv
+INFO 2025-11-30 15:38:48,597 basehttp "GET /management/ HTTP/1.1" 200 42962
+INFO 2025-11-30 15:38:48,647 basehttp "GET /static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css HTTP/1.1" 200 9071
+INFO 2025-11-30 15:38:48,648 basehttp "GET /static/plugins/jqvmap/jqvmap.min.css HTTP/1.1" 200 613
+INFO 2025-11-30 15:38:48,649 basehttp "GET /static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css HTTP/1.1" 200 19470
+INFO 2025-11-30 15:38:48,652 basehttp "GET /static/dist/img/user8-128x128.jpg HTTP/1.1" 200 5060
+INFO 2025-11-30 15:38:48,656 basehttp "GET /static/plugins/daterangepicker/daterangepicker.css HTTP/1.1" 200 8069
+INFO 2025-11-30 15:38:48,657 basehttp "GET /static/plugins/summernote/summernote-bs4.css HTTP/1.1" 200 18647
+INFO 2025-11-30 15:38:48,658 basehttp "GET /static/dist/img/user3-128x128.jpg HTTP/1.1" 200 3511
+INFO 2025-11-30 15:38:48,660 basehttp "GET /static/dist/img/AdminLTELogo.png HTTP/1.1" 200 10380
+INFO 2025-11-30 15:38:48,661 basehttp "GET /static/dist/img/user1-128x128.jpg HTTP/1.1" 200 2879
+INFO 2025-11-30 15:38:48,661 basehttp "GET /static/dist/img/Logo-TITOPS.png HTTP/1.1" 200 17797
+INFO 2025-11-30 15:38:48,666 basehttp "GET /static/plugins/sparklines/sparkline.js HTTP/1.1" 200 7219
+INFO 2025-11-30 15:38:48,671 basehttp "GET /static/plugins/chart.js/Chart.min.js HTTP/1.1" 200 172812
+INFO 2025-11-30 15:38:48,680 basehttp "GET /static/plugins/jquery-knob/jquery.knob.min.js HTTP/1.1" 200 10804
+INFO 2025-11-30 15:38:48,680 basehttp "GET /static/plugins/jquery-ui/jquery-ui.min.js HTTP/1.1" 200 253669
+INFO 2025-11-30 15:38:48,681 basehttp "GET /static/plugins/jqvmap/jquery.vmap.min.js HTTP/1.1" 200 21150
+INFO 2025-11-30 15:38:48,682 basehttp "GET /static/plugins/jqvmap/maps/jquery.vmap.usa.js HTTP/1.1" 200 47712
+INFO 2025-11-30 15:38:48,688 basehttp "GET /static/plugins/moment/moment.min.js HTTP/1.1" 200 53324
+INFO 2025-11-30 15:38:48,691 basehttp "GET /static/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js HTTP/1.1" 200 56879
+INFO 2025-11-30 15:38:48,691 basehttp "GET /static/plugins/daterangepicker/daterangepicker.js HTTP/1.1" 200 67268
+INFO 2025-11-30 15:38:48,694 basehttp "GET /static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js HTTP/1.1" 200 42076
+INFO 2025-11-30 15:38:48,695 basehttp "GET /static/dist/js/adminlte.js HTTP/1.1" 200 55314
+INFO 2025-11-30 15:38:48,696 basehttp "GET /static/plugins/summernote/summernote-bs4.min.js HTTP/1.1" 200 127927
+INFO 2025-11-30 15:38:48,697 basehttp "GET /static/dist/js/pages/dashboard.js HTTP/1.1" 200 7577
+INFO 2025-11-30 15:38:48,698 basehttp "GET /static/dist/js/demo.js HTTP/1.1" 200 12351
+INFO 2025-11-30 15:38:48,842 basehttp "GET /static/plugins/fontawesome-free/webfonts/fa-regular-400.woff2 HTTP/1.1" 200 13584
+ERROR 2025-11-30 15:39:27,162 log Internal Server Error: /management/appraisal/manager/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 3987, in manager_appraisals
+    return render(request, 'hod_template/manager_appraisals.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 321, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 238, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 321, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'manager_review' not found. 'manager_review' is not a valid view function or pattern name.
+ERROR 2025-11-30 15:39:27,177 basehttp "GET /management/appraisal/manager/ HTTP/1.1" 500 219385
+INFO 2025-11-30 15:41:11,076 basehttp "GET /management/departments/ HTTP/1.1" 200 38115
+INFO 2025-11-30 15:41:11,295 basehttp "GET /static/plugins/summernote/font/summernote.woff?1d9aeaaff0a8939558a45be6cd52cd4c HTTP/1.1" 200 10604
+WARNING 2025-11-30 15:41:13,974 log Forbidden (Permission denied): /management/employees/add/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\decorators.py", line 31, in wrapped_view
+    raise PermissionDenied
+django.core.exceptions.PermissionDenied
+WARNING 2025-11-30 15:41:13,985 basehttp "GET /management/employees/add/ HTTP/1.1" 403 135
+INFO 2025-11-30 15:42:40,020 basehttp "GET /portal/profile/ HTTP/1.1" 200 20995
+INFO 2025-11-30 15:42:40,985 basehttp "GET /portal/expenses/ HTTP/1.1" 200 34808
+INFO 2025-11-30 15:42:42,336 basehttp "GET /portal/attendance/ HTTP/1.1" 200 45607
+INFO 2025-11-30 15:42:42,409 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-30 15:42:50,621 basehttp "GET /portal/ HTTP/1.1" 200 18728
+INFO 2025-11-30 15:42:54,041 basehttp "GET /portal/leaves/ HTTP/1.1" 200 30885
+INFO 2025-11-30 15:42:55,069 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22261
+INFO 2025-11-30 15:42:56,587 basehttp "GET /portal/attendance/ HTTP/1.1" 200 45607
+INFO 2025-11-30 15:42:56,665 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-30 15:42:57,505 basehttp "GET /portal/expenses/ HTTP/1.1" 200 34808
+INFO 2025-11-30 15:42:58,302 basehttp "GET /portal/profile/ HTTP/1.1" 200 20995
+INFO 2025-11-30 15:42:59,216 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 13055
+INFO 2025-11-30 15:43:00,412 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 48665
+INFO 2025-11-30 15:43:01,886 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 13055
+WARNING 2025-11-30 15:43:05,579 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-30 15:43:05,581 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 7187
+INFO 2025-11-30 15:43:05,839 basehttp "GET /static/plugins/bootstrap/js/bootstrap.bundle.min.js.map HTTP/1.1" 200 311949
+INFO 2025-11-30 15:43:05,840 basehttp "GET /static/dist/js/adminlte.min.js.map HTTP/1.1" 200 78868
+INFO 2025-11-30 15:43:05,901 basehttp "GET /static/dist/css/adminlte.min.css.map HTTP/1.1" 200 2061805
+INFO 2025-11-30 15:43:26,393 basehttp "GET /portal/ HTTP/1.1" 200 18728
+WARNING 2025-11-30 15:43:26,490 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-11-30 15:43:26,491 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 7187
+INFO 2025-11-30 16:03:16,779 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-11-30 16:03:18,466 autoreload Watching for file changes with StatReloader
+INFO 2025-11-30 16:03:47,870 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 48665
+INFO 2025-11-30 16:04:52,344 basehttp "GET /management/employees/ HTTP/1.1" 200 37544
+INFO 2025-11-30 16:05:12,749 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-30 16:05:12,760 basehttp "GET /login/ HTTP/1.1" 200 3054
+INFO 2025-11-30 16:05:19,064 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-30 16:05:19,099 basehttp "GET /portal/ HTTP/1.1" 200 20907
+INFO 2025-11-30 16:05:21,096 management_views Admin home accessed by hangpt
+INFO 2025-11-30 16:05:21,135 basehttp "GET /management/ HTTP/1.1" 200 42377
+INFO 2025-11-30 16:05:50,268 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-30 16:05:50,283 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-30 16:05:59,367 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-30 16:05:59,400 basehttp "GET /portal/ HTTP/1.1" 200 20634
+INFO 2025-11-30 16:06:01,262 management_views Admin home accessed by dungpd
+INFO 2025-11-30 16:06:01,298 basehttp "GET /management/ HTTP/1.1" 200 42377
+WARNING 2025-11-30 16:06:16,385 log Forbidden (Permission denied): /management/employees/add/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\decorators.py", line 31, in wrapped_view
+    raise PermissionDenied
+django.core.exceptions.PermissionDenied
+WARNING 2025-11-30 16:06:16,405 basehttp "GET /management/employees/add/ HTTP/1.1" 403 135
+INFO 2025-11-30 16:06:19,390 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-30 16:06:19,413 basehttp "GET /login/ HTTP/1.1" 200 3054
+INFO 2025-11-30 16:06:25,385 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-30 16:06:25,413 basehttp "GET /portal/ HTTP/1.1" 200 20907
+INFO 2025-11-30 16:06:27,674 management_views Admin home accessed by hangpt
+INFO 2025-11-30 16:06:27,705 basehttp "GET /management/ HTTP/1.1" 200 42377
+INFO 2025-11-30 16:10:38,798 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-30 16:10:38,824 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-30 16:10:42,467 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-30 16:10:42,503 basehttp "GET /portal/ HTTP/1.1" 200 18895
+INFO 2025-11-30 16:10:44,458 management_views Admin home accessed by linhvt
+INFO 2025-11-30 16:10:44,515 basehttp "GET /management/ HTTP/1.1" 200 42377
+WARNING 2025-11-30 16:10:50,972 log Forbidden (Permission denied): /management/employees/add/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\decorators.py", line 31, in wrapped_view
+    raise PermissionDenied
+django.core.exceptions.PermissionDenied
+WARNING 2025-11-30 16:10:50,987 basehttp "GET /management/employees/add/ HTTP/1.1" 403 135
+WARNING 2025-11-30 16:11:11,591 log Forbidden (CSRF token from POST incorrect.): /login/
+WARNING 2025-11-30 16:11:11,602 basehttp "POST /login/ HTTP/1.1" 403 2518
+INFO 2025-11-30 16:11:15,002 basehttp "GET /login/ HTTP/1.1" 200 3054
+INFO 2025-11-30 16:11:19,740 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-30 16:11:19,797 basehttp "GET /portal/ HTTP/1.1" 200 20907
+INFO 2025-11-30 16:11:21,546 management_views Admin home accessed by hangpt
+INFO 2025-11-30 16:11:21,576 basehttp "GET /management/ HTTP/1.1" 200 42377
+INFO 2025-11-30 16:12:16,404 basehttp "GET /portal/payroll/ HTTP/1.1" 200 26618
+INFO 2025-11-30 16:12:21,624 basehttp "GET /management/payroll/manage/ HTTP/1.1" 200 114756
+INFO 2025-11-30 16:16:47,175 management_views Admin home accessed by hangpt
+INFO 2025-11-30 16:16:47,206 basehttp "GET /management/ HTTP/1.1" 200 42377
+INFO 2025-11-30 16:17:50,066 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 13055
+INFO 2025-11-30 16:18:16,648 basehttp "GET /portal/appraisal/13/ HTTP/1.1" 200 17005
+INFO 2025-11-30 16:18:23,006 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 13055
+WARNING 2025-11-30 16:18:50,905 log Not Found: /
+WARNING 2025-11-30 16:18:50,907 basehttp "GET / HTTP/1.1" 404 7025
+INFO 2025-11-30 16:18:55,775 basehttp "GET /portal HTTP/1.1" 301 0
+INFO 2025-11-30 16:18:55,814 basehttp "GET /portal/ HTTP/1.1" 200 20907
+INFO 2025-11-30 16:19:02,711 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 13909
+INFO 2025-11-30 16:19:07,834 basehttp "GET /portal/approvals/ HTTP/1.1" 200 25225
+INFO 2025-11-30 16:19:24,239 basehttp "GET /portal/ HTTP/1.1" 200 20907
+INFO 2025-11-30 16:19:46,620 basehttp "GET /portal/profile/ HTTP/1.1" 200 20995
+INFO 2025-11-30 16:20:05,910 basehttp "GET /management/appraisal/ HTTP/1.1" 200 34152
+INFO 2025-11-30 16:20:10,641 basehttp "GET /management/appraisal/ HTTP/1.1" 200 34152
+INFO 2025-11-30 16:20:11,465 basehttp "GET /management/appraisal/manager/ HTTP/1.1" 200 34158
+INFO 2025-11-30 16:20:13,332 basehttp "GET /management/appraisal/hr/ HTTP/1.1" 200 70193
+INFO 2025-11-30 16:20:22,921 basehttp "GET /management/appraisal/periods/ HTTP/1.1" 200 34288
+INFO 2025-11-30 16:20:48,915 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 13055
+INFO 2025-11-30 16:20:50,321 basehttp "GET /portal/appraisal/13/ HTTP/1.1" 200 17005
+INFO 2025-11-30 16:20:58,624 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 13055
+INFO 2025-11-30 16:21:00,955 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-30 16:21:00,965 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-30 16:21:06,670 basehttp "GET /management/org-chart/ HTTP/1.1" 200 66464
+INFO 2025-11-30 16:21:16,264 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-30 16:21:16,297 basehttp "GET /portal/ HTTP/1.1" 200 18723
+INFO 2025-11-30 16:21:22,036 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 13109
+INFO 2025-11-30 16:21:25,889 basehttp "GET /portal/appraisal/15/self-assess/ HTTP/1.1" 200 27745
+INFO 2025-11-30 16:27:02,933 basehttp "GET /management/appraisal/periods/ HTTP/1.1" 200 34288
+INFO 2025-11-30 16:27:04,528 basehttp "GET /management/appraisal/periods/1/ HTTP/1.1" 200 36431
+INFO 2025-11-30 16:27:06,932 basehttp "GET /management/appraisal/periods/1/add-criteria/ HTTP/1.1" 200 35660
+INFO 2025-11-30 16:34:11,396 basehttp "GET /management/appraisal/periods/1/ HTTP/1.1" 200 36431
+INFO 2025-11-30 16:34:12,965 basehttp "GET /management/appraisal/periods/ HTTP/1.1" 200 34288
+INFO 2025-11-30 16:34:15,230 basehttp "GET /management/appraisal/periods/2/ HTTP/1.1" 200 70213
+INFO 2025-11-30 16:34:22,814 basehttp "GET /management/appraisal/13/detail/ HTTP/1.1" 200 41551
+INFO 2025-11-30 16:34:22,984 basehttp "GET /media/avatars/0d83f6eb2ddb44cb9d446a9af58be3fb_426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_k9bNr6A.jpg HTTP/1.1" 200 411816
+INFO 2025-11-30 16:34:34,558 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-30 16:34:34,573 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-30 16:34:43,665 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-30 16:34:43,695 basehttp "GET /portal/ HTTP/1.1" 200 18728
+INFO 2025-11-30 16:34:48,123 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-11-30 16:34:48,142 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-11-30 16:34:52,906 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-11-30 16:34:52,947 basehttp "GET /portal/ HTTP/1.1" 200 20611
+INFO 2025-11-30 16:34:55,170 management_views Admin home accessed by hungvv
+INFO 2025-11-30 16:34:55,198 basehttp "GET /management/ HTTP/1.1" 200 42962
+ERROR 2025-11-30 16:34:58,763 log Internal Server Error: /management/appraisal/manager/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 3987, in manager_appraisals
+    return render(request, 'hod_template/manager_appraisals.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 321, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 238, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 321, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'manager_review' not found. 'manager_review' is not a valid view function or pattern name.
+ERROR 2025-11-30 16:34:58,771 basehttp "GET /management/appraisal/manager/ HTTP/1.1" 500 219385
+INFO 2025-11-30 16:36:22,077 basehttp "GET /management/recruitment/applications/ HTTP/1.1" 200 177664
+INFO 2025-11-30 16:36:29,111 basehttp "GET /management/recruitment/jobs/ HTTP/1.1" 200 61243
+INFO 2025-11-30 16:36:32,040 basehttp "GET /management/recruitment/applications/ HTTP/1.1" 200 177664
+INFO 2025-11-30 16:36:35,642 basehttp "GET /management/recruitment/jobs/ HTTP/1.1" 200 61243
+INFO 2025-11-30 16:36:38,969 basehttp "GET /management/recruitment/applications/ HTTP/1.1" 200 177664
+INFO 2025-11-30 16:36:45,900 basehttp "GET /careers/ HTTP/1.1" 200 19779
+INFO 2025-11-30 16:36:58,993 basehttp "GET /management/leave/types/ HTTP/1.1" 200 48890
+INFO 2025-11-30 16:37:02,605 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 13055
+INFO 2025-11-30 16:37:03,304 basehttp "GET /portal/profile/ HTTP/1.1" 200 20995
+INFO 2025-11-30 16:37:03,381 basehttp "GET /media/avatars/0d83f6eb2ddb44cb9d446a9af58be3fb_426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_k9bNr6A.jpg HTTP/1.1" 200 411816
+INFO 2025-11-30 16:37:05,591 basehttp "GET /portal/expenses/ HTTP/1.1" 200 34808
+INFO 2025-11-30 16:37:07,970 basehttp "GET /portal/attendance/ HTTP/1.1" 200 45607
+INFO 2025-11-30 16:37:08,045 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-30 16:37:09,034 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22261
+INFO 2025-11-30 16:37:10,160 basehttp "GET /portal/leaves/ HTTP/1.1" 200 30885
+INFO 2025-11-30 16:37:10,951 basehttp "GET /portal/ HTTP/1.1" 200 18728
+INFO 2025-11-30 16:37:16,820 basehttp "GET /portal/attendance/ HTTP/1.1" 200 45607
+INFO 2025-11-30 16:37:16,901 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-30 16:37:18,233 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22261
+INFO 2025-11-30 16:37:19,278 basehttp "GET /portal/expenses/create/ HTTP/1.1" 200 16865
+INFO 2025-11-30 16:37:21,326 basehttp "GET /portal/leaves/create/ HTTP/1.1" 200 18232
+INFO 2025-11-30 16:37:27,260 basehttp "GET /portal/leaves/ HTTP/1.1" 200 30885
+INFO 2025-11-30 16:37:42,466 basehttp "GET /portal/profile/ HTTP/1.1" 200 20995
+INFO 2025-11-30 16:37:47,031 basehttp "GET /portal/attendance/ HTTP/1.1" 200 45607
+INFO 2025-11-30 16:37:47,114 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-11-30 16:37:58,238 basehttp "POST /portal/attendance/check-in/ HTTP/1.1" 200 132
+INFO 2025-11-30 16:38:00,298 basehttp "GET /portal/attendance/ HTTP/1.1" 200 47177
+INFO 2025-11-30 16:38:00,367 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 188
+INFO 2025-11-30 16:38:05,797 basehttp "POST /portal/attendance/check-out/ HTTP/1.1" 200 156
+INFO 2025-11-30 16:38:07,868 basehttp "GET /portal/attendance/ HTTP/1.1" 200 47200
+INFO 2025-11-30 16:38:07,944 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 187
+INFO 2025-11-30 16:38:13,425 basehttp "GET /portal/attendance/ HTTP/1.1" 200 47200
+INFO 2025-11-30 16:38:13,503 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 187
+INFO 2025-11-30 16:38:14,280 basehttp "GET /portal/attendance/ HTTP/1.1" 200 47200
+INFO 2025-11-30 16:38:14,348 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 187
+INFO 2025-11-30 16:58:46,049 management_views Admin home accessed by hungvv
+INFO 2025-11-30 16:58:46,093 basehttp "GET /management/ HTTP/1.1" 200 42962
+INFO 2025-11-30 17:02:58,138 basehttp "GET /portal/ HTTP/1.1" 200 18728
