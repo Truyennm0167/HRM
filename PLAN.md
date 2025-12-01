@@ -6,18 +6,18 @@
 
 # 📋 DANH SÁCH 10 YÊU CẦU CẦN PHÁT TRIỂN
 
-| #   | Yêu cầu                                          | Độ ưu tiên  | Độ khó | Thời gian |
-| --- | ------------------------------------------------ | ----------- | ------ | --------- |
-| 1   | Sửa hệ thống phân quyền                          | 🔴 CRITICAL | Medium | 0.5 ngày  |
-| 2   | Hoàn thiện Performance Appraisal                 | 🔴 CRITICAL | High   | 1-2 ngày  |
-| 3   | Thêm tạo tài khoản nhân viên vào sidebar         | 🟢 EASY     | Low    | 0.5 giờ   |
-| 4   | Module Khen thưởng - Kỷ luật                     | 🟠 HIGH     | Medium | 1-2 ngày  |
-| 5   | Sửa Chấm công Portal                             | 🟠 HIGH     | Medium | 0.5 ngày  |
-| 6   | Loại bỏ Portal khỏi /management, thêm nút chuyển | 🟢 EASY     | Low    | 0.5 giờ   |
-| 7   | Sắp xếp lại Sidebar theo chuẩn HRM               | 🟡 MEDIUM   | Low    | 0.5 ngày  |
-| 8   | Thiết kế lại Dashboard với Charts                | 🟠 HIGH     | Medium | 1-2 ngày  |
-| 9   | Tích hợp Email Notifications                     | 🟡 MEDIUM   | Medium | 1 ngày    |
-| 10  | Thêm phần Settings                               | 🟡 MEDIUM   | Medium | 1 ngày    |
+| #   | Yêu cầu                                          | Độ ưu tiên  | Độ khó | Thời gian | Trạng thái |
+| --- | ------------------------------------------------ | ----------- | ------ | --------- | ---------- |
+| 1   | Sửa hệ thống phân quyền                          | 🔴 CRITICAL | Medium | 0.5 ngày  | ✅ DONE    |
+| 2   | Hoàn thiện Performance Appraisal                 | 🔴 CRITICAL | High   | 1-2 ngày  | ✅ DONE    |
+| 3   | Thêm tạo tài khoản nhân viên vào sidebar         | 🟢 EASY     | Low    | 0.5 giờ   | ✅ DONE    |
+| 4   | Module Khen thưởng - Kỷ luật                     | 🟠 HIGH     | Medium | 1-2 ngày  | ✅ DONE    |
+| 5   | Sửa Chấm công Portal                             | 🟠 HIGH     | Medium | 0.5 ngày  | ✅ DONE    |
+| 6   | Loại bỏ Portal khỏi /management, thêm nút chuyển | 🟢 EASY     | Low    | 0.5 giờ   | ✅ DONE    |
+| 7   | Sắp xếp lại Sidebar theo chuẩn HRM               | 🟡 MEDIUM   | Low    | 0.5 ngày  | ✅ DONE    |
+| 8   | Thiết kế lại Dashboard với Charts                | 🟠 HIGH     | Medium | 1-2 ngày  | ✅ DONE    |
+| 9   | Tích hợp Email Notifications                     | 🟡 MEDIUM   | Medium | 1 ngày    | 🔲 TODO    |
+| 10  | Thêm phần Settings                               | 🟡 MEDIUM   | Medium | 1 ngày    | 🔲 TODO    |
 
 ---
 
@@ -622,10 +622,11 @@ Sắp xếp sidebar theo thứ tự chuẩn ngành HRM
 
 ---
 
-## 8️⃣ THIẾT KẾ LẠI DASHBOARD VỚI CHARTS
+## 8️⃣ THIẾT KẾ LẠI DASHBOARD VỚI CHARTS ✅ HOÀN THÀNH
 
 **Mức độ ưu tiên:** 🟠 HIGH  
 **Thời gian ước tính:** 1-2 ngày
+**Trạng thái:** ✅ ĐÃ HOÀN THÀNH (01/12/2025)
 
 ### 📌 Yêu cầu
 

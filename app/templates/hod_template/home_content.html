@@ -1,242 +1,422 @@
-{% extends 'hod_template/base_template.html'%}
+{% extends 'hod_template/base_template.html' %}
 {% load humanize %}
-{% block page_title %}
-Trang chủ
-{% endblock page_title %}
-{% load static %}
+
+{% block page_title %}Dashboard{% endblock %}
+
 {% block main_content %}
-<!-- Main content -->
-    <section class="content">
-      <div class="container-fluid">
-        <!-- Small boxes (Stat box) -->
-        <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>{{ employees.count }}</h3>
-
-                <p>Nhân viên</p>
-              </div>
-              <a href="\add_employee">
-                <div class="icon">
-                  <i class="ion ion-person-add"></i>
-                </div>
-              </a>
-              <a href="{% url 'employee_list' %}" class="small-box-footer">Chi tiết<i class="fas fa-arrow-circle-right"></i></a>
+<!-- Summary Cards -->
+<div class="row">
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3>{{ total_employees }}</h3>
+                <p>Tổng nhân viên</p>
             </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>{{ departments.count }}</h3>
+            <div class="icon">
+                <i class="fas fa-users"></i>
+            </div>
+            <a href="{% url 'employee_list' %}" class="small-box-footer">
+                Xem chi tiết <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
 
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h3>{{ active_employees }}</h3>
+                <p>Đang làm việc</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-user-check"></i>
+            </div>
+            <a href="{% url 'employee_list' %}?status=active" class="small-box-footer">
+                Xem chi tiết <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <h3>{{ total_salary|intcomma }} đ</h3>
+                <p>Tổng lương tháng</p>
+            </div>
+            <div class="icon">
+                <i class="fas fa-money-bill-wave"></i>
+            </div>
+            <a href="{% url 'management_calculate_payroll' %}" class="small-box-footer">
+                Xem chi tiết <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <h3>{{ total_departments }}</h3>
                 <p>Phòng ban</p>
-              </div>
-              <a href="{% url 'department_page' %}">
-                <div class="icon">
-                  <i class="ion ion-briefcase"></i>
-                </div>
-              </a>
-              <a href="{% url 'department_page' %}" class="small-box-footer">Chi tiết <i class="fas fa-arrow-circle-right"></i></a>
             </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>80,241,304{{ total_salary|floatformat:0|intcomma }} đ</h3>
-
-                <p>Tổng lương</p>
-              </div>
-              <a href="{% url 'manage_payroll' %}">
-                <div class="icon">
-                  <i class="ion ion-cash"></i>
-                </div>
-              </a>
-              <a href="{% url 'manage_payroll' %}" class="small-box-footer">Chi tiết <i class="fas fa-arrow-circle-right"></i></a>
+            <div class="icon">
+                <i class="fas fa-building"></i>
             </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>4</h3>
-
-                <p>Nhân viên đang làm việc</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">Chi tiết <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
+            <a href="{% url 'management_departments' %}" class="small-box-footer">
+                Xem chi tiết <i class="fas fa-arrow-circle-right"></i>
+            </a>
         </div>
-        <!-- /.row -->
-         
-        <!-- Appraisal Notifications -->
-        <div class="row">
-          {% if my_pending_appraisals > 0 %}
-          <div class="col-md-4">
-            <div class="card card-warning">
-              <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-exclamation-triangle"></i> Đánh giá của bạn</h3>
-              </div>
-              <div class="card-body">
-                <p>Bạn có <strong>{{ my_pending_appraisals }}</strong> đánh giá đang chờ tự đánh giá.</p>
-                <a href="{% url 'my_appraisals' %}" class="btn btn-warning">
-                  <i class="fas fa-edit"></i> Đánh giá ngay
-                </a>
-              </div>
-            </div>
-          </div>
-          {% endif %}
+    </div>
+</div>
 
-          {% if team_pending_appraisals > 0 %}
-          <div class="col-md-4">
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-users"></i> Đánh giá team</h3>
-              </div>
-              <div class="card-body">
-                <p>Bạn có <strong>{{ team_pending_appraisals }}</strong> nhân viên chờ đánh giá.</p>
-                <a href="{% url 'manager_appraisals' %}" class="btn btn-primary">
-                  <i class="fas fa-user-tie"></i> Xem danh sách
-                </a>
-              </div>
+<!-- Quick Stats Info Boxes -->
+<div class="row">
+    <div class="col-md-3 col-sm-6 col-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-info"><i class="fas fa-calendar-alt"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">Đơn nghỉ phép chờ duyệt</span>
+                <span class="info-box-number">{{ pending_leaves }}</span>
             </div>
-          </div>
-          {% endif %}
-
-          {% if hr_pending_appraisals > 0 %}
-          <div class="col-md-4">
-            <div class="card card-info">
-              <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-clipboard-check"></i> HR Appraisals</h3>
-              </div>
-              <div class="card-body">
-                <p>Có <strong>{{ hr_pending_appraisals }}</strong> đánh giá chờ phê duyệt HR.</p>
-                <a href="{% url 'hr_appraisals' %}" class="btn btn-info">
-                  <i class="fas fa-check"></i> Phê duyệt
-                </a>
-              </div>
-            </div>
-          </div>
-          {% endif %}
         </div>
+    </div>
 
-        <!-- Recent Completed Appraisals -->
-        {% if recent_appraisals %}
-        <div class="row">
-          <div class="col-12">
-            <div class="card card-success">
-              <div class="card-header">
-                <h3 class="card-title"><i class="fas fa-check-circle"></i> Đánh giá hoàn thành gần đây</h3>
-                <div class="card-tools">
-                  <a href="{% url 'hr_appraisals' %}" class="btn btn-sm btn-success">
-                    <i class="fas fa-list"></i> Xem tất cả
-                  </a>
+    <div class="col-md-3 col-sm-6 col-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-warning"><i class="fas fa-receipt"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">Chi phí chờ duyệt</span>
+                <span class="info-box-number">{{ pending_expenses }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-success"><i class="fas fa-trophy"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">Khen thưởng năm nay</span>
+                <span class="info-box-number">{{ total_rewards_year }}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 col-12">
+        <div class="info-box">
+            <span class="info-box-icon bg-danger"><i class="fas fa-gavel"></i></span>
+            <div class="info-box-content">
+                <span class="info-box-text">Kỷ luật năm nay</span>
+                <span class="info-box-number">{{ total_disciplines_year }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Row 1 -->
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-chart-pie mr-1"></i>
+                    Phân bố nhân viên theo phòng ban
+                </h3>
+            </div>
+            <div class="card-body">
+                <canvas id="deptPieChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-chart-pie mr-1"></i>
+                    Phân bố theo trạng thái
+                </h3>
+            </div>
+            <div class="card-body">
+                <canvas id="statusDoughnutChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Charts Row 2 -->
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-chart-bar mr-1"></i>
+                    Lương trung bình theo phòng ban
+                </h3>
+            </div>
+            <div class="card-body">
+                <canvas id="salaryBarChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-chart-line mr-1"></i>
+                    Xu hướng tuyển dụng (6 tháng gần nhất)
+                </h3>
+            </div>
+            <div class="card-body">
+                <canvas id="hiringLineChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Appraisal Notifications -->
+{% if appraisal_notifications %}
+<div class="row">
+    <div class="col-12">
+        <div class="card card-warning">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-bell mr-1"></i>
+                    Thông báo đánh giá
+                </h3>
+            </div>
+            <div class="card-body">
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    Có <strong>{{ appraisal_notifications|length }}</strong> nhân viên cần đánh giá trong thời gian tới:
                 </div>
-              </div>
-              <div class="card-body p-0">
-                <table class="table table-sm">
-                  <thead>
-                    <tr>
-                      <th>Nhân viên</th>
-                      <th>Kỳ</th>
-                      <th>Điểm</th>
-                      <th>Xếp loại</th>
-                      <th>Ngày hoàn thành</th>
-                      <th>Thao tác</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for appraisal in recent_appraisals %}
-                    <tr>
-                      <td>{{ appraisal.employee.name }}</td>
-                      <td>{{ appraisal.period.name }}</td>
-                      <td><strong class="text-success">{{ appraisal.final_score }}</strong></td>
-                      <td>
-                        {% if appraisal.overall_rating == 'outstanding' %}
-                          <span class="badge badge-danger">Xuất sắc</span>
-                        {% elif appraisal.overall_rating == 'exceeds' %}
-                          <span class="badge badge-success">Vượt mức</span>
-                        {% elif appraisal.overall_rating == 'meets' %}
-                          <span class="badge badge-primary">Đạt yêu cầu</span>
-                        {% elif appraisal.overall_rating == 'needs_improvement' %}
-                          <span class="badge badge-warning">Cần cải thiện</span>
-                        {% elif appraisal.overall_rating == 'unsatisfactory' %}
-                          <span class="badge badge-secondary">Không đạt</span>
-                        {% endif %}
-                      </td>
-                      <td>{{ appraisal.final_review_date|date:"d/m/Y" }}</td>
-                      <td>
-                        <a href="{% url 'appraisal_detail' appraisal.id %}" class="btn btn-xs btn-info">
-                          <i class="fas fa-eye"></i> Xem
-                        </a>
-                      </td>
-                    </tr>
+                <ul class="list-group">
+                    {% for noti in appraisal_notifications %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>{{ noti.employee.name }}</strong>
+                            <small class="text-muted ml-2">- {{ noti.employee.department.name }}</small>
+                        </div>
+                        <span class="badge badge-warning badge-pill">{{ noti.message }}</span>
+                    </li>
                     {% endfor %}
-                  </tbody>
-                </table>
-              </div>
+                </ul>
             </div>
-          </div>
         </div>
-        {% endif %}
+    </div>
+</div>
+{% endif %}
 
-        <div class="row">
-          <div class="col-12">
-            <div class="card card-primary">
-              <div class="card-header">
-                <h3 class="card-title">Danh sách Nhân viên</h3>
-              </div>
-              <div class="card-body">
-                <table id="employeeTable" class="table table-bordered table-hover">
-                  <thead>
-                    <tr>
-                      <th>STT</th>
-                      <th>Họ tên</th>
-                      <th>Giới tính</th>
-                      <th>Ngày sinh</th>
-                      <th>Vị trí làm việc</th>
-                      <th>Phòng ban</th>
-                      <th>Ngày vào làm</th>
-                      <th>Hành động</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for emp in employees %}
-                      <tr>
-                        <td>{{ forloop.counter }}</td>
-                        <td>{{ emp.name }}</td>
-                        <td>{{ emp.get_gender_display }}</td>
-                        <td>{{ emp.birthday|date:"d/m/Y" }}</td>
-                        <td>{{ emp.job_position }}</td>
-                        <td>{{ emp.department.name }}</td>
-                        <td>{{ emp.contract_start_date|date:"d/m/Y" }}</td>
-                        <td>
-                          <a href="{% url 'employee_detail' emp.id %}" class="btn btn-info btn-sm">
-                            <i class="fas fa-eye"></i> Xem
-                          </a>
-                        </td>
-                      </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-              </div>
+<!-- Recent Activities -->
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-user-plus mr-1"></i>
+                    Nhân viên mới
+                </h3>
             </div>
-          </div>
+            <div class="card-body p-0">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Tên</th>
+                            <th>Phòng ban</th>
+                            <th>Ngày vào</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for emp in new_employees %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'employee_detail' emp.id %}">{{ emp.name }}</a>
+                            </td>
+                            <td>{{ emp.department.name|default:"-" }}</td>
+                            <td>{{ emp.date_joined|date:"d/m/Y" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center text-muted">Không có nhân viên mới</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <!-- /.row -->
+    </div>
 
-      </div><!-- /.container-fluid -->
-    </section>
-    <!-- /.content -->
+    <div class="col-lg-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="fas fa-file-contract mr-1"></i>
+                    Hợp đồng sắp hết hạn
+                </h3>
+                <span class="badge badge-danger float-right">{{ expiring_contracts }}</span>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Tên</th>
+                            <th>Loại HĐ</th>
+                            <th>Ngày hết hạn</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for contract in expiring_contracts_list %}
+                        <tr>
+                            <td>
+                                <a href="{% url 'employee_detail' contract.employee.id %}">{{ contract.employee.name }}</a>
+                            </td>
+                            <td>{{ contract.get_contract_type_display }}</td>
+                            <td>
+                                <span class="text-danger">{{ contract.end_date|date:"d/m/Y" }}</span>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="3" class="text-center text-muted">Không có hợp đồng sắp hết hạn</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 
-{% endblock main_content %}
+<!-- Chart.js Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Department Pie Chart
+    var deptData = {{ dept_employee_data|safe }};
+    var deptCtx = document.getElementById('deptPieChart').getContext('2d');
+    new Chart(deptCtx, {
+        type: 'pie',
+        data: {
+            labels: deptData.labels,
+            datasets: [{
+                data: deptData.values,
+                backgroundColor: [
+                    '#f56954', '#00a65a', '#f39c12', '#00c0ef', '#3c8dbc',
+                    '#d2d6de', '#ff6384', '#36a2eb', '#ffce56', '#4bc0c0'
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right'
+                }
+            }
+        }
+    });
+
+    // Status Doughnut Chart
+    var statusData = {{ status_data|safe }};
+    var statusCtx = document.getElementById('statusDoughnutChart').getContext('2d');
+    new Chart(statusCtx, {
+        type: 'doughnut',
+        data: {
+            labels: statusData.labels,
+            datasets: [{
+                data: statusData.values,
+                backgroundColor: ['#17a2b8', '#ffc107', '#28a745', '#6c757d', '#dc3545']
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'right'
+                }
+            }
+        }
+    });
+
+    // Salary Bar Chart
+    var salaryData = {{ dept_salary_data|safe }};
+    var salaryCtx = document.getElementById('salaryBarChart').getContext('2d');
+    new Chart(salaryCtx, {
+        type: 'bar',
+        data: {
+            labels: salaryData.labels,
+            datasets: [{
+                label: 'Lương TB (VNĐ)',
+                data: salaryData.values,
+                backgroundColor: '#3c8dbc',
+                borderColor: '#367fa9',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        callback: function(value) {
+                            return value.toLocaleString('vi-VN') + ' đ';
+                        }
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return context.parsed.y.toLocaleString('vi-VN') + ' đ';
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // Hiring Line Chart
+    var hiringData = {{ hiring_trend|safe }};
+    var hiringCtx = document.getElementById('hiringLineChart').getContext('2d');
+    new Chart(hiringCtx, {
+        type: 'line',
+        data: {
+            labels: hiringData.labels,
+            datasets: [{
+                label: 'Số nhân viên mới',
+                data: hiringData.values,
+                fill: true,
+                backgroundColor: 'rgba(60, 141, 188, 0.2)',
+                borderColor: '#3c8dbc',
+                tension: 0.3,
+                pointBackgroundColor: '#3c8dbc',
+                pointRadius: 5
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: {
+                        stepSize: 1
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                }
+            }
+        }
+    });
+});
+</script>
+{% endblock %}

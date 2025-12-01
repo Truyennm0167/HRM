@@ -47,7 +47,7 @@ import xlwt
 import calendar
 import re
 import logging
-from django.db.models import Sum
+from django.db.models import Sum, Avg, Count
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 import logging
 
@@ -60,30 +60,147 @@ def admin_home(request):
     departments = Department.objects.all()
     payrolls = Payroll.objects.all()
     
-    # Appraisal statistics
+    # ========== STATISTICS ==========
+    # Active employees (status 1=Thử việc, 2=Nhân viên chính thức)
+    active_employees = employees.filter(status__in=[1, 2]).count()
+    
+    # Total salary this month
+    current_month = timezone.localtime(timezone.now()).month
+    current_year = timezone.localtime(timezone.now()).year
+    total_salary = Payroll.objects.filter(
+        month=current_month, 
+        year=current_year
+    ).aggregate(total=Sum('total_salary'))['total'] or 0
+    
+    # ========== CHART DATA ==========
+    # 1. Employees by Department (Pie Chart)
+    dept_labels = []
+    dept_values = []
+    for dept in departments:
+        count = employees.filter(department=dept, status__in=[1, 2]).count()
+        if count > 0:
+            dept_labels.append(dept.name)
+            dept_values.append(count)
+    dept_employee_data = {'labels': dept_labels, 'values': dept_values}
+    
+    # 2. Employee Status Distribution (Doughnut Chart)
+    STATUS_LABELS = {
+        0: 'Onboarding',
+        1: 'Thử việc', 
+        2: 'Chính thức',
+        3: 'Đã nghỉ việc',
+        4: 'Bị sa thải'
+    }
+    status_labels = []
+    status_values = []
+    for status_val, status_label in STATUS_LABELS.items():
+        count = employees.filter(status=status_val).count()
+        if count > 0:
+            status_labels.append(status_label)
+            status_values.append(count)
+    status_data = {'labels': status_labels, 'values': status_values}
+    
+    # 3. Average Salary by Department (Bar Chart)
+    salary_labels = []
+    salary_values = []
+    for dept in departments:
+        avg_salary = employees.filter(
+            department=dept, 
+            status__in=[1, 2]
+        ).aggregate(avg=Avg('salary'))['avg']
+        if avg_salary:
+            salary_labels.append(dept.name)
+            salary_values.append(round(avg_salary))
+    dept_salary_data = {'labels': salary_labels, 'values': salary_values}
+    
+    # 4. Monthly Hiring Trend (Line Chart) - Last 6 months
+    trend_labels = []
+    trend_values = []
+    for i in range(5, -1, -1):
+        month = current_month - i
+        year = current_year
+        if month <= 0:
+            month += 12
+            year -= 1
+        
+        count = employees.filter(
+            contract_start_date__month=month,
+            contract_start_date__year=year
+        ).count()
+        
+        trend_labels.append(f'T{month}')
+        trend_values.append(count)
+    hiring_trend = {'labels': trend_labels, 'values': trend_values}
+    
+    # ========== RECENT ACTIVITIES ==========
+    # New employees (last 5)
+    new_employees = employees.order_by('-created_at')[:5]
+    
+    # Pending leave requests
+    pending_leaves = LeaveRequest.objects.filter(status='pending').count()
+    
+    # Pending expenses
+    pending_expenses = Expense.objects.filter(status='pending').count()
+    
+    # Expiring contracts (next 30 days)
+    from datetime import timedelta
+    today = timezone.localtime(timezone.now()).date()
+    expiring_contracts_count = Contract.objects.filter(
+        end_date__lte=today + timedelta(days=30),
+        end_date__gte=today,
+        status='active'
+    ).count()
+    expiring_contracts_list = Contract.objects.filter(
+        end_date__lte=today + timedelta(days=30),
+        end_date__gte=today,
+        status='active'
+    ).select_related('employee').order_by('end_date')[:5]
+    
+    # ========== APPRAISAL STATISTICS ==========
+    appraisal_notifications = []
     try:
         user_employee = Employee.objects.get(email=request.user.email)
         
-        # Get pending appraisals for current user
         my_pending_appraisals = Appraisal.objects.filter(
             employee=user_employee,
             status='pending_self'
         ).count()
         
-        # Get team appraisals if user is manager
         team_pending_appraisals = 0
         if user_employee.is_manager:
             team_pending_appraisals = Appraisal.objects.filter(
                 manager=user_employee,
                 status='pending_manager'
             ).count()
+            
+            # Get appraisal notifications for manager's team
+            pending_appraisals = Appraisal.objects.filter(
+                manager=user_employee,
+                status='pending_manager'
+            ).select_related('employee', 'period')[:5]
+            
+            for appraisal in pending_appraisals:
+                appraisal_notifications.append({
+                    'employee': appraisal.employee,
+                    'message': f'Cần đánh giá - {appraisal.period.name}'
+                })
         
-        # Get HR appraisals
         hr_pending_appraisals = Appraisal.objects.filter(
             status='pending_hr'
         ).count()
         
-        # Get recent completed appraisals
+        # HR gets all pending HR reviews
+        if request.user.groups.filter(name='HR').exists():
+            hr_pending = Appraisal.objects.filter(
+                status='pending_hr'
+            ).select_related('employee', 'period')[:5]
+            
+            for appraisal in hr_pending:
+                appraisal_notifications.append({
+                    'employee': appraisal.employee,
+                    'message': f'Chờ duyệt HR - {appraisal.period.name}'
+                })
+        
         recent_appraisals = Appraisal.objects.filter(
             status='completed'
         ).order_by('-final_review_date')[:5]
@@ -94,14 +211,44 @@ def admin_home(request):
         hr_pending_appraisals = 0
         recent_appraisals = []
     
+    # ========== REWARDS & DISCIPLINES ==========
+    total_rewards_year = Reward.objects.filter(date__year=current_year).count()
+    total_disciplines_year = Discipline.objects.filter(date__year=current_year).count()
+    
     context = {
         "employees": employees,
         "departments": departments,
         "payrolls": payrolls,
+        "total_employees": employees.count(),
+        "total_departments": departments.count(),
+        "active_employees": active_employees,
+        "total_salary": total_salary,
+        "current_month": current_month,
+        "current_year": current_year,
+        
+        # Chart data (JSON)
+        "dept_employee_data": json.dumps(dept_employee_data),
+        "status_data": json.dumps(status_data),
+        "dept_salary_data": json.dumps(dept_salary_data),
+        "hiring_trend": json.dumps(hiring_trend),
+        
+        # Recent activities
+        "new_employees": new_employees,
+        "pending_leaves": pending_leaves,
+        "pending_expenses": pending_expenses,
+        "expiring_contracts": expiring_contracts_count,
+        "expiring_contracts_list": expiring_contracts_list,
+        
+        # Appraisals
+        "appraisal_notifications": appraisal_notifications,
         "my_pending_appraisals": my_pending_appraisals,
         "team_pending_appraisals": team_pending_appraisals,
         "hr_pending_appraisals": hr_pending_appraisals,
         "recent_appraisals": recent_appraisals,
+        
+        # Rewards/Disciplines
+        "total_rewards_year": total_rewards_year,
+        "total_disciplines_year": total_disciplines_year,
     }
     logger.info(f"Admin home accessed by {request.user.username}")
     return render(request, "hod_template/home_content.html", context)
