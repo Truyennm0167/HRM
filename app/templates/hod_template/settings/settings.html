@@ -1,0 +1,672 @@
+{% extends "hod_template/base_template.html" %}
+{% load static %}
+
+{% block title %}Cài đặt hệ thống{% endblock %}
+
+{% block main_content %}
+<div class="content-wrapper">
+    <!-- Content Header -->
+    <section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1><i class="fas fa-cog mr-2"></i>Cài đặt hệ thống</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="{% url 'admin_home' %}">Dashboard</a></li>
+                        <li class="breadcrumb-item active">Cài đặt</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <!-- Tabs Navigation (Left Side) -->
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Danh mục</h3>
+                        </div>
+                        <div class="card-body p-0">
+                            <ul class="nav nav-pills flex-column" id="settingsTabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link {% if active_tab == 'company' %}active{% endif %}" 
+                                       id="company-tab" data-toggle="pill" href="#company" role="tab">
+                                        <i class="fas fa-building mr-2"></i> Thông tin công ty
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {% if active_tab == 'work' %}active{% endif %}" 
+                                       id="work-tab" data-toggle="pill" href="#work" role="tab">
+                                        <i class="fas fa-clock mr-2"></i> Thời gian làm việc
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {% if active_tab == 'salary' %}active{% endif %}" 
+                                       id="salary-tab" data-toggle="pill" href="#salary" role="tab">
+                                        <i class="fas fa-money-bill-wave mr-2"></i> Lương & Bảo hiểm
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {% if active_tab == 'email' %}active{% endif %}" 
+                                       id="email-tab" data-toggle="pill" href="#email" role="tab">
+                                        <i class="fas fa-envelope mr-2"></i> Cài đặt Email
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {% if active_tab == 'notification' %}active{% endif %}" 
+                                       id="notification-tab" data-toggle="pill" href="#notification" role="tab">
+                                        <i class="fas fa-bell mr-2"></i> Thông báo
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link {% if active_tab == 'general' %}active{% endif %}" 
+                                       id="general-tab" data-toggle="pill" href="#general" role="tab">
+                                        <i class="fas fa-sliders-h mr-2"></i> Cài đặt chung
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- Info Card -->
+                    <div class="card bg-light">
+                        <div class="card-body">
+                            <p class="text-muted mb-2">
+                                <i class="fas fa-info-circle mr-1"></i> 
+                                <small>Cập nhật lần cuối:</small>
+                            </p>
+                            <p class="mb-0">
+                                <small>{{ settings.updated_at|date:"d/m/Y H:i" }}</small>
+                            </p>
+                            {% if settings.updated_by %}
+                            <p class="mb-0">
+                                <small>Bởi: {{ settings.updated_by.username }}</small>
+                            </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tab Content (Right Side) -->
+                <div class="col-md-9">
+                    <div class="tab-content" id="settingsTabContent">
+                        
+                        <!-- Company Tab -->
+                        <div class="tab-pane fade {% if active_tab == 'company' %}show active{% endif %}" 
+                             id="company" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-building mr-2"></i>Thông tin công ty
+                                    </h3>
+                                </div>
+                                <form method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="form_type" value="company">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label>Tên công ty <span class="text-danger">*</span></label>
+                                                    {{ company_form.company_name }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Mã số thuế</label>
+                                                    {{ company_form.company_tax_code }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Địa chỉ</label>
+                                            {{ company_form.company_address }}
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Số điện thoại</label>
+                                                    {{ company_form.company_phone }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Email công ty</label>
+                                                    {{ company_form.company_email }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Website</label>
+                                            {{ company_form.company_website }}
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Logo công ty</label>
+                                            {% if settings.company_logo %}
+                                            <div class="mb-2">
+                                                <img src="{{ settings.company_logo.url }}" alt="Logo" 
+                                                     style="max-height: 100px;" class="img-thumbnail">
+                                            </div>
+                                            {% endif %}
+                                            {{ company_form.company_logo }}
+                                            <small class="text-muted">Khuyến nghị: PNG hoặc JPG, tối đa 2MB</small>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-save mr-1"></i> Lưu thay đổi
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <!-- Work Settings Tab -->
+                        <div class="tab-pane fade {% if active_tab == 'work' %}show active{% endif %}" 
+                             id="work" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-clock mr-2"></i>Cài đặt thời gian làm việc
+                                    </h3>
+                                </div>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="form_type" value="work">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Ngày làm việc tiêu chuẩn/tháng</label>
+                                                    {{ work_form.standard_working_days }}
+                                                    <small class="text-muted">Thường là 22 ngày</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Giờ làm việc/ngày</label>
+                                                    {{ work_form.standard_working_hours }}
+                                                    <small class="text-muted">Thường là 8 giờ</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <hr>
+                                        <h5>Giờ làm việc</h5>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Giờ bắt đầu</label>
+                                                    {{ work_form.work_start_time }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Giờ kết thúc</label>
+                                                    {{ work_form.work_end_time }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Nghỉ trưa bắt đầu</label>
+                                                    {{ work_form.lunch_break_start }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Nghỉ trưa kết thúc</label>
+                                                    {{ work_form.lunch_break_end }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Múi giờ</label>
+                                            {{ work_form.timezone }}
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-save mr-1"></i> Lưu thay đổi
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <!-- Salary & Insurance Tab -->
+                        <div class="tab-pane fade {% if active_tab == 'salary' %}show active{% endif %}" 
+                             id="salary" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-money-bill-wave mr-2"></i>Cài đặt Lương & Bảo hiểm
+                                    </h3>
+                                </div>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="form_type" value="salary">
+                                    <div class="card-body">
+                                        <!-- Tax Settings -->
+                                        <h5><i class="fas fa-percentage mr-1"></i> Thuế TNCN</h5>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Thuế suất cơ bản (%)</label>
+                                                    {{ salary_form.tax_rate }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Giảm trừ bản thân (VNĐ)</label>
+                                                    {{ salary_form.tax_deduction_personal }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Giảm trừ người phụ thuộc (VNĐ)</label>
+                                                    {{ salary_form.tax_deduction_dependent }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <hr>
+                                        
+                                        <!-- Employee Insurance -->
+                                        <h5><i class="fas fa-user mr-1"></i> Bảo hiểm - Người lao động đóng</h5>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>BHXH (%)</label>
+                                                    {{ salary_form.social_insurance_rate }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>BHYT (%)</label>
+                                                    {{ salary_form.health_insurance_rate }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>BHTN (%)</label>
+                                                    {{ salary_form.unemployment_insurance_rate }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="alert alert-info">
+                                            <i class="fas fa-info-circle mr-1"></i>
+                                            Tổng NLĐ đóng: <strong>{{ settings.total_employee_insurance_rate }}%</strong>
+                                        </div>
+                                        
+                                        <hr>
+                                        
+                                        <!-- Employer Insurance -->
+                                        <h5><i class="fas fa-building mr-1"></i> Bảo hiểm - Người sử dụng LĐ đóng</h5>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>BHXH (%)</label>
+                                                    {{ salary_form.employer_social_insurance_rate }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>BHYT (%)</label>
+                                                    {{ salary_form.employer_health_insurance_rate }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>BHTN (%)</label>
+                                                    {{ salary_form.employer_unemployment_insurance_rate }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="alert alert-info">
+                                            <i class="fas fa-info-circle mr-1"></i>
+                                            Tổng NSDLĐ đóng: <strong>{{ settings.total_employer_insurance_rate }}%</strong>
+                                        </div>
+                                        
+                                        <hr>
+                                        
+                                        <!-- Salary Limits -->
+                                        <h5><i class="fas fa-chart-line mr-1"></i> Giới hạn lương</h5>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Lương tối thiểu vùng (VNĐ)</label>
+                                                    {{ salary_form.minimum_wage }}
+                                                    <small class="text-muted">Lương tối thiểu vùng I năm 2024: 4.960.000đ</small>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Mức đóng BHXH tối đa (VNĐ)</label>
+                                                    {{ salary_form.social_insurance_max_salary }}
+                                                    <small class="text-muted">20 lần lương tối thiểu</small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-save mr-1"></i> Lưu thay đổi
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <!-- Email Settings Tab -->
+                        <div class="tab-pane fade {% if active_tab == 'email' %}show active{% endif %}" 
+                             id="email" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-envelope mr-2"></i>Cài đặt Email (SMTP)
+                                    </h3>
+                                </div>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="form_type" value="email">
+                                    <div class="card-body">
+                                        <div class="alert alert-warning">
+                                            <i class="fas fa-exclamation-triangle mr-1"></i>
+                                            <strong>Lưu ý:</strong> Với Gmail, bạn cần tạo "App Password" thay vì dùng mật khẩu thông thường.
+                                            <a href="https://support.google.com/accounts/answer/185833" target="_blank">
+                                                Hướng dẫn tạo App Password
+                                            </a>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <div class="form-group">
+                                                    <label>SMTP Server</label>
+                                                    {{ email_form.email_host }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Port</label>
+                                                    {{ email_form.email_port }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-switch">
+                                                        {{ email_form.email_use_tls }}
+                                                        <label class="custom-control-label" for="id_email-email_use_tls">
+                                                            Sử dụng TLS (khuyến nghị)
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <div class="custom-control custom-switch">
+                                                        {{ email_form.email_use_ssl }}
+                                                        <label class="custom-control-label" for="id_email-email_use_ssl">
+                                                            Sử dụng SSL
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <hr>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Email đăng nhập</label>
+                                                    {{ email_form.email_host_user }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Mật khẩu / App Password</label>
+                                                    {{ email_form.email_host_password }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Tên người gửi</label>
+                                            {{ email_form.email_from_name }}
+                                            <small class="text-muted">Hiển thị trong email gửi đi (VD: "HRM System")</small>
+                                        </div>
+                                        
+                                        <hr>
+                                        
+                                        <!-- Test Email -->
+                                        <h5><i class="fas fa-paper-plane mr-1"></i> Test cấu hình</h5>
+                                        <div class="input-group">
+                                            <input type="email" class="form-control" id="testEmailInput" 
+                                                   placeholder="Nhập email để test..." value="{{ request.user.email }}">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-outline-info" type="button" id="btnTestEmail">
+                                                    <i class="fas fa-paper-plane mr-1"></i> Gửi email test
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div id="testEmailResult" class="mt-2"></div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-save mr-1"></i> Lưu thay đổi
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <!-- Notification Settings Tab -->
+                        <div class="tab-pane fade {% if active_tab == 'notification' %}show active{% endif %}" 
+                             id="notification" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-bell mr-2"></i>Cài đặt thông báo
+                                    </h3>
+                                </div>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="form_type" value="notification">
+                                    <div class="card-body">
+                                        <p class="text-muted">Chọn các loại email thông báo tự động sẽ được gửi:</p>
+                                        
+                                        <div class="form-group">
+                                            <div class="custom-control custom-switch">
+                                                {{ notification_form.notify_leave_approved }}
+                                                <label class="custom-control-label" for="id_notification-notify_leave_approved">
+                                                    <i class="fas fa-calendar-check text-success mr-1"></i>
+                                                    Thông báo khi duyệt/từ chối đơn nghỉ phép
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <div class="custom-control custom-switch">
+                                                {{ notification_form.notify_expense_approved }}
+                                                <label class="custom-control-label" for="id_notification-notify_expense_approved">
+                                                    <i class="fas fa-receipt text-info mr-1"></i>
+                                                    Thông báo khi duyệt/từ chối yêu cầu chi phí
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <div class="custom-control custom-switch">
+                                                {{ notification_form.notify_welcome_email }}
+                                                <label class="custom-control-label" for="id_notification-notify_welcome_email">
+                                                    <i class="fas fa-user-plus text-primary mr-1"></i>
+                                                    Gửi email chào mừng nhân viên mới
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <hr>
+                                        
+                                        <div class="form-group">
+                                            <div class="custom-control custom-switch">
+                                                {{ notification_form.notify_contract_expiring }}
+                                                <label class="custom-control-label" for="id_notification-notify_contract_expiring">
+                                                    <i class="fas fa-file-contract text-warning mr-1"></i>
+                                                    Cảnh báo hợp đồng sắp hết hạn
+                                                </label>
+                                            </div>
+                                            <div class="ml-4 mt-2">
+                                                <label class="small">Cảnh báo trước:</label>
+                                                <div class="input-group" style="width: 150px;">
+                                                    {{ notification_form.contract_expiring_days }}
+                                                    <div class="input-group-append">
+                                                        <span class="input-group-text">ngày</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <div class="custom-control custom-switch">
+                                                {{ notification_form.notify_appraisal_reminder }}
+                                                <label class="custom-control-label" for="id_notification-notify_appraisal_reminder">
+                                                    <i class="fas fa-star text-warning mr-1"></i>
+                                                    Nhắc nhở đánh giá nhân viên
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-save mr-1"></i> Lưu thay đổi
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <!-- General Settings Tab -->
+                        <div class="tab-pane fade {% if active_tab == 'general' %}show active{% endif %}" 
+                             id="general" role="tabpanel">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h3 class="card-title">
+                                        <i class="fas fa-sliders-h mr-2"></i>Cài đặt chung
+                                    </h3>
+                                </div>
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="form_type" value="general">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Định dạng ngày</label>
+                                                    {{ general_form.date_format }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Ký hiệu tiền tệ</label>
+                                                    {{ general_form.currency_symbol }}
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Số dòng mỗi trang</label>
+                                                    {{ general_form.pagination_size }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-save mr-1"></i> Lưu thay đổi
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    // Test email button
+    $('#btnTestEmail').click(function() {
+        var testEmail = $('#testEmailInput').val();
+        var $btn = $(this);
+        var $result = $('#testEmailResult');
+        
+        if (!testEmail) {
+            $result.html('<div class="alert alert-warning">Vui lòng nhập email để test</div>');
+            return;
+        }
+        
+        $btn.prop('disabled', true).html('<i class="fas fa-spinner fa-spin mr-1"></i> Đang gửi...');
+        $result.html('');
+        
+        $.ajax({
+            url: '{% url "test_email_settings" %}',
+            method: 'POST',
+            data: {
+                'test_email': testEmail,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.success) {
+                    $result.html('<div class="alert alert-success">' + 
+                        '<i class="fas fa-check-circle mr-1"></i>' + response.message + '</div>');
+                } else {
+                    $result.html('<div class="alert alert-danger">' + 
+                        '<i class="fas fa-times-circle mr-1"></i>' + response.message + '</div>');
+                }
+            },
+            error: function() {
+                $result.html('<div class="alert alert-danger">' + 
+                    '<i class="fas fa-times-circle mr-1"></i>Lỗi kết nối server</div>');
+            },
+            complete: function() {
+                $btn.prop('disabled', false).html('<i class="fas fa-paper-plane mr-1"></i> Gửi email test');
+            }
+        });
+    });
+    
+    // Format number inputs for currency
+    $('input[type="number"][step="100000"]').on('blur', function() {
+        var val = $(this).val();
+        if (val) {
+            // Just ensure it's a valid number
+            $(this).val(parseInt(val) || 0);
+        }
+    });
+});
+</script>
+{% endblock %}

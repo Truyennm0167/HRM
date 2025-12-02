@@ -17,7 +17,7 @@
 | 7   | Sắp xếp lại Sidebar theo chuẩn HRM               | 🟡 MEDIUM   | Low    | 0.5 ngày  | ✅ DONE    |
 | 8   | Thiết kế lại Dashboard với Charts                | 🟠 HIGH     | Medium | 1-2 ngày  | ✅ DONE    |
 | 9   | Tích hợp Email Notifications                     | 🟡 MEDIUM   | Medium | 1 ngày    | ✅ DONE    |
-| 10  | Thêm phần Settings                               | 🟡 MEDIUM   | Medium | 1 ngày    | 🔲 TODO    |
+| 10  | Thêm phần Settings                               | 🟡 MEDIUM   | Medium | 1 ngày    | ✅ DONE    |
 
 ---
 
@@ -889,10 +889,11 @@ def send_email_async(subject, message, recipient_list):
 
 ---
 
-## 🔟 THÊM PHẦN SETTINGS
+## 🔟 THÊM PHẦN SETTINGS ✅ HOÀN THÀNH
 
 **Mức độ ưu tiên:** 🟡 MEDIUM  
 **Thời gian ước tính:** 1 ngày
+**Trạng thái:** ✅ ĐÃ HOÀN THÀNH (02/12/2025)
 
 ### 📌 Yêu cầu
 
@@ -1007,15 +1008,57 @@ def settings_page(request):
 
 ### ✅ Checklist
 
-- [ ] Tạo model SystemSettings
-- [ ] Chạy migration
-- [ ] Tạo SystemSettingsForm
-- [ ] Tạo view settings_page
-- [ ] Tạo template settings.html
-- [ ] Thêm menu Settings vào sidebar
-- [ ] Thêm URL pattern
-- [ ] Tích hợp settings vào payroll calculation
-- [ ] Test các cấu hình
+- [x] Tạo model SystemSettings
+- [x] Chạy migration
+- [x] Tạo SystemSettingsForm (6 forms riêng biệt)
+- [x] Tạo view settings_page
+- [x] Tạo template settings.html
+- [x] Thêm menu Settings vào sidebar
+- [x] Thêm URL pattern
+- [ ] Tích hợp settings vào payroll calculation (TODO: Future enhancement)
+- [x] Test các cấu hình
+
+### 📋 Thay đổi đã thực hiện:
+
+**1. `app/models.py` (THÊM):**
+
+- Model `SystemSettings` (Singleton pattern)
+- 6 nhóm cài đặt:
+  - Thông tin công ty (tên, logo, địa chỉ, MST...)
+  - Thời gian làm việc (giờ/ngày, ngày/tháng, giờ nghỉ trưa)
+  - Lương & Bảo hiểm (thuế TNCN, BHXH, BHYT, BHTN cả NLĐ và NSDLĐ)
+  - Email/SMTP settings
+  - Thông báo (các loại email notification)
+  - Cài đặt chung (định dạng ngày, tiền tệ, phân trang)
+
+**2. `app/forms.py` (THÊM 6 forms):**
+
+- `CompanySettingsForm` - Thông tin công ty
+- `WorkSettingsForm` - Thời gian làm việc
+- `SalarySettingsForm` - Lương & Bảo hiểm
+- `EmailSettingsForm` - SMTP settings
+- `NotificationSettingsForm` - Cài đặt thông báo
+- `GeneralSettingsForm` - Cài đặt chung
+
+**3. `app/management_views.py` (THÊM):**
+
+- `settings_page()` - Trang settings với 6 tabs
+- `test_email_settings()` - API test gửi email
+
+**4. `app/templates/hod_template/settings/settings.html` (MỚI):**
+
+- Giao diện settings với 6 tabs
+- Form riêng cho từng nhóm cài đặt
+- Test email function
+
+**5. `app/urls_management.py` (THÊM):**
+
+- `/management/settings/` - Trang settings
+- `/management/settings/test-email/` - API test email
+
+**6. Sidebar (CẬP NHẬT):**
+
+- Thêm section "CÀI ĐẶT" với link đến trang settings
 
 ---
 

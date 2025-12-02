@@ -2,7 +2,8 @@
 from django import forms
 from .models import (Employee, LeaveType, LeaveRequest, ExpenseCategory, Expense, 
                      Contract, JobPosting, Application, AppraisalPeriod, 
-                     AppraisalCriteria, Appraisal, AppraisalScore, Reward, Discipline)
+                     AppraisalCriteria, Appraisal, AppraisalScore, Reward, Discipline,
+                     SystemSettings)
 
 class EmployeeForm(forms.ModelForm):
     class Meta:
@@ -672,3 +673,272 @@ class DisciplineForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         # status=2 means 'Nhân viên chính thức', status=1 means 'Thử việc'
         self.fields['employee'].queryset = Employee.objects.filter(status__in=[1, 2]).order_by('name')
+
+
+# ==================== SYSTEM SETTINGS FORMS ====================
+
+class CompanySettingsForm(forms.ModelForm):
+    """Form for company information settings"""
+    class Meta:
+        model = SystemSettings
+        fields = [
+            'company_name', 'company_logo', 'company_address', 
+            'company_phone', 'company_email', 'company_website', 'company_tax_code'
+        ]
+        widgets = {
+            'company_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Tên công ty'
+            }),
+            'company_address': forms.Textarea(attrs={
+                'class': 'form-control',
+                'rows': 3,
+                'placeholder': 'Địa chỉ công ty'
+            }),
+            'company_phone': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Số điện thoại'
+            }),
+            'company_email': forms.EmailInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Email công ty'
+            }),
+            'company_website': forms.URLInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'https://example.com'
+            }),
+            'company_tax_code': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Mã số thuế'
+            }),
+            'company_logo': forms.FileInput(attrs={
+                'class': 'form-control-file'
+            }),
+        }
+
+
+class WorkSettingsForm(forms.ModelForm):
+    """Form for work/time settings"""
+    class Meta:
+        model = SystemSettings
+        fields = [
+            'standard_working_days', 'standard_working_hours',
+            'work_start_time', 'work_end_time',
+            'lunch_break_start', 'lunch_break_end', 'timezone'
+        ]
+        widgets = {
+            'standard_working_days': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'min': 1,
+                'max': 31
+            }),
+            'standard_working_hours': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'step': '0.5',
+                'min': 1,
+                'max': 24
+            }),
+            'work_start_time': forms.TimeInput(attrs={
+                'class': 'form-control',
+                'type': 'time'
+            }),
+            'work_end_time': forms.TimeInput(attrs={
+                'class': 'form-control',
+                'type': 'time'
+            }),
+            'lunch_break_start': forms.TimeInput(attrs={
+                'class': 'form-control',
+                'type': 'time'
+            }),
+            'lunch_break_end': forms.TimeInput(attrs={
+                'class': 'form-control',
+                'type': 'time'
+            }),
+            'timezone': forms.Select(attrs={
+                'class': 'form-control'
+            }, choices=[
+                ('Asia/Ho_Chi_Minh', 'Việt Nam (GMT+7)'),
+                ('Asia/Bangkok', 'Thailand (GMT+7)'),
+                ('Asia/Singapore', 'Singapore (GMT+8)'),
+                ('Asia/Tokyo', 'Japan (GMT+9)'),
+                ('UTC', 'UTC (GMT+0)'),
+            ]),
+        }
+
+
+class SalarySettingsForm(forms.ModelForm):
+    """Form for salary and insurance settings"""
+    class Meta:
+        model = SystemSettings
+        fields = [
+            'tax_rate', 'tax_deduction_personal', 'tax_deduction_dependent',
+            'social_insurance_rate', 'health_insurance_rate', 'unemployment_insurance_rate',
+            'employer_social_insurance_rate', 'employer_health_insurance_rate', 'employer_unemployment_insurance_rate',
+            'minimum_wage', 'social_insurance_max_salary'
+        ]
+        widgets = {
+            'tax_rate': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'step': '0.1',
+                'min': 0,
+                'max': 100
+            }),
+            'tax_deduction_personal': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'step': '100000'
+            }),
+            'tax_deduction_dependent': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'step': '100000'
+            }),
+            'social_insurance_rate': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'step': '0.1',
+                'min': 0,
+                'max': 100
+            }),
+            'health_insurance_rate': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'step': '0.1',
+                'min': 0,
+                'max': 100
+            }),
+            'unemployment_insurance_rate': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'step': '0.1',
+                'min': 0,
+                'max': 100
+            }),
+            'employer_social_insurance_rate': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'step': '0.1',
+                'min': 0,
+                'max': 100
+            }),
+            'employer_health_insurance_rate': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'step': '0.1',
+                'min': 0,
+                'max': 100
+            }),
+            'employer_unemployment_insurance_rate': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'step': '0.1',
+                'min': 0,
+                'max': 100
+            }),
+            'minimum_wage': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'step': '100000'
+            }),
+            'social_insurance_max_salary': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'step': '100000'
+            }),
+        }
+
+
+class EmailSettingsForm(forms.ModelForm):
+    """Form for email/SMTP settings"""
+    class Meta:
+        model = SystemSettings
+        fields = [
+            'email_host', 'email_port', 'email_use_tls', 'email_use_ssl',
+            'email_host_user', 'email_host_password', 'email_from_name'
+        ]
+        widgets = {
+            'email_host': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'smtp.gmail.com'
+            }),
+            'email_port': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'placeholder': '587'
+            }),
+            'email_use_tls': forms.CheckboxInput(attrs={
+                'class': 'form-check-input'
+            }),
+            'email_use_ssl': forms.CheckboxInput(attrs={
+                'class': 'form-check-input'
+            }),
+            'email_host_user': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'your-email@gmail.com'
+            }),
+            'email_host_password': forms.PasswordInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'App password',
+                'autocomplete': 'new-password'
+            }, render_value=True),
+            'email_from_name': forms.TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'HRM System'
+            }),
+        }
+
+
+class NotificationSettingsForm(forms.ModelForm):
+    """Form for notification settings"""
+    class Meta:
+        model = SystemSettings
+        fields = [
+            'notify_leave_approved', 'notify_expense_approved',
+            'notify_contract_expiring', 'contract_expiring_days',
+            'notify_appraisal_reminder', 'notify_welcome_email'
+        ]
+        widgets = {
+            'notify_leave_approved': forms.CheckboxInput(attrs={
+                'class': 'form-check-input'
+            }),
+            'notify_expense_approved': forms.CheckboxInput(attrs={
+                'class': 'form-check-input'
+            }),
+            'notify_contract_expiring': forms.CheckboxInput(attrs={
+                'class': 'form-check-input'
+            }),
+            'contract_expiring_days': forms.NumberInput(attrs={
+                'class': 'form-control',
+                'min': 1,
+                'max': 90,
+                'style': 'width: 100px'
+            }),
+            'notify_appraisal_reminder': forms.CheckboxInput(attrs={
+                'class': 'form-check-input'
+            }),
+            'notify_welcome_email': forms.CheckboxInput(attrs={
+                'class': 'form-check-input'
+            }),
+        }
+
+
+class GeneralSettingsForm(forms.ModelForm):
+    """Combined form for general system settings"""
+    class Meta:
+        model = SystemSettings
+        fields = ['date_format', 'currency_symbol', 'pagination_size']
+        widgets = {
+            'date_format': forms.Select(attrs={
+                'class': 'form-control'
+            }, choices=[
+                ('d/m/Y', 'DD/MM/YYYY (31/12/2024)'),
+                ('Y-m-d', 'YYYY-MM-DD (2024-12-31)'),
+                ('m/d/Y', 'MM/DD/YYYY (12/31/2024)'),
+                ('d-m-Y', 'DD-MM-YYYY (31-12-2024)'),
+            ]),
+            'currency_symbol': forms.Select(attrs={
+                'class': 'form-control'
+            }, choices=[
+                ('VNĐ', 'VNĐ - Việt Nam Đồng'),
+                ('$', '$ - US Dollar'),
+                ('€', '€ - Euro'),
+                ('¥', '¥ - Japanese Yen'),
+            ]),
+            'pagination_size': forms.Select(attrs={
+                'class': 'form-control'
+            }, choices=[
+                (10, '10 dòng'),
+                (20, '20 dòng'),
+                (50, '50 dòng'),
+                (100, '100 dòng'),
+            ]),
+        }

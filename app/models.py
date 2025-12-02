@@ -1501,3 +1501,287 @@ class AnnouncementRead(models.Model):
     
     def __str__(self):
         return f"{self.employee.name} - {self.announcement.title}"
+
+
+class SystemSettings(models.Model):
+    """
+    Singleton model for system settings.
+    Only one instance should exist (pk=1).
+    """
+    # ==================== COMPANY INFO ====================
+    company_name = models.CharField(
+        max_length=200, 
+        default='Công ty TNHH ABC',
+        verbose_name='Tên công ty'
+    )
+    company_logo = models.ImageField(
+        upload_to='settings/', 
+        blank=True, 
+        null=True,
+        verbose_name='Logo công ty'
+    )
+    company_address = models.TextField(
+        blank=True, 
+        default='',
+        verbose_name='Địa chỉ'
+    )
+    company_phone = models.CharField(
+        max_length=20, 
+        blank=True, 
+        default='',
+        verbose_name='Số điện thoại'
+    )
+    company_email = models.EmailField(
+        blank=True, 
+        default='',
+        verbose_name='Email công ty'
+    )
+    company_website = models.URLField(
+        blank=True, 
+        default='',
+        verbose_name='Website'
+    )
+    company_tax_code = models.CharField(
+        max_length=20, 
+        blank=True, 
+        default='',
+        verbose_name='Mã số thuế'
+    )
+    
+    # ==================== WORK SETTINGS ====================
+    standard_working_days = models.IntegerField(
+        default=22,
+        verbose_name='Ngày làm việc tiêu chuẩn/tháng'
+    )
+    standard_working_hours = models.DecimalField(
+        max_digits=4, 
+        decimal_places=2, 
+        default=8,
+        verbose_name='Giờ làm việc/ngày'
+    )
+    work_start_time = models.TimeField(
+        default='08:00',
+        verbose_name='Giờ bắt đầu làm việc'
+    )
+    work_end_time = models.TimeField(
+        default='17:00',
+        verbose_name='Giờ kết thúc làm việc'
+    )
+    lunch_break_start = models.TimeField(
+        default='12:00',
+        verbose_name='Giờ nghỉ trưa bắt đầu'
+    )
+    lunch_break_end = models.TimeField(
+        default='13:00',
+        verbose_name='Giờ nghỉ trưa kết thúc'
+    )
+    timezone = models.CharField(
+        max_length=50, 
+        default='Asia/Ho_Chi_Minh',
+        verbose_name='Múi giờ'
+    )
+    
+    # ==================== SALARY & INSURANCE SETTINGS ====================
+    # Tax rates
+    tax_rate = models.DecimalField(
+        max_digits=5, 
+        decimal_places=2, 
+        default=10,
+        verbose_name='Thuế TNCN cơ bản (%)',
+        help_text='Thuế thu nhập cá nhân cơ bản'
+    )
+    tax_deduction_personal = models.DecimalField(
+        max_digits=15, 
+        decimal_places=0, 
+        default=11000000,
+        verbose_name='Giảm trừ bản thân',
+        help_text='Mức giảm trừ gia cảnh bản thân'
+    )
+    tax_deduction_dependent = models.DecimalField(
+        max_digits=15, 
+        decimal_places=0, 
+        default=4400000,
+        verbose_name='Giảm trừ người phụ thuộc',
+        help_text='Mức giảm trừ cho mỗi người phụ thuộc'
+    )
+    
+    # Insurance rates (employee contribution)
+    social_insurance_rate = models.DecimalField(
+        max_digits=5, 
+        decimal_places=2, 
+        default=8,
+        verbose_name='BHXH người lao động (%)'
+    )
+    health_insurance_rate = models.DecimalField(
+        max_digits=5, 
+        decimal_places=2, 
+        default=1.5,
+        verbose_name='BHYT người lao động (%)'
+    )
+    unemployment_insurance_rate = models.DecimalField(
+        max_digits=5, 
+        decimal_places=2, 
+        default=1,
+        verbose_name='BHTN người lao động (%)'
+    )
+    
+    # Insurance rates (employer contribution)
+    employer_social_insurance_rate = models.DecimalField(
+        max_digits=5, 
+        decimal_places=2, 
+        default=17.5,
+        verbose_name='BHXH người sử dụng LĐ (%)'
+    )
+    employer_health_insurance_rate = models.DecimalField(
+        max_digits=5, 
+        decimal_places=2, 
+        default=3,
+        verbose_name='BHYT người sử dụng LĐ (%)'
+    )
+    employer_unemployment_insurance_rate = models.DecimalField(
+        max_digits=5, 
+        decimal_places=2, 
+        default=1,
+        verbose_name='BHTN người sử dụng LĐ (%)'
+    )
+    
+    # Salary limits
+    minimum_wage = models.DecimalField(
+        max_digits=15, 
+        decimal_places=0, 
+        default=4960000,
+        verbose_name='Lương tối thiểu vùng',
+        help_text='Lương tối thiểu vùng I'
+    )
+    social_insurance_max_salary = models.DecimalField(
+        max_digits=15, 
+        decimal_places=0, 
+        default=46800000,
+        verbose_name='Mức đóng BHXH tối đa',
+        help_text='20 lần lương tối thiểu'
+    )
+    
+    # ==================== EMAIL SETTINGS ====================
+    email_host = models.CharField(
+        max_length=200, 
+        blank=True, 
+        default='smtp.gmail.com',
+        verbose_name='SMTP Server'
+    )
+    email_port = models.IntegerField(
+        default=587,
+        verbose_name='SMTP Port'
+    )
+    email_use_tls = models.BooleanField(
+        default=True,
+        verbose_name='Sử dụng TLS'
+    )
+    email_use_ssl = models.BooleanField(
+        default=False,
+        verbose_name='Sử dụng SSL'
+    )
+    email_host_user = models.CharField(
+        max_length=200, 
+        blank=True, 
+        default='',
+        verbose_name='Email username'
+    )
+    email_host_password = models.CharField(
+        max_length=200, 
+        blank=True, 
+        default='',
+        verbose_name='Email password',
+        help_text='App password cho Gmail'
+    )
+    email_from_name = models.CharField(
+        max_length=100, 
+        blank=True, 
+        default='HRM System',
+        verbose_name='Tên người gửi'
+    )
+    
+    # ==================== NOTIFICATION SETTINGS ====================
+    notify_leave_approved = models.BooleanField(
+        default=True,
+        verbose_name='Thông báo duyệt nghỉ phép'
+    )
+    notify_expense_approved = models.BooleanField(
+        default=True,
+        verbose_name='Thông báo duyệt chi phí'
+    )
+    notify_contract_expiring = models.BooleanField(
+        default=True,
+        verbose_name='Cảnh báo hợp đồng sắp hết hạn'
+    )
+    contract_expiring_days = models.IntegerField(
+        default=30,
+        verbose_name='Số ngày cảnh báo HĐ',
+        help_text='Cảnh báo trước bao nhiêu ngày'
+    )
+    notify_appraisal_reminder = models.BooleanField(
+        default=True,
+        verbose_name='Nhắc nhở đánh giá'
+    )
+    notify_welcome_email = models.BooleanField(
+        default=True,
+        verbose_name='Gửi email chào mừng NV mới'
+    )
+    
+    # ==================== SYSTEM SETTINGS ====================
+    date_format = models.CharField(
+        max_length=20, 
+        default='d/m/Y',
+        verbose_name='Định dạng ngày',
+        help_text='d/m/Y hoặc Y-m-d'
+    )
+    currency_symbol = models.CharField(
+        max_length=10, 
+        default='VNĐ',
+        verbose_name='Ký hiệu tiền tệ'
+    )
+    pagination_size = models.IntegerField(
+        default=20,
+        verbose_name='Số dòng mỗi trang'
+    )
+    
+    # ==================== METADATA ====================
+    updated_at = models.DateTimeField(auto_now=True)
+    updated_by = models.ForeignKey(
+        'auth.User', 
+        on_delete=models.SET_NULL, 
+        null=True, 
+        blank=True,
+        related_name='settings_updates'
+    )
+    
+    class Meta:
+        verbose_name = "Cài đặt hệ thống"
+        verbose_name_plural = "Cài đặt hệ thống"
+    
+    def save(self, *args, **kwargs):
+        """Ensure only one instance exists (Singleton pattern)"""
+        self.pk = 1
+        super().save(*args, **kwargs)
+    
+    def delete(self, *args, **kwargs):
+        """Prevent deletion of settings"""
+        pass
+    
+    @classmethod
+    def get_settings(cls):
+        """Get or create the singleton settings instance"""
+        obj, created = cls.objects.get_or_create(pk=1)
+        return obj
+    
+    @property
+    def total_employee_insurance_rate(self):
+        """Tổng tỷ lệ bảo hiểm người lao động đóng"""
+        return self.social_insurance_rate + self.health_insurance_rate + self.unemployment_insurance_rate
+    
+    @property
+    def total_employer_insurance_rate(self):
+        """Tổng tỷ lệ bảo hiểm người sử dụng LĐ đóng"""
+        return self.employer_social_insurance_rate + self.employer_health_insurance_rate + self.employer_unemployment_insurance_rate
+    
+    def __str__(self):
+        return "Cài đặt hệ thống"

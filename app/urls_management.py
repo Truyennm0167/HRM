@@ -252,4 +252,8 @@ urlpatterns = [
     path('disciplines/<int:pk>/', management_views.discipline_detail, name='discipline_detail'),
     path('disciplines/<int:pk>/edit/', management_views.discipline_edit, name='discipline_edit'),
     path('disciplines/<int:pk>/delete/', management_views.discipline_delete, name='discipline_delete'),
+    
+    # System Settings
+    path('settings/', management_views.settings_page, name='settings_page'),
+    path('settings/test-email/', management_views.test_email_settings, name='test_email_settings'),
 ]

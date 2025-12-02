@@ -404,6 +404,15 @@
           </ul>
         </li>
 
+        <!-- Settings -->
+        <li class="nav-header">CÀI ĐẶT</li>
+        <li class="nav-item">
+          <a href="{% url 'settings_page' %}" class="nav-link {% if '/settings' in request.path %}active{% endif %}">
+            <i class="nav-icon fas fa-cog"></i>
+            <p>Cài đặt hệ thống</p>
+          </a>
+        </li>
+
       </ul>
     </nav>
     <!-- /.sidebar-menu -->

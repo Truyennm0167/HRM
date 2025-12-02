@@ -4857,3 +4857,143 @@ def discipline_detail(request, pk):
     return render(request, 'hod_template/disciplines/detail.html', {
         'discipline': discipline
     })
+
+
+# ======================== SYSTEM SETTINGS ========================
+
+@login_required
+@hr_only
+def settings_page(request):
+    """Main settings page with tabs"""
+    from .models import SystemSettings
+    from .forms import (
+        CompanySettingsForm, WorkSettingsForm, SalarySettingsForm,
+        EmailSettingsForm, NotificationSettingsForm, GeneralSettingsForm
+    )
+    
+    settings = SystemSettings.get_settings()
+    active_tab = request.GET.get('tab', 'company')
+    
+    # Initialize all forms with current settings
+    forms_dict = {
+        'company_form': CompanySettingsForm(instance=settings, prefix='company'),
+        'work_form': WorkSettingsForm(instance=settings, prefix='work'),
+        'salary_form': SalarySettingsForm(instance=settings, prefix='salary'),
+        'email_form': EmailSettingsForm(instance=settings, prefix='email'),
+        'notification_form': NotificationSettingsForm(instance=settings, prefix='notification'),
+        'general_form': GeneralSettingsForm(instance=settings, prefix='general'),
+    }
+    
+    if request.method == 'POST':
+        form_type = request.POST.get('form_type')
+        
+        if form_type == 'company':
+            form = CompanySettingsForm(request.POST, request.FILES, instance=settings, prefix='company')
+            if form.is_valid():
+                obj = form.save(commit=False)
+                obj.updated_by = request.user
+                obj.save()
+                messages.success(request, 'Đã cập nhật thông tin công ty!')
+                return redirect('settings_page')
+            forms_dict['company_form'] = form
+            active_tab = 'company'
+            
+        elif form_type == 'work':
+            form = WorkSettingsForm(request.POST, instance=settings, prefix='work')
+            if form.is_valid():
+                obj = form.save(commit=False)
+                obj.updated_by = request.user
+                obj.save()
+                messages.success(request, 'Đã cập nhật cài đặt thời gian làm việc!')
+                return redirect('settings_page')
+            forms_dict['work_form'] = form
+            active_tab = 'work'
+            
+        elif form_type == 'salary':
+            form = SalarySettingsForm(request.POST, instance=settings, prefix='salary')
+            if form.is_valid():
+                obj = form.save(commit=False)
+                obj.updated_by = request.user
+                obj.save()
+                messages.success(request, 'Đã cập nhật cài đặt lương & bảo hiểm!')
+                return redirect('settings_page')
+            forms_dict['salary_form'] = form
+            active_tab = 'salary'
+            
+        elif form_type == 'email':
+            form = EmailSettingsForm(request.POST, instance=settings, prefix='email')
+            if form.is_valid():
+                obj = form.save(commit=False)
+                obj.updated_by = request.user
+                obj.save()
+                messages.success(request, 'Đã cập nhật cài đặt email!')
+                return redirect('settings_page')
+            forms_dict['email_form'] = form
+            active_tab = 'email'
+            
+        elif form_type == 'notification':
+            form = NotificationSettingsForm(request.POST, instance=settings, prefix='notification')
+            if form.is_valid():
+                obj = form.save(commit=False)
+                obj.updated_by = request.user
+                obj.save()
+                messages.success(request, 'Đã cập nhật cài đặt thông báo!')
+                return redirect('settings_page')
+            forms_dict['notification_form'] = form
+            active_tab = 'notification'
+            
+        elif form_type == 'general':
+            form = GeneralSettingsForm(request.POST, instance=settings, prefix='general')
+            if form.is_valid():
+                obj = form.save(commit=False)
+                obj.updated_by = request.user
+                obj.save()
+                messages.success(request, 'Đã cập nhật cài đặt hệ thống!')
+                return redirect('settings_page')
+            forms_dict['general_form'] = form
+            active_tab = 'general'
+    
+    context = {
+        'settings': settings,
+        'active_tab': active_tab,
+        **forms_dict
+    }
+    return render(request, 'hod_template/settings/settings.html', context)
+
+
+@login_required
+@hr_only
+def test_email_settings(request):
+    """Test email configuration by sending a test email"""
+    from django.core.mail import send_mail
+    from django.conf import settings as django_settings
+    import json
+    
+    if request.method != 'POST':
+        return JsonResponse({'success': False, 'message': 'Invalid request method'})
+    
+    try:
+        test_email = request.POST.get('test_email', request.user.email)
+        
+        if not test_email:
+            return JsonResponse({'success': False, 'message': 'Vui lòng nhập email để test'})
+        
+        send_mail(
+            subject='[HRM] Test Email Configuration',
+            message='Đây là email test từ hệ thống HRM. Nếu bạn nhận được email này, cấu hình SMTP đã hoạt động chính xác.',
+            from_email=django_settings.DEFAULT_FROM_EMAIL,
+            recipient_list=[test_email],
+            fail_silently=False,
+        )
+        
+        return JsonResponse({
+            'success': True, 
+            'message': f'Email test đã được gửi đến {test_email}'
+        })
+        
+    except Exception as e:
+        logger.error(f"Test email failed: {e}")
+        return JsonResponse({
+            'success': False, 
+            'message': f'Lỗi gửi email: {str(e)}'
+        })
