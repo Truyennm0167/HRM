@@ -27208,3 +27208,74 @@ INFO 2025-11-30 20:36:09,617 basehttp "GET /management/employees/166/ HTTP/1.1" 
 WARNING 2025-11-30 20:36:09,669 basehttp "GET /static/img/default-profile.png HTTP/1.1" 404 1929
 INFO 2025-11-30 20:36:19,763 basehttp "GET /management/employees/153/ HTTP/1.1" 200 31894
 WARNING 2025-11-30 20:36:19,806 basehttp "GET /static/img/default-profile.png HTTP/1.1" 404 1929
+INFO 2025-12-01 23:32:28,443 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-12-01 23:32:28,524 basehttp "GET /login/?next=/portal/ HTTP/1.1" 200 2905
+INFO 2025-12-01 23:32:33,995 basehttp "POST /login/?next=/portal/ HTTP/1.1" 302 0
+INFO 2025-12-01 23:32:34,144 basehttp "GET /portal/ HTTP/1.1" 200 18710
+INFO 2025-12-01 23:32:38,412 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 48665
+INFO 2025-12-01 23:32:42,069 basehttp "GET /portal/leaves/ HTTP/1.1" 200 30885
+INFO 2025-12-01 23:32:46,381 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22244
+INFO 2025-12-01 23:32:48,076 basehttp "GET /portal/attendance/ HTTP/1.1" 200 26428
+INFO 2025-12-01 23:32:48,185 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-12-01 23:32:49,230 basehttp "GET /portal/expenses/ HTTP/1.1" 200 34791
+INFO 2025-12-01 23:32:50,314 basehttp "GET /portal/profile/ HTTP/1.1" 200 20995
+INFO 2025-12-01 23:32:50,608 basehttp "GET /media/avatars/0d83f6eb2ddb44cb9d446a9af58be3fb_426ee7ce-73d7-4c88-a3ba-ec9c3b268a52_k9bNr6A.jpg HTTP/1.1" 200 411816
+INFO 2025-12-01 23:32:51,919 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 13045
+INFO 2025-12-01 23:57:31,106 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-12-01 23:57:31,122 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-12-01 23:57:43,259 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-12-01 23:57:43,376 basehttp "GET /portal/ HTTP/1.1" 200 21567
+INFO 2025-12-01 23:57:46,345 management_views Admin home accessed by hangpt
+INFO 2025-12-01 23:57:46,367 basehttp "GET /management/ HTTP/1.1" 200 38311
+INFO 2025-12-01 23:57:46,471 basehttp "GET /static/plugins/jqvmap/jqvmap.min.css HTTP/1.1" 200 613
+INFO 2025-12-01 23:57:46,482 basehttp "GET /static/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css HTTP/1.1" 200 9071
+INFO 2025-12-01 23:57:46,485 basehttp "GET /static/plugins/daterangepicker/daterangepicker.css HTTP/1.1" 200 8069
+INFO 2025-12-01 23:57:46,485 basehttp "GET /static/plugins/overlayScrollbars/css/OverlayScrollbars.min.css HTTP/1.1" 200 19470
+INFO 2025-12-01 23:57:46,488 basehttp "GET /static/dist/img/user1-128x128.jpg HTTP/1.1" 200 2879
+INFO 2025-12-01 23:57:46,489 basehttp "GET /static/plugins/summernote/summernote-bs4.css HTTP/1.1" 200 18647
+INFO 2025-12-01 23:57:46,490 basehttp "GET /static/dist/img/user8-128x128.jpg HTTP/1.1" 200 5060
+INFO 2025-12-01 23:57:46,495 basehttp "GET /static/dist/img/user3-128x128.jpg HTTP/1.1" 200 3511
+INFO 2025-12-01 23:57:46,504 basehttp "GET /static/dist/img/AdminLTELogo.png HTTP/1.1" 200 10380
+INFO 2025-12-01 23:57:46,505 basehttp "GET /static/dist/img/Logo-TITOPS.png HTTP/1.1" 200 17797
+INFO 2025-12-01 23:57:46,516 basehttp "GET /static/plugins/sparklines/sparkline.js HTTP/1.1" 200 7219
+INFO 2025-12-01 23:57:46,517 basehttp "GET /static/plugins/jquery-knob/jquery.knob.min.js HTTP/1.1" 200 10804
+INFO 2025-12-01 23:57:46,519 basehttp "GET /static/plugins/jqvmap/jquery.vmap.min.js HTTP/1.1" 200 21150
+INFO 2025-12-01 23:57:46,521 basehttp "GET /static/plugins/jqvmap/maps/jquery.vmap.usa.js HTTP/1.1" 200 47712
+INFO 2025-12-01 23:57:46,526 basehttp "GET /static/plugins/moment/moment.min.js HTTP/1.1" 200 53324
+INFO 2025-12-01 23:57:46,533 basehttp "GET /static/plugins/chart.js/Chart.min.js HTTP/1.1" 200 172812
+INFO 2025-12-01 23:57:46,539 basehttp "GET /static/plugins/jquery-ui/jquery-ui.min.js HTTP/1.1" 200 253669
+INFO 2025-12-01 23:57:46,544 basehttp "GET /static/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js HTTP/1.1" 200 56879
+INFO 2025-12-01 23:57:46,545 basehttp "GET /static/plugins/daterangepicker/daterangepicker.js HTTP/1.1" 200 67268
+INFO 2025-12-01 23:57:46,545 basehttp "GET /static/dist/js/adminlte.js HTTP/1.1" 200 55314
+INFO 2025-12-01 23:57:46,546 basehttp "GET /static/plugins/summernote/summernote-bs4.min.js HTTP/1.1" 200 127927
+INFO 2025-12-01 23:57:46,546 basehttp "GET /static/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js HTTP/1.1" 200 42076
+INFO 2025-12-01 23:57:46,554 basehttp "GET /static/dist/js/pages/dashboard.js HTTP/1.1" 200 7577
+INFO 2025-12-01 23:57:46,559 basehttp "GET /static/dist/js/demo.js HTTP/1.1" 200 12351
+INFO 2025-12-01 23:57:46,692 basehttp "GET /static/plugins/fontawesome-free/webfonts/fa-regular-400.woff2 HTTP/1.1" 200 13584
+INFO 2025-12-01 23:57:55,451 basehttp "GET /management/rewards/ HTTP/1.1" 200 54972
+INFO 2025-12-01 23:57:57,805 basehttp "GET /management/disciplines/ HTTP/1.1" 200 39820
+INFO 2025-12-01 23:59:48,177 basehttp "GET /management/rewards/ HTTP/1.1" 200 54972
+INFO 2025-12-01 23:59:56,639 basehttp "GET /management/salary-rules/components/ HTTP/1.1" 200 30710
+INFO 2025-12-02 00:00:02,410 basehttp "GET /management/payroll/manage/ HTTP/1.1" 200 113495
+INFO 2025-12-02 00:00:04,837 basehttp "GET /management/payroll/calculate/ HTTP/1.1" 200 40050
+INFO 2025-12-02 00:38:51,730 basehttp "GET /management/payroll/manage/ HTTP/1.1" 200 113495
+INFO 2025-12-02 00:38:54,831 management_views All expenses viewed by hangpt
+INFO 2025-12-02 00:38:54,880 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 46006
+INFO 2025-12-02 00:38:59,880 management_views Admin home accessed by hangpt
+INFO 2025-12-02 00:38:59,903 basehttp "GET /management/ HTTP/1.1" 200 38311
+INFO 2025-12-02 00:47:46,602 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-12-02 00:47:49,728 autoreload Watching for file changes with StatReloader
+INFO 2025-12-02 00:47:54,425 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-12-02 00:47:55,595 autoreload Watching for file changes with StatReloader
+INFO 2025-12-02 00:48:12,254 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-12-02 00:48:13,414 autoreload Watching for file changes with StatReloader
+INFO 2025-12-02 00:48:20,639 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-12-02 00:48:21,802 autoreload Watching for file changes with StatReloader
+INFO 2025-12-02 00:50:57,727 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-12-02 00:50:58,938 autoreload Watching for file changes with StatReloader
+INFO 2025-12-02 00:51:20,784 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-12-02 00:51:22,003 autoreload Watching for file changes with StatReloader
+INFO 2025-12-02 00:51:39,873 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-12-02 00:51:40,998 autoreload Watching for file changes with StatReloader
+INFO 2025-12-02 08:22:36,970 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-12-02 08:22:39,828 autoreload Watching for file changes with StatReloader

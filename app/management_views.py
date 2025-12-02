@@ -405,6 +405,14 @@ def add_employee_save(request):
             )
             employee.save()
             logger.info(f"Employee {employee.name} ({employee.employee_code}) created by {request.user.username}")
+            
+            # Send welcome email
+            try:
+                from .email_service import EmailService
+                EmailService.send_welcome_email(employee)
+            except Exception as email_error:
+                logger.warning(f"Failed to send welcome email: {email_error}")
+            
             messages.success(request, "Thêm Nhân viên thành công.")
 
             return redirect("/add_employee")
@@ -1534,6 +1542,13 @@ def approve_leave_request(request, request_id):
         leave_balance.used_days += leave_request.total_days
         leave_balance.save()  # Auto-calculate remaining_days
         
+        # Send email notification
+        try:
+            from .email_service import EmailService
+            EmailService.send_leave_approved(leave_request)
+        except Exception as email_error:
+            logger.warning(f"Failed to send leave approval email: {email_error}")
+        
         logger.info(f"Leave request {request_id} approved by {approver.name}")
         messages.success(request, "Đã duyệt đơn xin nghỉ phép")
         
@@ -1578,6 +1593,13 @@ def reject_leave_request(request, request_id):
         leave_request.approved_at = timezone.now()
         leave_request.rejection_reason = request.POST.get('rejection_reason', '')
         leave_request.save()
+        
+        # Send email notification
+        try:
+            from .email_service import EmailService
+            EmailService.send_leave_rejected(leave_request)
+        except Exception as email_error:
+            logger.warning(f"Failed to send leave rejection email: {email_error}")
         
         logger.info(f"Leave request {request_id} rejected by {approver.name}")
         messages.success(request, "Đã từ chối đơn xin nghỉ phép")
@@ -1898,6 +1920,13 @@ def approve_expense(request, expense_id):
         expense.approved_at = timezone.now()
         expense.save()
         
+        # Send email notification
+        try:
+            from .email_service import EmailService
+            EmailService.send_expense_approved(expense)
+        except Exception as email_error:
+            logger.warning(f"Failed to send expense approval email: {email_error}")
+        
         logger.info(f"Expense {expense_id} approved by {approver.name}")
         messages.success(request, "Đã duyệt yêu cầu chi phí")
         
@@ -1940,6 +1969,13 @@ def reject_expense(request, expense_id):
         if rejection_reason:
             expense.description += f"\n\nLý do từ chối: {rejection_reason}"
         expense.save()
+        
+        # Send email notification
+        try:
+            from .email_service import EmailService
+            EmailService.send_expense_rejected(expense, rejection_reason)
+        except Exception as email_error:
+            logger.warning(f"Failed to send expense rejection email: {email_error}")
         
         logger.info(f"Expense {expense_id} rejected by {rejector.name}")
         messages.success(request, "Đã từ chối yêu cầu chi phí")
@@ -4595,6 +4631,14 @@ def reward_create(request):
         form = RewardForm(request.POST)
         if form.is_valid():
             reward = form.save()
+            
+            # Send email notification
+            try:
+                from .email_service import EmailService
+                EmailService.send_reward_notification(reward)
+            except Exception as email_error:
+                logger.warning(f"Failed to send reward notification email: {email_error}")
+            
             messages.success(request, f'Đã tạo khen thưởng #{reward.number} cho {reward.employee.name}')
             return redirect('reward_list')
         else:
@@ -4737,6 +4781,14 @@ def discipline_create(request):
         form = DisciplineForm(request.POST)
         if form.is_valid():
             discipline = form.save()
+            
+            # Send email notification
+            try:
+                from .email_service import EmailService
+                EmailService.send_discipline_notification(discipline)
+            except Exception as email_error:
+                logger.warning(f"Failed to send discipline notification email: {email_error}")
+            
             messages.success(request, f'Đã tạo kỷ luật #{discipline.number} cho {discipline.employee.name}')
             return redirect('discipline_list')
         else:

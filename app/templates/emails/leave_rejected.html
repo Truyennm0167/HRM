@@ -1,47 +1,76 @@
-{% extends "emails/base_email.html" %}
-
-{% block title %}Đơn nghỉ phép bị từ chối{% endblock %}
-
-{% block header_title %}Thông báo đơn nghỉ phép{% endblock %}
-{% block header_subtitle %}Leave Request Rejected{% endblock %}
-
-{% block content %}
-<div class="greeting">
-    <p>Kính gửi <strong>{{ employee_name }}</strong>,</p>
-</div>
-
-<div class="alert alert-danger">
-    <strong>Thông báo!</strong> Đơn xin nghỉ phép của bạn không được phê duyệt.
-</div>
-
-<p>Rất tiếc, đơn xin nghỉ phép của bạn không thể được phê duyệt vào thời điểm này.</p>
-
-<div class="info-box">
-    <h3>Chi tiết đơn nghỉ phép</h3>
-    <div class="info-row">
-        <div class="info-label">Loại nghỉ phép:</div>
-        <div class="info-value">{{ leave_type }}</div>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRM System</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f4f4f4; }
+        .email-container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .email-header { background: linear-gradient(135deg, #dc3545 0%, #c82333 100%); color: white; padding: 30px 20px; text-align: center; }
+        .email-header h1 { margin: 0; font-size: 24px; font-weight: 600; }
+        .email-header .logo { font-size: 32px; margin-bottom: 10px; }
+        .email-body { padding: 30px 20px; }
+        .greeting { font-size: 18px; color: #333; margin-bottom: 20px; }
+        .content { background-color: #f8f9fa; border-radius: 6px; padding: 20px; margin: 20px 0; }
+        .content-row { padding: 10px 0; border-bottom: 1px solid #e9ecef; }
+        .content-row:last-child { border-bottom: none; }
+        .content-label { font-weight: 600; color: #495057; display: inline-block; min-width: 150px; }
+        .content-value { color: #212529; }
+        .status-badge { display: inline-block; padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 14px; }
+        .status-rejected { background-color: #f8d7da; color: #721c24; }
+        .danger-box { background-color: #f8d7da; border-left: 4px solid #dc3545; padding: 15px; margin: 20px 0; border-radius: 0 6px 6px 0; }
+        .reason-box { background-color: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; border-radius: 0 6px 6px 0; }
+        .email-footer { background-color: #f8f9fa; padding: 20px; text-align: center; font-size: 12px; color: #6c757d; border-top: 1px solid #e9ecef; }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <div class="logo">🏢</div>
+            <h1>{{ company_name|default:"HRM System" }}</h1>
+        </div>
+        <div class="email-body">
+            <p class="greeting">Xin chào <strong>{{ employee_name }}</strong>,</p>
+            <div class="danger-box">
+                <strong>❌ Đơn nghỉ phép của bạn đã bị từ chối</strong>
+            </div>
+            <div class="content">
+                <div class="content-row">
+                    <span class="content-label">Loại nghỉ phép:</span>
+                    <span class="content-value">{{ leave_type }}</span>
+                </div>
+                <div class="content-row">
+                    <span class="content-label">Ngày bắt đầu:</span>
+                    <span class="content-value">{{ start_date|date:"d/m/Y" }}</span>
+                </div>
+                <div class="content-row">
+                    <span class="content-label">Ngày kết thúc:</span>
+                    <span class="content-value">{{ end_date|date:"d/m/Y" }}</span>
+                </div>
+                <div class="content-row">
+                    <span class="content-label">Số ngày nghỉ:</span>
+                    <span class="content-value">{{ days }} ngày</span>
+                </div>
+                <div class="content-row">
+                    <span class="content-label">Người xử lý:</span>
+                    <span class="content-value">{{ rejected_by }}</span>
+                </div>
+                <div class="content-row">
+                    <span class="content-label">Trạng thái:</span>
+                    <span class="status-badge status-rejected">✗ Từ chối</span>
+                </div>
+            </div>
+            <div class="reason-box">
+                <strong>📝 Lý do từ chối:</strong><br>
+                {{ reason }}
+            </div>
+            <p>Nếu có thắc mắc, vui lòng liên hệ phòng HR.</p>
+        </div>
+        <div class="email-footer">
+            <p>Email này được gửi tự động từ hệ thống {{ company_name|default:"HRM System" }}.</p>
+            <p>Vui lòng không trả lời email này.</p>
+        </div>
     </div>
-    <div class="info-row">
-        <div class="info-label">Từ ngày:</div>
-        <div class="info-value">{{ start_date|date:"d/m/Y" }}</div>
-    </div>
-    <div class="info-row">
-        <div class="info-label">Đến ngày:</div>
-        <div class="info-value">{{ end_date|date:"d/m/Y" }}</div>
-    </div>
-    <div class="info-row">
-        <div class="info-label">Trạng thái:</div>
-        <div class="info-value"><span style="color: #dc3545; font-weight: bold;">✗ Không được phê duyệt</span></div>
-    </div>
-</div>
-
-<div class="alert alert-warning">
-    <h4 style="margin-top: 0;">Lý do từ chối:</h4>
-    <p style="margin: 5px 0;">{{ reason }}</p>
-</div>
-
-<p>Nếu bạn có bất kỳ câu hỏi nào hoặc muốn thảo luận thêm về đơn nghỉ phép, vui lòng liên hệ trực tiếp với người quản lý hoặc phòng Nhân sự.</p>
-
-<p>Bạn có thể nộp đơn nghỉ phép mới với thời gian khác nếu cần.</p>
-{% endblock %}
+</body>
+</html>

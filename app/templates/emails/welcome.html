@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRM System</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f4f4f4; }
+        .email-container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .email-header { background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); color: white; padding: 30px 20px; text-align: center; }
+        .email-header h1 { margin: 0; font-size: 24px; font-weight: 600; }
+        .email-header .logo { font-size: 32px; margin-bottom: 10px; }
+        .email-body { padding: 30px 20px; }
+        .greeting { font-size: 18px; color: #333; margin-bottom: 20px; }
+        .welcome-banner { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 8px; text-align: center; margin: 20px 0; }
+        .welcome-banner h2 { margin: 0 0 10px 0; font-size: 24px; }
+        .content { background-color: #f8f9fa; border-radius: 6px; padding: 20px; margin: 20px 0; }
+        .content-row { padding: 10px 0; border-bottom: 1px solid #e9ecef; }
+        .content-row:last-child { border-bottom: none; }
+        .content-label { font-weight: 600; color: #495057; display: inline-block; min-width: 150px; }
+        .content-value { color: #212529; }
+        .credentials-box { background-color: #e7f3ff; border: 2px dashed #007bff; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .credentials-box h3 { margin-top: 0; color: #0056b3; }
+        .btn { display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); color: white !important; text-decoration: none; border-radius: 6px; font-weight: 600; margin-top: 20px; }
+        .email-footer { background-color: #f8f9fa; padding: 20px; text-align: center; font-size: 12px; color: #6c757d; border-top: 1px solid #e9ecef; }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <div class="logo">🎉</div>
+            <h1>{{ company_name|default:"HRM System" }}</h1>
+        </div>
+        <div class="email-body">
+            <div class="welcome-banner">
+                <h2>Chào mừng bạn gia nhập đội ngũ!</h2>
+                <p>Chúng tôi rất vui được chào đón bạn</p>
+            </div>
+            
+            <p class="greeting">Xin chào <strong>{{ employee_name }}</strong>,</p>
+            
+            <p>Chúng tôi rất vui mừng thông báo bạn đã chính thức trở thành thành viên của công ty. Dưới đây là thông tin của bạn:</p>
+            
+            <div class="content">
+                <div class="content-row">
+                    <span class="content-label">Phòng ban:</span>
+                    <span class="content-value">{{ department }}</span>
+                </div>
+                <div class="content-row">
+                    <span class="content-label">Chức vụ:</span>
+                    <span class="content-value">{{ job_title }}</span>
+                </div>
+                <div class="content-row">
+                    <span class="content-label">Ngày bắt đầu:</span>
+                    <span class="content-value">{{ start_date|date:"d/m/Y" }}</span>
+                </div>
+            </div>
+            
+            {% if username and password %}
+            <div class="credentials-box">
+                <h3>🔐 Thông tin đăng nhập</h3>
+                <p><strong>Tài khoản:</strong> {{ username }}</p>
+                <p><strong>Mật khẩu:</strong> {{ password }}</p>
+                <p style="color: #dc3545; font-size: 12px;">⚠️ Vui lòng đổi mật khẩu sau khi đăng nhập lần đầu!</p>
+            </div>
+            {% endif %}
+            
+            <p>Nếu có bất kỳ câu hỏi nào, vui lòng liên hệ phòng HR.</p>
+            
+            <p>Chúc bạn có những trải nghiệm tuyệt vời!</p>
+        </div>
+        <div class="email-footer">
+            <p>Email này được gửi tự động từ hệ thống {{ company_name|default:"HRM System" }}.</p>
+            <p>Vui lòng không trả lời email này.</p>
+        </div>
+    </div>
+</body>
+</html>

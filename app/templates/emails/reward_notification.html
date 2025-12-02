@@ -7,7 +7,7 @@
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f4f4f4; }
         .email-container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .email-header { background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); color: white; padding: 30px 20px; text-align: center; }
+        .email-header { background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%); color: #333; padding: 30px 20px; text-align: center; }
         .email-header h1 { margin: 0; font-size: 24px; font-weight: 600; }
         .email-header .logo { font-size: 32px; margin-bottom: 10px; }
         .email-body { padding: 30px 20px; }
@@ -17,50 +17,47 @@
         .content-row:last-child { border-bottom: none; }
         .content-label { font-weight: 600; color: #495057; display: inline-block; min-width: 150px; }
         .content-value { color: #212529; }
-        .status-badge { display: inline-block; padding: 6px 16px; border-radius: 20px; font-weight: 600; font-size: 14px; }
-        .status-approved { background-color: #d4edda; color: #155724; }
         .success-box { background-color: #d4edda; border-left: 4px solid #28a745; padding: 15px; margin: 20px 0; border-radius: 0 6px 6px 0; }
+        .amount-box { background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%); color: #333; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0; }
+        .amount-box .amount { font-size: 28px; font-weight: bold; margin: 10px 0; }
         .email-footer { background-color: #f8f9fa; padding: 20px; text-align: center; font-size: 12px; color: #6c757d; border-top: 1px solid #e9ecef; }
     </style>
 </head>
 <body>
     <div class="email-container">
         <div class="email-header">
-            <div class="logo">🏢</div>
+            <div class="logo">🏆</div>
             <h1>{{ company_name|default:"HRM System" }}</h1>
         </div>
         <div class="email-body">
             <p class="greeting">Xin chào <strong>{{ employee_name }}</strong>,</p>
+            
             <div class="success-box">
-                <strong>🎉 Đơn nghỉ phép của bạn đã được phê duyệt!</strong>
+                <strong>🎉 Chúc mừng! Bạn đã được khen thưởng!</strong>
             </div>
+            
+            <div class="amount-box">
+                <div>Số tiền khen thưởng</div>
+                <div class="amount">{{ amount|floatformat:0 }} VNĐ</div>
+                {% if cash_payment %}
+                <div style="font-size: 12px;">💵 Thanh toán bằng tiền mặt</div>
+                {% else %}
+                <div style="font-size: 12px;">💳 Cộng vào lương</div>
+                {% endif %}
+            </div>
+            
             <div class="content">
                 <div class="content-row">
-                    <span class="content-label">Loại nghỉ phép:</span>
-                    <span class="content-value">{{ leave_type }}</span>
+                    <span class="content-label">Lý do:</span>
+                    <span class="content-value">{{ description }}</span>
                 </div>
                 <div class="content-row">
-                    <span class="content-label">Ngày bắt đầu:</span>
-                    <span class="content-value">{{ start_date|date:"d/m/Y" }}</span>
-                </div>
-                <div class="content-row">
-                    <span class="content-label">Ngày kết thúc:</span>
-                    <span class="content-value">{{ end_date|date:"d/m/Y" }}</span>
-                </div>
-                <div class="content-row">
-                    <span class="content-label">Số ngày nghỉ:</span>
-                    <span class="content-value">{{ days }} ngày</span>
-                </div>
-                <div class="content-row">
-                    <span class="content-label">Người duyệt:</span>
-                    <span class="content-value">{{ approved_by }}</span>
-                </div>
-                <div class="content-row">
-                    <span class="content-label">Trạng thái:</span>
-                    <span class="status-badge status-approved">✓ Đã duyệt</span>
+                    <span class="content-label">Ngày:</span>
+                    <span class="content-value">{{ date|date:"d/m/Y" }}</span>
                 </div>
             </div>
-            <p>Chúc bạn có kỳ nghỉ vui vẻ!</p>
+            
+            <p>Cảm ơn bạn đã đóng góp xuất sắc cho công ty!</p>
         </div>
         <div class="email-footer">
             <p>Email này được gửi tự động từ hệ thống {{ company_name|default:"HRM System" }}.</p>

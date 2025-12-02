@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRM System</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f4f4f4; }
+        .email-container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .email-header { background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); color: white; padding: 30px 20px; text-align: center; }
+        .email-header h1 { margin: 0; font-size: 24px; font-weight: 600; }
+        .email-header .logo { font-size: 32px; margin-bottom: 10px; }
+        .email-body { padding: 30px 20px; }
+        .greeting { font-size: 18px; color: #333; margin-bottom: 20px; }
+        .credentials-box { background-color: #e7f3ff; border: 2px dashed #007bff; padding: 20px; border-radius: 8px; margin: 20px 0; }
+        .credentials-box h3 { margin-top: 0; color: #0056b3; }
+        .warning-text { color: #dc3545; font-size: 12px; margin-top: 10px; }
+        .btn { display: inline-block; padding: 12px 30px; background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); color: white !important; text-decoration: none; border-radius: 6px; font-weight: 600; margin-top: 20px; }
+        .email-footer { background-color: #f8f9fa; padding: 20px; text-align: center; font-size: 12px; color: #6c757d; border-top: 1px solid #e9ecef; }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <div class="logo">🔐</div>
+            <h1>{{ company_name|default:"HRM System" }}</h1>
+        </div>
+        <div class="email-body">
+            <p class="greeting">Xin chào <strong>{{ employee_name }}</strong>,</p>
+            
+            <p>Tài khoản HRM của bạn đã được tạo thành công. Dưới đây là thông tin đăng nhập:</p>
+            
+            <div class="credentials-box">
+                <h3>🔐 Thông tin đăng nhập</h3>
+                <p><strong>Tài khoản:</strong> {{ username }}</p>
+                <p><strong>Mật khẩu tạm thời:</strong> {{ temp_password }}</p>
+                <p class="warning-text">⚠️ Vui lòng đổi mật khẩu ngay sau khi đăng nhập lần đầu để bảo mật tài khoản!</p>
+            </div>
+            
+            <p style="text-align: center;">
+                <a href="{{ login_url }}" class="btn">Đăng nhập ngay</a>
+            </p>
+            
+            <p>Nếu bạn không yêu cầu tạo tài khoản này, vui lòng liên hệ phòng HR ngay lập tức.</p>
+        </div>
+        <div class="email-footer">
+            <p>Email này được gửi tự động từ hệ thống {{ company_name|default:"HRM System" }}.</p>
+            <p>Vui lòng không trả lời email này.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HRM System</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; margin: 0; padding: 0; background-color: #f4f4f4; }
+        .email-container { max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .email-header { background: linear-gradient(135deg, #17a2b8 0%, #138496 100%); color: white; padding: 30px 20px; text-align: center; }
+        .email-header h1 { margin: 0; font-size: 24px; font-weight: 600; }
+        .email-header .logo { font-size: 32px; margin-bottom: 10px; }
+        .email-body { padding: 30px 20px; }
+        .greeting { font-size: 18px; color: #333; margin-bottom: 20px; }
+        .info-box { background-color: #d1ecf1; border-left: 4px solid #17a2b8; padding: 15px; margin: 20px 0; border-radius: 0 6px 6px 0; }
+        .count-box { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 8px; text-align: center; margin: 20px 0; }
+        .count-box .count { font-size: 48px; font-weight: bold; margin: 10px 0; }
+        .email-footer { background-color: #f8f9fa; padding: 20px; text-align: center; font-size: 12px; color: #6c757d; border-top: 1px solid #e9ecef; }
+    </style>
+</head>
+<body>
+    <div class="email-container">
+        <div class="email-header">
+            <div class="logo">👥</div>
+            <h1>{{ company_name|default:"HRM System" }}</h1>
+        </div>
+        <div class="email-body">
+            <p class="greeting">Xin chào <strong>{{ manager_name }}</strong>,</p>
+            
+            <div class="info-box">
+                <strong>📋 Nhắc nhở: Đánh giá nhân viên đang chờ</strong>
+            </div>
+            
+            <p>Bạn có các đánh giá nhân viên cần xem xét{% if period %} cho kỳ <strong>{{ period }}</strong>{% endif %}:</p>
+            
+            <div class="count-box">
+                <div>Số đánh giá chờ duyệt</div>
+                <div class="count">{{ pending_count }}</div>
+            </div>
+            
+            {% if pending_employees %}
+            <div class="info-box" style="background-color: #fff3cd; border-left-color: #ffc107;">
+                <strong>Nhân viên chờ đánh giá:</strong>
+                <ul style="margin: 10px 0 0 0; padding-left: 20px;">
+                {% for name in pending_employees %}
+                    <li>{{ name }}</li>
+                {% endfor %}
+                {% if pending_count > pending_employees|length %}
+                    <li>... và {{ pending_count|add:"-10" }} người khác</li>
+                {% endif %}
+                </ul>
+            </div>
+            {% endif %}
+            
+            <p>Vui lòng đăng nhập hệ thống để hoàn thành đánh giá cho team của bạn.</p>
+        </div>
+        <div class="email-footer">
+            <p>Email này được gửi tự động từ hệ thống {{ company_name|default:"HRM System" }}.</p>
+            <p>Vui lòng không trả lời email này.</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -16,7 +16,7 @@
 | 6   | Loại bỏ Portal khỏi /management, thêm nút chuyển | 🟢 EASY     | Low    | 0.5 giờ   | ✅ DONE    |
 | 7   | Sắp xếp lại Sidebar theo chuẩn HRM               | 🟡 MEDIUM   | Low    | 0.5 ngày  | ✅ DONE    |
 | 8   | Thiết kế lại Dashboard với Charts                | 🟠 HIGH     | Medium | 1-2 ngày  | ✅ DONE    |
-| 9   | Tích hợp Email Notifications                     | 🟡 MEDIUM   | Medium | 1 ngày    | 🔲 TODO    |
+| 9   | Tích hợp Email Notifications                     | 🟡 MEDIUM   | Medium | 1 ngày    | ✅ DONE    |
 | 10  | Thêm phần Settings                               | 🟡 MEDIUM   | Medium | 1 ngày    | 🔲 TODO    |
 
 ---
@@ -727,7 +727,7 @@ def admin_home(request):
 
 ---
 
-## 9️⃣ TÍCH HỢP EMAIL NOTIFICATIONS
+## 9️⃣ TÍCH HỢP EMAIL NOTIFICATIONS ✅ HOÀN THÀNH
 
 **Mức độ ưu tiên:** 🟡 MEDIUM  
 **Thời gian ước tính:** 1 ngày
@@ -836,14 +836,56 @@ def send_email_async(subject, message, recipient_list):
 
 ### ✅ Checklist
 
-- [ ] Cấu hình SMTP trong settings.py
-- [ ] Tạo file `email_service.py`
-- [ ] Tạo email templates
-- [ ] Tích hợp email vào leave approval
-- [ ] Tích hợp email vào expense approval
-- [ ] Tạo management command cho appraisal reminders
-- [ ] Tạo management command cho contract expiring alerts
-- [ ] Test gửi email
+- [x] Cấu hình SMTP trong settings.py
+- [x] Tạo file `email_service.py`
+- [x] Tạo email templates
+- [x] Tích hợp email vào leave approval
+- [x] Tích hợp email vào expense approval
+- [x] Tạo management command cho appraisal reminders
+- [x] Tạo management command cho contract expiring alerts
+- [x] Test gửi email
+
+### 📋 Thay đổi đã thực hiện:
+
+**1. `app/email_service.py` (MỚI):**
+
+- Class `EmailService` với các methods:
+  - `send_leave_approved()`, `send_leave_rejected()`
+  - `send_expense_approved()`, `send_expense_rejected()`
+  - `send_appraisal_reminder()`, `send_appraisal_completed()`
+  - `send_manager_review_reminder()`
+  - `send_contract_expiring_alert()`, `send_contract_renewed()`
+  - `send_welcome_email()`
+  - `send_reward_notification()`, `send_discipline_notification()`
+
+**2. Email Templates (12 files trong `app/templates/emails/`):**
+
+- `leave_approved.html`, `leave_rejected.html`
+- `expense_approved.html`, `expense_rejected.html`
+- `welcome.html`
+- `appraisal_reminder.html`, `appraisal_completed.html`
+- `manager_review_reminder.html`
+- `contract_expiring_employee.html`, `contract_renewed.html`
+- `reward_notification.html`, `discipline_notification.html`
+
+**3. `app/management_views.py` (CẬP NHẬT):**
+
+- Thêm email notification trong:
+  - `approve_leave_request()` - gửi email khi duyệt nghỉ phép
+  - `reject_leave_request()` - gửi email khi từ chối nghỉ phép
+  - `approve_expense()` - gửi email khi duyệt chi phí
+  - `reject_expense()` - gửi email khi từ chối chi phí
+  - `add_employee_save()` - gửi welcome email
+  - `reward_create()` - gửi thông báo khen thưởng
+  - `discipline_create()` - gửi thông báo kỷ luật
+
+**4. Management Commands (MỚI):**
+
+- `send_contract_alerts` - Gửi cảnh báo hợp đồng sắp hết hạn
+  - Sử dụng: `python manage.py send_contract_alerts --days 30`
+- `send_appraisal_reminders` - Gửi nhắc nhở đánh giá
+  - Sử dụng: `python manage.py send_appraisal_reminders`
+  - Option `--to-managers` để gửi cho manager
 
 ---
 
