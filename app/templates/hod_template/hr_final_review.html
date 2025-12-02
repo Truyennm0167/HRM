@@ -170,7 +170,7 @@
                 </div>
 
                 <!-- HR Final Review Form -->
-                <form method="POST" action="{% url 'hr_final_review' appraisal.id %}">
+                <form method="POST" action="{% url 'management_hr_final_review' appraisal.id %}">
                     {% csrf_token %}
                     <div class="card card-success">
                         <div class="card-header">
