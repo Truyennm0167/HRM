@@ -24,6 +24,7 @@ from .forms import (
     AppraisalPeriodForm, AppraisalCriteriaForm, SelfAssessmentForm, ManagerReviewForm, HRFinalReviewForm
 )
 from .permissions import require_hr, require_hr_or_manager, can_manage_contract
+from .email_service import EmailService
 from .validators import (
     validate_image_file, 
     validate_document_file, 
@@ -1171,6 +1172,31 @@ def request_leave(request):
             
             leave_request.save()
             logger.info(f"Leave request created by {employee.name}: {leave_request.total_days} days")
+            
+            # Gửi email thông báo cho manager/HR
+            try:
+                # Tìm manager của phòng ban
+                if employee.department:
+                    managers = Employee.objects.filter(
+                        department=employee.department,
+                        is_manager=True
+                    ).exclude(id=employee.id)
+                    
+                    for manager in managers:
+                        if manager.email:
+                            EmailService.send_leave_request_notification(leave_request, manager.email)
+                
+                # Thông báo cho HR
+                from django.contrib.auth.models import Group
+                hr_group = Group.objects.filter(name='HR').first()
+                if hr_group:
+                    hr_users = hr_group.user_set.all()
+                    for hr_user in hr_users:
+                        if hr_user.email:
+                            EmailService.send_leave_request_notification(leave_request, hr_user.email)
+            except Exception as email_error:
+                logger.warning(f"Failed to send leave request notification: {email_error}")
+            
             messages.success(request, "Đơn xin nghỉ phép đã được gửi thành công")
             return redirect("leave_history")
     else:
@@ -1338,6 +1364,12 @@ def approve_leave_request(request, request_id):
         logger.info(f"Leave request {request_id} approved by {approver.name}")
         messages.success(request, "Đã duyệt đơn xin nghỉ phép")
         
+        # Gửi email thông báo cho nhân viên
+        try:
+            EmailService.send_leave_approved(leave_request)
+        except Exception as email_error:
+            logger.warning(f"Failed to send leave approved email: {email_error}")
+        
     except LeaveRequest.DoesNotExist:
         messages.error(request, "Không tìm thấy đơn xin nghỉ phép")
     except Exception as e:
@@ -1382,6 +1414,12 @@ def reject_leave_request(request, request_id):
         
         logger.info(f"Leave request {request_id} rejected by {approver.name}")
         messages.success(request, "Đã từ chối đơn xin nghỉ phép")
+        
+        # Gửi email thông báo cho nhân viên
+        try:
+            EmailService.send_leave_rejected(leave_request, leave_request.rejection_reason)
+        except Exception as email_error:
+            logger.warning(f"Failed to send leave rejected email: {email_error}")
         
     except LeaveRequest.DoesNotExist:
         messages.error(request, "Không tìm thấy đơn xin nghỉ phép")
@@ -3495,6 +3533,13 @@ def renew_contract(request, contract_id):
     
     messages.success(request, f'Đã tạo hợp đồng gia hạn {new_contract.contract_code}!')
     logger.info(f"Contract {old_contract.contract_code} renewed to {new_contract.contract_code}")
+    
+    # Gửi email thông báo cho nhân viên
+    try:
+        EmailService.send_contract_renewed(old_contract.employee)
+    except Exception as email_error:
+        logger.warning(f"Failed to send contract renewed email: {email_error}")
+    
     return redirect('contract_detail', contract_id=new_contract.id)
 
 

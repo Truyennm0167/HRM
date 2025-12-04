@@ -346,6 +346,29 @@ def add_employee_save(request):
             employee_school = request.POST.get("employee_school")
             employee_certificate = request.POST.get("employee_certificate")
 
+            # Truncate string fields to match DB column limits
+            def truncate(value, max_len):
+                if value and len(value) > max_len:
+                    return value[:max_len]
+                return value
+            
+            employee_code = truncate(employee_code, 20)
+            employee_name = truncate(employee_name, 50)
+            employee_identification = truncate(employee_identification, 50)
+            employee_nationality = truncate(employee_nationality, 50)
+            employee_nation = truncate(employee_nation, 50)
+            employee_religion = truncate(employee_religion, 50)
+            employee_email = truncate(employee_email, 50)
+            employee_phone = truncate(employee_phone, 50)
+            employee_job_position = truncate(employee_job_position, 50)
+            employee_major = truncate(employee_major, 100)
+            employee_school = truncate(employee_school, 100)
+            employee_place_of_birth = truncate(employee_place_of_birth, 300)
+            employee_place_of_origin = truncate(employee_place_of_origin, 300)
+            employee_place_of_residence = truncate(employee_place_of_residence, 300)
+            employee_place_of_issue = truncate(employee_place_of_issue, 300)
+            employee_address = truncate(employee_address, 300)
+
             # Validate inputs
             try:
                 validate_email(employee_email)
@@ -406,14 +429,66 @@ def add_employee_save(request):
             employee.save()
             logger.info(f"Employee {employee.name} ({employee.employee_code}) created by {request.user.username}")
             
-            # Send welcome email
+            # ========== TỰ ĐỘNG TẠO TÀI KHOẢN USER ==========
+            user_created = False
+            temp_password = None
+            try:
+                from django.contrib.auth.models import User, Group
+                import secrets
+                import string
+                
+                # Tạo username từ mã nhân viên
+                username = employee.employee_code.lower()
+                
+                # Kiểm tra username đã tồn tại chưa
+                if not User.objects.filter(username=username).exists():
+                    # Tạo mật khẩu tạm (8 ký tự ngẫu nhiên)
+                    alphabet = string.ascii_letters + string.digits
+                    temp_password = ''.join(secrets.choice(alphabet) for _ in range(8))
+                    
+                    # Tạo user
+                    user = User.objects.create_user(
+                        username=username,
+                        email=employee.email,
+                        password=temp_password,
+                        first_name=employee.name.split()[-1] if employee.name else '',
+                        last_name=' '.join(employee.name.split()[:-1]) if employee.name else '',
+                        is_active=True
+                    )
+                    
+                    # Gán group Employee (tạo nếu chưa có)
+                    employee_group, _ = Group.objects.get_or_create(name='Employee')
+                    user.groups.add(employee_group)
+                    
+                    # Nếu là manager, thêm group Manager
+                    if employee.is_manager:
+                        manager_group, _ = Group.objects.get_or_create(name='Manager')
+                        user.groups.add(manager_group)
+                    
+                    user_created = True
+                    logger.info(f"Auto-created user account '{username}' for employee {employee.employee_code}")
+                else:
+                    logger.warning(f"Username '{username}' already exists, skipping auto-create")
+                    
+            except Exception as user_error:
+                logger.error(f"Failed to auto-create user account: {user_error}")
+            
+            # Send welcome email with account info
             try:
                 from .email_service import EmailService
-                EmailService.send_welcome_email(employee)
+                if user_created and temp_password:
+                    # Gửi email chào mừng kèm thông tin tài khoản
+                    EmailService.send_account_created(employee, username, temp_password)
+                else:
+                    EmailService.send_welcome_email(employee)
             except Exception as email_error:
                 logger.warning(f"Failed to send welcome email: {email_error}")
             
-            messages.success(request, "Thêm Nhân viên thành công.")
+            # Thông báo thành công
+            if user_created:
+                messages.success(request, f"Thêm nhân viên thành công! Tài khoản đăng nhập: {username} / {temp_password}")
+            else:
+                messages.success(request, "Thêm Nhân viên thành công.")
 
             return redirect("/add_employee")
         except ValidationError as e:
@@ -3730,6 +3805,14 @@ def renew_contract(request, contract_id):
     
     messages.success(request, f'Đã tạo hợp đồng gia hạn {new_contract.contract_code}!')
     logger.info(f"Contract {old_contract.contract_code} renewed to {new_contract.contract_code}")
+    
+    # Gửi email thông báo cho nhân viên
+    try:
+        from .email_service import EmailService
+        EmailService.send_contract_renewed(old_contract.employee)
+    except Exception as email_error:
+        logger.warning(f"Failed to send contract renewed email: {email_error}")
+    
     return redirect('contract_detail', contract_id=new_contract.id)
 
 
@@ -4298,6 +4381,13 @@ def hr_final_review(request, appraisal_id):
                 
                 appraisal.save()
                 
+                # Gửi email thông báo kết quả đánh giá cho nhân viên
+                try:
+                    from .email_service import EmailService
+                    EmailService.send_appraisal_completed(appraisal)
+                except Exception as email_error:
+                    logger.warning(f"Failed to send appraisal completed email: {email_error}")
+                
                 messages.success(request, 'Đã hoàn tất đánh giá!')
                 logger.info(f"HR final review completed for {appraisal.employee.name}")
                 return redirect('hr_appraisals')
@@ -4420,7 +4510,14 @@ def create_user(request):
     
     # GET request
     all_groups = Group.objects.all()
-    employees = Employee.objects.filter(status__in=[1, 2]).select_related('department')
+    # Lấy nhân viên chưa có tài khoản user (status 0,1,2 = đang làm việc)
+    # Loại bỏ những người đã có user account (dựa trên email)
+    existing_user_emails = User.objects.values_list('email', flat=True)
+    employees = Employee.objects.filter(
+        status__in=[0, 1, 2]  # Onboarding, Thử việc, Chính thức
+    ).exclude(
+        email__in=existing_user_emails
+    ).select_related('department')
     
     context = {
         'all_groups': all_groups,

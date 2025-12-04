@@ -27628,3 +27628,1229 @@ INFO 2025-12-02 22:10:03,271 basehttp "GET /management/appraisal/hr/?status=pend
 INFO 2025-12-02 22:10:03,805 basehttp "GET /management/appraisal/hr/?status=pending_self HTTP/1.1" 200 67195
 INFO 2025-12-02 22:10:05,200 basehttp "GET /management/appraisal/hr/ HTTP/1.1" 200 69404
 INFO 2025-12-02 22:10:09,790 basehttp "GET /management/appraisal/periods/ HTTP/1.1" 200 33314
+INFO 2025-12-02 22:11:11,117 basehttp "GET /management/appraisal/manager/ HTTP/1.1" 200 33184
+INFO 2025-12-02 22:11:14,804 management_views Admin home accessed by hangpt
+INFO 2025-12-02 22:11:14,830 basehttp "GET /management/ HTTP/1.1" 200 38598
+INFO 2025-12-02 22:11:47,651 basehttp "GET /management/employees/ HTTP/1.1" 200 36591
+INFO 2025-12-02 22:11:50,613 basehttp "GET /management/employees/?page=2 HTTP/1.1" 200 36532
+INFO 2025-12-02 22:11:52,784 basehttp "GET /management/employees/?page=1 HTTP/1.1" 200 36591
+INFO 2025-12-02 22:11:54,769 management_views Admin home accessed by hangpt
+INFO 2025-12-02 22:11:54,792 basehttp "GET /management/ HTTP/1.1" 200 38598
+INFO 2025-12-03 15:43:26,849 autoreload Watching for file changes with StatReloader
+INFO 2025-12-03 15:43:31,274 basehttp "GET /management/ HTTP/1.1" 302 0
+INFO 2025-12-03 15:43:31,303 basehttp "GET /login/?next=/management/ HTTP/1.1" 200 2905
+WARNING 2025-12-03 15:43:31,590 log Not Found: /favicon.ico
+WARNING 2025-12-03 15:43:31,591 basehttp "GET /favicon.ico HTTP/1.1" 404 7076
+INFO 2025-12-03 15:43:42,782 basehttp "GET /careers/ HTTP/1.1" 200 24734
+INFO 2025-12-03 15:43:46,253 basehttp "GET /careers/17/ HTTP/1.1" 200 16577
+INFO 2025-12-03 15:43:49,646 basehttp "GET /careers/ HTTP/1.1" 200 24734
+INFO 2025-12-03 15:43:52,398 basehttp "GET /careers/13/ HTTP/1.1" 200 16615
+INFO 2025-12-03 15:44:00,093 basehttp "GET /management HTTP/1.1" 301 0
+INFO 2025-12-03 15:44:00,105 basehttp "GET /management/ HTTP/1.1" 302 0
+INFO 2025-12-03 15:44:00,116 basehttp "GET /login/?next=/management/ HTTP/1.1" 200 2905
+INFO 2025-12-03 15:44:05,952 basehttp "GET /admin HTTP/1.1" 301 0
+INFO 2025-12-03 15:44:05,986 basehttp "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-12-03 15:44:06,032 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4223
+INFO 2025-12-03 15:44:06,434 basehttp "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2929
+INFO 2025-12-03 15:44:06,439 basehttp "GET /static/admin/css/base.css HTTP/1.1" 200 21310
+INFO 2025-12-03 15:44:06,440 basehttp "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+INFO 2025-12-03 15:44:06,448 basehttp "GET /static/admin/css/login.css HTTP/1.1" 200 958
+INFO 2025-12-03 15:44:06,451 basehttp "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2694
+INFO 2025-12-03 15:44:06,454 basehttp "GET /static/admin/css/responsive.css HTTP/1.1" 200 18559
+INFO 2025-12-03 15:44:06,454 basehttp "GET /static/admin/js/theme.js HTTP/1.1" 200 1943
+INFO 2025-12-03 15:44:09,732 basehttp "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+INFO 2025-12-03 15:44:09,778 basehttp "GET /admin/ HTTP/1.1" 200 17870
+INFO 2025-12-03 15:44:09,833 basehttp "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+INFO 2025-12-03 15:44:09,847 basehttp "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+INFO 2025-12-03 15:44:09,847 basehttp "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+INFO 2025-12-03 15:44:12,979 basehttp "GET /admin/auth/user/ HTTP/1.1" 200 30288
+INFO 2025-12-03 15:44:13,038 basehttp "GET /static/admin/css/changelists.css HTTP/1.1" 200 6566
+INFO 2025-12-03 15:44:13,040 basehttp "GET /static/admin/js/core.js HTTP/1.1" 200 5682
+INFO 2025-12-03 15:44:13,041 basehttp "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+INFO 2025-12-03 15:44:13,041 basehttp "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 8943
+INFO 2025-12-03 15:44:13,048 basehttp "GET /static/admin/js/actions.js HTTP/1.1" 200 7872
+INFO 2025-12-03 15:44:13,053 basehttp "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+INFO 2025-12-03 15:44:13,055 basehttp "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+INFO 2025-12-03 15:44:13,055 basehttp "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+INFO 2025-12-03 15:44:13,063 basehttp "GET /static/admin/img/icon-yes.svg HTTP/1.1" 200 436
+INFO 2025-12-03 15:44:13,065 basehttp "GET /static/admin/img/icon-no.svg HTTP/1.1" 200 560
+INFO 2025-12-03 15:44:13,066 basehttp "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 292458
+INFO 2025-12-03 15:44:13,067 basehttp "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 232381
+INFO 2025-12-03 15:44:13,069 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 15:44:13,079 basehttp "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+INFO 2025-12-03 15:44:13,119 basehttp "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+INFO 2025-12-03 15:44:13,119 basehttp "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+INFO 2025-12-03 15:44:38,405 basehttp "GET /admin/auth/user/?groups__id__exact=2 HTTP/1.1" 200 18642
+INFO 2025-12-03 15:44:38,461 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 15:44:40,245 basehttp "GET /admin/auth/user/?groups__id__exact=1 HTTP/1.1" 200 18642
+INFO 2025-12-03 15:44:40,300 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 15:44:42,038 basehttp "GET /admin/auth/user/?groups__id__exact=3 HTTP/1.1" 200 18642
+INFO 2025-12-03 15:44:42,099 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 15:44:43,172 basehttp "GET /admin/auth/user/? HTTP/1.1" 200 30288
+INFO 2025-12-03 15:44:43,219 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 15:44:46,196 basehttp "GET /admin/auth/group/ HTTP/1.1" 200 17537
+INFO 2025-12-03 15:44:46,261 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 15:44:47,727 basehttp "GET /admin/auth/group/2/change/ HTTP/1.1" 200 31847
+INFO 2025-12-03 15:44:47,766 basehttp "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 586
+INFO 2025-12-03 15:44:47,767 basehttp "GET /static/admin/js/SelectBox.js HTTP/1.1" 200 4530
+INFO 2025-12-03 15:44:47,769 basehttp "GET /static/admin/js/SelectFilter2.js HTTP/1.1" 200 15292
+INFO 2025-12-03 15:44:47,769 basehttp "GET /static/admin/css/forms.css HTTP/1.1" 200 9090
+INFO 2025-12-03 15:44:47,777 basehttp "GET /static/admin/css/widgets.css HTTP/1.1" 200 11921
+INFO 2025-12-03 15:44:47,783 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 15:44:47,785 basehttp "GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+INFO 2025-12-03 15:44:47,832 basehttp "GET /static/admin/img/icon-unknown.svg HTTP/1.1" 200 655
+INFO 2025-12-03 15:44:47,833 basehttp "GET /static/admin/img/selector-icons.svg HTTP/1.1" 200 3291
+INFO 2025-12-03 15:44:47,833 basehttp "GET /static/admin/img/icon-unknown-alt.svg HTTP/1.1" 200 655
+INFO 2025-12-03 15:44:49,057 basehttp "GET /admin/auth/group/ HTTP/1.1" 200 17537
+INFO 2025-12-03 15:44:53,681 basehttp "GET /admin/app/employee/ HTTP/1.1" 200 38039
+INFO 2025-12-03 15:44:53,757 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 15:45:13,696 basehttp "GET /admin/app/employee/176/change/ HTTP/1.1" 200 40368
+INFO 2025-12-03 15:45:13,753 basehttp "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 200 392
+INFO 2025-12-03 15:45:13,753 basehttp "GET /static/admin/js/calendar.js HTTP/1.1" 200 8466
+INFO 2025-12-03 15:45:13,753 basehttp "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+INFO 2025-12-03 15:45:13,758 basehttp "GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 200 19319
+INFO 2025-12-03 15:45:13,771 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 15:45:13,846 basehttp "GET /static/admin/img/icon-calendar.svg HTTP/1.1" 200 1086
+INFO 2025-12-03 15:45:20,248 basehttp "GET /admin/auth/user/ HTTP/1.1" 200 30288
+INFO 2025-12-03 15:45:20,311 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 15:45:34,740 basehttp "POST /admin/logout/ HTTP/1.1" 302 0
+INFO 2025-12-03 15:45:34,751 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-12-03 15:45:39,243 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-12-03 15:45:39,262 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-12-03 15:45:39,291 basehttp "GET /login/ HTTP/1.1" 200 3049
+INFO 2025-12-03 15:45:47,378 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-12-03 15:45:47,406 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-12-03 15:45:47,431 basehttp "GET /login/ HTTP/1.1" 200 3049
+INFO 2025-12-03 15:45:53,332 basehttp "GET /admin HTTP/1.1" 301 0
+INFO 2025-12-03 15:45:53,367 basehttp "GET /admin/ HTTP/1.1" 200 17870
+INFO 2025-12-03 16:35:27,500 autoreload Watching for file changes with StatReloader
+INFO 2025-12-03 16:35:41,538 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-12-03 16:35:41,574 basehttp "GET /login/ HTTP/1.1" 200 3049
+INFO 2025-12-03 16:35:45,914 basehttp "GET /admin/ HTTP/1.1" 200 17870
+INFO 2025-12-03 16:35:48,091 basehttp "GET /admin/auth/user/ HTTP/1.1" 200 38320
+INFO 2025-12-03 16:35:48,161 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 16:36:27,979 basehttp "GET /admin/auth/group/ HTTP/1.1" 200 17946
+INFO 2025-12-03 16:36:28,040 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 16:36:31,033 basehttp "GET /admin/auth/group/5/change/ HTTP/1.1" 200 32331
+INFO 2025-12-03 16:36:31,094 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 16:36:32,618 basehttp "GET /admin/auth/group/ HTTP/1.1" 200 17946
+INFO 2025-12-03 16:36:36,623 basehttp "GET /admin/auth/group/7/change/ HTTP/1.1" 200 31985
+INFO 2025-12-03 16:36:36,683 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 16:36:37,657 basehttp "GET /admin/auth/group/ HTTP/1.1" 200 17946
+INFO 2025-12-03 16:36:39,521 basehttp "GET /admin/auth/group/4/change/ HTTP/1.1" 200 33459
+INFO 2025-12-03 16:36:39,596 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 16:36:40,537 basehttp "GET /admin/auth/group/ HTTP/1.1" 200 17946
+INFO 2025-12-03 16:36:41,620 basehttp "GET /admin/auth/group/8/change/ HTTP/1.1" 200 31932
+INFO 2025-12-03 16:36:41,685 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 16:36:42,530 basehttp "GET /admin/auth/group/ HTTP/1.1" 200 17946
+INFO 2025-12-03 16:36:43,746 basehttp "GET /admin/auth/group/6/change/ HTTP/1.1" 200 32000
+INFO 2025-12-03 16:36:43,806 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 16:36:44,555 basehttp "GET /admin/auth/group/ HTTP/1.1" 200 17946
+INFO 2025-12-03 16:36:46,480 basehttp "GET /admin/auth/user/ HTTP/1.1" 200 38320
+INFO 2025-12-03 16:36:46,559 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 16:36:57,620 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-12-03 16:36:57,641 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-12-03 16:36:57,671 basehttp "GET /login/ HTTP/1.1" 200 3049
+INFO 2025-12-03 16:37:32,243 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-12-03 16:37:32,349 basehttp "GET /portal/ HTTP/1.1" 200 21119
+INFO 2025-12-03 16:37:35,812 basehttp "GET /portal/profile/ HTTP/1.1" 200 22586
+INFO 2025-12-03 16:37:36,012 basehttp "GET /static/dist/img/avatar.png HTTP/1.1" 200 8543
+INFO 2025-12-03 16:37:50,115 basehttp "GET /portal/attendance/ HTTP/1.1" 200 27903
+INFO 2025-12-03 16:37:50,203 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-12-03 16:37:54,724 basehttp "GET /portal/attendance/?month=9&year=2025 HTTP/1.1" 200 64092
+INFO 2025-12-03 16:37:54,799 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-12-03 16:38:10,624 basehttp "GET /portal/attendance/?month=11&year=2025 HTTP/1.1" 200 64051
+INFO 2025-12-03 16:38:10,715 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-12-03 16:38:15,241 basehttp "GET /portal/attendance/?month=12&year=2025 HTTP/1.1" 200 27903
+INFO 2025-12-03 16:38:15,334 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-12-03 16:38:17,960 basehttp "GET /portal/expenses/ HTTP/1.1" 200 19912
+INFO 2025-12-03 16:38:18,829 basehttp "GET /portal/profile/ HTTP/1.1" 200 22586
+INFO 2025-12-03 16:38:19,975 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 16607
+INFO 2025-12-03 16:38:23,286 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 68925
+INFO 2025-12-03 16:38:37,544 basehttp "GET /portal/appraisal/team/ HTTP/1.1" 200 46873
+INFO 2025-12-03 16:38:41,009 basehttp "GET /portal/ HTTP/1.1" 200 21119
+INFO 2025-12-03 16:38:46,011 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 40224
+INFO 2025-12-03 16:38:58,803 basehttp "GET /portal/expenses/228/ HTTP/1.1" 200 18103
+INFO 2025-12-03 16:39:03,070 basehttp "GET /portal/expenses/ HTTP/1.1" 200 19912
+INFO 2025-12-03 16:39:05,402 basehttp "GET /portal/approvals/ HTTP/1.1" 200 36279
+INFO 2025-12-03 16:39:15,609 management_views Admin home accessed by hr001
+INFO 2025-12-03 16:39:15,636 basehttp "GET /management/ HTTP/1.1" 200 43909
+INFO 2025-12-03 16:39:23,971 basehttp "GET /management/employees/ HTTP/1.1" 200 37165
+INFO 2025-12-03 16:39:24,720 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37752
+INFO 2025-12-03 16:39:24,795 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37752
+INFO 2025-12-03 16:39:25,701 basehttp "GET /management/users/ HTTP/1.1" 200 121824
+INFO 2025-12-03 16:39:43,377 basehttp "GET /management/users/create/ HTTP/1.1" 200 48798
+INFO 2025-12-03 16:40:01,614 basehttp "GET /management/users/ HTTP/1.1" 200 121824
+INFO 2025-12-03 16:40:05,386 basehttp "GET /management/departments/ HTTP/1.1" 200 39358
+INFO 2025-12-03 16:40:05,569 basehttp "GET /static/plugins/summernote/font/summernote.woff?1d9aeaaff0a8939558a45be6cd52cd4c HTTP/1.1" 200 10604
+INFO 2025-12-03 16:40:06,806 basehttp "GET /management/job-titles/ HTTP/1.1" 200 37619
+INFO 2025-12-03 16:40:19,483 basehttp "GET /management/org-chart/ HTTP/1.1" 200 87964
+INFO 2025-12-03 16:40:26,133 basehttp "GET /management/contracts/ HTTP/1.1" 200 73267
+INFO 2025-12-03 16:40:32,356 basehttp "GET /management/contracts/create/ HTTP/1.1" 200 38851
+INFO 2025-12-03 16:40:34,309 basehttp "GET /management/contracts/expiring/ HTTP/1.1" 200 39764
+INFO 2025-12-03 16:40:39,032 basehttp "GET /management/attendance/add/ HTTP/1.1" 200 80662
+INFO 2025-12-03 16:40:45,527 basehttp "GET /management/attendance/manage/ HTTP/1.1" 200 2891053
+INFO 2025-12-03 16:40:57,463 basehttp "GET /management/leave/requests/ HTTP/1.1" 200 81485
+INFO 2025-12-03 16:40:58,936 basehttp "GET /management/leave/types/ HTTP/1.1" 200 45746
+INFO 2025-12-03 16:41:01,495 basehttp "GET /management/payroll/calculate/ HTTP/1.1" 200 42719
+INFO 2025-12-03 16:41:03,318 basehttp "GET /management/payroll/manage/ HTTP/1.1" 200 192384
+INFO 2025-12-03 16:41:11,623 basehttp "GET /management/salary-rules/components/ HTTP/1.1" 200 30996
+INFO 2025-12-03 16:41:13,879 basehttp "GET /management/salary-rules/bulk-assign/ HTTP/1.1" 200 58253
+INFO 2025-12-03 16:41:21,224 basehttp "GET /management/salary-rules/templates/ HTTP/1.1" 200 27568
+INFO 2025-12-03 16:41:25,541 basehttp "GET /management/salary-rules/history/ HTTP/1.1" 200 32562
+INFO 2025-12-03 16:41:27,266 basehttp "GET /management/salary-rules/components/ HTTP/1.1" 200 30996
+INFO 2025-12-03 16:41:46,356 management_views All expenses viewed by hr001
+INFO 2025-12-03 16:41:46,522 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 153701
+INFO 2025-12-03 16:41:57,071 management_views Expense 292 viewed by hr001
+INFO 2025-12-03 16:41:57,089 basehttp "GET /management/expense/requests/292/ HTTP/1.1" 200 35891
+INFO 2025-12-03 16:41:59,416 management_views Expense 290 viewed by hr001
+INFO 2025-12-03 16:41:59,434 basehttp "GET /management/expense/requests/290/ HTTP/1.1" 200 35632
+INFO 2025-12-03 16:42:12,180 management_views Expense categories viewed by hr001
+INFO 2025-12-03 16:42:12,206 basehttp "GET /management/expense/categories/ HTTP/1.1" 200 41275
+INFO 2025-12-03 16:42:18,257 basehttp "GET /management/appraisal/periods/ HTTP/1.1" 200 33264
+ERROR 2025-12-03 16:42:27,350 log Internal Server Error: /management/appraisal/manager/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 4172, in manager_appraisals
+    return render(request, 'hod_template/manager_appraisals.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 321, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 238, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 321, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'manager_review' not found. 'manager_review' is not a valid view function or pattern name.
+ERROR 2025-12-03 16:42:27,365 basehttp "GET /management/appraisal/manager/ HTTP/1.1" 500 250597
+ERROR 2025-12-03 16:42:30,468 log Internal Server Error: /management/appraisal/manager/
+Traceback (most recent call last):
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 4172, in manager_appraisals
+    return render(request, 'hod_template/manager_appraisals.html', context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\shortcuts.py", line 24, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 175, in render
+    return self._render(context)
+           ~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 157, in render
+    return compiled_parent._render(context)
+           ~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 167, in _render
+    return self.nodelist.render(context)
+           ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\loader_tags.py", line 63, in render
+    result = block.nodelist.render(context)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 321, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 238, in render
+    nodelist.append(node.render_annotated(context))
+                    ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 321, in render
+    return nodelist.render(context)
+           ~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 1005, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\base.py", line 966, in render_annotated
+    return self.render(context)
+           ~~~~~~~~~~~^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\template\defaulttags.py", line 471, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Asus\AppData\Roaming\Python\Python313\site-packages\django\urls\resolvers.py", line 828, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'manager_review' not found. 'manager_review' is not a valid view function or pattern name.
+ERROR 2025-12-03 16:42:30,474 basehttp "GET /management/appraisal/manager/ HTTP/1.1" 500 250597
+INFO 2025-12-03 16:42:33,259 basehttp "GET /management/appraisal/hr/ HTTP/1.1" 200 168845
+INFO 2025-12-03 16:42:40,700 basehttp "GET /management/rewards/ HTTP/1.1" 200 58141
+INFO 2025-12-03 16:42:43,246 basehttp "GET /management/disciplines/ HTTP/1.1" 200 39003
+INFO 2025-12-03 16:42:45,610 basehttp "GET /management/recruitment/jobs/ HTTP/1.1" 200 61062
+INFO 2025-12-03 16:42:49,161 basehttp "GET /management/recruitment/jobs/create/ HTTP/1.1" 200 44948
+INFO 2025-12-03 16:42:50,919 basehttp "GET /management/recruitment/applications/ HTTP/1.1" 200 182141
+INFO 2025-12-03 16:42:52,873 basehttp "GET /careers/ HTTP/1.1" 200 24735
+INFO 2025-12-03 16:43:00,292 basehttp "GET /management/settings/ HTTP/1.1" 200 69572
+INFO 2025-12-03 16:43:00,352 basehttp "GET /media/settings/Logo-Titops.png HTTP/1.1" 200 17797
+INFO 2025-12-03 16:43:13,568 basehttp "GET /portal/ HTTP/1.1" 200 21119
+INFO 2025-12-03 16:43:17,125 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 68925
+INFO 2025-12-03 16:43:19,378 basehttp "GET /portal/leaves/ HTTP/1.1" 200 21025
+INFO 2025-12-03 16:43:21,224 basehttp "GET /portal/ HTTP/1.1" 200 21119
+INFO 2025-12-03 16:43:25,377 basehttp "GET /portal/leaves/ HTTP/1.1" 200 21025
+INFO 2025-12-03 16:43:35,991 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 68925
+INFO 2025-12-03 16:44:45,802 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 16607
+INFO 2025-12-03 16:44:49,585 basehttp "GET /portal/ HTTP/1.1" 200 21119
+INFO 2025-12-03 16:45:08,387 basehttp "GET /portal/profile/ HTTP/1.1" 200 22586
+INFO 2025-12-03 16:45:26,656 basehttp "GET /portal/profile/edit/ HTTP/1.1" 200 19481
+INFO 2025-12-03 16:45:30,679 management_views Admin home accessed by hr001
+INFO 2025-12-03 16:45:30,700 basehttp "GET /management/ HTTP/1.1" 200 43909
+INFO 2025-12-03 16:45:33,173 basehttp "GET /management/employees/ HTTP/1.1" 200 37165
+INFO 2025-12-03 16:45:35,447 basehttp "GET /management/employees/?page=2 HTTP/1.1" 200 37256
+INFO 2025-12-03 16:45:37,400 basehttp "GET /management/employees/?page=3 HTTP/1.1" 200 37264
+INFO 2025-12-03 16:45:39,093 basehttp "GET /management/employees/?page=4 HTTP/1.1" 200 35529
+INFO 2025-12-03 16:45:42,262 basehttp "GET /management/employees/?page=1 HTTP/1.1" 200 37165
+INFO 2025-12-03 16:45:51,839 basehttp "GET /management/org-chart/ HTTP/1.1" 200 87964
+INFO 2025-12-03 16:45:54,559 management_views Admin home accessed by hr001
+INFO 2025-12-03 16:45:54,586 basehttp "GET /management/ HTTP/1.1" 200 43909
+INFO 2025-12-03 16:46:14,899 basehttp "GET /management/employees/ HTTP/1.1" 200 37165
+INFO 2025-12-03 16:46:20,513 basehttp "GET /management/users/ HTTP/1.1" 200 121824
+INFO 2025-12-03 16:48:20,411 basehttp "GET /admin/auth/user/?is_superuser__exact=1 HTTP/1.1" 302 0
+INFO 2025-12-03 16:48:20,445 basehttp "GET /admin/login/?next=/admin/auth/user/%3Fis_superuser__exact%3D1 HTTP/1.1" 200 3858
+INFO 2025-12-03 16:48:24,704 basehttp "POST /admin/login/?next=/admin/auth/user/%3Fis_superuser__exact%3D1 HTTP/1.1" 302 0
+INFO 2025-12-03 16:48:24,736 basehttp "GET /admin/auth/user/?is_superuser__exact=1 HTTP/1.1" 200 23138
+INFO 2025-12-03 16:48:24,811 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 16:48:38,110 basehttp "POST /admin/auth/user/?is_superuser__exact=1 HTTP/1.1" 200 16379
+INFO 2025-12-03 16:48:38,156 basehttp "GET /static/admin/js/cancel.js HTTP/1.1" 200 884
+INFO 2025-12-03 16:48:40,458 basehttp "POST /admin/auth/user/?is_superuser__exact=1 HTTP/1.1" 302 0
+INFO 2025-12-03 16:48:40,486 basehttp "GET /admin/auth/user/?is_superuser__exact=1 HTTP/1.1" 200 20963
+INFO 2025-12-03 16:48:40,541 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 16:48:43,215 basehttp "GET /management/users/ HTTP/1.1" 200 114050
+INFO 2025-12-03 16:48:52,735 basehttp "GET /management/users/161/edit/ HTTP/1.1" 200 49048
+INFO 2025-12-03 16:49:07,234 basehttp "GET /management/departments/ HTTP/1.1" 200 39358
+INFO 2025-12-03 16:49:11,386 basehttp "GET /management/job-titles/ HTTP/1.1" 200 37619
+INFO 2025-12-03 16:49:51,825 basehttp "GET /management/org-chart/ HTTP/1.1" 200 87964
+INFO 2025-12-03 16:49:55,727 management_views Admin home accessed by admin
+INFO 2025-12-03 16:49:55,745 basehttp "GET /management/ HTTP/1.1" 200 39340
+INFO 2025-12-03 16:50:05,825 basehttp "GET /management/employees/219/ HTTP/1.1" 200 32169
+WARNING 2025-12-03 16:50:05,886 basehttp "GET /static/img/default-profile.png HTTP/1.1" 404 1929
+INFO 2025-12-03 16:50:12,668 basehttp "GET /management/employees/ HTTP/1.1" 200 37165
+INFO 2025-12-03 16:50:20,216 basehttp "GET /admin/auth/user/? HTTP/1.1" 200 36218
+INFO 2025-12-03 16:50:20,270 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 16:50:29,086 basehttp "GET /admin/auth/group/ HTTP/1.1" 200 17946
+INFO 2025-12-03 16:50:29,142 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 16:50:32,722 basehttp "GET /management/employees/?page=2 HTTP/1.1" 200 37256
+INFO 2025-12-03 16:50:35,222 basehttp "GET /management/users/ HTTP/1.1" 200 114050
+INFO 2025-12-03 16:50:50,185 basehttp "GET /management/users/173/edit/ HTTP/1.1" 200 49093
+INFO 2025-12-03 16:52:57,164 basehttp "GET /management/users/176/edit/ HTTP/1.1" 200 49092
+INFO 2025-12-03 16:52:59,669 basehttp "GET /management/users/161/edit/ HTTP/1.1" 200 49048
+INFO 2025-12-03 16:53:06,570 basehttp "GET /management/users/ HTTP/1.1" 200 114050
+INFO 2025-12-03 16:53:08,042 basehttp "GET /management/settings/ HTTP/1.1" 200 69405
+INFO 2025-12-03 16:53:08,100 basehttp "GET /media/settings/Logo-Titops.png HTTP/1.1" 200 17797
+INFO 2025-12-03 16:53:12,377 basehttp "POST /management/settings/ HTTP/1.1" 302 0
+INFO 2025-12-03 16:53:12,423 basehttp "GET /management/settings/ HTTP/1.1" 200 69572
+INFO 2025-12-03 16:53:23,943 basehttp "POST /management/settings/ HTTP/1.1" 302 0
+INFO 2025-12-03 16:53:23,977 basehttp "GET /management/settings/ HTTP/1.1" 200 69572
+INFO 2025-12-03 16:53:37,339 basehttp "GET /management/recruitment/jobs/ HTTP/1.1" 200 61062
+INFO 2025-12-03 16:53:59,274 basehttp "GET /management/recruitment/applications/ HTTP/1.1" 200 182141
+INFO 2025-12-03 16:54:15,523 basehttp "GET /management/recruitment/jobs/ HTTP/1.1" 200 61062
+INFO 2025-12-03 16:54:20,057 basehttp "GET /management/recruitment/jobs/create/ HTTP/1.1" 200 45612
+INFO 2025-12-03 16:55:02,528 basehttp "GET /careers/ HTTP/1.1" 200 24735
+INFO 2025-12-03 16:55:50,636 basehttp "GET /careers/18/ HTTP/1.1" 200 17377
+INFO 2025-12-03 16:56:26,623 basehttp "GET /careers/ HTTP/1.1" 200 24735
+INFO 2025-12-03 16:56:31,361 basehttp "GET /careers/18/ HTTP/1.1" 200 17377
+INFO 2025-12-03 16:56:33,970 basehttp "GET /careers/21/ HTTP/1.1" 200 17227
+INFO 2025-12-03 16:56:35,684 basehttp "GET /careers/18/ HTTP/1.1" 200 17377
+INFO 2025-12-03 16:56:37,672 basehttp "GET /careers/21/ HTTP/1.1" 200 17227
+INFO 2025-12-03 16:56:39,155 basehttp "GET /careers/18/ HTTP/1.1" 200 17377
+INFO 2025-12-03 16:57:20,944 management_views Job posting JOB20251203 created by admin
+INFO 2025-12-03 16:57:20,956 basehttp "POST /management/recruitment/jobs/create/ HTTP/1.1" 302 0
+INFO 2025-12-03 16:57:20,999 basehttp "GET /management/recruitment/jobs/24/ HTTP/1.1" 200 43927
+INFO 2025-12-03 16:57:29,401 basehttp "GET /management/recruitment/jobs/24/edit/ HTTP/1.1" 200 46462
+INFO 2025-12-03 16:57:32,429 basehttp "GET /management/recruitment/jobs/ HTTP/1.1" 200 65017
+INFO 2025-12-03 16:57:37,709 basehttp "GET /management/recruitment/jobs/24/ HTTP/1.1" 200 43927
+INFO 2025-12-03 16:57:40,643 basehttp "GET /management/recruitment/jobs/24/ HTTP/1.1" 200 43927
+WARNING 2025-12-03 16:57:45,384 log Not Found: /careers/24/
+WARNING 2025-12-03 16:57:45,385 basehttp "GET /careers/24/ HTTP/1.1" 404 3377
+INFO 2025-12-03 16:57:51,679 basehttp "GET /management/recruitment/jobs/24/edit/ HTTP/1.1" 200 46093
+INFO 2025-12-03 16:57:54,483 basehttp "GET /management/recruitment/jobs/ HTTP/1.1" 200 65017
+INFO 2025-12-03 16:57:56,593 basehttp "GET /management/recruitment/jobs/24/ HTTP/1.1" 200 43927
+INFO 2025-12-03 16:57:58,036 basehttp "GET /management/recruitment/applications/?job=24 HTTP/1.1" 200 53748
+INFO 2025-12-03 16:58:05,079 basehttp "GET /management/recruitment/jobs/ HTTP/1.1" 200 65017
+INFO 2025-12-03 16:58:07,623 basehttp "GET /management/recruitment/jobs/24/edit/ HTTP/1.1" 200 46093
+INFO 2025-12-03 16:58:11,907 management_views Job posting JOB20251203 updated by admin
+INFO 2025-12-03 16:58:11,920 basehttp "POST /management/recruitment/jobs/24/edit/ HTTP/1.1" 302 0
+INFO 2025-12-03 16:58:11,951 basehttp "GET /management/recruitment/jobs/24/ HTTP/1.1" 200 43930
+INFO 2025-12-03 16:58:14,299 basehttp "GET /careers/24/ HTTP/1.1" 200 16935
+INFO 2025-12-03 16:58:20,618 basehttp "GET /careers/24/apply/ HTTP/1.1" 200 22399
+INFO 2025-12-03 17:00:00,008 basehttp "GET /management/recruitment/jobs/24/edit/ HTTP/1.1" 200 46093
+INFO 2025-12-03 17:00:24,220 management_views Job posting JOB20251203 updated by admin
+INFO 2025-12-03 17:00:24,230 basehttp "POST /management/recruitment/jobs/24/edit/ HTTP/1.1" 302 0
+INFO 2025-12-03 17:00:24,265 basehttp "GET /management/recruitment/jobs/24/ HTTP/1.1" 200 44250
+INFO 2025-12-03 17:00:32,451 basehttp "GET /careers/24/ HTTP/1.1" 200 17869
+INFO 2025-12-03 17:04:07,783 autoreload Watching for file changes with StatReloader
+WARNING 2025-12-03 17:04:12,983 log Not Found: /careers/24/apply/
+WARNING 2025-12-03 17:04:12,984 basehttp "GET /careers/24/apply/ HTTP/1.1" 404 3596
+WARNING 2025-12-03 17:04:14,225 log Not Found: /careers/24/
+WARNING 2025-12-03 17:04:14,227 basehttp "GET /careers/24/ HTTP/1.1" 404 3377
+INFO 2025-12-03 17:04:36,755 autoreload Watching for file changes with StatReloader
+INFO 2025-12-03 17:04:56,955 basehttp "GET /careers HTTP/1.1" 301 0
+INFO 2025-12-03 17:04:57,118 basehttp "GET /careers/ HTTP/1.1" 200 12206
+INFO 2025-12-03 17:05:02,436 basehttp "GET /admin HTTP/1.1" 301 0
+INFO 2025-12-03 17:05:02,558 basehttp "GET /admin/ HTTP/1.1" 302 0
+INFO 2025-12-03 17:05:02,599 basehttp "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4387
+INFO 2025-12-03 17:05:05,627 basehttp "POST /admin/login/?next=/admin/ HTTP/1.1" 200 4373
+INFO 2025-12-03 17:05:10,968 basehttp "POST /admin/login/?next=/admin/ HTTP/1.1" 200 4373
+INFO 2025-12-03 17:05:16,190 basehttp "GET /management/ HTTP/1.1" 302 0
+INFO 2025-12-03 17:05:16,201 basehttp "GET /login/?next=/management/ HTTP/1.1" 200 2905
+INFO 2025-12-03 17:05:20,933 basehttp "GET /admin/auth/user/ HTTP/1.1" 302 0
+INFO 2025-12-03 17:05:20,961 basehttp "GET /admin/login/?next=/admin/auth/user/ HTTP/1.1" 200 4243
+INFO 2025-12-03 17:05:57,077 autoreload Watching for file changes with StatReloader
+INFO 2025-12-03 17:07:06,376 autoreload Watching for file changes with StatReloader
+INFO 2025-12-03 17:13:34,228 autoreload Watching for file changes with StatReloader
+INFO 2025-12-03 17:14:03,718 basehttp "GET /login/?next=/management/ HTTP/1.1" 200 2905
+INFO 2025-12-03 17:14:10,338 basehttp "POST /login/?next=/management/ HTTP/1.1" 200 3105
+INFO 2025-12-03 17:14:17,695 basehttp "POST /admin/login/?next=/admin/auth/user/ HTTP/1.1" 200 4393
+INFO 2025-12-03 17:14:21,822 basehttp "POST /admin/login/?next=/admin/auth/user/ HTTP/1.1" 200 4393
+INFO 2025-12-03 17:14:29,501 basehttp "POST /admin/login/?next=/admin/auth/user/ HTTP/1.1" 200 4393
+INFO 2025-12-03 17:14:51,179 basehttp "POST /admin/login/?next=/admin/auth/user/ HTTP/1.1" 200 4393
+INFO 2025-12-03 17:14:58,627 basehttp "GET /careers HTTP/1.1" 301 0
+INFO 2025-12-03 17:14:58,732 basehttp "GET /careers/ HTTP/1.1" 200 12206
+INFO 2025-12-03 17:31:41,960 autoreload Watching for file changes with StatReloader
+INFO 2025-12-03 17:31:48,069 basehttp "POST /admin/login/?next=/admin/auth/user/ HTTP/1.1" 200 4393
+INFO 2025-12-03 17:31:57,063 basehttp "POST /admin/login/?next=/admin/auth/user/ HTTP/1.1" 302 0
+INFO 2025-12-03 17:31:57,133 basehttp "GET /admin/auth/user/ HTTP/1.1" 200 36190
+INFO 2025-12-03 17:31:57,203 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 17:32:08,689 basehttp "GET /admin/auth/group/ HTTP/1.1" 200 17947
+INFO 2025-12-03 17:32:08,752 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-03 17:32:12,892 basehttp "GET /careers/ HTTP/1.1" 200 24734
+INFO 2025-12-03 17:36:46,862 basehttp "GET /admin/auth/ HTTP/1.1" 200 5627
+INFO 2025-12-03 17:36:48,698 basehttp "GET /admin/auth/user/ HTTP/1.1" 200 36190
+INFO 2025-12-03 17:36:48,768 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+WARNING 2025-12-03 17:37:03,170 log Not Found: /
+WARNING 2025-12-03 17:37:03,172 basehttp "GET / HTTP/1.1" 404 7025
+INFO 2025-12-03 17:37:06,839 basehttp "GET /portal HTTP/1.1" 301 0
+INFO 2025-12-03 17:37:06,950 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-12-03 17:37:06,962 basehttp "GET /login/?next=/portal/ HTTP/1.1" 200 2905
+INFO 2025-12-03 17:37:07,275 basehttp "GET /static/plugins/fontawesome-free/css/all.min.css HTTP/1.1" 200 56842
+INFO 2025-12-03 17:37:07,315 basehttp "GET /static/plugins/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 78635
+INFO 2025-12-03 17:37:07,366 basehttp "GET /static/plugins/icheck-bootstrap/icheck-bootstrap.min.css HTTP/1.1" 200 12505
+INFO 2025-12-03 17:37:07,377 basehttp "GET /static/plugins/jquery/jquery.min.js HTTP/1.1" 200 88145
+INFO 2025-12-03 17:37:07,384 basehttp "GET /static/dist/js/adminlte.min.js HTTP/1.1" 200 24244
+INFO 2025-12-03 17:37:07,409 basehttp "GET /static/dist/css/adminlte.min.css HTTP/1.1" 200 656504
+INFO 2025-12-03 17:37:07,469 basehttp "GET /static/plugins/fontawesome-free/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 75728
+INFO 2025-12-03 17:37:12,906 basehttp "POST /login/?next=/portal/ HTTP/1.1" 200 3105
+INFO 2025-12-03 17:37:22,434 basehttp "POST /login/?next=/portal/ HTTP/1.1" 302 0
+INFO 2025-12-03 17:37:22,499 basehttp "GET /portal/ HTTP/1.1" 200 20937
+INFO 2025-12-03 17:40:22,236 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 68928
+INFO 2025-12-03 17:40:27,142 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-12-03 17:40:27,149 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-12-03 17:40:29,922 basehttp "POST /login/ HTTP/1.1" 200 3105
+INFO 2025-12-03 17:40:40,168 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-12-03 17:40:40,189 basehttp "GET /portal/ HTTP/1.1" 200 18549
+INFO 2025-12-03 17:40:45,453 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22236
+INFO 2025-12-03 17:40:47,564 basehttp "GET /portal/ HTTP/1.1" 200 18549
+INFO 2025-12-03 17:40:50,278 basehttp "GET /portal/payroll/ HTTP/1.1" 200 22236
+INFO 2025-12-03 17:40:51,325 basehttp "GET /portal/profile/ HTTP/1.1" 200 21006
+INFO 2025-12-03 17:40:51,356 basehttp "GET /static/dist/img/avatar.png HTTP/1.1" 200 8543
+INFO 2025-12-03 17:41:03,616 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 15092
+INFO 2025-12-03 17:41:04,292 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 67627
+INFO 2025-12-03 17:41:05,494 basehttp "GET /portal/ HTTP/1.1" 200 18549
+INFO 2025-12-03 17:41:07,841 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-12-03 17:41:07,847 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-12-03 17:41:12,948 basehttp "GET /careers/ HTTP/1.1" 200 24734
+INFO 2025-12-03 17:41:22,828 basehttp "GET /careers/40/ HTTP/1.1" 200 17227
+INFO 2025-12-03 17:41:26,925 basehttp "GET /careers/40/apply/ HTTP/1.1" 200 21854
+INFO 2025-12-03 17:42:14,501 basehttp "GET /careers/ HTTP/1.1" 200 24734
+INFO 2025-12-03 17:44:55,398 basehttp "POST /careers/40/apply/ HTTP/1.1" 302 0
+INFO 2025-12-03 17:44:55,415 basehttp "GET /careers/40/ HTTP/1.1" 200 17227
+WARNING 2025-12-03 17:46:56,411 log Forbidden (CSRF token from POST incorrect.): /login/
+WARNING 2025-12-03 17:46:56,416 basehttp "POST /login/?next=/management/ HTTP/1.1" 403 2518
+INFO 2025-12-03 17:47:00,608 basehttp "GET /login/?next=/management/ HTTP/1.1" 200 2905
+INFO 2025-12-03 17:47:21,421 basehttp "POST /login/?next=/management/ HTTP/1.1" 302 0
+INFO 2025-12-03 17:47:21,515 management_views Admin home accessed by hr001
+INFO 2025-12-03 17:47:21,605 basehttp "GET /management/ HTTP/1.1" 200 45315
+INFO 2025-12-03 17:47:43,750 basehttp "GET /management/recruitment/jobs/ HTTP/1.1" 200 61061
+INFO 2025-12-03 17:47:50,469 basehttp "GET /management/recruitment/applications/ HTTP/1.1" 200 186523
+INFO 2025-12-03 17:47:54,523 basehttp "GET /management/recruitment/applications/148/ HTTP/1.1" 200 44597
+INFO 2025-12-03 17:48:20,576 basehttp "GET /management/recruitment/applications/148/update/ HTTP/1.1" 200 46972
+INFO 2025-12-03 17:48:59,135 basehttp "GET /management/recruitment/applications/148/ HTTP/1.1" 200 44597
+INFO 2025-12-03 17:49:02,668 basehttp "GET /management/recruitment/applications/ HTTP/1.1" 200 186523
+INFO 2025-12-03 17:49:06,903 management_views Application APP20251203EF498F status changed from new to screening
+INFO 2025-12-03 17:49:06,910 basehttp "POST /management/recruitment/applications/148/status/ HTTP/1.1" 200 134
+INFO 2025-12-03 17:49:08,530 basehttp "GET /management/recruitment/applications/148/ HTTP/1.1" 200 44613
+INFO 2025-12-03 17:49:12,822 basehttp "GET /management/recruitment/applications/148/update/ HTTP/1.1" 200 46972
+INFO 2025-12-03 17:49:16,717 basehttp "GET /management/recruitment/applications/148/ HTTP/1.1" 200 44613
+INFO 2025-12-03 17:49:17,827 basehttp "GET /management/recruitment/applications/ HTTP/1.1" 200 186532
+INFO 2025-12-03 17:49:20,474 basehttp "GET /management/recruitment/applications/148/ HTTP/1.1" 200 44613
+INFO 2025-12-03 17:49:21,809 basehttp "GET /management/recruitment/applications/148/update/ HTTP/1.1" 200 46972
+INFO 2025-12-03 17:49:34,580 basehttp "GET /management/recruitment/applications/148/update/ HTTP/1.1" 200 46972
+INFO 2025-12-03 17:49:51,126 management_views Application APP20251203EF498F updated by hr001
+INFO 2025-12-03 17:49:51,131 basehttp "POST /management/recruitment/applications/148/update/ HTTP/1.1" 302 0
+INFO 2025-12-03 17:49:51,163 basehttp "GET /management/recruitment/applications/148/ HTTP/1.1" 200 46729
+INFO 2025-12-03 17:50:00,160 management_views Application APP20251203EF498F converted to employee NV0006
+INFO 2025-12-03 17:50:00,165 basehttp "POST /management/recruitment/applications/148/convert/ HTTP/1.1" 302 0
+INFO 2025-12-03 17:50:00,186 basehttp "GET /management/employees/267/ HTTP/1.1" 200 32099
+WARNING 2025-12-03 17:50:00,249 basehttp "GET /static/img/default-profile.png HTTP/1.1" 404 1929
+INFO 2025-12-03 17:50:10,741 basehttp "GET /management/recruitment/jobs/ HTTP/1.1" 200 61061
+INFO 2025-12-03 17:50:14,681 basehttp "GET /careers/ HTTP/1.1" 200 24734
+INFO 2025-12-03 17:50:16,966 basehttp "GET /management/recruitment/applications/ HTTP/1.1" 200 188646
+INFO 2025-12-03 17:50:21,966 basehttp "GET /management/recruitment/applications/144/ HTTP/1.1" 200 46669
+INFO 2025-12-03 17:50:29,226 basehttp "GET /management/recruitment/applications/144/update/ HTTP/1.1" 200 47027
+INFO 2025-12-03 17:50:35,715 basehttp "GET /management/recruitment/applications/144/ HTTP/1.1" 200 46192
+INFO 2025-12-03 17:50:37,870 basehttp "GET /management/employees/ HTTP/1.1" 200 37183
+INFO 2025-12-03 17:50:40,390 basehttp "GET /management/employees/?page=4 HTTP/1.1" 200 36325
+INFO 2025-12-03 17:50:42,551 basehttp "GET /management/employees/267/ HTTP/1.1" 200 32099
+WARNING 2025-12-03 17:50:42,610 basehttp "GET /static/img/default-profile.png HTTP/1.1" 404 1929
+INFO 2025-12-03 17:50:45,226 basehttp "GET /management/employees/267/edit/ HTTP/1.1" 200 36675
+INFO 2025-12-03 17:50:45,307 basehttp "GET /management/employees/267/edit/ HTTP/1.1" 200 36675
+ERROR 2025-12-03 17:52:31,330 log Internal Server Error: /management/employees/267/edit/save/
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1957, in get_prep_value
+    return float(value)
+ValueError: could not convert string to float: '11000000,0'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\views\decorators\http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 707, in update_employee_save
+    employee.avatar.save(unique_name, avatar)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\fields\files.py", line 99, in save
+    self.instance.save()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 814, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 877, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 990, in _save_table
+    updated = self._do_update(
+        base_qs, using, pk_val, values, update_fields, forced_update
+    )
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 1054, in _do_update
+    return filtered._update(values) > 0
+           ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\query.py", line 1231, in _update
+    return query.get_compiler(self.db).execute_sql(CURSOR)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1984, in execute_sql
+    cursor = super().execute_sql(result_type)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1549, in execute_sql
+    sql, params = self.as_sql()
+                  ~~~~~~~~~~~^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1947, in as_sql
+    val = field.get_db_prep_save(val, connection=self.connection)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 954, in get_db_prep_save
+    return self.get_db_prep_value(value, connection=connection, prepared=False)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 947, in get_db_prep_value
+    value = self.get_prep_value(value)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1959, in get_prep_value
+    raise e.__class__(
+        "Field '%s' expected a number but got %r." % (self.name, value),
+    ) from e
+ValueError: Field 'salary' expected a number but got '11000000,0'.
+ERROR 2025-12-03 17:52:31,343 basehttp "POST /management/employees/267/edit/save/ HTTP/1.1" 500 169695
+ERROR 2025-12-03 17:52:49,749 log Internal Server Error: /management/employees/267/edit/save/
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1957, in get_prep_value
+    return float(value)
+ValueError: could not convert string to float: '12,0'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\views\decorators\http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 707, in update_employee_save
+    employee.avatar.save(unique_name, avatar)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\fields\files.py", line 99, in save
+    self.instance.save()
+    ~~~~~~~~~~~~~~~~~~^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 814, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 877, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 990, in _save_table
+    updated = self._do_update(
+        base_qs, using, pk_val, values, update_fields, forced_update
+    )
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 1054, in _do_update
+    return filtered._update(values) > 0
+           ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\query.py", line 1231, in _update
+    return query.get_compiler(self.db).execute_sql(CURSOR)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1984, in execute_sql
+    cursor = super().execute_sql(result_type)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1549, in execute_sql
+    sql, params = self.as_sql()
+                  ~~~~~~~~~~~^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1947, in as_sql
+    val = field.get_db_prep_save(val, connection=self.connection)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 954, in get_db_prep_save
+    return self.get_db_prep_value(value, connection=connection, prepared=False)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 947, in get_db_prep_value
+    value = self.get_prep_value(value)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1959, in get_prep_value
+    raise e.__class__(
+        "Field '%s' expected a number but got %r." % (self.name, value),
+    ) from e
+ValueError: Field 'contract_duration' expected a number but got '12,0'.
+ERROR 2025-12-03 17:52:49,755 basehttp "POST /management/employees/267/edit/save/ HTTP/1.1" 500 169859
+INFO 2025-12-03 17:53:07,374 basehttp "POST /management/employees/267/edit/save/ HTTP/1.1" 302 0
+INFO 2025-12-03 17:53:07,395 basehttp "GET /management/employees/267/ HTTP/1.1" 200 32202
+INFO 2025-12-03 17:53:07,460 basehttp "GET /media/avatars/2975f28370ed407a83e5ed28fe9c8167_MinhTruyen_1x1.jpg HTTP/1.1" 200 411816
+INFO 2025-12-03 17:53:18,964 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37877
+INFO 2025-12-03 17:53:19,028 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+INFO 2025-12-03 17:53:21,319 basehttp "GET /management/users/ HTTP/1.1" 200 114023
+INFO 2025-12-03 17:53:25,187 basehttp "GET /management/users/create/ HTTP/1.1" 200 48837
+INFO 2025-12-03 17:55:12,831 basehttp "GET /management/users/ HTTP/1.1" 200 114023
+INFO 2025-12-03 17:55:19,931 basehttp "GET /management/employees/ HTTP/1.1" 200 37183
+INFO 2025-12-03 17:55:22,211 basehttp "GET /management/users/ HTTP/1.1" 200 114023
+INFO 2025-12-03 17:56:56,251 basehttp "GET /management/users/create/ HTTP/1.1" 200 48837
+INFO 2025-12-03 17:57:18,961 basehttp "GET /management/employees/ HTTP/1.1" 200 37183
+INFO 2025-12-03 17:57:20,422 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+INFO 2025-12-03 17:57:20,501 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+INFO 2025-12-03 17:57:25,070 basehttp "GET /management/users/ HTTP/1.1" 200 114023
+INFO 2025-12-03 17:57:28,788 basehttp "GET /management/users/create/ HTTP/1.1" 200 48837
+INFO 2025-12-03 17:59:59,175 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-12-03 18:00:00,540 autoreload Watching for file changes with StatReloader
+INFO 2025-12-03 18:00:11,892 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-12-03 18:00:12,957 autoreload Watching for file changes with StatReloader
+INFO 2025-12-03 18:07:48,778 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+INFO 2025-12-03 18:07:48,865 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+ERROR 2025-12-03 18:09:59,004 management_views Error adding employee: duplicate key value violates unique constraint "app_employee_phone_key"
+DETAIL:  Key (phone)=(0764142269) already exists.
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "app_employee_phone_key"
+DETAIL:  Key (phone)=(0764142269) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 406, in add_employee_save
+    employee.save()
+    ~~~~~~~~~~~~~^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 814, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 877, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 1020, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, fields, returning_fields, raw
+    )
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 1061, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "app_employee_phone_key"
+DETAIL:  Key (phone)=(0764142269) already exists.
+
+INFO 2025-12-03 18:09:59,024 basehttp "POST /management/employees/add/save/ HTTP/1.1" 302 0
+INFO 2025-12-03 18:09:59,041 basehttp "GET /add_employee HTTP/1.1" 302 0
+INFO 2025-12-03 18:09:59,065 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37917
+INFO 2025-12-03 18:09:59,176 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+INFO 2025-12-03 18:10:51,473 basehttp "GET /management/employees/ HTTP/1.1" 200 37183
+INFO 2025-12-03 18:10:53,981 basehttp "GET /management/employees/?page=2 HTTP/1.1" 200 37263
+INFO 2025-12-03 18:11:33,902 basehttp "GET /management/employees/?search=truy%E1%BB%81n&department=&status= HTTP/1.1" 200 28679
+INFO 2025-12-03 18:11:37,555 basehttp "GET /management/employees/267/ HTTP/1.1" 200 32202
+INFO 2025-12-03 18:11:37,731 basehttp "GET /media/avatars/2975f28370ed407a83e5ed28fe9c8167_MinhTruyen_1x1.jpg HTTP/1.1" 200 411816
+INFO 2025-12-03 18:11:39,981 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+INFO 2025-12-03 18:11:40,039 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+ERROR 2025-12-03 18:13:23,246 management_views Error adding employee: value too long for type character varying(100)
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.StringDataRightTruncation: value too long for type character varying(100)
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 406, in add_employee_save
+    employee.save()
+    ~~~~~~~~~~~~~^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 814, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 877, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 1020, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, fields, returning_fields, raw
+    )
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 1061, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.DataError: value too long for type character varying(100)
+
+INFO 2025-12-03 18:13:23,258 basehttp "POST /management/employees/add/save/ HTTP/1.1" 302 0
+INFO 2025-12-03 18:13:23,279 basehttp "GET /add_employee HTTP/1.1" 302 0
+INFO 2025-12-03 18:13:23,309 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37917
+INFO 2025-12-03 18:13:23,401 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+INFO 2025-12-03 18:13:25,625 basehttp "GET /management/employees/ HTTP/1.1" 200 37183
+INFO 2025-12-03 18:13:28,192 basehttp "GET /management/employees/?search=truy%C3%AAn&department=&status= HTTP/1.1" 200 27878
+INFO 2025-12-03 18:13:30,726 basehttp "GET /management/employees/?search=truy%E1%BB%81n&department=&status= HTTP/1.1" 200 28679
+INFO 2025-12-03 18:15:23,623 basehttp "GET /management/employees/267/ HTTP/1.1" 200 32202
+INFO 2025-12-03 18:15:23,692 basehttp "GET /media/avatars/2975f28370ed407a83e5ed28fe9c8167_MinhTruyen_1x1.jpg HTTP/1.1" 304 0
+INFO 2025-12-03 18:22:34,052 basehttp "GET /management/employees/ HTTP/1.1" 200 37183
+INFO 2025-12-03 18:22:36,605 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+INFO 2025-12-03 18:22:36,741 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+INFO 2025-12-03 18:22:50,734 basehttp "GET /careers/ HTTP/1.1" 200 24734
+INFO 2025-12-03 18:23:07,563 basehttp "GET /careers/37/ HTTP/1.1" 200 17377
+INFO 2025-12-03 20:09:03,627 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-12-03 20:09:06,663 autoreload Watching for file changes with StatReloader
+INFO 2025-12-03 20:10:56,846 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-12-03 20:10:57,931 autoreload Watching for file changes with StatReloader
+INFO 2025-12-03 20:15:15,193 basehttp "POST /management/employees/add/save/ HTTP/1.1" 302 0
+INFO 2025-12-03 20:15:15,210 basehttp "GET /login/?next=/management/employees/add/save/ HTTP/1.1" 200 2905
+INFO 2025-12-03 20:15:30,761 basehttp "POST /login/?next=/management/employees/add/save/ HTTP/1.1" 302 0
+WARNING 2025-12-03 20:15:30,773 log Method Not Allowed (GET): /management/employees/add/save/
+WARNING 2025-12-03 20:15:30,777 basehttp "GET /management/employees/add/save/ HTTP/1.1" 405 0
+INFO 2025-12-03 20:15:39,489 basehttp "GET /login/?next=/management/employees/add/save/ HTTP/1.1" 200 2905
+INFO 2025-12-03 20:15:44,010 basehttp "POST /login/?next=/management/employees/add/save/ HTTP/1.1" 302 0
+WARNING 2025-12-03 20:15:44,028 log Method Not Allowed (GET): /management/employees/add/save/
+WARNING 2025-12-03 20:15:44,048 basehttp "GET /management/employees/add/save/ HTTP/1.1" 405 0
+INFO 2025-12-03 20:15:48,300 management_views Admin home accessed by hr001
+INFO 2025-12-03 20:15:48,378 basehttp "GET /management/ HTTP/1.1" 200 45338
+INFO 2025-12-03 20:15:50,533 basehttp "GET /management/employees/ HTTP/1.1" 200 37183
+INFO 2025-12-03 20:15:54,786 basehttp "GET /management/employees/?search=truy%E1%BB%81n&department=&status= HTTP/1.1" 200 28679
+INFO 2025-12-03 20:15:57,709 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+INFO 2025-12-03 20:15:57,788 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+ERROR 2025-12-03 20:19:07,037 management_views Error adding employee: value too long for type character varying(100)
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.StringDataRightTruncation: value too long for type character varying(100)
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 429, in add_employee_save
+    employee.save()
+    ~~~~~~~~~~~~~^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 814, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 877, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 1020, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, fields, returning_fields, raw
+    )
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 1061, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.DataError: value too long for type character varying(100)
+
+INFO 2025-12-03 20:19:07,058 basehttp "POST /management/employees/add/save/ HTTP/1.1" 302 0
+INFO 2025-12-03 20:19:07,075 basehttp "GET /add_employee HTTP/1.1" 302 0
+INFO 2025-12-03 20:19:07,101 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37917
+INFO 2025-12-03 20:19:07,212 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+INFO 2025-12-03 20:19:28,705 management_views Employee Nguyễn Minh Truyền (NV0007) created by hr001
+INFO 2025-12-03 20:19:29,100 management_views Auto-created user account 'nv0007' for employee NV0007
+INFO 2025-12-03 20:19:34,004 email_service Email sent successfully: [HRM] Tài khoản của bạn đã được tạo to ['truyennm7777@gmail.com']
+INFO 2025-12-03 20:19:34,019 basehttp "POST /management/employees/add/save/ HTTP/1.1" 302 0
+INFO 2025-12-03 20:19:34,057 basehttp "GET /add_employee HTTP/1.1" 302 0
+INFO 2025-12-03 20:19:34,087 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37919
+INFO 2025-12-03 20:19:34,154 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+WARNING 2025-12-03 20:20:58,066 log Not Found: /
+WARNING 2025-12-03 20:20:58,067 basehttp "GET / HTTP/1.1" 404 7025
+WARNING 2025-12-03 20:20:58,296 log Not Found: /favicon.ico
+WARNING 2025-12-03 20:20:58,297 basehttp "GET /favicon.ico HTTP/1.1" 404 7076
+INFO 2025-12-03 20:21:06,079 basehttp "GET /portal HTTP/1.1" 301 0
+INFO 2025-12-03 20:21:06,457 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-12-03 20:21:06,463 basehttp "GET /login/?next=/portal/ HTTP/1.1" 200 2905
+INFO 2025-12-03 20:21:06,653 basehttp "GET /static/plugins/fontawesome-free/css/all.min.css HTTP/1.1" 200 56842
+INFO 2025-12-03 20:21:06,657 basehttp "GET /static/plugins/icheck-bootstrap/icheck-bootstrap.min.css HTTP/1.1" 200 12505
+INFO 2025-12-03 20:21:06,683 basehttp "GET /static/dist/css/adminlte.min.css HTTP/1.1" 200 656504
+INFO 2025-12-03 20:21:06,690 basehttp "GET /static/plugins/jquery/jquery.min.js HTTP/1.1" 200 88145
+INFO 2025-12-03 20:21:06,714 basehttp "GET /static/plugins/bootstrap/js/bootstrap.bundle.min.js HTTP/1.1" 200 78635
+INFO 2025-12-03 20:21:06,717 basehttp "GET /static/dist/js/adminlte.min.js HTTP/1.1" 200 24244
+INFO 2025-12-03 20:21:06,773 basehttp "GET /static/plugins/fontawesome-free/webfonts/fa-solid-900.woff2 HTTP/1.1" 200 75728
+INFO 2025-12-03 20:21:18,591 basehttp "POST /login/?next=/portal/ HTTP/1.1" 302 0
+INFO 2025-12-03 20:21:18,632 basehttp "GET /portal/ HTTP/1.1" 200 13790
+INFO 2025-12-03 20:21:21,245 basehttp "GET /portal/profile/ HTTP/1.1" 200 21005
+INFO 2025-12-03 20:21:21,302 basehttp "GET /media/avatars/0005ff6f615649bf90c238bec9ca9509_sontung.jpg HTTP/1.1" 200 576065
+INFO 2025-12-03 20:21:52,056 basehttp "GET /portal/appraisal/ HTTP/1.1" 200 11806
+INFO 2025-12-03 20:21:53,306 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 69714
+INFO 2025-12-03 20:22:07,850 basehttp "GET /management/users/ HTTP/1.1" 200 116077
+INFO 2025-12-04 08:12:08,315 basehttp "GET /portal/leaves/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:12:08,330 basehttp "GET /login/?next=/portal/leaves/ HTTP/1.1" 200 2905
+INFO 2025-12-04 08:12:10,323 basehttp "GET /portal/organization-chart/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:12:10,337 basehttp "GET /login/?next=/portal/organization-chart/ HTTP/1.1" 200 2905
+INFO 2025-12-04 08:12:11,562 basehttp "GET /portal/appraisal/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:12:11,570 basehttp "GET /login/?next=/portal/appraisal/ HTTP/1.1" 200 2905
+INFO 2025-12-04 08:12:12,544 basehttp "GET /portal/profile/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:12:12,555 basehttp "GET /login/?next=/portal/profile/ HTTP/1.1" 200 2905
+INFO 2025-12-04 08:12:20,214 basehttp "POST /login/?next=/portal/profile/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:12:20,271 basehttp "GET /portal/profile/ HTTP/1.1" 200 21005
+INFO 2025-12-04 08:12:20,360 basehttp "GET /media/avatars/0005ff6f615649bf90c238bec9ca9509_sontung.jpg HTTP/1.1" 200 576065
+INFO 2025-12-04 08:12:55,710 basehttp "GET /portal/profile/edit/ HTTP/1.1" 200 17929
+INFO 2025-12-04 08:23:48,269 basehttp "GET /management/users/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:23:48,279 basehttp "GET /login/?next=/management/users/ HTTP/1.1" 200 2905
+INFO 2025-12-04 08:23:59,422 basehttp "POST /login/?next=/management/users/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:23:59,499 basehttp "GET /management/users/ HTTP/1.1" 200 116077
+INFO 2025-12-04 08:26:16,145 basehttp "GET /management/org-chart/ HTTP/1.1" 200 90619
+INFO 2025-12-04 08:26:48,976 basehttp "GET /management/employees/ HTTP/1.1" 200 37183
+INFO 2025-12-04 08:26:56,007 basehttp "GET /management/employees/?search=B%C3%B9i+&department=&status= HTTP/1.1" 200 29462
+INFO 2025-12-04 08:26:57,800 basehttp "GET /management/employees/240/ HTTP/1.1" 200 32198
+WARNING 2025-12-04 08:26:57,854 basehttp "GET /static/img/default-profile.png HTTP/1.1" 404 1929
+INFO 2025-12-04 08:27:01,500 basehttp "GET /management/employees/240/edit/ HTTP/1.1" 200 36762
+INFO 2025-12-04 08:27:01,570 basehttp "GET /management/employees/240/edit/ HTTP/1.1" 200 36762
+ERROR 2025-12-04 08:27:32,713 log Internal Server Error: /management/employees/240/edit/save/
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1957, in get_prep_value
+    return float(value)
+ValueError: could not convert string to float: '45000000,0'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\views\decorators\http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 789, in update_employee_save
+    employee.save()
+    ~~~~~~~~~~~~~^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 814, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 877, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 990, in _save_table
+    updated = self._do_update(
+        base_qs, using, pk_val, values, update_fields, forced_update
+    )
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 1054, in _do_update
+    return filtered._update(values) > 0
+           ~~~~~~~~~~~~~~~~^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\query.py", line 1231, in _update
+    return query.get_compiler(self.db).execute_sql(CURSOR)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1984, in execute_sql
+    cursor = super().execute_sql(result_type)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1549, in execute_sql
+    sql, params = self.as_sql()
+                  ~~~~~~~~~~~^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1947, in as_sql
+    val = field.get_db_prep_save(val, connection=self.connection)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 954, in get_db_prep_save
+    return self.get_db_prep_value(value, connection=connection, prepared=False)
+           ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 947, in get_db_prep_value
+    value = self.get_prep_value(value)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\fields\__init__.py", line 1959, in get_prep_value
+    raise e.__class__(
+        "Field '%s' expected a number but got %r." % (self.name, value),
+    ) from e
+ValueError: Field 'salary' expected a number but got '45000000,0'.
+ERROR 2025-12-04 08:27:32,728 basehttp "POST /management/employees/240/edit/save/ HTTP/1.1" 500 164249
+INFO 2025-12-04 08:27:40,656 basehttp "POST /management/employees/240/edit/save/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:27:40,676 basehttp "GET /management/employees/240/ HTTP/1.1" 200 32207
+WARNING 2025-12-04 08:27:40,732 basehttp "GET /static/img/default-profile.png HTTP/1.1" 404 1929
+INFO 2025-12-04 08:27:45,482 management_views Admin home accessed by hr001
+INFO 2025-12-04 08:27:45,507 basehttp "GET /management/ HTTP/1.1" 200 45367
+INFO 2025-12-04 08:27:55,450 basehttp "GET /management/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:27:55,457 basehttp "GET /login/?next=/management/ HTTP/1.1" 200 3176
+INFO 2025-12-04 08:28:24,988 basehttp "POST /login/?next=/management/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:28:25,004 basehttp "GET /management/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:28:25,046 basehttp "GET /portal/ HTTP/1.1" 200 14334
+INFO 2025-12-04 08:28:34,556 basehttp "GET /portal/leaves/ HTTP/1.1" 200 19546
+INFO 2025-12-04 08:28:52,485 basehttp "GET /portal/leaves/create/ HTTP/1.1" 200 18190
+INFO 2025-12-04 08:29:16,048 basehttp "POST /portal/leaves/create/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:29:16,092 basehttp "GET /portal/leaves/ HTTP/1.1" 200 23038
+INFO 2025-12-04 08:29:37,601 management_views Admin home accessed by hr001
+INFO 2025-12-04 08:29:37,623 basehttp "GET /management/ HTTP/1.1" 200 45367
+INFO 2025-12-04 08:29:41,663 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:29:41,671 basehttp "GET /login/ HTTP/1.1" 200 3044
+INFO 2025-12-04 08:29:47,892 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:29:47,907 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:29:47,922 basehttp "GET /login/ HTTP/1.1" 200 3049
+INFO 2025-12-04 08:29:57,715 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:29:57,732 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:29:57,749 basehttp "GET /login/ HTTP/1.1" 200 3049
+INFO 2025-12-04 08:30:17,135 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:30:17,147 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:30:17,160 basehttp "GET /login/ HTTP/1.1" 200 3049
+WARNING 2025-12-04 08:30:24,262 log Not Found: /
+WARNING 2025-12-04 08:30:24,263 basehttp "GET / HTTP/1.1" 404 7025
+INFO 2025-12-04 08:30:26,681 basehttp "GET /portal HTTP/1.1" 301 0
+INFO 2025-12-04 08:30:26,803 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:30:26,817 basehttp "GET /login/ HTTP/1.1" 200 3049
+INFO 2025-12-04 08:30:33,359 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:30:33,377 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:30:33,387 basehttp "GET /login/ HTTP/1.1" 200 3049
+INFO 2025-12-04 08:30:53,445 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:30:53,507 basehttp "GET /portal/ HTTP/1.1" 200 18257
+INFO 2025-12-04 08:30:56,620 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-12-04 08:31:06,624 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:31:06,659 basehttp "GET /portal/ HTTP/1.1" 200 21117
+INFO 2025-12-04 08:31:09,538 management_views Admin home accessed by hr001
+INFO 2025-12-04 08:31:09,568 basehttp "GET /management/ HTTP/1.1" 200 45367
+INFO 2025-12-04 08:31:12,522 basehttp "GET /management/org-chart/ HTTP/1.1" 200 90637
+INFO 2025-12-04 08:31:16,097 basehttp "GET /management/users/ HTTP/1.1" 200 116077
+INFO 2025-12-04 08:31:28,280 basehttp "GET /management/users/13/edit/ HTTP/1.1" 200 49115
+INFO 2025-12-04 08:31:48,191 management_views Updated user it001 by hr001
+INFO 2025-12-04 08:31:48,195 basehttp "POST /management/users/13/edit/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:31:48,240 basehttp "GET /management/users/ HTTP/1.1" 200 116462
+INFO 2025-12-04 08:31:57,661 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:31:57,669 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-12-04 08:32:03,789 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:32:03,827 basehttp "GET /portal/ HTTP/1.1" 200 20652
+INFO 2025-12-04 08:32:08,249 basehttp "GET /portal/profile/ HTTP/1.1" 200 22453
+INFO 2025-12-04 08:32:12,507 basehttp "GET /portal/approvals/ HTTP/1.1" 200 54832
+INFO 2025-12-04 08:32:12,588 basehttp "GET /media/avatars/0005ff6f615649bf90c238bec9ca9509_sontung.jpg HTTP/1.1" 200 576065
+INFO 2025-12-04 08:32:12,700 basehttp "GET /media/avatars/2975f28370ed407a83e5ed28fe9c8167_MinhTruyen_1x1.jpg HTTP/1.1" 200 411816
+INFO 2025-12-04 08:32:14,463 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 57258
+INFO 2025-12-04 08:32:39,919 basehttp "GET /portal/leaves/320/ HTTP/1.1" 200 17726
+INFO 2025-12-04 08:33:05,071 basehttp "GET /portal/appraisal/team/ HTTP/1.1" 200 29339
+INFO 2025-12-04 08:33:10,702 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:33:10,708 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-12-04 08:33:17,407 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:33:17,457 basehttp "GET /portal/ HTTP/1.1" 200 21117
+INFO 2025-12-04 08:33:20,383 basehttp "GET /portal/approvals/ HTTP/1.1" 200 38468
+INFO 2025-12-04 08:33:21,299 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 36899
+INFO 2025-12-04 08:33:22,919 management_views Admin home accessed by hr001
+INFO 2025-12-04 08:33:22,960 basehttp "GET /management/ HTTP/1.1" 200 45367
+INFO 2025-12-04 08:33:27,132 basehttp "GET /management/leave/requests/ HTTP/1.1" 200 91720
+INFO 2025-12-04 08:33:30,458 basehttp "GET /management/leave/requests/344/ HTTP/1.1" 200 33873
+WARNING 2025-12-04 08:33:33,582 management_views Failed to send leave approval email: 'LeaveRequest' object has no attribute 'number_of_days'
+INFO 2025-12-04 08:33:33,582 management_views Leave request 344 approved by Ngô Quốc Nhung
+INFO 2025-12-04 08:33:33,587 basehttp "POST /management/leave/requests/344/approve/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:33:33,659 basehttp "GET /management/leave/requests/ HTTP/1.1" 200 89326
+INFO 2025-12-04 08:36:24,796 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-12-04 08:36:26,840 autoreload Watching for file changes with StatReloader
+INFO 2025-12-04 08:37:27,345 basehttp "GET /portal/expenses/ HTTP/1.1" 200 18437
+INFO 2025-12-04 08:37:29,251 basehttp "GET /portal/leaves/ HTTP/1.1" 200 22000
+INFO 2025-12-04 08:37:34,462 basehttp "GET /portal/expenses/ HTTP/1.1" 200 18437
+INFO 2025-12-04 08:37:36,751 basehttp "GET /portal/expenses/create/ HTTP/1.1" 200 16778
+INFO 2025-12-04 08:38:10,313 basehttp "POST /portal/expenses/create/ HTTP/1.1" 200 18030
+INFO 2025-12-04 08:38:17,596 basehttp "POST /portal/expenses/create/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:38:17,630 basehttp "GET /portal/expenses/ HTTP/1.1" 200 21906
+INFO 2025-12-04 08:38:40,490 management_views All expenses viewed by hr001
+INFO 2025-12-04 08:38:40,815 basehttp "GET /management/expense/requests/ HTTP/1.1" 200 163065
+INFO 2025-12-04 08:38:44,233 management_views Expense 601 viewed by hr001
+INFO 2025-12-04 08:38:44,248 basehttp "GET /management/expense/requests/601/ HTTP/1.1" 200 34686
+INFO 2025-12-04 08:38:48,992 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:38:49,003 basehttp "GET /login/ HTTP/1.1" 200 3044
+INFO 2025-12-04 08:38:55,449 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-12-04 08:38:55,504 basehttp "GET /portal/ HTTP/1.1" 200 20652
+INFO 2025-12-04 08:38:58,787 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 53976
+INFO 2025-12-04 08:39:00,641 basehttp "GET /portal/expenses/601/ HTTP/1.1" 200 18055
+INFO 2025-12-04 08:39:06,244 basehttp "GET /portal/expenses/ HTTP/1.1" 200 19736
+INFO 2025-12-04 08:39:08,392 basehttp "GET /portal/approvals/ HTTP/1.1" 200 54877
+INFO 2025-12-04 08:39:08,593 basehttp "GET /media/avatars/0005ff6f615649bf90c238bec9ca9509_sontung.jpg HTTP/1.1" 200 576065
+INFO 2025-12-04 08:39:08,655 basehttp "GET /media/avatars/2975f28370ed407a83e5ed28fe9c8167_MinhTruyen_1x1.jpg HTTP/1.1" 200 411816
+INFO 2025-12-04 08:39:13,867 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 53976
+INFO 2025-12-04 08:46:51,374 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-12-04 08:46:52,793 autoreload Watching for file changes with StatReloader
+INFO 2025-12-04 08:48:27,100 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-12-04 08:48:28,690 autoreload Watching for file changes with StatReloader
+INFO 2025-12-04 08:52:19,034 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-12-04 08:52:20,437 autoreload Watching for file changes with StatReloader
