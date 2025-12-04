@@ -28854,3 +28854,304 @@ INFO 2025-12-04 08:48:27,100 autoreload D:\Study\CT201\Project\hrm\app\managemen
 INFO 2025-12-04 08:48:28,690 autoreload Watching for file changes with StatReloader
 INFO 2025-12-04 08:52:19,034 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
 INFO 2025-12-04 08:52:20,437 autoreload Watching for file changes with StatReloader
+INFO 2025-12-04 08:53:21,355 basehttp "GET /portal/approvals/ HTTP/1.1" 200 54877
+INFO 2025-12-04 08:53:30,125 basehttp "GET /portal/appraisal/team/ HTTP/1.1" 200 29339
+INFO 2025-12-04 08:53:33,506 basehttp "GET /portal/approvals/ HTTP/1.1" 200 54877
+INFO 2025-12-04 08:54:25,726 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56719
+INFO 2025-12-04 08:54:27,049 basehttp "GET /portal/leaves/344/ HTTP/1.1" 200 17711
+INFO 2025-12-04 08:54:38,027 basehttp "GET /portal/leaves/344/ HTTP/1.1" 200 17711
+INFO 2025-12-04 08:54:44,480 basehttp "GET /portal/leaves/344/ HTTP/1.1" 200 17711
+INFO 2025-12-04 08:54:47,839 basehttp "GET /portal/leaves/ HTTP/1.1" 200 20848
+INFO 2025-12-04 08:54:50,313 basehttp "GET /portal/appraisal/team/ HTTP/1.1" 200 29339
+INFO 2025-12-04 08:54:50,729 basehttp "GET /portal/organization-chart/ HTTP/1.1" 200 71022
+INFO 2025-12-04 08:54:51,375 basehttp "GET /portal/approvals/ HTTP/1.1" 200 54877
+INFO 2025-12-04 08:54:53,920 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 53976
+INFO 2025-12-04 08:54:56,154 basehttp "GET /portal/expenses/601/ HTTP/1.1" 200 18055
+INFO 2025-12-04 08:56:05,241 basehttp "GET /portal/expenses/ HTTP/1.1" 200 19736
+INFO 2025-12-04 08:56:09,029 basehttp "GET /portal/approvals/ HTTP/1.1" 200 54877
+INFO 2025-12-04 08:56:09,758 basehttp "GET /portal/appraisal/team/ HTTP/1.1" 200 29339
+INFO 2025-12-04 08:56:10,284 basehttp "GET /portal/approvals/ HTTP/1.1" 200 54877
+INFO 2025-12-04 08:56:17,883 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56719
+INFO 2025-12-04 08:57:03,473 basehttp "GET /portal/appraisal/team/ HTTP/1.1" 200 29339
+INFO 2025-12-04 08:57:04,722 basehttp "GET /portal/approvals/ HTTP/1.1" 200 54877
+INFO 2025-12-04 08:57:08,716 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56719
+INFO 2025-12-04 08:58:46,702 basehttp "GET /portal/approvals/ HTTP/1.1" 200 54877
+INFO 2025-12-04 08:58:47,795 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 53976
+INFO 2025-12-04 09:00:44,284 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-12-04 09:00:45,575 autoreload Watching for file changes with StatReloader
+INFO 2025-12-04 09:05:39,622 basehttp "GET /portal/appraisal/team/ HTTP/1.1" 200 29339
+INFO 2025-12-04 09:05:40,582 basehttp "GET /portal/approvals/ HTTP/1.1" 200 54877
+INFO 2025-12-04 09:05:46,141 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56724
+INFO 2025-12-04 09:05:49,741 basehttp "GET /portal/team/leaves/344/ HTTP/1.1" 200 19516
+INFO 2025-12-04 09:05:51,418 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56724
+INFO 2025-12-04 09:06:11,252 basehttp "GET /portal/approvals/ HTTP/1.1" 200 54877
+INFO 2025-12-04 09:06:19,153 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56724
+INFO 2025-12-04 09:06:54,679 basehttp "GET /portal/approvals/ HTTP/1.1" 200 54877
+INFO 2025-12-04 09:10:18,031 basehttp "GET /portal/approvals/ HTTP/1.1" 200 54877
+INFO 2025-12-04 09:10:24,276 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56724
+INFO 2025-12-04 09:10:42,291 basehttp "GET /portal/team/leaves/320/ HTTP/1.1" 200 21494
+INFO 2025-12-04 09:10:43,942 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56724
+INFO 2025-12-04 09:10:46,399 basehttp "GET /portal/approvals/ HTTP/1.1" 200 54877
+INFO 2025-12-04 09:10:48,560 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 53981
+INFO 2025-12-04 09:10:49,953 basehttp "GET /portal/team/expenses/601/ HTTP/1.1" 200 22074
+INFO 2025-12-04 09:10:54,497 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 53981
+INFO 2025-12-04 09:10:56,622 basehttp "GET /portal/team/expenses/601/ HTTP/1.1" 200 22074
+INFO 2025-12-04 09:11:00,532 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 53981
+INFO 2025-12-04 09:11:04,794 basehttp "GET /portal/team/expenses/601/ HTTP/1.1" 200 22074
+INFO 2025-12-04 10:32:28,766 basehttp "GET /portal/team/expenses/ HTTP/1.1" 302 0
+INFO 2025-12-04 10:32:28,809 basehttp "GET /login/?next=/portal/team/expenses/ HTTP/1.1" 200 2905
+INFO 2025-12-04 10:32:36,056 basehttp "POST /login/?next=/portal/team/expenses/ HTTP/1.1" 302 0
+INFO 2025-12-04 10:32:36,127 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 44713
+INFO 2025-12-04 10:32:55,422 management_views Admin home accessed by hr001
+INFO 2025-12-04 10:32:55,474 basehttp "GET /management/ HTTP/1.1" 200 45367
+INFO 2025-12-04 13:41:48,535 basehttp "GET /management/org-chart/ HTTP/1.1" 302 0
+INFO 2025-12-04 13:41:48,557 basehttp "GET /login/?next=/management/org-chart/ HTTP/1.1" 200 2905
+INFO 2025-12-04 15:10:41,321 basehttp "POST /login/?next=/management/org-chart/ HTTP/1.1" 302 0
+INFO 2025-12-04 15:10:41,376 basehttp "GET /management/org-chart/ HTTP/1.1" 302 0
+INFO 2025-12-04 15:10:41,519 basehttp "GET /portal/ HTTP/1.1" 200 21196
+INFO 2025-12-04 15:10:49,326 basehttp "GET /portal/appraisal/team/ HTTP/1.1" 200 29339
+INFO 2025-12-04 15:10:49,911 basehttp "GET /portal/approvals/ HTTP/1.1" 200 54877
+INFO 2025-12-04 15:10:50,126 basehttp "GET /media/avatars/0005ff6f615649bf90c238bec9ca9509_sontung.jpg HTTP/1.1" 200 576065
+INFO 2025-12-04 15:10:50,187 basehttp "GET /media/avatars/2975f28370ed407a83e5ed28fe9c8167_MinhTruyen_1x1.jpg HTTP/1.1" 200 411816
+INFO 2025-12-04 15:11:04,975 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 53981
+WARNING 2025-12-04 15:11:25,009 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-04 15:11:25,010 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 7187
+INFO 2025-12-04 15:11:25,167 basehttp "GET /static/dist/js/adminlte.min.js.map HTTP/1.1" 200 78868
+INFO 2025-12-04 15:11:25,172 basehttp "GET /static/plugins/bootstrap/js/bootstrap.bundle.min.js.map HTTP/1.1" 200 311949
+INFO 2025-12-04 15:11:25,215 basehttp "GET /static/dist/css/adminlte.min.css.map HTTP/1.1" 200 2061805
+INFO 2025-12-04 15:12:48,132 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-12-04 15:12:48,141 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-12-04 15:12:52,869 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-12-04 15:12:52,925 basehttp "GET /portal/ HTTP/1.1" 200 21117
+INFO 2025-12-04 15:12:54,886 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 44713
+INFO 2025-12-04 15:13:04,847 basehttp "GET /portal/team/expenses/530/ HTTP/1.1" 200 22256
+INFO 2025-12-04 15:13:14,456 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 44713
+INFO 2025-12-04 15:13:19,067 basehttp "GET /portal/leaves/ HTTP/1.1" 200 24055
+INFO 2025-12-04 15:13:20,418 basehttp "GET /portal/attendance/ HTTP/1.1" 200 27903
+INFO 2025-12-04 15:13:20,491 basehttp "GET /portal/attendance/today/ HTTP/1.1" 200 72
+INFO 2025-12-04 15:13:20,962 basehttp "GET /portal/expenses/ HTTP/1.1" 200 26832
+INFO 2025-12-04 15:13:21,943 basehttp "GET /portal/approvals/ HTTP/1.1" 200 38468
+INFO 2025-12-04 15:13:27,410 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 36904
+INFO 2025-12-04 15:13:36,842 basehttp "GET /portal/approvals/ HTTP/1.1" 200 38468
+INFO 2025-12-04 15:13:39,261 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 44713
+INFO 2025-12-04 15:13:43,593 basehttp "GET /portal/team/expenses/530/ HTTP/1.1" 200 22256
+INFO 2025-12-04 15:13:51,243 basehttp "POST /portal/team/expenses/530/approve/ HTTP/1.1" 200 453
+INFO 2025-12-04 15:13:52,678 basehttp "GET /portal/team/expenses/530/ HTTP/1.1" 200 22060
+INFO 2025-12-04 15:13:55,862 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 43917
+INFO 2025-12-04 15:13:57,421 basehttp "GET /portal/team/expenses/530/ HTTP/1.1" 200 22060
+INFO 2025-12-04 15:14:11,971 basehttp "GET /portal/approvals/ HTTP/1.1" 200 36288
+INFO 2025-12-04 15:14:16,621 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 43917
+INFO 2025-12-04 15:14:43,201 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-12-04 15:14:43,212 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-12-04 15:14:47,579 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-12-04 15:14:47,613 basehttp "GET /portal/ HTTP/1.1" 200 20652
+INFO 2025-12-04 15:14:49,578 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 53981
+INFO 2025-12-04 15:14:51,941 basehttp "GET /portal/team/expenses/601/ HTTP/1.1" 200 22074
+INFO 2025-12-04 15:15:10,754 basehttp "POST /portal/team/expenses/601/reject/ HTTP/1.1" 200 411
+INFO 2025-12-04 15:15:12,050 basehttp "GET /portal/team/expenses/601/ HTTP/1.1" 200 21878
+INFO 2025-12-04 15:15:13,510 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 53181
+INFO 2025-12-04 15:15:22,009 basehttp "GET /portal/team/expenses/601/ HTTP/1.1" 200 21878
+INFO 2025-12-04 15:15:23,810 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 53181
+INFO 2025-12-04 15:15:29,441 basehttp "GET /portal/team/expenses/601/ HTTP/1.1" 200 21878
+INFO 2025-12-04 15:15:32,590 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 53181
+INFO 2025-12-04 15:15:36,097 basehttp "GET /portal/team/expenses/601/ HTTP/1.1" 200 21878
+INFO 2025-12-04 15:15:37,294 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 53181
+INFO 2025-12-04 15:15:56,186 basehttp "GET /portal/appraisal/team/ HTTP/1.1" 200 29339
+INFO 2025-12-04 15:15:56,950 basehttp "GET /portal/approvals/ HTTP/1.1" 200 52732
+INFO 2025-12-04 15:15:57,040 basehttp "GET /media/avatars/2975f28370ed407a83e5ed28fe9c8167_MinhTruyen_1x1.jpg HTTP/1.1" 200 411816
+INFO 2025-12-04 15:15:57,045 basehttp "GET /media/avatars/0005ff6f615649bf90c238bec9ca9509_sontung.jpg HTTP/1.1" 200 576065
+INFO 2025-12-04 15:16:07,067 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 53181
+INFO 2025-12-04 15:16:39,531 basehttp "GET /portal/approvals/ HTTP/1.1" 200 52732
+INFO 2025-12-04 15:16:41,325 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56724
+WARNING 2025-12-04 15:16:50,448 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-04 15:16:50,449 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 7187
+INFO 2025-12-04 15:19:06,849 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56724
+WARNING 2025-12-04 15:19:06,915 log Not Found: /.well-known/appspecific/com.chrome.devtools.json
+WARNING 2025-12-04 15:19:06,917 basehttp "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 7187
+INFO 2025-12-04 15:20:48,057 basehttp "GET /portal/team/leaves/344/ HTTP/1.1" 200 21384
+INFO 2025-12-04 15:20:53,171 basehttp "GET /portal/team/leaves/344/ HTTP/1.1" 200 21384
+INFO 2025-12-04 15:20:55,549 basehttp "GET /portal/team/leaves/343 HTTP/1.1" 301 0
+WARNING 2025-12-04 15:20:55,579 log Not Found: /portal/team/leaves/343/
+WARNING 2025-12-04 15:20:55,580 basehttp "GET /portal/team/leaves/343/ HTTP/1.1" 404 8906
+INFO 2025-12-04 15:20:59,171 basehttp "GET /portal/team/leaves/344/ HTTP/1.1" 200 21384
+INFO 2025-12-04 15:21:27,449 basehttp "GET /admin/app/leaverequest/ HTTP/1.1" 302 0
+INFO 2025-12-04 15:21:27,583 basehttp "GET /admin/login/?next=/admin/app/leaverequest/ HTTP/1.1" 200 3824
+INFO 2025-12-04 15:21:31,300 basehttp "POST /admin/login/?next=/admin/app/leaverequest/ HTTP/1.1" 200 3974
+INFO 2025-12-04 15:21:36,502 basehttp "POST /admin/login/?next=/admin/app/leaverequest/ HTTP/1.1" 302 0
+INFO 2025-12-04 15:21:36,626 basehttp "GET /admin/app/leaverequest/ HTTP/1.1" 200 49852
+INFO 2025-12-04 15:21:36,700 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-04 15:22:40,328 basehttp "GET /admin/app/leaverequest/322/change/ HTTP/1.1" 200 32519
+INFO 2025-12-04 15:22:40,404 basehttp "GET /static/admin/js/calendar.js HTTP/1.1" 200 8466
+INFO 2025-12-04 15:22:40,411 basehttp "GET /static/admin/css/forms.css HTTP/1.1" 200 9090
+INFO 2025-12-04 15:22:40,416 basehttp "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+INFO 2025-12-04 15:22:40,416 basehttp "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 586
+INFO 2025-12-04 15:22:40,418 basehttp "GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 200 19319
+INFO 2025-12-04 15:22:40,420 basehttp "GET /static/admin/css/widgets.css HTTP/1.1" 200 11921
+INFO 2025-12-04 15:22:40,427 basehttp "GET /static/admin/img/icon-deletelink.svg HTTP/1.1" 200 392
+INFO 2025-12-04 15:22:40,434 basehttp "GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+INFO 2025-12-04 15:22:40,507 basehttp "GET /admin/jsi18n/ HTTP/1.1" 200 8817
+INFO 2025-12-04 15:22:40,564 basehttp "GET /static/admin/img/icon-clock.svg HTTP/1.1" 200 677
+INFO 2025-12-04 15:22:40,564 basehttp "GET /static/admin/img/icon-calendar.svg HTTP/1.1" 200 1086
+INFO 2025-12-04 15:22:57,565 basehttp "GET /admin/app/leaverequest/ HTTP/1.1" 200 49852
+ERROR 2025-12-04 15:23:03,778 log Internal Server Error: /portal/team/leaves/344/
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 2015, in team_leave_detail
+    Q(employee__department=employee.department)  # Department leave (for managers)
+                           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'department'
+ERROR 2025-12-04 15:23:03,798 basehttp "GET /portal/team/leaves/344/ HTTP/1.1" 500 84324
+ERROR 2025-12-04 15:23:08,615 log Internal Server Error: /portal/team/leaves/322/
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\portal_views.py", line 2015, in team_leave_detail
+    Q(employee__department=employee.department)  # Department leave (for managers)
+                           ^^^^^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'department'
+ERROR 2025-12-04 15:23:08,618 basehttp "GET /portal/team/leaves/322/ HTTP/1.1" 500 84154
+INFO 2025-12-04 15:23:12,791 basehttp "GET /management HTTP/1.1" 301 0
+INFO 2025-12-04 15:23:12,965 management_views Admin home accessed by admin
+INFO 2025-12-04 15:23:12,997 basehttp "GET /management/ HTTP/1.1" 200 40272
+INFO 2025-12-04 15:23:18,199 basehttp "GET /portal HTTP/1.1" 301 0
+INFO 2025-12-04 15:23:18,326 basehttp "GET /portal/ HTTP/1.1" 302 0
+INFO 2025-12-04 15:23:18,342 basehttp "GET /login/ HTTP/1.1" 200 3049
+INFO 2025-12-04 15:23:27,307 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-12-04 15:23:27,362 basehttp "GET /portal/ HTTP/1.1" 200 20652
+INFO 2025-12-04 15:23:30,410 basehttp "GET /portal/approvals/ HTTP/1.1" 200 52732
+INFO 2025-12-04 15:23:30,502 basehttp "GET /media/avatars/0005ff6f615649bf90c238bec9ca9509_sontung.jpg HTTP/1.1" 200 576065
+INFO 2025-12-04 15:23:30,604 basehttp "GET /media/avatars/2975f28370ed407a83e5ed28fe9c8167_MinhTruyen_1x1.jpg HTTP/1.1" 200 411816
+INFO 2025-12-04 15:23:31,557 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56724
+INFO 2025-12-04 15:23:35,185 basehttp "GET /portal/team/leaves/344/ HTTP/1.1" 200 21384
+INFO 2025-12-04 15:23:37,733 basehttp "GET /portal/team/leaves/322/ HTTP/1.1" 200 21828
+INFO 2025-12-04 15:23:51,270 basehttp "POST /portal/team/leaves/322/reject/ HTTP/1.1" 200 388
+INFO 2025-12-04 15:23:52,418 basehttp "GET /portal/team/leaves/322/ HTTP/1.1" 200 21403
+INFO 2025-12-04 15:23:53,543 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56188
+INFO 2025-12-04 15:24:03,736 basehttp "GET /portal/team/leaves/322/ HTTP/1.1" 200 21403
+INFO 2025-12-04 15:24:05,263 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56188
+INFO 2025-12-04 15:24:15,001 basehttp "GET /portal/expenses/ HTTP/1.1" 302 0
+INFO 2025-12-04 15:24:15,012 basehttp "GET /login/?next=/portal/expenses/ HTTP/1.1" 200 2905
+INFO 2025-12-04 15:24:21,468 basehttp "POST /login/?next=/portal/expenses/ HTTP/1.1" 200 3105
+INFO 2025-12-04 15:24:27,844 basehttp "POST /login/?next=/portal/expenses/ HTTP/1.1" 302 0
+INFO 2025-12-04 15:24:27,901 basehttp "GET /portal/expenses/ HTTP/1.1" 200 25364
+INFO 2025-12-04 15:24:31,710 basehttp "GET /portal/leaves/ HTTP/1.1" 200 26670
+INFO 2025-12-04 15:24:35,044 basehttp "GET /portal/leaves/322/ HTTP/1.1" 200 20098
+INFO 2025-12-04 15:25:34,772 basehttp "GET /portal/approvals/ HTTP/1.1" 200 50598
+INFO 2025-12-04 15:25:36,021 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56188
+INFO 2025-12-04 15:26:45,327 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56741
+INFO 2025-12-04 15:26:46,994 basehttp "GET /portal/team/leaves/321/ HTTP/1.1" 200 21838
+INFO 2025-12-04 15:26:48,871 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56741
+INFO 2025-12-04 15:27:19,243 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-12-04 15:27:22,522 autoreload Watching for file changes with StatReloader
+INFO 2025-12-04 15:27:25,152 basehttp "GET /portal/team/leaves/344/ HTTP/1.1" 200 21384
+INFO 2025-12-04 15:27:27,224 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56741
+INFO 2025-12-04 15:27:29,879 basehttp "GET /portal/team/leaves/321/ HTTP/1.1" 200 21838
+INFO 2025-12-04 15:27:34,026 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56741
+INFO 2025-12-04 15:27:34,653 basehttp "GET /portal/approvals/ HTTP/1.1" 200 50598
+INFO 2025-12-04 15:27:35,614 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 53181
+INFO 2025-12-04 15:27:37,914 basehttp "GET /portal/team/expenses/556/ HTTP/1.1" 200 21995
+INFO 2025-12-04 16:11:23,049 basehttp "GET /portal/approvals/ HTTP/1.1" 200 50598
+INFO 2025-12-04 16:11:24,373 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 53181
+INFO 2025-12-04 16:11:28,106 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56741
+INFO 2025-12-04 16:11:30,795 basehttp "GET /portal/team/leaves/321/ HTTP/1.1" 200 21838
+INFO 2025-12-04 16:13:33,939 basehttp "GET /portal/approvals/ HTTP/1.1" 200 50598
+INFO 2025-12-04 16:13:36,884 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 56741
+INFO 2025-12-04 16:19:05,680 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-12-04 16:19:07,851 autoreload Watching for file changes with StatReloader
+INFO 2025-12-04 16:20:16,078 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-12-04 16:20:17,310 autoreload Watching for file changes with StatReloader
+INFO 2025-12-04 16:36:55,585 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-12-04 16:36:57,088 autoreload Watching for file changes with StatReloader
+INFO 2025-12-04 16:37:16,628 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-12-04 16:37:17,680 autoreload Watching for file changes with StatReloader
+INFO 2025-12-04 16:40:03,369 basehttp "GET /portal/profile/ HTTP/1.1" 302 0
+INFO 2025-12-04 16:40:03,388 basehttp "GET /login/?next=/portal/profile/ HTTP/1.1" 200 2905
+INFO 2025-12-04 16:40:11,481 basehttp "POST /login/?next=/portal/profile/ HTTP/1.1" 200 3105
+INFO 2025-12-04 16:40:28,850 basehttp "POST /login/?next=/portal/profile/ HTTP/1.1" 302 0
+INFO 2025-12-04 16:40:28,929 basehttp "GET /portal/profile/ HTTP/1.1" 200 21005
+INFO 2025-12-04 16:40:29,087 basehttp "GET /media/avatars/0005ff6f615649bf90c238bec9ca9509_sontung.jpg HTTP/1.1" 200 576065
+INFO 2025-12-04 16:40:37,710 basehttp "GET /portal/expenses/ HTTP/1.1" 200 20864
+INFO 2025-12-04 16:40:40,086 basehttp "GET /portal/expenses/create/ HTTP/1.1" 200 16778
+INFO 2025-12-04 16:41:05,412 basehttp "POST /portal/expenses/create/ HTTP/1.1" 302 0
+INFO 2025-12-04 16:41:05,453 basehttp "GET /portal/expenses/ HTTP/1.1" 200 24065
+INFO 2025-12-04 16:41:08,476 basehttp "GET /media/receipts/sontung_Z5hTEMq.jpg HTTP/1.1" 200 576065
+INFO 2025-12-04 16:41:45,928 basehttp "GET /portal/approvals/ HTTP/1.1" 200 52832
+INFO 2025-12-04 16:41:59,533 basehttp "POST /portal/team/expenses/602/approve/ HTTP/1.1" 200 451
+INFO 2025-12-04 16:42:00,592 basehttp "GET /portal/approvals/ HTTP/1.1" 200 50688
+INFO 2025-12-04 16:42:12,974 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 55185
+INFO 2025-12-04 16:43:08,484 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-12-04 16:43:10,051 autoreload Watching for file changes with StatReloader
+INFO 2025-12-04 16:43:28,746 autoreload D:\Study\CT201\Project\hrm\app\email_service.py changed, reloading.
+INFO 2025-12-04 16:43:30,142 autoreload Watching for file changes with StatReloader
+INFO 2025-12-04 16:47:15,216 autoreload D:\Study\CT201\Project\hrm\app\email_service.py changed, reloading.
+INFO 2025-12-04 16:47:16,590 autoreload Watching for file changes with StatReloader
+INFO 2025-12-04 16:47:28,074 basehttp "GET /portal/team/expenses/602/ HTTP/1.1" 200 22461
+INFO 2025-12-04 16:47:28,317 basehttp "GET /media/receipts/sontung_Z5hTEMq.jpg HTTP/1.1" 200 576065
+INFO 2025-12-04 16:47:58,920 basehttp "GET /portal/expenses/create/ HTTP/1.1" 200 16778
+INFO 2025-12-04 16:48:21,916 basehttp "POST /portal/expenses/create/ HTTP/1.1" 302 0
+INFO 2025-12-04 16:48:21,979 basehttp "GET /portal/expenses/ HTTP/1.1" 200 26203
+INFO 2025-12-04 16:48:36,383 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 57885
+INFO 2025-12-04 16:48:49,259 email_service Email sent successfully: [HRM] Chi phí bị từ chối - 100,000 VNĐ to ['truyennm7777@gmail.com']
+INFO 2025-12-04 16:48:49,270 basehttp "POST /portal/team/expenses/603/reject/ HTTP/1.1" 200 359
+INFO 2025-12-04 16:48:51,336 basehttp "GET /portal/team/expenses/ HTTP/1.1" 200 57086
+INFO 2025-12-04 16:49:38,987 basehttp "GET /portal/leaves/ HTTP/1.1" 200 22000
+INFO 2025-12-04 16:49:41,545 basehttp "GET /portal/leaves/create/ HTTP/1.1" 200 18190
+INFO 2025-12-04 16:49:43,179 basehttp "GET /portal/leaves/calendar/ HTTP/1.1" 200 16787
+INFO 2025-12-04 16:49:45,499 basehttp "GET /portal/leaves/create/ HTTP/1.1" 200 18190
+INFO 2025-12-04 16:50:12,386 basehttp "POST /portal/leaves/create/ HTTP/1.1" 302 0
+INFO 2025-12-04 16:50:12,428 basehttp "GET /portal/leaves/ HTTP/1.1" 200 25065
+INFO 2025-12-04 16:50:35,369 basehttp "GET /portal/approvals/ HTTP/1.1" 200 52787
+INFO 2025-12-04 16:50:37,377 basehttp "GET /portal/team/leaves/ HTTP/1.1" 200 59379
+INFO 2025-12-04 16:50:49,058 basehttp "POST /portal/team/leaves/345/reject/ HTTP/1.1" 200 411
+INFO 2025-12-04 16:50:50,875 basehttp "GET /portal/approvals/ HTTP/1.1" 200 50688
+INFO 2025-12-04 16:51:31,244 autoreload D:\Study\CT201\Project\hrm\app\email_service.py changed, reloading.
+INFO 2025-12-04 16:51:32,619 autoreload Watching for file changes with StatReloader
+INFO 2025-12-04 16:52:05,284 email_service Email sent successfully: [HRM] Đơn nghỉ phép bị từ chối - Phép năm to ['ho.ngoc.duc@company.com']
+INFO 2025-12-04 16:52:05,303 basehttp "POST /portal/team/leaves/321/reject/ HTTP/1.1" 200 414
+INFO 2025-12-04 16:52:08,671 basehttp "GET /portal/approvals/ HTTP/1.1" 200 48554
+INFO 2025-12-04 16:53:46,070 email_service Email sent successfully: [HRM] Chi phí đã được duyệt - 500,000 VNĐ to ['phan.anh.kiet@company.com']
+INFO 2025-12-04 16:53:46,083 basehttp "POST /portal/team/expenses/556/approve/ HTTP/1.1" 200 438
+INFO 2025-12-04 16:53:47,377 basehttp "GET /portal/approvals/ HTTP/1.1" 200 46375
+INFO 2025-12-04 16:54:09,510 basehttp "GET /portal/appraisal/team/ HTTP/1.1" 200 29339
+INFO 2025-12-04 17:19:37,872 basehttp "GET /logout/ HTTP/1.1" 302 0
+INFO 2025-12-04 17:19:37,906 basehttp "GET /login/ HTTP/1.1" 200 2905
+INFO 2025-12-04 17:19:42,637 basehttp "POST /login/ HTTP/1.1" 302 0
+INFO 2025-12-04 17:19:42,754 basehttp "GET /portal/ HTTP/1.1" 200 21117
+INFO 2025-12-04 17:19:45,105 management_views Admin home accessed by hr001
+INFO 2025-12-04 17:19:45,171 basehttp "GET /management/ HTTP/1.1" 200 45367
+INFO 2025-12-04 17:19:49,001 basehttp "GET /management/rewards/ HTTP/1.1" 200 58172
+INFO 2025-12-04 17:19:51,199 basehttp "GET /management/rewards/create/ HTTP/1.1" 200 31198
+INFO 2025-12-04 17:21:20,100 email_service Email sent successfully: [HRM] Thông báo khen thưởng to ['truyenb2207573@student.ctu.edu.vn']
+INFO 2025-12-04 17:21:20,114 basehttp "POST /management/rewards/create/ HTTP/1.1" 302 0
+INFO 2025-12-04 17:21:20,173 basehttp "GET /management/rewards/ HTTP/1.1" 200 59913
+INFO 2025-12-04 17:27:30,234 basehttp "GET /management/disciplines/ HTTP/1.1" 200 39017
+INFO 2025-12-04 17:27:31,811 basehttp "GET /management/disciplines/create/ HTTP/1.1" 200 31021
+INFO 2025-12-04 17:28:05,786 email_service Email sent successfully: [HRM] Thông báo kỷ luật to ['truyenb2207573@student.ctu.edu.vn']
+INFO 2025-12-04 17:28:05,793 basehttp "POST /management/disciplines/create/ HTTP/1.1" 302 0
+INFO 2025-12-04 17:28:05,831 basehttp "GET /management/disciplines/ HTTP/1.1" 200 40604
+INFO 2025-12-04 17:31:05,485 basehttp "GET /management/contracts/expiring/ HTTP/1.1" 200 50196
+ERROR 2025-12-04 17:38:34,621 send_contract_alerts Error sending contract alert to pham.quang.kiet@company.com: 'float' object cannot be interpreted as an integer
+ERROR 2025-12-04 17:38:34,622 send_contract_alerts Error sending contract alert to nguyen.thi.lan@company.com: 'float' object cannot be interpreted as an integer
+ERROR 2025-12-04 17:38:34,626 send_contract_alerts Error sending contract alert to do.phuong.huong@company.com: 'float' object cannot be interpreted as an integer
+ERROR 2025-12-04 17:38:34,628 send_contract_alerts Error sending contract alert to luong.anh.vinh@company.com: 'float' object cannot be interpreted as an integer
+INFO 2025-12-04 17:38:55,360 autoreload D:\Study\CT201\Project\hrm\app\email_service.py changed, reloading.
+INFO 2025-12-04 17:38:57,632 autoreload Watching for file changes with StatReloader
+INFO 2025-12-04 17:39:20,210 email_service Email sent successfully: [HRM] Hợp đồng sắp hết hạn - Còn 14 ngày to ['pham.quang.kiet@company.com']
+INFO 2025-12-04 17:39:26,237 email_service Email sent successfully: [HRM] Hợp đồng sắp hết hạn - Còn 16 ngày to ['nguyen.thi.lan@company.com']
+INFO 2025-12-04 17:39:31,690 email_service Email sent successfully: [HRM] Hợp đồng sắp hết hạn - Còn 16 ngày to ['do.phuong.huong@company.com']
+INFO 2025-12-04 17:39:39,055 email_service Email sent successfully: [HRM] Hợp đồng sắp hết hạn - Còn 20 ngày to ['luong.anh.vinh@company.com']
+INFO 2025-12-04 17:40:38,271 autoreload D:\Study\CT201\Project\hrm\app\email_service.py changed, reloading.
+INFO 2025-12-04 17:40:39,693 autoreload Watching for file changes with StatReloader

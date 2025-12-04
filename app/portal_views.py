@@ -25,6 +25,7 @@ from .leave_helpers import (
     reject_leave_request, cancel_leave_request,
     get_leave_summary
 )
+from .email_service import EmailService
 
 # Decorator for manager-only views
 def require_manager_permission(view_func):
@@ -274,7 +275,7 @@ def leave_create(request):
                 # Calculate pending leaves
                 pending_leaves_count = LeaveRequest.objects.filter(
                     employee=employee,
-                    status='Pending'
+                    status='pending'
                 ).aggregate(models.Sum('total_days'))['total_days__sum'] or 0
                 
                 context = {
@@ -325,7 +326,7 @@ def leave_create(request):
     # Calculate pending leaves
     pending_leaves = LeaveRequest.objects.filter(
         employee=employee,
-        status='Pending'
+        status='pending'
     ).aggregate(models.Sum('total_days'))['total_days__sum'] or 0
     
     context = {
@@ -1559,14 +1560,14 @@ def team_leaves(request):
     # Calculate stats
     from datetime import date
     today = date.today()
-    pending_count = leave_requests.filter(status='Pending').count()
+    pending_count = leave_requests.filter(status='pending').count()
     approved_count = leave_requests.filter(
-        status='Approved', 
+        status='approved', 
         created_at__year=today.year,
         created_at__month=today.month
     ).count()
     rejected_count = leave_requests.filter(
-        status='Rejected',
+        status='rejected',
         created_at__year=today.year,
         created_at__month=today.month
     ).count()
@@ -1604,6 +1605,12 @@ def team_leave_approve(request, leave_id):
         success, message = approve_leave_request(leave_request, employee)
         
         if success:
+            # Send email notification
+            try:
+                EmailService.send_leave_approved(leave_request)
+            except Exception as e:
+                print(f"Error sending leave approval email: {e}")
+            
             return JsonResponse({
                 'success': True,
                 'message': message,
@@ -1653,6 +1660,12 @@ def team_leave_reject(request, leave_id):
         success, message = reject_leave_request(leave_request, employee, rejection_reason)
         
         if success:
+            # Send email notification
+            try:
+                EmailService.send_leave_rejected(leave_request, rejection_reason)
+            except Exception as e:
+                print(f"Error sending leave rejection email: {e}")
+            
             return JsonResponse({
                 'success': True,
                 'message': message,
@@ -1702,7 +1715,7 @@ def team_leaves_bulk_action(request):
         leave_requests = LeaveRequest.objects.filter(
             id__in=leave_ids,
             employee__department=employee.department,
-            status='Pending'
+            status='pending'
         )
         
         if not leave_requests.exists():
@@ -1724,7 +1737,7 @@ def team_leaves_bulk_action(request):
                     )
                     
                     if has_balance:
-                        leave.status = 'Approved'
+                        leave.status = 'approved'
                         leave.approved_by = employee
                         leave.approved_date = timezone.now()
                         leave.save()
@@ -1735,24 +1748,37 @@ def team_leaves_bulk_action(request):
                             leave_balance.remaining_days -= leave.total_days
                             leave_balance.save()
                         
+                        # Send email notification
+                        try:
+                            EmailService.send_leave_approved(leave)
+                        except Exception as e:
+                            print(f"Error sending leave approval email: {e}")
+                        
                         success_count += 1
                     else:
-                        failed_items.append(f"{leave.employee.admin.get_full_name()}: {balance_msg}")
+                        failed_items.append(f"{leave.employee.name}: {balance_msg}")
                 
                 elif action == 'reject':
                     if not reason:
-                        failed_items.append(f"{leave.employee.admin.get_full_name()}: Cần lý do từ chối")
+                        failed_items.append(f"{leave.employee.name}: Cần lý do từ chối")
                         continue
                     
-                    leave.status = 'Rejected'
+                    leave.status = 'rejected'
                     leave.approved_by = employee
                     leave.approved_date = timezone.now()
-                    leave.admin_comment = reason
+                    leave.rejection_reason = reason
                     leave.save()
+                    
+                    # Send email notification
+                    try:
+                        EmailService.send_leave_rejected(leave, reason)
+                    except Exception as e:
+                        print(f"Error sending leave rejection email: {e}")
+                    
                     success_count += 1
                     
             except Exception as e:
-                failed_items.append(f"{leave.employee.admin.get_full_name()}: {str(e)}")
+                failed_items.append(f"{leave.employee.name}: {str(e)}")
         
         # Prepare response message
         if success_count > 0:
@@ -1863,22 +1889,36 @@ def team_expenses_bulk_action(request):
                     expense.approved_by = employee
                     expense.approved_at = timezone.now()
                     expense.save()
+                    
+                    # Send email notification
+                    try:
+                        EmailService.send_expense_approved(expense)
+                    except Exception as e:
+                        print(f"Error sending expense approval email: {e}")
+                    
                     success_count += 1
                 
                 elif action == 'reject':
                     if not reason:
-                        failed_items.append(f"{expense.employee.admin.get_full_name()}: Cần lý do từ chối")
+                        failed_items.append(f"{expense.employee.name}: Cần lý do từ chối")
                         continue
                     
                     expense.status = 'rejected'
                     expense.approved_by = employee
                     expense.approved_at = timezone.now()
-                    expense.comment = reason
+                    expense.rejection_reason = reason
                     expense.save()
+                    
+                    # Send email notification
+                    try:
+                        EmailService.send_expense_rejected(expense, reason)
+                    except Exception as e:
+                        print(f"Error sending expense rejection email: {e}")
+                    
                     success_count += 1
                     
             except Exception as e:
-                failed_items.append(f"{expense.employee.admin.get_full_name()}: {str(e)}")
+                failed_items.append(f"{expense.employee.name}: {str(e)}")
         
         # Prepare response message
         if success_count > 0:
@@ -1923,6 +1963,12 @@ def team_expense_approve(request, expense_id):
         expense.approved_by = employee
         expense.approved_at = timezone.now()
         expense.save()
+        
+        # Send email notification
+        try:
+            EmailService.send_expense_approved(expense)
+        except Exception as e:
+            print(f"Error sending expense approval email: {e}")
         
         return JsonResponse({
             'success': True,
@@ -1980,6 +2026,12 @@ def team_expense_reject(request, expense_id):
         expense.approved_at = timezone.now()
         expense.rejection_reason = rejection_reason
         expense.save()
+        
+        # Send email notification
+        try:
+            EmailService.send_expense_rejected(expense, rejection_reason)
+        except Exception as e:
+            print(f"Error sending expense rejection email: {e}")
         
         return JsonResponse({
             'success': True,

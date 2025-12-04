@@ -83,12 +83,19 @@
 
                     <!-- Actions -->
                     <div class="mt-3">
-                        {% if leave_request.status == 'pending' %}
+                        {% if is_manager_view and leave_request.status == 'pending' %}
+                        <button type="button" class="btn btn-success" onclick="approveLeave()">
+                            <i class="fas fa-check mr-1"></i> Duyệt
+                        </button>
+                        <button type="button" class="btn btn-danger" onclick="rejectLeave()">
+                            <i class="fas fa-times mr-1"></i> Từ chối
+                        </button>
+                        {% elif leave_request.status == 'pending' and not is_manager_view %}
                         <button type="button" class="btn btn-danger" onclick="cancelLeave()">
                             <i class="fas fa-times mr-1"></i> Hủy đơn
                         </button>
                         {% endif %}
-                        <a href="{% url 'portal_leaves' %}" class="btn btn-secondary">
+                        <a href="{% if is_manager_view %}{% url 'portal_team_leaves' %}{% else %}{% url 'portal_leaves' %}{% endif %}" class="btn btn-secondary">
                             <i class="fas fa-arrow-left mr-1"></i> Quay lại
                         </a>
                     </div>
@@ -157,32 +164,131 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
 function cancelLeave() {
-    if (confirm('Bạn có chắc muốn hủy đơn nghỉ phép này?')) {
-        fetch(`/portal/leaves/{{ leave_request.id }}/cancel/`, {
-            method: 'POST',
-            headers: {
-                'X-CSRFToken': '{{ csrf_token }}',
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest'
+    Swal.fire({
+        title: 'Xác nhận hủy đơn?',
+        text: 'Bạn có chắc muốn hủy đơn nghỉ phép này?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Hủy đơn',
+        cancelButtonText: 'Đóng'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`/portal/leaves/{{ leave_request.id }}/cancel/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire('Thành công!', data.message || 'Đã hủy đơn thành công!', 'success').then(() => {
+                        window.location.href = "{% url 'portal_leaves' %}";
+                    });
+                } else {
+                    Swal.fire('Lỗi!', data.message || 'Không thể hủy đơn', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire('Lỗi!', 'Có lỗi xảy ra khi hủy đơn', 'error');
+            });
+        }
+    });
+}
+
+function approveLeave() {
+    Swal.fire({
+        title: 'Duyệt đơn nghỉ phép?',
+        text: 'Bạn có chắc muốn duyệt đơn này?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#28a745',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Duyệt',
+        cancelButtonText: 'Hủy'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`/portal/team/leaves/{{ leave_request.id }}/approve/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire('Thành công!', data.message || 'Đã duyệt đơn thành công!', 'success').then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire('Lỗi!', data.message || 'Không thể duyệt đơn', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire('Lỗi!', 'Có lỗi xảy ra khi duyệt đơn', 'error');
+            });
+        }
+    });
+}
+
+function rejectLeave() {
+    Swal.fire({
+        title: 'Từ chối đơn nghỉ phép?',
+        input: 'textarea',
+        inputLabel: 'Lý do từ chối',
+        inputPlaceholder: 'Nhập lý do từ chối...',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#dc3545',
+        cancelButtonColor: '#6c757d',
+        confirmButtonText: 'Từ chối',
+        cancelButtonText: 'Hủy',
+        inputValidator: (value) => {
+            if (!value) {
+                return 'Vui lòng nhập lý do từ chối!'
             }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert(data.message || 'Đã hủy đơn thành công!');
-                window.location.href = "{% url 'portal_leaves' %}";
-            } else {
-                alert('Lỗi: ' + (data.message || 'Không thể hủy đơn'));
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Có lỗi xảy ra khi hủy đơn');
-        });
-    }
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            fetch(`/portal/team/leaves/{{ leave_request.id }}/reject/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ reason: result.value })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    Swal.fire('Thành công!', data.message || 'Đã từ chối đơn thành công!', 'success').then(() => {
+                        location.reload();
+                    });
+                } else {
+                    Swal.fire('Lỗi!', data.message || 'Không thể từ chối đơn', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                Swal.fire('Lỗi!', 'Có lỗi xảy ra khi từ chối đơn', 'error');
+            });
+        }
+    });
 }
 </script>
 {% endblock %}

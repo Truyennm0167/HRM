@@ -74,7 +74,7 @@ class EmailService:
             'leave_type': leave_request.leave_type.name,
             'start_date': leave_request.start_date,
             'end_date': leave_request.end_date,
-            'days': leave_request.number_of_days,
+            'days': leave_request.total_days,
             'approved_by': leave_request.approved_by.name if leave_request.approved_by else 'HR',
             'company_name': 'HRM System',
         }
@@ -94,7 +94,7 @@ class EmailService:
             'leave_type': leave_request.leave_type.name,
             'start_date': leave_request.start_date,
             'end_date': leave_request.end_date,
-            'days': leave_request.number_of_days,
+            'days': leave_request.total_days,
             'reason': reason or leave_request.rejection_reason or 'Không đủ điều kiện',
             'rejected_by': leave_request.approved_by.name if leave_request.approved_by else 'HR',
             'company_name': 'HRM System',
@@ -115,7 +115,7 @@ class EmailService:
             'leave_type': leave_request.leave_type.name,
             'start_date': leave_request.start_date,
             'end_date': leave_request.end_date,
-            'days': leave_request.number_of_days,
+            'days': leave_request.total_days,
             'reason': leave_request.reason,
             'company_name': 'HRM System',
         }
@@ -137,7 +137,7 @@ class EmailService:
             'category': expense.category.name if expense.category else 'Khác',
             'amount': expense.amount,
             'description': expense.description,
-            'expense_date': expense.expense_date,
+            'expense_date': expense.date,
             'approved_by': expense.approved_by.name if expense.approved_by else 'HR',
             'company_name': 'HRM System',
         }
@@ -157,7 +157,7 @@ class EmailService:
             'category': expense.category.name if expense.category else 'Khác',
             'amount': expense.amount,
             'description': expense.description,
-            'expense_date': expense.expense_date,
+            'expense_date': expense.date,
             'reason': reason or expense.rejection_reason or 'Không đủ điều kiện',
             'rejected_by': expense.approved_by.name if expense.approved_by else 'HR',
             'company_name': 'HRM System',
@@ -266,26 +266,32 @@ class EmailService:
         """Alert employee about expiring contract
         
         Args:
-            employee: Employee model instance (not Contract!)
+            employee: Employee model instance
             days_remaining: Number of days until contract expires
         """
-        # Calculate contract end date from employee fields
-        contract_end_date = None
-        if employee.contract_start_date and employee.contract_duration:
-            from datetime import date
-            import calendar
-            start = employee.contract_start_date
-            months = employee.contract_duration
-            end_year = start.year + (start.month + months - 1) // 12
-            end_month = (start.month + months - 1) % 12 + 1
-            max_day = calendar.monthrange(end_year, end_month)[1]
-            end_day = min(start.day, max_day)
-            contract_end_date = date(end_year, end_month, end_day)
+        from datetime import date, timedelta
+        from django.utils import timezone
+        
+        # Calculate contract end date
+        today = timezone.localtime(timezone.now()).date()
+        contract_end_date = today + timedelta(days=days_remaining)
+        
+        # Try to get active contract info
+        contract_type = 'N/A'
+        contract_start = None
+        try:
+            active_contract = employee.contracts.filter(status='active').order_by('-start_date').first()
+            if active_contract:
+                contract_type = active_contract.get_contract_type_display()
+                contract_start = active_contract.start_date
+                contract_end_date = active_contract.end_date
+        except:
+            pass
         
         context = {
             'employee_name': employee.name,
-            'contract_duration': f"{employee.contract_duration} tháng" if employee.contract_duration else 'N/A',
-            'start_date': employee.contract_start_date,
+            'contract_type': contract_type,
+            'start_date': contract_start,
             'end_date': contract_end_date,
             'days_remaining': days_remaining,
             'department': employee.department.name if employee.department else 'N/A',
