@@ -4,7 +4,7 @@ Run monthly via cron job: python manage.py send_appraisal_reminders
 """
 from django.core.management.base import BaseCommand
 from django.utils import timezone
-from app.models import Employee, Appraisal
+from app.models import Employee, Appraisal, AppraisalPeriod
 from app.email_service import EmailService
 import logging
 
@@ -16,9 +16,9 @@ class Command(BaseCommand):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            '--period',
-            type=str,
-            help='Specific period to check (e.g., "Q1 2024"). If not provided, uses current period.'
+            '--period-id',
+            type=int,
+            help='Specific period ID to check. If not provided, uses active periods.'
         )
         parser.add_argument(
             '--dry-run',
@@ -31,150 +31,181 @@ class Command(BaseCommand):
             help='Send reminders to managers about pending team appraisals'
         )
 
-    def get_current_period(self):
-        """Get current appraisal period based on quarter"""
-        now = timezone.localtime(timezone.now())
-        quarter = (now.month - 1) // 3 + 1
-        return f"Q{quarter} {now.year}"
-
     def handle(self, *args, **options):
-        period = options['period'] or self.get_current_period()
+        period_id = options.get('period_id')
         dry_run = options['dry_run']
         to_managers = options['to_managers']
         
-        self.stdout.write(f'Checking appraisals for period: {period}')
-        
-        # Get all active employees
-        active_employees = Employee.objects.filter(status='active')
-        
+        self.stdout.write('')
+        self.stdout.write('=' * 60)
         if to_managers:
-            self.send_manager_reminders(active_employees, period, dry_run)
+            self.stdout.write('📋 GỬI NHẮC NHỞ ĐÁNH GIÁ CHO MANAGER')
         else:
-            self.send_employee_reminders(active_employees, period, dry_run)
-
-    def send_employee_reminders(self, employees, period, dry_run):
-        """Send reminders to employees who haven't completed self-appraisal"""
-        # Find employees without appraisal for this period
-        employees_with_appraisal = Appraisal.objects.filter(
-            period=period
-        ).values_list('employee_id', flat=True)
+            self.stdout.write('📋 GỬI NHẮC NHỞ TỰ ĐÁNH GIÁ CHO NHÂN VIÊN')
+        self.stdout.write('=' * 60)
+        if dry_run:
+            self.stdout.write(self.style.WARNING('🔍 CHẾ ĐỘ DRY-RUN: Không gửi email thực sự'))
+        self.stdout.write('=' * 60)
+        self.stdout.write('')
         
-        employees_without_appraisal = employees.exclude(
-            id__in=employees_with_appraisal
-        )
+        # Get appraisal periods
+        if period_id:
+            periods = AppraisalPeriod.objects.filter(id=period_id)
+        else:
+            periods = AppraisalPeriod.objects.filter(status='active')
         
-        if not employees_without_appraisal.exists():
-            self.stdout.write(
-                self.style.SUCCESS(f'All employees have submitted appraisals for {period}.')
-            )
+        if not periods.exists():
+            self.stdout.write(self.style.WARNING('⚠️ Không có kỳ đánh giá nào đang hoạt động.'))
             return
         
-        count = employees_without_appraisal.count()
-        self.stdout.write(f'Found {count} employees without appraisal for {period}.')
+        for period in periods:
+            self.stdout.write(f'📆 Kỳ đánh giá: {period.name}')
+            self.stdout.write(f'   Thời gian: {period.start_date} - {period.end_date}')
+            self.stdout.write('')
+            
+            if to_managers:
+                self.send_manager_reminders(period, dry_run)
+            else:
+                self.send_employee_reminders(period, dry_run)
+
+    def send_employee_reminders(self, period, dry_run):
+        """Send reminders to employees who haven't completed self-appraisal"""
+        
+        # Find appraisals pending self-assessment
+        pending_appraisals = Appraisal.objects.filter(
+            period=period,
+            status='pending_self'
+        ).select_related('employee', 'employee__department')
+        
+        if not pending_appraisals.exists():
+            self.stdout.write(self.style.SUCCESS(
+                f'✅ Tất cả nhân viên đã hoàn thành tự đánh giá cho kỳ {period.name}.'
+            ))
+            return
+        
+        count = pending_appraisals.count()
+        self.stdout.write(f'📊 Tìm thấy {count} nhân viên cần nhắc nhở:')
+        self.stdout.write('')
         
         success_count = 0
         error_count = 0
+        skip_count = 0
         
-        for employee in employees_without_appraisal:
+        for appraisal in pending_appraisals:
+            employee = appraisal.employee
+            
+            self.stdout.write(f'  👤 {employee.name} ({employee.employee_code})')
+            self.stdout.write(f'     📧 Email: {employee.email or "N/A"}')
+            self.stdout.write(f'     🏢 Phòng ban: {employee.department.name if employee.department else "N/A"}')
+            
             if not employee.email:
-                self.stdout.write(
-                    self.style.WARNING(f'  - Skipping {employee.name} (no email)')
-                )
+                self.stdout.write(self.style.WARNING(f'     ⚠️ Không có email - bỏ qua'))
+                skip_count += 1
+                self.stdout.write('')
                 continue
             
             if dry_run:
-                self.stdout.write(
-                    f'  [DRY RUN] Would send reminder to {employee.name} ({employee.email})'
-                )
+                self.stdout.write(self.style.WARNING(f'     🔍 [DRY-RUN] Bỏ qua gửi email'))
             else:
                 try:
-                    EmailService.send_appraisal_reminder(employee, period)
-                    self.stdout.write(
-                        self.style.SUCCESS(f'  ✓ Sent reminder to {employee.name}')
-                    )
+                    EmailService.send_appraisal_reminder(employee, period.name)
+                    self.stdout.write(self.style.SUCCESS(f'     ✅ Đã gửi email thành công'))
                     success_count += 1
                 except Exception as e:
-                    self.stdout.write(
-                        self.style.ERROR(f'  ✗ Failed to send to {employee.name}: {e}')
-                    )
+                    self.stdout.write(self.style.ERROR(f'     ❌ Lỗi gửi email: {str(e)}'))
                     error_count += 1
+                    logger.error(f"Error sending appraisal reminder to {employee.email}: {e}")
+            
+            self.stdout.write('')
         
         # Summary
-        self.stdout.write('')
-        if dry_run:
-            self.stdout.write(self.style.WARNING(f'DRY RUN: Would send {count} emails'))
-        else:
-            self.stdout.write(
-                self.style.SUCCESS(f'Sent: {success_count}, Failed: {error_count}')
-            )
+        self._print_summary(count, success_count, error_count, skip_count, dry_run)
 
-    def send_manager_reminders(self, employees, period, dry_run):
+    def send_manager_reminders(self, period, dry_run):
         """Send reminders to managers about pending team appraisals to review"""
-        # Get all managers
-        managers = employees.filter(is_manager=True)
         
-        if not managers.exists():
-            self.stdout.write(self.style.WARNING('No managers found.'))
+        # Find appraisals pending manager review
+        pending_appraisals = Appraisal.objects.filter(
+            period=period,
+            status='pending_manager'
+        ).select_related('employee', 'employee__department', 'manager')
+        
+        if not pending_appraisals.exists():
+            self.stdout.write(self.style.SUCCESS(
+                f'✅ Không có đánh giá nào đang chờ manager duyệt cho kỳ {period.name}.'
+            ))
             return
+        
+        # Group by manager
+        managers_pending = {}
+        for appraisal in pending_appraisals:
+            manager = appraisal.manager
+            if manager:
+                if manager.id not in managers_pending:
+                    managers_pending[manager.id] = {
+                        'manager': manager,
+                        'appraisals': []
+                    }
+                managers_pending[manager.id]['appraisals'].append(appraisal)
+        
+        if not managers_pending:
+            self.stdout.write(self.style.WARNING('⚠️ Không tìm thấy manager nào.'))
+            return
+        
+        self.stdout.write(f'📊 Tìm thấy {len(managers_pending)} manager cần nhắc nhở:')
+        self.stdout.write('')
         
         success_count = 0
         error_count = 0
+        skip_count = 0
         
-        for manager in managers:
-            # Get team members in their department
-            team_members = employees.filter(
-                department=manager.department
-            ).exclude(id=manager.id)
+        for manager_id, data in managers_pending.items():
+            manager = data['manager']
+            appraisals = data['appraisals']
+            pending_count = len(appraisals)
             
-            # Get appraisals pending manager review
-            pending_appraisals = Appraisal.objects.filter(
-                employee__in=team_members,
-                period=period,
-                manager_rating__isnull=True  # Manager hasn't reviewed yet
-            ).select_related('employee')
-            
-            if not pending_appraisals.exists():
-                continue
+            self.stdout.write(f'  👤 {manager.name} ({manager.employee_code})')
+            self.stdout.write(f'     📧 Email: {manager.email or "N/A"}')
+            self.stdout.write(f'     🏢 Phòng ban: {manager.department.name if manager.department else "N/A"}')
+            self.stdout.write(f'     📋 Số đánh giá chờ duyệt: {pending_count}')
             
             if not manager.email:
-                self.stdout.write(
-                    self.style.WARNING(f'  - Skipping manager {manager.name} (no email)')
-                )
+                self.stdout.write(self.style.WARNING(f'     ⚠️ Không có email - bỏ qua'))
+                skip_count += 1
+                self.stdout.write('')
                 continue
             
-            pending_count = pending_appraisals.count()
-            pending_names = [a.employee.name for a in pending_appraisals[:5]]
-            
             if dry_run:
-                self.stdout.write(
-                    f'  [DRY RUN] Would send reminder to manager {manager.name} '
-                    f'about {pending_count} pending appraisals'
-                )
+                self.stdout.write(self.style.WARNING(f'     🔍 [DRY-RUN] Bỏ qua gửi email'))
             else:
                 try:
                     EmailService.send_manager_review_reminder(
-                        manager, 
-                        pending_appraisals, 
-                        period
+                        manager=manager,
+                        pending_appraisals=appraisals,
+                        period=period.name
                     )
-                    self.stdout.write(
-                        self.style.SUCCESS(
-                            f'  ✓ Sent reminder to manager {manager.name} '
-                            f'({pending_count} pending reviews)'
-                        )
-                    )
+                    self.stdout.write(self.style.SUCCESS(f'     ✅ Đã gửi email thành công'))
                     success_count += 1
                 except Exception as e:
-                    self.stdout.write(
-                        self.style.ERROR(f'  ✗ Failed to send to {manager.name}: {e}')
-                    )
+                    self.stdout.write(self.style.ERROR(f'     ❌ Lỗi gửi email: {str(e)}'))
                     error_count += 1
+                    logger.error(f"Error sending manager reminder to {manager.email}: {e}")
+            
+            self.stdout.write('')
         
         # Summary
-        self.stdout.write('')
-        if dry_run:
-            self.stdout.write(self.style.WARNING(f'DRY RUN complete'))
+        self._print_summary(len(managers_pending), success_count, error_count, skip_count, dry_run)
+    
+    def _print_summary(self, total, success, error, skip, dry_run):
+        """Print summary of email sending"""
+        self.stdout.write('=' * 60)
+        self.stdout.write('📊 TỔNG KẾT:')
+        self.stdout.write(f'   • Tổng số cần gửi: {total}')
+        if not dry_run:
+            self.stdout.write(f'   • Gửi email thành công: {success}')
+            self.stdout.write(f'   • Gửi email thất bại: {error}')
+            self.stdout.write(f'   • Bỏ qua (không có email): {skip}')
         else:
-            self.stdout.write(
-                self.style.SUCCESS(f'Sent: {success_count}, Failed: {error_count}')
-            )
+            self.stdout.write(self.style.WARNING(f'   • CHẾ ĐỘ DRY-RUN - Không gửi email'))
+        self.stdout.write('=' * 60)
+        self.stdout.write('')

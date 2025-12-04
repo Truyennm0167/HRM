@@ -29155,3 +29155,319 @@ INFO 2025-12-04 17:39:31,690 email_service Email sent successfully: [HRM] Hợp 
 INFO 2025-12-04 17:39:39,055 email_service Email sent successfully: [HRM] Hợp đồng sắp hết hạn - Còn 20 ngày to ['luong.anh.vinh@company.com']
 INFO 2025-12-04 17:40:38,271 autoreload D:\Study\CT201\Project\hrm\app\email_service.py changed, reloading.
 INFO 2025-12-04 17:40:39,693 autoreload Watching for file changes with StatReloader
+INFO 2025-12-04 17:43:32,896 basehttp "GET /management/appraisal/periods/ HTTP/1.1" 200 33276
+INFO 2025-12-04 17:43:34,611 basehttp "GET /management/appraisal/periods/4/ HTTP/1.1" 200 93986
+INFO 2025-12-04 17:43:52,423 basehttp "GET /management/appraisal/110/detail/ HTTP/1.1" 200 47556
+INFO 2025-12-04 17:43:52,590 basehttp "GET /static/dist/img/user2-160x160.jpg HTTP/1.1" 200 7070
+INFO 2025-12-04 17:43:57,642 management_views Admin home accessed by hr001
+INFO 2025-12-04 17:43:57,688 basehttp "GET /management/ HTTP/1.1" 200 45367
+INFO 2025-12-04 17:44:02,660 basehttp "GET /management/appraisal/hr/ HTTP/1.1" 200 168672
+INFO 2025-12-04 17:46:03,665 basehttp "GET /management/appraisal/hr/?status=pending_self HTTP/1.1" 200 65456
+INFO 2025-12-04 17:46:05,666 basehttp "GET /management/appraisal/hr/?status=pending_manager HTTP/1.1" 200 47012
+INFO 2025-12-04 17:46:07,163 basehttp "GET /management/appraisal/hr/?status=completed HTTP/1.1" 200 99612
+INFO 2025-12-04 17:46:10,029 basehttp "GET /management/appraisal/hr/?status=pending_hr HTTP/1.1" 200 48482
+INFO 2025-12-04 17:46:11,192 basehttp "GET /management/appraisal/hr/ HTTP/1.1" 200 168672
+INFO 2025-12-04 17:46:13,522 basehttp "GET /management/appraisal/hr/?status=pending_hr HTTP/1.1" 200 48482
+INFO 2025-12-04 17:46:14,637 basehttp "GET /management/appraisal/hr/ HTTP/1.1" 200 168672
+INFO 2025-12-04 17:46:20,710 basehttp "GET /management/appraisal/114/hr-review/ HTTP/1.1" 200 40492
+INFO 2025-12-04 17:46:54,256 basehttp "GET /management/appraisal/periods/ HTTP/1.1" 200 33276
+INFO 2025-12-04 17:46:55,576 basehttp "GET /management/appraisal/periods/4/ HTTP/1.1" 200 93242
+INFO 2025-12-04 17:47:00,066 basehttp "GET /management/appraisal/periods/4/ HTTP/1.1" 200 93242
+INFO 2025-12-04 17:47:10,296 basehttp "GET /management/appraisal/periods/4/ HTTP/1.1" 200 93242
+INFO 2025-12-04 17:47:24,197 basehttp "GET /management/appraisal/hr/ HTTP/1.1" 200 168672
+INFO 2025-12-04 17:47:31,998 basehttp "GET /management/appraisal/114/hr-review/ HTTP/1.1" 200 40492
+WARNING 2025-12-04 17:48:56,622 management_views Failed to send appraisal completed email: 'Appraisal' object has no attribute 'manager_rating'
+INFO 2025-12-04 17:48:56,622 management_views HR final review completed for Phan Anh Kiệt
+INFO 2025-12-04 17:48:56,627 basehttp "POST /management/appraisal/114/hr-review/ HTTP/1.1" 302 0
+INFO 2025-12-04 17:48:56,763 basehttp "GET /management/appraisal/hr/ HTTP/1.1" 200 168858
+INFO 2025-12-04 17:49:52,181 basehttp "GET /management/contracts/expiring/ HTTP/1.1" 200 50196
+INFO 2025-12-04 17:50:06,945 basehttp "GET /management/contracts/ HTTP/1.1" 200 73850
+INFO 2025-12-04 17:50:09,059 basehttp "GET /management/contracts/expiring/ HTTP/1.1" 200 50196
+INFO 2025-12-04 17:50:28,945 basehttp "GET /management/contracts/?expiring=true HTTP/1.1" 200 73850
+INFO 2025-12-04 17:50:30,344 basehttp "GET /management/contracts/?expiring=true HTTP/1.1" 200 73850
+INFO 2025-12-04 17:50:35,011 basehttp "GET /management/contracts/expiring/ HTTP/1.1" 200 50196
+INFO 2025-12-04 17:50:40,137 basehttp "GET /management/contracts/ HTTP/1.1" 200 73850
+INFO 2025-12-04 17:50:54,405 basehttp "GET /management/contracts/170/ HTTP/1.1" 200 37858
+INFO 2025-12-04 17:51:06,670 basehttp "GET /management/contracts/170/edit/ HTTP/1.1" 200 39657
+INFO 2025-12-04 17:51:11,835 basehttp "GET /management/contracts/expiring/ HTTP/1.1" 200 50196
+INFO 2025-12-04 17:51:21,712 basehttp "GET /management/appraisal/hr/ HTTP/1.1" 200 168492
+INFO 2025-12-04 17:51:23,131 basehttp "GET /management/appraisal/116/hr-review/ HTTP/1.1" 200 40531
+INFO 2025-12-04 17:51:28,874 basehttp "GET /management/appraisal/hr/ HTTP/1.1" 200 168492
+INFO 2025-12-04 17:51:51,780 basehttp "GET /management/appraisal/116/hr-review/ HTTP/1.1" 200 40531
+INFO 2025-12-04 17:52:18,232 management_views Salary adjusted for Võ Minh Cường: +-1000000
+WARNING 2025-12-04 17:52:18,237 management_views Failed to send appraisal completed email: 'Appraisal' object has no attribute 'manager_rating'
+INFO 2025-12-04 17:52:18,238 management_views HR final review completed for Võ Minh Cường
+INFO 2025-12-04 17:52:18,245 basehttp "POST /management/appraisal/116/hr-review/ HTTP/1.1" 302 0
+INFO 2025-12-04 17:52:18,399 basehttp "GET /management/appraisal/hr/ HTTP/1.1" 200 168678
+INFO 2025-12-04 17:54:15,552 basehttp "GET /management/appraisal/103/hr-review/ HTTP/1.1" 200 40535
+INFO 2025-12-04 17:55:44,376 basehttp "GET /management/appraisal/hr/ HTTP/1.1" 200 168312
+INFO 2025-12-04 17:56:50,589 basehttp "GET /management/contracts/expiring/ HTTP/1.1" 200 50196
+ERROR 2025-12-04 17:57:15,114 log Internal Server Error: /management/contracts/178/renew/
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.NotNullViolation: null value in column "signed_date" of relation "app_contract" violates not-null constraint
+DETAIL:  Failing row contains (191, HD202512046A9777, probation, 2025-12-18, 2026-01-18, null, 12000000, {}, Tòa nhà ABC, 123 Nguyễn Trãi, Thanh Xuân, Hà Nội, 08:00-12:00, 13:00-17:00, ĐIỀU KHOẢN HỢP ĐỒNG LAO ĐỘNG
+
+1. Thời gian làm v..., draft, Gia hạn từ hợp đồng HD20251203AE9838, , 2025-12-04 10:57:14.866338+00, 2025-12-04 10:57:14.866363+00, 231, 254, 55, 178, 53).
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "C:\Python313\Lib\contextlib.py", line 85, in inner
+    return func(*args, **kwds)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\permissions.py", line 146, in _wrapped_view
+    return view_func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\views\decorators\http.py", line 43, in inner
+    return func(request, *args, **kwargs)
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 3764, in renew_contract
+    new_contract = Contract.objects.create(
+        employee=old_contract.employee,
+    ...<13 lines>...
+        created_by=old_contract.created_by
+    )
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\query.py", line 658, in create
+    obj.save(force_insert=True, using=self.db)
+    ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\app\models.py", line 965, in save
+    super().save(*args, **kwargs)
+    ~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 814, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 877, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 1020, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, fields, returning_fields, raw
+    )
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 1061, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.IntegrityError: null value in column "signed_date" of relation "app_contract" violates not-null constraint
+DETAIL:  Failing row contains (191, HD202512046A9777, probation, 2025-12-18, 2026-01-18, null, 12000000, {}, Tòa nhà ABC, 123 Nguyễn Trãi, Thanh Xuân, Hà Nội, 08:00-12:00, 13:00-17:00, ĐIỀU KHOẢN HỢP ĐỒNG LAO ĐỘNG
+
+1. Thời gian làm v..., draft, Gia hạn từ hợp đồng HD20251203AE9838, , 2025-12-04 10:57:14.866338+00, 2025-12-04 10:57:14.866363+00, 231, 254, 55, 178, 53).
+
+ERROR 2025-12-04 17:57:15,156 basehttp "POST /management/contracts/178/renew/ HTTP/1.1" 500 211218
+INFO 2025-12-04 22:38:43,801 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-12-04 22:38:46,997 autoreload Watching for file changes with StatReloader
+INFO 2025-12-04 23:04:46,879 basehttp - Broken pipe from ('127.0.0.1', 65399)
+INFO 2025-12-04 23:04:46,909 basehttp "POST /management/contracts/178/renew/ HTTP/1.1" 302 0
+INFO 2025-12-04 23:04:46,939 basehttp "GET /login/?next=/management/contracts/178/renew/ HTTP/1.1" 200 2905
+INFO 2025-12-04 23:04:55,871 basehttp "POST /login/?next=/management/contracts/178/renew/ HTTP/1.1" 302 0
+WARNING 2025-12-04 23:04:55,906 log Method Not Allowed (GET): /management/contracts/178/renew/
+WARNING 2025-12-04 23:04:55,911 basehttp "GET /management/contracts/178/renew/ HTTP/1.1" 405 0
+INFO 2025-12-04 23:04:57,296 basehttp "GET /login/?next=/management/contracts/178/renew/ HTTP/1.1" 200 2905
+INFO 2025-12-04 23:04:58,776 basehttp "GET /management/contracts/expiring/ HTTP/1.1" 200 50196
+INFO 2025-12-04 23:05:02,479 basehttp "GET /management/contracts/expiring/ HTTP/1.1" 200 50196
+INFO 2025-12-04 23:05:17,976 management_views Contract HD20251203AE9838 renewed to HD20251204AD6A07
+INFO 2025-12-04 23:05:23,536 email_service Email sent successfully: [HRM] Hợp đồng đã được gia hạn to ['pham.quang.kiet@company.com']
+INFO 2025-12-04 23:05:23,551 basehttp "POST /management/contracts/178/renew/ HTTP/1.1" 302 0
+INFO 2025-12-04 23:05:23,661 basehttp "GET /management/contracts/192/ HTTP/1.1" 200 40043
+INFO 2025-12-04 23:09:27,079 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37894
+INFO 2025-12-04 23:09:27,338 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+INFO 2025-12-04 23:09:29,549 basehttp "GET /management/employees/ HTTP/1.1" 200 37183
+INFO 2025-12-04 23:09:32,853 basehttp "GET /management/employees/?page=2 HTTP/1.1" 200 37263
+INFO 2025-12-04 23:09:36,158 basehttp "GET /management/employees/?page=3 HTTP/1.1" 200 37284
+INFO 2025-12-04 23:09:39,940 basehttp "GET /management/employees/?page=4 HTTP/1.1" 200 37126
+INFO 2025-12-04 23:09:44,408 basehttp "GET /management/employees/267/ HTTP/1.1" 200 32202
+INFO 2025-12-04 23:09:44,715 basehttp "GET /media/avatars/2975f28370ed407a83e5ed28fe9c8167_MinhTruyen_1x1.jpg HTTP/1.1" 200 411816
+INFO 2025-12-04 23:09:53,018 basehttp "GET /management/employees/ HTTP/1.1" 200 37183
+INFO 2025-12-04 23:09:56,675 basehttp "GET /management/employees/?search=truy%E1%BB%81n&department=&status= HTTP/1.1" 200 29479
+INFO 2025-12-04 23:10:00,851 basehttp "GET /management/employees/269/ HTTP/1.1" 200 32202
+INFO 2025-12-04 23:10:00,951 basehttp "GET /media/avatars/0005ff6f615649bf90c238bec9ca9509_sontung.jpg HTTP/1.1" 200 576065
+INFO 2025-12-04 23:10:06,487 basehttp "GET /management/employees/267/ HTTP/1.1" 200 32202
+INFO 2025-12-04 23:10:14,867 management_views Employee Nguyễn Minh Truyền (NV0006) deleted by hr001
+INFO 2025-12-04 23:10:15,088 basehttp "POST /management/employees/267/delete/ HTTP/1.1" 302 0
+INFO 2025-12-04 23:10:15,151 basehttp "GET /management/employees/ HTTP/1.1" 200 37183
+INFO 2025-12-04 23:10:22,373 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+INFO 2025-12-04 23:10:22,508 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+INFO 2025-12-04 23:10:24,852 basehttp "GET /management/employees/ HTTP/1.1" 200 37183
+INFO 2025-12-04 23:10:37,259 basehttp "GET /careers/ HTTP/1.1" 200 24734
+INFO 2025-12-04 23:10:46,369 basehttp "GET /careers/40/ HTTP/1.1" 200 17227
+INFO 2025-12-04 23:10:49,314 basehttp "GET /careers/40/apply/ HTTP/1.1" 200 21854
+INFO 2025-12-04 23:12:31,469 basehttp "POST /careers/40/apply/ HTTP/1.1" 302 0
+INFO 2025-12-04 23:12:31,498 basehttp "GET /careers/40/ HTTP/1.1" 200 17227
+INFO 2025-12-04 23:12:39,288 basehttp "GET /management/recruitment/applications/ HTTP/1.1" 200 192839
+INFO 2025-12-04 23:12:49,754 management_views Application APP202512048A0E65 status changed from new to interview
+INFO 2025-12-04 23:12:49,763 basehttp "POST /management/recruitment/applications/149/status/ HTTP/1.1" 200 135
+INFO 2025-12-04 23:12:57,134 management_views Application APP202512048A0E65 status changed from interview to test
+INFO 2025-12-04 23:12:57,141 basehttp "POST /management/recruitment/applications/149/status/ HTTP/1.1" 200 138
+INFO 2025-12-04 23:12:59,633 management_views Application APP202512048A0E65 status changed from test to accepted
+INFO 2025-12-04 23:12:59,644 basehttp "POST /management/recruitment/applications/149/status/ HTTP/1.1" 200 135
+INFO 2025-12-04 23:13:05,013 basehttp "GET /management/recruitment/applications/149/ HTTP/1.1" 200 44792
+INFO 2025-12-04 23:13:13,906 basehttp "GET /management/recruitment/applications/149/update/ HTTP/1.1" 200 47064
+INFO 2025-12-04 23:13:21,081 basehttp "GET /management/recruitment/applications/149/ HTTP/1.1" 200 44792
+INFO 2025-12-04 23:13:28,634 management_views Application APP202512048A0E65 converted to employee NV0008
+INFO 2025-12-04 23:13:28,643 basehttp "POST /management/recruitment/applications/149/convert/ HTTP/1.1" 302 0
+INFO 2025-12-04 23:13:28,683 basehttp "GET /management/employees/270/ HTTP/1.1" 200 32085
+WARNING 2025-12-04 23:13:28,816 basehttp "GET /static/img/default-profile.png HTTP/1.1" 404 1929
+INFO 2025-12-04 23:13:33,178 basehttp "GET /management/users/ HTTP/1.1" 200 116595
+INFO 2025-12-04 23:14:18,323 basehttp "GET /management/employees/ HTTP/1.1" 200 37183
+INFO 2025-12-04 23:14:22,654 basehttp "GET /management/employees/?search=truy%E1%BB%81n&department=&status= HTTP/1.1" 200 29479
+INFO 2025-12-04 23:14:26,173 basehttp "GET /management/employees/270/ HTTP/1.1" 200 32085
+WARNING 2025-12-04 23:14:26,266 basehttp "GET /static/img/default-profile.png HTTP/1.1" 404 1929
+INFO 2025-12-04 23:14:29,012 management_views Employee Nguyễn Minh Truyền (NV0008) deleted by hr001
+INFO 2025-12-04 23:14:29,118 basehttp "POST /management/employees/270/delete/ HTTP/1.1" 302 0
+INFO 2025-12-04 23:14:29,185 basehttp "GET /management/employees/ HTTP/1.1" 200 37183
+INFO 2025-12-04 23:14:32,919 basehttp "GET /management/recruitment/jobs/ HTTP/1.1" 200 61061
+INFO 2025-12-04 23:14:43,117 basehttp "GET /management/recruitment/applications/ HTTP/1.1" 200 192850
+INFO 2025-12-04 23:14:49,671 basehttp "GET /management/recruitment/applications/149/ HTTP/1.1" 200 44677
+INFO 2025-12-04 23:15:17,167 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+INFO 2025-12-04 23:15:17,311 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+ERROR 2025-12-04 23:16:57,697 management_views Error adding employee: duplicate key value violates unique constraint "app_employee_identification_key"
+DETAIL:  Key (identification)=(098765432123) already exists.
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+psycopg2.errors.UniqueViolation: duplicate key value violates unique constraint "app_employee_identification_key"
+DETAIL:  Key (identification)=(098765432123) already exists.
+
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\Study\CT201\Project\hrm\app\management_views.py", line 429, in add_employee_save
+    employee.save()
+    ~~~~~~~~~~~~~^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 814, in save
+    self.save_base(
+    ~~~~~~~~~~~~~~^
+        using=using,
+        ^^^^^^^^^^^^
+    ...<2 lines>...
+        update_fields=update_fields,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 877, in save_base
+    updated = self._save_table(
+        raw,
+    ...<4 lines>...
+        update_fields,
+    )
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 1020, in _save_table
+    results = self._do_insert(
+        cls._base_manager, using, fields, returning_fields, raw
+    )
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\base.py", line 1061, in _do_insert
+    return manager._insert(
+           ~~~~~~~~~~~~~~~^
+        [self],
+        ^^^^^^^
+    ...<3 lines>...
+        raw=raw,
+        ^^^^^^^^
+    )
+    ^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\query.py", line 1805, in _insert
+    return query.get_compiler(using=using).execute_sql(returning_fields)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1822, in execute_sql
+    cursor.execute(sql, params)
+    ~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 102, in execute
+    return super().execute(sql, params)
+           ~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 67, in execute
+    return self._execute_with_wrappers(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        sql, params, many=False, executor=self._execute
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 80, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 84, in _execute
+    with self.db.wrap_database_errors:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\utils.py", line 91, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "D:\Study\CT201\Project\hrm\.venv\Lib\site-packages\django\db\backends\utils.py", line 89, in _execute
+    return self.cursor.execute(sql, params)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^
+django.db.utils.IntegrityError: duplicate key value violates unique constraint "app_employee_identification_key"
+DETAIL:  Key (identification)=(098765432123) already exists.
+
+INFO 2025-12-04 23:16:57,732 basehttp "POST /management/employees/add/save/ HTTP/1.1" 302 0
+INFO 2025-12-04 23:16:57,773 basehttp "GET /add_employee HTTP/1.1" 302 0
+INFO 2025-12-04 23:16:57,822 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37917
+INFO 2025-12-04 23:16:57,950 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+INFO 2025-12-04 23:18:01,423 management_views Employee Nguyễn Minh Truyền (NV0008) created by hr001
+INFO 2025-12-04 23:18:02,104 management_views Auto-created user account 'nv0008' for employee NV0008
+INFO 2025-12-04 23:18:07,368 email_service Email sent successfully: [HRM] Tài khoản của bạn đã được tạo to ['nmtruyen0167@gmail.com']
+INFO 2025-12-04 23:18:07,384 basehttp "POST /management/employees/add/save/ HTTP/1.1" 302 0
+INFO 2025-12-04 23:18:07,407 basehttp "GET /add_employee HTTP/1.1" 302 0
+INFO 2025-12-04 23:18:07,455 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37919
+INFO 2025-12-04 23:18:07,573 basehttp "GET /management/employees/add/ HTTP/1.1" 200 37751
+INFO 2025-12-04 23:21:53,914 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-12-04 23:21:55,808 autoreload Watching for file changes with StatReloader
+INFO 2025-12-04 23:22:04,138 autoreload D:\Study\CT201\Project\hrm\app\portal_views.py changed, reloading.
+INFO 2025-12-04 23:22:05,471 autoreload Watching for file changes with StatReloader
+INFO 2025-12-04 23:30:19,090 autoreload D:\Study\CT201\Project\hrm\app\management_views.py changed, reloading.
+INFO 2025-12-04 23:30:20,715 autoreload Watching for file changes with StatReloader

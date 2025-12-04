@@ -299,6 +299,20 @@ def leave_create(request):
             # Save leave request
             leave_request.save()
             
+            # Send notification to manager
+            try:
+                if employee.department:
+                    # Find department manager
+                    manager = Employee.objects.filter(
+                        department=employee.department,
+                        is_manager=True
+                    ).first()
+                    
+                    if manager and manager.email:
+                        EmailService.send_leave_request_notification(leave_request, manager.email)
+            except Exception as email_error:
+                print(f"Error sending leave notification to manager: {email_error}")
+            
             messages.success(
                 request, 
                 f'Đã gửi đơn xin nghỉ phép thành công! '

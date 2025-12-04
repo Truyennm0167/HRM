@@ -2551,10 +2551,35 @@ def convert_to_employee(request, application_id):
             application.converted_to_employee = True
             application.save()
             
+            # Create user account for employee
+            from django.contrib.auth.models import User
+            import secrets
+            
+            username = employee.employee_code.lower()
+            temp_password = secrets.token_urlsafe(8)  # Generate random password
+            
+            # Check if user already exists
+            if not User.objects.filter(username=username).exists():
+                user = User.objects.create_user(
+                    username=username,
+                    email=employee.email,
+                    password=temp_password,
+                    first_name=employee.name.split()[0] if employee.name else '',
+                    last_name=' '.join(employee.name.split()[1:]) if employee.name and len(employee.name.split()) > 1 else ''
+                )
+                user.save()
+                
+                # Send welcome email with account credentials
+                try:
+                    EmailService.send_account_created(employee, username, temp_password)
+                    logger.info(f"Welcome email sent to {employee.email}")
+                except Exception as email_error:
+                    logger.warning(f"Failed to send welcome email: {email_error}")
+            
             messages.success(
                 request,
                 f'Ứng viên {application.full_name} đã được chuyển thành nhân viên với mã {employee.employee_code}! '
-                f'Vui lòng cập nhật thông tin CMND/CCCD và các thông tin còn thiếu.'
+                f'Tài khoản đăng nhập: {username}. Email thông báo đã được gửi.'
             )
             logger.info(f"Application {application.application_code} converted to employee {employee.employee_code}")
             
@@ -3494,6 +3519,7 @@ def renew_contract(request, contract_id):
         contract_type=old_contract.contract_type,
         start_date=new_start_date,
         end_date=new_end_date if new_end_date else None,
+        signed_date=timezone.now().date(),  # Set signed_date to today
         base_salary=old_contract.base_salary,
         allowances=old_contract.allowances,
         job_title=old_contract.job_title,
