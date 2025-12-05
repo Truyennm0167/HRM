@@ -1,0 +1,884 @@
+// HRM System - Entity Relationship Diagram
+// Database: SQLite/PostgreSQL/MySQL
+// Framework: Django 4.2
+// Total: 35 Models
+// Docs: https://dbml.dbdiagram.io/docs
+
+// ============================================================================
+// ORGANIZATION STRUCTURE
+// ============================================================================
+
+Table job_titles {
+  id integer [primary key]
+  name varchar(100) [not null]
+  salary_coefficient float [not null, note: 'Hệ số lương']
+  description text
+  created_at timestamp [default: `now()`]
+}
+
+Table departments {
+  id integer [primary key]
+  name varchar(50) [not null]
+  description text
+  date_establishment date [not null]
+  created_at timestamp [default: `now()`]
+}
+
+// ============================================================================
+// EMPLOYEE MANAGEMENT
+// ============================================================================
+
+Table employees {
+  id integer [primary key]
+  employee_code varchar(20) [unique, not null, note: 'Mã nhân viên']
+  name varchar(50) [not null]
+  gender integer [not null, note: '0=Nam, 1=Nữ, 2=Khác']
+  birthday date [not null]
+  place_of_birth varchar(300)
+  place_of_origin varchar(300)
+  place_of_residence varchar(300)
+  identification varchar(50) [unique, not null, note: 'CMND/CCCD']
+  date_of_issue date
+  place_of_issue varchar(300)
+  nationality varchar(50)
+  nation varchar(50)
+  religion varchar(50)
+  email varchar(50) [unique, not null]
+  phone varchar(50) [unique, not null]
+  address varchar(300)
+  avatar varchar(255) [note: 'Path to avatar image']
+  marital_status integer [note: '0=Độc thân, 1=Đã kết hôn, 2=Đã ly hôn']
+  job_title_id integer
+  job_position varchar(50)
+  department_id integer
+  is_manager boolean [default: false]
+  salary float [not null]
+  contract_start_date date [not null]
+  contract_duration float [note: 'Đơn vị: tháng']
+  status integer [not null, note: '0=Onboarding, 1=Thử việc, 2=Chính thức, 3=Nghỉ việc, 4=Sa thải']
+  education_level integer [note: '0=PT, 1=TC, 2=CĐ, 3=ĐH, 4=ThS, 5=TS, 6=Khác']
+  major varchar(100)
+  school varchar(100)
+  certificate text [note: 'Các chứng chỉ, cách nhau bởi dấu phẩy']
+  created_at date [default: `now()`]
+}
+
+Ref: employees.job_title_id > job_titles.id [delete: set null]
+Ref: employees.department_id > departments.id [delete: set null]
+
+// ============================================================================
+// REWARD & DISCIPLINE
+// ============================================================================
+
+Table rewards {
+  id integer [primary key]
+  number integer [unique, not null, note: 'Số quyết định']
+  description text [not null]
+  date timestamp [not null]
+  amount float [not null, note: 'Số tiền thưởng']
+  cash_payment boolean [not null, note: 'Trả bằng tiền mặt?']
+  employee_id integer [not null]
+  created_at timestamp [default: `now()`]
+}
+
+Ref: rewards.employee_id > employees.id [delete: cascade]
+
+Table disciplines {
+  id integer [primary key]
+  number integer [unique, not null, note: 'Số quyết định']
+  description text [not null]
+  date timestamp [not null]
+  amount float [not null, note: 'Số tiền phạt']
+  employee_id integer [not null]
+  created_at timestamp [default: `now()`]
+}
+
+Ref: disciplines.employee_id > employees.id [delete: cascade]
+
+Table evaluations {
+  id integer [primary key]
+  employee_id integer [not null]
+  period varchar(50) [not null, note: 'Tháng/Quý/Năm/Dự án']
+  score float [not null]
+  comment text
+  created_at timestamp [default: `now()`]
+}
+
+Ref: evaluations.employee_id > employees.id [delete: cascade]
+
+// ============================================================================
+// ATTENDANCE MANAGEMENT
+// ============================================================================
+
+Table attendances {
+  id integer [primary key]
+  employee_id integer [not null]
+  date timestamp [not null]
+  status varchar(50) [not null, note: 'Có làm việc/Nghỉ phép/Nghỉ không phép']
+  working_hours float [default: 0]
+  notes varchar(300)
+}
+
+Ref: attendances.employee_id > employees.id [delete: cascade]
+
+// ============================================================================
+// PAYROLL MANAGEMENT
+// ============================================================================
+
+Table payrolls {
+  id integer [primary key]
+  employee_id integer [not null]
+  month integer [not null, note: '1-12']
+  year integer [not null]
+  base_salary float [not null, note: 'Lương cơ bản']
+  salary_coefficient float [not null, note: 'Hệ số lương']
+  standard_working_days integer [not null]
+  hourly_rate float [not null]
+  total_working_hours float [not null]
+  bonus float [default: 0, note: 'Thưởng']
+  penalty float [default: 0, note: 'Phạt']
+  total_salary float [not null, note: 'Tổng lương']
+  notes text
+  status varchar(20) [default: 'pending', note: 'pending/confirmed']
+  created_at timestamp [default: `now()`]
+  updated_at timestamp
+
+  indexes {
+    (employee_id, month, year) [unique]
+  }
+}
+
+Ref: payrolls.employee_id > employees.id [delete: cascade]
+
+// ============================================================================
+// LEAVE MANAGEMENT
+// ============================================================================
+
+Table leave_types {
+  id integer [primary key]
+  name varchar(100) [unique, not null]
+  code varchar(20) [unique, not null, note: 'AL, SL, ML...']
+  description text
+  max_days_per_year integer [not null]
+  requires_approval boolean [default: true]
+  is_paid boolean [default: true]
+  is_active boolean [default: true]
+  created_at timestamp [default: `now()`]
+}
+
+Table leave_balances {
+  id integer [primary key]
+  employee_id integer [not null]
+  leave_type_id integer [not null]
+  year integer [not null]
+  total_days float [not null, note: 'Tổng ngày được cấp']
+  used_days float [default: 0, note: 'Đã sử dụng']
+  remaining_days float [not null, note: 'Còn lại']
+
+  indexes {
+    (employee_id, leave_type_id, year) [unique]
+  }
+}
+
+Ref: leave_balances.employee_id > employees.id [delete: cascade]
+Ref: leave_balances.leave_type_id > leave_types.id [delete: cascade]
+
+Table leave_requests {
+  id integer [primary key]
+  employee_id integer [not null]
+  leave_type_id integer [not null]
+  start_date date [not null]
+  end_date date [not null]
+  total_days float [not null, note: 'Có thể 0.5 cho nửa ngày']
+  reason text [not null]
+  status varchar(20) [default: 'pending', note: 'pending/approved/rejected/cancelled']
+  approved_by_id integer [note: 'Manager hoặc HR']
+  approved_at timestamp
+  rejection_reason text
+  created_at timestamp [default: `now()`]
+  updated_at timestamp
+}
+
+Ref: leave_requests.employee_id > employees.id [delete: cascade]
+Ref: leave_requests.leave_type_id > leave_types.id [delete: restrict]
+Ref: leave_requests.approved_by_id > employees.id [delete: set null]
+
+// ============================================================================
+// EXPENSE MANAGEMENT
+// ============================================================================
+
+Table expense_categories {
+  id integer [primary key]
+  name varchar(100) [unique, not null]
+  code varchar(20) [unique, not null]
+  description text
+  is_active boolean [default: true]
+  created_at timestamp [default: `now()`]
+}
+
+Table expenses {
+  id integer [primary key]
+  employee_id integer [not null]
+  category_id integer [not null]
+  amount decimal(12,2) [not null, note: 'Số tiền yêu cầu hoàn']
+  date date [not null, note: 'Ngày phát sinh chi phí']
+  description text [not null]
+  receipt varchar(255) [note: 'Ảnh hóa đơn']
+  status varchar(20) [default: 'pending', note: 'pending/approved/rejected/paid/cancelled']
+  approved_by_id integer
+  approved_at timestamp
+  rejection_reason text
+  paid_by_id integer [note: 'Kế toán']
+  paid_at timestamp
+  payment_method varchar(50) [note: 'cash/bank_transfer/check']
+  payment_reference varchar(100) [note: 'Mã giao dịch']
+  created_at timestamp [default: `now()`]
+  updated_at timestamp
+}
+
+Ref: expenses.employee_id > employees.id [delete: cascade]
+Ref: expenses.category_id > expense_categories.id [delete: restrict]
+Ref: expenses.approved_by_id > employees.id [delete: set null]
+Ref: expenses.paid_by_id > employees.id [delete: set null]
+
+// ============================================================================
+// RECRUITMENT MANAGEMENT
+// ============================================================================
+
+Table job_postings {
+  id integer [primary key]
+  title varchar(200) [not null]
+  code varchar(50) [unique, not null]
+  department_id integer
+  job_title_id integer
+  description text [not null]
+  requirements text [not null]
+  responsibilities text [not null]
+  benefits text [not null]
+  employment_type varchar(20) [default: 'fulltime', note: 'fulltime/parttime/contract/internship']
+  experience_level varchar(20) [default: 'junior', note: 'entry/junior/mid/senior/expert']
+  number_of_positions integer [default: 1]
+  location varchar(300) [not null]
+  salary_min float
+  salary_max float
+  salary_negotiable boolean [default: false]
+  deadline date [not null]
+  start_date date
+  status varchar(20) [default: 'draft', note: 'draft/open/closed/cancelled']
+  contact_person varchar(100)
+  contact_email varchar(254)
+  contact_phone varchar(20)
+  views_count integer [default: 0]
+  applications_count integer [default: 0]
+  created_by_id integer
+  created_at timestamp [default: `now()`]
+  updated_at timestamp
+}
+
+Ref: job_postings.department_id > departments.id [delete: set null]
+Ref: job_postings.job_title_id > job_titles.id [delete: set null]
+Ref: job_postings.created_by_id > employees.id [delete: set null]
+
+Table applications {
+  id integer [primary key]
+  job_id integer [not null]
+  application_code varchar(50) [unique, not null]
+  full_name varchar(100) [not null]
+  email varchar(254) [not null]
+  phone varchar(20) [not null]
+  date_of_birth date
+  gender integer
+  address varchar(300)
+  current_position varchar(100)
+  current_company varchar(200)
+  years_of_experience integer [default: 0]
+  education_level integer
+  school varchar(200)
+  major varchar(100)
+  resume varchar(255) [not null, note: 'CV file']
+  cover_letter text
+  portfolio_url varchar(200)
+  linkedin_url varchar(200)
+  expected_salary float
+  available_start_date date
+  notice_period_days integer [default: 0]
+  status varchar(20) [default: 'new', note: 'new/screening/phone_interview/interview/test/offer/accepted/rejected/withdrawn']
+  source varchar(20) [default: 'website', note: 'website/referral/linkedin/facebook/indeed/vietnamworks/other']
+  rating integer [note: '1-5']
+  notes text
+  interview_date timestamp
+  interview_location varchar(300)
+  interviewer_id integer
+  offer_made_date date
+  offer_accepted_date date
+  rejection_reason text
+  converted_to_employee boolean [default: false]
+  employee_id integer [note: 'Linked after conversion']
+  assigned_to_id integer
+  created_at timestamp [default: `now()`]
+  updated_at timestamp
+}
+
+Ref: applications.job_id > job_postings.id [delete: cascade]
+Ref: applications.interviewer_id > employees.id [delete: set null]
+Ref: applications.employee_id - employees.id [delete: set null]
+Ref: applications.assigned_to_id > employees.id [delete: set null]
+
+Table application_notes {
+  id integer [primary key]
+  application_id integer [not null]
+  author_id integer
+  note text [not null]
+  is_important boolean [default: false]
+  created_at timestamp [default: `now()`]
+}
+
+Ref: application_notes.application_id > applications.id [delete: cascade]
+Ref: application_notes.author_id > employees.id [delete: set null]
+
+// ============================================================================
+// SALARY RULES ENGINE
+// ============================================================================
+
+Table salary_components {
+  id integer [primary key]
+  code varchar(50) [unique, not null, note: 'PC_VITRI, TH_HIEUSUAT...']
+  name varchar(100) [not null]
+  component_type varchar(20) [not null, note: 'allowance/bonus/deduction/overtime']
+  calculation_method varchar(20) [not null, note: 'fixed/percentage/formula/hourly/daily']
+  default_amount float [default: 0]
+  percentage float [default: 0, note: '0-100']
+  formula text [note: 'Python formula']
+  is_taxable boolean [default: true]
+  is_mandatory boolean [default: false]
+  is_active boolean [default: true]
+  description text
+  created_at timestamp [default: `now()`]
+  updated_at timestamp
+}
+
+Table employee_salary_rules {
+  id integer [primary key]
+  employee_id integer [not null]
+  component_id integer [not null]
+  custom_amount float [note: 'Override default']
+  custom_percentage float
+  custom_formula text
+  effective_from date [not null]
+  effective_to date [note: 'null = vô thời hạn']
+  is_active boolean [default: true]
+  notes text
+  created_by_id integer
+  created_at timestamp [default: `now()`]
+  updated_at timestamp
+
+  indexes {
+    (employee_id, component_id, effective_from) [unique]
+  }
+}
+
+Ref: employee_salary_rules.employee_id > employees.id [delete: cascade]
+Ref: employee_salary_rules.component_id > salary_components.id [delete: cascade]
+Ref: employee_salary_rules.created_by_id > employees.id [delete: set null]
+
+Table payroll_calculation_logs {
+  id integer [primary key]
+  payroll_id integer [not null]
+  base_salary float [not null]
+  total_allowances float [default: 0]
+  total_bonuses float [default: 0]
+  total_deductions float [default: 0]
+  total_overtime float [default: 0]
+  taxable_income float [default: 0]
+  personal_income_tax float [default: 0]
+  social_insurance float [default: 0]
+  health_insurance float [default: 0]
+  unemployment_insurance float [default: 0]
+  gross_salary float [not null, note: 'Trước thuế & BH']
+  net_salary float [not null, note: 'Thực nhận']
+  calculation_details json [note: 'Chi tiết từng component']
+  calculated_at timestamp [default: `now()`]
+  calculated_by_id integer
+}
+
+Ref: payroll_calculation_logs.payroll_id > payrolls.id [delete: cascade]
+Ref: payroll_calculation_logs.calculated_by_id > employees.id [delete: set null]
+
+Table salary_rule_templates {
+  id integer [primary key]
+  name varchar(100) [not null]
+  description text
+  job_title_id integer
+  department_id integer
+  is_active boolean [default: true]
+  created_at timestamp [default: `now()`]
+  updated_at timestamp
+}
+
+Ref: salary_rule_templates.job_title_id > job_titles.id [delete: set null]
+Ref: salary_rule_templates.department_id > departments.id [delete: set null]
+
+Table salary_rule_template_items {
+  id integer [primary key]
+  template_id integer [not null]
+  component_id integer [not null]
+  custom_amount float
+  custom_percentage float
+  custom_formula text
+  is_active boolean [default: true]
+  order integer [default: 0]
+
+  indexes {
+    (template_id, component_id) [unique]
+  }
+}
+
+Ref: salary_rule_template_items.template_id > salary_rule_templates.id [delete: cascade]
+Ref: salary_rule_template_items.component_id > salary_components.id [delete: cascade]
+
+// ============================================================================
+// CONTRACT MANAGEMENT
+// ============================================================================
+
+Table contracts {
+  id integer [primary key]
+  contract_code varchar(20) [unique, not null]
+  employee_id integer [not null]
+  contract_type varchar(20) [not null, note: 'probation/fixed_term/indefinite/seasonal/part_time']
+  start_date date [not null]
+  end_date date [note: 'null nếu không xác định thời hạn']
+  signed_date date
+  base_salary decimal(15,2) [default: 0]
+  allowances json [note: 'Phụ cấp dạng JSON']
+  job_title_id integer
+  department_id integer
+  work_location varchar(255)
+  working_hours varchar(100) [default: '8:00-17:00']
+  status varchar(20) [default: 'draft', note: 'draft/active/expired/terminated/renewed']
+  terms text [note: 'Điều khoản']
+  notes text
+  attachment varchar(255) [note: 'File PDF']
+  created_by_id integer
+  created_at timestamp [default: `now()`]
+  updated_at timestamp
+  renewed_from_id integer [note: 'Hợp đồng cũ được gia hạn']
+
+  indexes {
+    (employee_id, status)
+    (end_date)
+    (status)
+  }
+}
+
+Ref: contracts.employee_id > employees.id [delete: cascade]
+Ref: contracts.job_title_id > job_titles.id [delete: set null]
+Ref: contracts.department_id > departments.id [delete: set null]
+Ref: contracts.created_by_id > employees.id [delete: set null]
+Ref: contracts.renewed_from_id > contracts.id [delete: set null]
+
+Table contract_histories {
+  id integer [primary key]
+  contract_id integer [not null]
+  action varchar(20) [not null, note: 'created/renewed/salary_adjusted/terminated/status_changed']
+  description text [not null]
+  old_value json
+  new_value json
+  performed_by_id integer
+  performed_at timestamp [default: `now()`]
+}
+
+Ref: contract_histories.contract_id > contracts.id [delete: cascade]
+Ref: contract_histories.performed_by_id > employees.id [delete: set null]
+
+// ============================================================================
+// SECURITY & AUDIT
+// ============================================================================
+
+Table permission_audit_logs {
+  id integer [primary key]
+  user_id integer
+  username varchar(150) [not null]
+  user_groups json [note: 'Groups at time of action']
+  action varchar(20) [default: 'denied', note: 'denied/granted/attempted']
+  resource_type varchar(50) [not null, note: 'Contract, LeaveRequest, etc.']
+  resource_id integer
+  permission_required varchar(100) [not null]
+  timestamp timestamp [default: `now()`]
+  ip_address varchar(45)
+  user_agent text
+  reason text [not null]
+  view_name varchar(100)
+  url_path varchar(500)
+  extra_data json
+
+  indexes {
+    (timestamp)
+    (user_id, timestamp)
+    (action, timestamp)
+    (resource_type, resource_id)
+  }
+}
+
+Ref: permission_audit_logs.user_id > auth_users.id [delete: set null]
+
+// Django Auth User (reference only)
+Table auth_users {
+  id integer [primary key]
+  username varchar(150) [unique, not null]
+  email varchar(254)
+  is_staff boolean [default: false]
+  is_active boolean [default: true]
+  date_joined timestamp
+}
+
+// ============================================================================
+// PERFORMANCE APPRAISAL
+// ============================================================================
+
+Table appraisal_periods {
+  id integer [primary key]
+  name varchar(200) [not null]
+  description text
+  start_date date [not null]
+  end_date date [not null]
+  self_assessment_deadline date [not null]
+  manager_review_deadline date [not null]
+  status varchar(20) [default: 'draft', note: 'draft/active/closed/archived']
+  created_by_id integer
+  created_at timestamp [default: `now()`]
+  updated_at timestamp
+
+  indexes {
+    (status, start_date)
+  }
+}
+
+Ref: appraisal_periods.created_by_id > employees.id [delete: set null]
+
+// M2M: appraisal_periods <-> departments
+Table appraisal_period_departments {
+  id integer [primary key]
+  appraisalperiod_id integer [not null]
+  department_id integer [not null]
+
+  indexes {
+    (appraisalperiod_id, department_id) [unique]
+  }
+}
+
+Ref: appraisal_period_departments.appraisalperiod_id > appraisal_periods.id [delete: cascade]
+Ref: appraisal_period_departments.department_id > departments.id [delete: cascade]
+
+// M2M: appraisal_periods <-> job_titles
+Table appraisal_period_job_titles {
+  id integer [primary key]
+  appraisalperiod_id integer [not null]
+  jobtitle_id integer [not null]
+
+  indexes {
+    (appraisalperiod_id, jobtitle_id) [unique]
+  }
+}
+
+Ref: appraisal_period_job_titles.appraisalperiod_id > appraisal_periods.id [delete: cascade]
+Ref: appraisal_period_job_titles.jobtitle_id > job_titles.id [delete: cascade]
+
+Table appraisal_criteria {
+  id integer [primary key]
+  period_id integer [not null]
+  name varchar(200) [not null]
+  description text [not null]
+  category varchar(20) [not null, note: 'performance/behavior/skill/leadership/development']
+  weight decimal(5,2) [default: 1.0, note: 'Trọng số %']
+  max_score integer [default: 5]
+  order integer [default: 0]
+}
+
+Ref: appraisal_criteria.period_id > appraisal_periods.id [delete: cascade]
+
+Table appraisals {
+  id integer [primary key]
+  period_id integer [not null]
+  employee_id integer [not null]
+  manager_id integer [note: 'Người đánh giá']
+  status varchar(20) [default: 'pending_self', note: 'pending_self/pending_manager/pending_hr/completed/cancelled']
+  self_assessment_date timestamp
+  manager_review_date timestamp
+  final_review_date timestamp
+  self_overall_score decimal(5,2)
+  self_comments text
+  self_achievements text
+  self_challenges text
+  self_development_plan text
+  company_feedback text [note: 'Góp ý cho công ty']
+  manager_overall_score decimal(5,2)
+  manager_comments text
+  manager_strengths text
+  manager_weaknesses text
+  manager_recommendations text
+  final_score decimal(5,2)
+  overall_rating varchar(20) [note: 'outstanding/exceeds/meets/needs_improvement/unsatisfactory']
+  hr_comments text
+  salary_adjustment decimal(15,2)
+  promotion_recommended boolean [default: false]
+  training_recommended text
+  created_at timestamp [default: `now()`]
+  updated_at timestamp
+
+  indexes {
+    (period_id, employee_id) [unique]
+    (period_id, status)
+    (employee_id, created_at)
+  }
+}
+
+Ref: appraisals.period_id > appraisal_periods.id [delete: cascade]
+Ref: appraisals.employee_id > employees.id [delete: cascade]
+Ref: appraisals.manager_id > employees.id [delete: set null]
+
+Table appraisal_scores {
+  id integer [primary key]
+  appraisal_id integer [not null]
+  criteria_id integer [not null]
+  self_score integer
+  self_comment text
+  manager_score integer
+  manager_comment text
+  final_score integer
+
+  indexes {
+    (appraisal_id, criteria_id) [unique]
+  }
+}
+
+Ref: appraisal_scores.appraisal_id > appraisals.id [delete: cascade]
+Ref: appraisal_scores.criteria_id > appraisal_criteria.id [delete: cascade]
+
+Table appraisal_comments {
+  id integer [primary key]
+  appraisal_id integer [not null]
+  author_id integer [not null]
+  author_type varchar(20) [not null, note: 'employee/manager/hr']
+  content text [not null]
+  is_private boolean [default: false, note: 'Chỉ HR và manager thấy']
+  created_at timestamp [default: `now()`]
+}
+
+Ref: appraisal_comments.appraisal_id > appraisals.id [delete: cascade]
+Ref: appraisal_comments.author_id > employees.id [delete: cascade]
+
+// ============================================================================
+// DOCUMENTS & ANNOUNCEMENTS
+// ============================================================================
+
+Table document_categories {
+  id integer [primary key]
+  name varchar(100) [unique, not null]
+  description text
+  icon varchar(50) [default: 'fa-folder']
+  color varchar(20) [default: 'primary']
+  order integer [default: 0]
+  is_active boolean [default: true]
+}
+
+Table documents {
+  id integer [primary key]
+  title varchar(200) [not null]
+  description text
+  category_id integer
+  file varchar(255) [not null]
+  file_size integer [default: 0, note: 'Bytes']
+  file_type varchar(50)
+  visibility varchar(20) [default: 'all', note: 'all/department/manager/specific']
+  uploaded_by_id integer
+  is_active boolean [default: true]
+  version varchar(20) [default: '1.0']
+  downloads_count integer [default: 0]
+  created_at timestamp [default: `now()`]
+  updated_at timestamp
+}
+
+Ref: documents.category_id > document_categories.id [delete: set null]
+Ref: documents.uploaded_by_id > employees.id [delete: set null]
+
+// M2M: documents <-> departments
+Table document_departments {
+  id integer [primary key]
+  document_id integer [not null]
+  department_id integer [not null]
+}
+
+Ref: document_departments.document_id > documents.id [delete: cascade]
+Ref: document_departments.department_id > departments.id [delete: cascade]
+
+// M2M: documents <-> employees (specific access)
+Table document_specific_employees {
+  id integer [primary key]
+  document_id integer [not null]
+  employee_id integer [not null]
+}
+
+Ref: document_specific_employees.document_id > documents.id [delete: cascade]
+Ref: document_specific_employees.employee_id > employees.id [delete: cascade]
+
+Table document_downloads {
+  id integer [primary key]
+  document_id integer [not null]
+  employee_id integer [not null]
+  downloaded_at timestamp [default: `now()`]
+  ip_address varchar(45)
+}
+
+Ref: document_downloads.document_id > documents.id [delete: cascade]
+Ref: document_downloads.employee_id > employees.id [delete: cascade]
+
+Table announcements {
+  id integer [primary key]
+  title varchar(200) [not null]
+  content text [not null]
+  category varchar(20) [default: 'general', note: 'general/event/policy/holiday/training/reward/other']
+  priority varchar(20) [default: 'normal', note: 'low/normal/high/urgent']
+  target_all boolean [default: true]
+  attachment varchar(255)
+  created_by_id integer
+  is_active boolean [default: true]
+  is_pinned boolean [default: false]
+  publish_at timestamp [not null]
+  expire_at timestamp
+  created_at timestamp [default: `now()`]
+  updated_at timestamp
+}
+
+Ref: announcements.created_by_id > employees.id [delete: set null]
+
+// M2M: announcements <-> departments
+Table announcement_departments {
+  id integer [primary key]
+  announcement_id integer [not null]
+  department_id integer [not null]
+}
+
+Ref: announcement_departments.announcement_id > announcements.id [delete: cascade]
+Ref: announcement_departments.department_id > departments.id [delete: cascade]
+
+// M2M: announcements <-> employees
+Table announcement_employees {
+  id integer [primary key]
+  announcement_id integer [not null]
+  employee_id integer [not null]
+}
+
+Ref: announcement_employees.announcement_id > announcements.id [delete: cascade]
+Ref: announcement_employees.employee_id > employees.id [delete: cascade]
+
+Table announcement_reads {
+  id integer [primary key]
+  announcement_id integer [not null]
+  employee_id integer [not null]
+  read_at timestamp [default: `now()`]
+
+  indexes {
+    (announcement_id, employee_id) [unique]
+  }
+}
+
+Ref: announcement_reads.announcement_id > announcements.id [delete: cascade]
+Ref: announcement_reads.employee_id > employees.id [delete: cascade]
+
+// ============================================================================
+// SYSTEM SETTINGS (Singleton)
+// ============================================================================
+
+Table system_settings {
+  id integer [primary key, note: 'Always = 1']
+  
+  // Company Info
+  company_name varchar(200) [default: 'Công ty TNHH ABC']
+  company_logo varchar(255)
+  company_address text
+  company_phone varchar(20)
+  company_email varchar(254)
+  company_website varchar(200)
+  company_tax_code varchar(20)
+  
+  // Work Settings
+  standard_working_days integer [default: 22]
+  standard_working_hours decimal(4,2) [default: 8]
+  work_start_time time [default: '08:00']
+  work_end_time time [default: '17:00']
+  lunch_break_start time [default: '12:00']
+  lunch_break_end time [default: '13:00']
+  timezone varchar(50) [default: 'Asia/Ho_Chi_Minh']
+  
+  // Tax & Insurance (Employee)
+  tax_rate decimal(5,2) [default: 10]
+  tax_deduction_personal decimal(15,0) [default: 11000000]
+  tax_deduction_dependent decimal(15,0) [default: 4400000]
+  social_insurance_rate decimal(5,2) [default: 8]
+  health_insurance_rate decimal(5,2) [default: 1.5]
+  unemployment_insurance_rate decimal(5,2) [default: 1]
+  
+  // Insurance (Employer)
+  employer_social_insurance_rate decimal(5,2) [default: 17.5]
+  employer_health_insurance_rate decimal(5,2) [default: 3]
+  employer_unemployment_insurance_rate decimal(5,2) [default: 1]
+  
+  // Salary Limits
+  minimum_wage decimal(15,0) [default: 4960000]
+  social_insurance_max_salary decimal(15,0) [default: 46800000]
+  
+  // Email Settings
+  email_host varchar(200) [default: 'smtp.gmail.com']
+  email_port integer [default: 587]
+  email_use_tls boolean [default: true]
+  email_use_ssl boolean [default: false]
+  email_host_user varchar(200)
+  email_host_password varchar(200)
+  email_from_name varchar(100) [default: 'HRM System']
+  
+  // Notification Settings
+  notify_leave_approved boolean [default: true]
+  notify_expense_approved boolean [default: true]
+  notify_contract_expiring boolean [default: true]
+  contract_expiring_days integer [default: 30]
+  notify_appraisal_reminder boolean [default: true]
+  notify_welcome_email boolean [default: true]
+  
+  // System Settings
+  date_format varchar(20) [default: 'd/m/Y']
+  currency_symbol varchar(10) [default: 'VNĐ']
+  pagination_size integer [default: 20]
+  
+  updated_at timestamp
+  updated_by_id integer
+}
+
+Ref: system_settings.updated_by_id > auth_users.id [delete: set null]
+
+// ============================================================================
+// AI RECRUITMENT MODULE (Separate App)
+// ============================================================================
+
+Table ai_job_descriptions {
+  id integer [primary key]
+  title varchar(255) [not null]
+  required_skills json [not null]
+  nice_to_have_skills json
+  required_years_experience float [not null]
+  required_degrees json
+  description text [not null]
+  created_at timestamp [default: `now()`]
+  updated_at timestamp
+}
+
+Table ai_resumes {
+  id integer [primary key]
+  employee_id integer
+  file varchar(255) [not null]
+  parsed_data json [note: 'AI extracted data']
+  scores json [note: 'AI scoring results']
+  created_at timestamp [default: `now()`]
+  updated_at timestamp
+}
+
+Ref: ai_resumes.employee_id > employees.id [delete: cascade]
